@@ -1,0 +1,23 @@
+# Test simple text-based wavelength normalization with 100 cases
+# This version avoids structured output format and uses plain text parsing
+
+experiment_name: wavelength_simple_100
+description: "Simple text wavelength prompts (100 cases, no structured output, no tokenization issues)"
+
+models:
+  - bedrock/openai.gpt-oss-120b-1:0
+
+call_types:
+  - wavelength_normalization
+
+max_cases: 100
+max_workers: 5
+timeout_seconds: 36000
+output_dir: experiments/compare_models/prompt_experiments
+temperature: 1.0
+
+call_type_configs:
+  wavelength_normalization:
+    prompt: paper_data_linking/linkers/general/prompts/wavelength_normalization/system.xml
+    input: inputs/test_set/wavelength_normalization.jsonl
+    handler_class: WavelengthNormalizationSimpleHandler

@@ -1,0 +1,8 @@
+*.jsonl
+*.json
+*.pdf
+*.txt
+*.png
+*.md
+*.csv
+../experiments/structured/html/

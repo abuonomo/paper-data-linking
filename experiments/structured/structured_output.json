@@ -1,0 +1,145 @@
+{
+  "title": "Scientific Observation Form for Bright Ray-like Features in CME Aftermath",
+  "summary": {
+    "content_summary": "This study analyzes current sheet candidates observed in the aftermath of CMEs using both white light and ultraviolet observations. The primary instruments employed are the LASCO C2 white light coronagraph and the UVCS ultraviolet spectrometer, both onboard the SOHO spacecraft. LASCO C2 images, collected during two main periods (1996 April\u20131998 December for solar minimum and 2001 for solar maximum), were used to detect ray-like features. UVCS observations, spanning from 1996 June to 2005 December, provided spectral data in key lines (e.g., O VI, H I Ly\u03b1, Si XII, and [Fe XVIII]) to assess plasma properties. Several other instruments\u2014including SUMER, the Transition Region and Coronal Explorer, the Solar Dynamics Observatory/Atmospheric Imaging Assembly (AIA), STEREO coronagraphs, and the MLSO Mark-III/Mark-IV K-coronameters\u2014are referenced in the text to provide additional context regarding observational techniques and supporting evidence from different wavelengths."
+  },
+  "instrumentation_details": [
+    {
+      "instrument_name": "LASCO C2",
+      "spacecraft": "SOHO",
+      "general_comments": "LASCO C2 is a white light coronagraph that continuously observes the solar corona from 2.3 to 6 R\u2299 with a cadence of about 20 minutes and a pixel size of 11.4 arcseconds. It is used to detect ray-like features associated with current sheets in the aftermath of CMEs.",
+      "general_comments_supporting_quote": "LASCO C2 is a white light coronagraph, that continuously observes the solar corona from 2.3 to 6 R\u2299 with a cadence of about 20 min and a pixel size of 11.4\u2032\u2032 (Brueckner et al. 1995).",
+      "detectors": null,
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [
+        {
+          "description": "White light observations during solar minimum.",
+          "start_date": "1996 April",
+          "end_date": "1998 December",
+          "time_range_supporting_quote": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "wavelengths": [
+            "White light (broadband visible)"
+          ],
+          "wavelengths_supporting_quote": "LASCO images are white light observations that reveal the ray\u2010like features in the wake of CMEs.",
+          "physical_observable": "Brightness and morphological features of current sheet candidate rays in the corona.",
+          "physical_observable_supporting_quote": "The white light ray-like features we analyzed in this paper were selected from the LASCO C2 observations.",
+          "additional_comments": "Used to identify and track the evolution of ray-like features behind CMEs."
+        },
+        {
+          "description": "White light observations during solar maximum.",
+          "start_date": "2001",
+          "end_date": "2001",
+          "time_range_supporting_quote": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "wavelengths": [
+            "White light (broadband visible)"
+          ],
+          "wavelengths_supporting_quote": "LASCO images provide a complete view of the solar corona in white light.",
+          "physical_observable": "Ray-like structures and brightness enhancements indicating current sheet morphology.",
+          "physical_observable_supporting_quote": "The images show the pre-CME corona, the ray in the wake of the CME, and the post-ray corona.",
+          "additional_comments": "Serves as the primary dataset for selecting candidate current sheets during solar maximum."
+        }
+      ],
+      "usage_category": "primary"
+    },
+    {
+      "instrument_name": "UVCS (UltraViolet Coronagraph Spectrometer)",
+      "spacecraft": "SOHO",
+      "general_comments": "UVCS is a spectrometer with a narrow entrance slit that can be positioned at various polar angles and heliocentric heights (1.5 to 9 R\u2299). It observes key ultraviolet emission lines, including the O VI doublet, H I Ly\u03b1, Si XII, and the high-temperature [Fe XVIII] line, to diagnose the plasma conditions in the corona.",
+      "general_comments_supporting_quote": "Unlike the WL coronagraph with its complete view of the solar corona, the UVCS spectrometer has a field of view defined by its narrow entrance slit 42\u2032 long and up to 82\u2032\u2032 wide. The slit can be placed at any polar angle and at heliocentric heights between 1.5 and 9 R\u2299. UVCS has two UV channels optimized to detect the O VI \u03bb\u03bb 1032, 1037 doublet and HI Ly\u03b1 lines.",
+      "detectors": [
+        "Two UV channels with spatial pixels of 7 arcseconds and spectral pixels of 0.0993 \u00c5 (OVI channel) and 0.1437 \u00c5 (Ly\u03b1 channel)"
+      ],
+      "detectors_supporting_quote": "The spatial pixels are 7\u2032\u2032 and spectral pixels are 0.0993 \u02daA (0.0915 \u02daA for the redundant path) and 0.1437\u02daA for the OVI and LYA channels, respectively.",
+      "data_collection_periods": [
+        {
+          "description": "UV spectroscopic observations covering current sheet features.",
+          "start_date": "1996 June",
+          "end_date": "2005 December",
+          "time_range_supporting_quote": "The UV selected rays were obtained from the period 1996 June through 2005 December.",
+          "wavelengths": [
+            "945 to 1270 \u00c5 (first order)",
+            "473 to 635 \u00c5 (second order)",
+            "[Fe XVIII], Si XII, O VI, H I Ly\u03b1, C III L977"
+          ],
+          "wavelengths_supporting_quote": "The spectra always included the O VI doublet, Si XII \u03bb\u03bb 499 or 521, Ly\u03b1, Ly\u03b2 and C III L977. During most of 2001, the synoptic scans also included the high temperature line of [Fe XVIII].",
+          "physical_observable": "Ultraviolet emission lines diagnostic of plasma temperature, density, and dynamics in current sheets.",
+          "physical_observable_supporting_quote": "In ultraviolet spectra, current sheets were identified as narrow regions of very hot plasma seen with UVCS between flare loops and CME cores.",
+          "additional_comments": "Data were acquired both from daily synoptic scans and targeted observations with varying spatial and spectral resolutions."
+        }
+      ],
+      "usage_category": "primary"
+    },
+    {
+      "instrument_name": "SUMER (Solar Ultraviolet Measurements of Emitted Radiation)",
+      "spacecraft": "SOHO",
+      "general_comments": "SUMER is referenced as having observed hot gas with very large line widths above flare loops, providing complementary information on high-temperature plasma in solar eruptions.",
+      "general_comments_supporting_quote": "or as hot gas with very large line widths above flare loops observed by the Solar Ultraviolet Measurements of Emitted Radiation (SUMER), (Innes et al. 2003; Wang et al. 2007).",
+      "detectors": null,
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced"
+    },
+    {
+      "instrument_name": "Transition Region and Coronal Explorer",
+      "spacecraft": "MSFC/NASA (operates as an independent mission)",
+      "general_comments": "The Transition Region and Coronal Explorer is mentioned in the context of narrow band EUV imaging that reveals hot gas in current sheets above the solar limb.",
+      "general_comments_supporting_quote": "Narrow band EUV images also show hot gas in current sheets above the limb, notably the Transition Region and Coronal Explorer images of Innes et al. (2003).",
+      "detectors": [
+        "EUV imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced"
+    },
+    {
+      "instrument_name": "Solar Dynamics Observatory/Atmospheric Imaging Assembly (SDO/AIA)",
+      "spacecraft": "SDO",
+      "general_comments": "SDO/AIA is cited as providing high-resolution images that reveal the structure and evolution of current sheets in the solar corona, particularly above flare loops.",
+      "general_comments_supporting_quote": "and the Solar Dynamics Observatory/Atmospheric Imaging Assembly (AIA) images of Reeves & Golub (2011) and Cheng et al. (2011).",
+      "detectors": [
+        "Multi-wavelength EUV imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced"
+    },
+    {
+      "instrument_name": "STEREO Coronagraphs",
+      "spacecraft": "STEREO",
+      "general_comments": "STEREO coronagraph data are mentioned as providing additional examples of disconnection events and ray-like features associated with CME current sheets.",
+      "general_comments_supporting_quote": "Recently, Howard et al. (2012) have presented beautiful examples of a few disconnection events seen in STEREO coronagraph data and tracked their evolution into the heliosphere.",
+      "detectors": [
+        "Coronagraph imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced"
+    },
+    {
+      "instrument_name": "MLSO Mark-III/Mark-IV K-Coronameters",
+      "spacecraft": "Mauna Loa Solar Observatory (MLSO)",
+      "general_comments": "The MLSO K-coronameters are ground-based instruments that produce polarization brightness maps of the solar corona and are used when the UVCS slit is positioned below the LASCO C2 occulter.",
+      "general_comments_supporting_quote": "For those events in which the UVCS slit was located below the LASCO C2 occulter disk we also examined, whenever the data were available, the Mark-III or Mark-IV K-coronameter data from Mauna Loa Solar Observatory (MLSO). The MLSO coronagraphs are ground-based instruments that produce polarization brightness maps of the solar corona from 1.14 to 2.86 R\u2299 in the range 7000 - 9000 \u02daA with a 3 min cadence.",
+      "detectors": [
+        "Polarimetric imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [
+        {
+          "description": "Routine ground-based observations.",
+          "start_date": "Approximately 17:00 UT",
+          "end_date": "Approximately 02:00 UT",
+          "time_range_supporting_quote": "The typical observing period is from \u223c17:00 to \u223c02:00 UT each day.",
+          "wavelengths": [
+            "7000 - 9000 \u00c5"
+          ],
+          "wavelengths_supporting_quote": "MLSO coronagraphs produce polarization brightness maps of the solar corona in the range 7000 - 9000 \u02daA with a 3 min cadence.",
+          "physical_observable": "Polarization brightness maps of the corona.",
+          "physical_observable_supporting_quote": "The MLSO coronagraphs are ground-based instruments that produce polarization brightness maps of the solar corona from 1.14 to 2.86 R\u2299.",
+          "additional_comments": "Used for supplementary comparison when UVCS observations are taken below the LASCO occulter."
+        }
+      ],
+      "usage_category": "contextual"
+    }
+  ]
+}

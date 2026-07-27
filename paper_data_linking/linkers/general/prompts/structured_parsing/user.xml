@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structured_parsing_task>
+  <task_description>
+    Please analyze and structure the following scientific instrumentation details:
+  </task_description>
+
+  <instrument_details_text>
+    {{ instruments_details_text }}
+  </instrument_details_text>
+
+  <extraction_requirements>
+    Extract all instruments/observatories mentioned, their roles, observation periods,
+    wavelengths, physical observables, and any supporting quotes from the text.
+  </extraction_requirements>
+
+  <formatting_requirements>
+    <requirement>wavelengths: Combine all wavelength information into a single descriptive string (not an array)</requirement>
+    <requirement>additional_comments: Use a single string or null if no additional information</requirement>
+    <requirement>All quote fields: Use arrays of strings as specified</requirement>
+    <requirement>Ensure all fields match the expected data types in the response schema</requirement>
+  </formatting_requirements>
+</structured_parsing_task>

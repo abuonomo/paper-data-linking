@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Annotations with Validation Sidebar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+    #container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+    #pdf-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+    }
+    .pageContainer {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+    }
+    .annotation-overlay {
+      position: absolute;
+      border: 2px solid rgba(255, 0, 0, 0.5);
+      background: rgba(255, 255, 0, 0.2);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .annotation-overlay:hover {
+      border-color: rgba(255, 0, 0, 1);
+      background: rgba(255, 255, 0, 0.5);
+    }
+    .annotation-overlay.highlight-all {
+      border-color: rgba(255, 0, 0, 1);
+      background: rgba(255, 255, 0, 0.5);
+    }
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #333;
+      padding: 8px;
+      font-size: 0.9em;
+      max-width: 300px;
+      z-index: 1000;
+      display: none;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    #sidebar {
+      width: 350px;
+      background: #fff;
+      border-left: 1px solid #ccc;
+      overflow-y: auto;
+      padding: 20px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .instrument-section {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .period-section {
+      margin-left: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #eee;
+      padding: 10px;
+      border-radius: 5px;
+      background: #fafafa;
+    }
+    .claim-item {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      background: #f0f0f0;
+    }
+    .claim-item.validated {
+      background: rgba(144, 238, 144, 0.3);
+      border-left: 4px solid green;
+    }
+    .claim-item.rejected {
+      background: rgba(255, 99, 71, 0.3);
+      border-left: 4px solid red;
+    }
+    .validation-buttons {
+      margin-top: 5px;
+      display: flex;
+      gap: 5px;
+    }
+    .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-validate {
+      background: #4CAF50;
+      color: white;
+    }
+    .btn-reject {
+      background: #f44336;
+      color: white;
+    }
+    .btn-reset {
+      background: #9e9e9e;
+      color: white;
+    }
+    .btn-highlight {
+      background: #2196F3;
+      color: white;
+    }
+    .claim-label {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .claim-value {
+      font-style: italic;
+      word-break: break-word;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #333;
+    }
+    h3 {
+      font-size: 16px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+    .badge-primary {
+      background: #007bff;
+      color: white;
+    }
+    .badge-secondary {
+      background: #6c757d;
+      color: white;
+    }
+    .highlight-toggle {
+      cursor: pointer;
+      color: #2196F3;
+      text-decoration: underline;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    .validation-status {
+      font-size: 12px;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 2px;
+    }
+    .status-validated {
+      color: green;
+    }
+    .status-rejected {
+      color: red;
+    }
+    .save-button {
+      position: sticky;
+      bottom: 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .progress-bar-container {
+      margin-top: 10px;
+      background: #e0e0e0;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: #4CAF50;
+      width: 0%;
+      transition: width 0.3s;
+    }
+  </style>
+  <!-- Include PDF.js from a CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="pdf-container">
+      <h1>PDF Viewer with Annotation Validation</h1>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+    <div id="sidebar">
+      <h2>Validation Dashboard</h2>
+      <div id="validation-stats">
+        <div>Claims to validate: <span id="total-claims">0</span></div>
+        <div>Validated: <span id="validated-claims">0</span></div>
+        <div>Rejected: <span id="rejected-claims">0</span></div>
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+      </div>
+      <div id="instruments-list"></div>
+      <button id="save-validations" class="save-button">Save Validations</button>
+    </div>
+  </div>
+
+  <script>
+    // Global configuration
+    const scale = 1.5;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    // URLs for PDF and JSON files
+    const pdfUrl = 'pdfs/2013ApJ...766...65C.pdf';
+    const jsonUrl = 'pdfs/annotated_output_locations.json';
+
+    // Array to store all annotations and validation status
+    let annotations = [];
+    let jsonData = null;
+    let validationState = {};
+
+    // Load validation state from localStorage if available
+    function loadValidationState() {
+      const savedState = localStorage.getItem('pdf_validation_state');
+      if (savedState) {
+        try {
+          validationState = JSON.parse(savedState);
+        } catch (e) {
+          console.error('Error loading validation state:', e);
+          validationState = {};
+        }
+      }
+    }
+
+    // Save validation state to localStorage
+    function saveValidationState() {
+      localStorage.setItem('pdf_validation_state', JSON.stringify(validationState));
+      alert('Validation state saved successfully!');
+    }
+
+    // Generate a unique ID for each claim to track its validation state
+    function generateClaimId(instrumentName, periodDescription, claimType, value) {
+      return `${instrumentName}|${periodDescription || 'general'}|${claimType}|${value}`.replace(/\s+/g, '_');
+    }
+
+    // Create the validation sidebar from JSON data
+    function createValidationSidebar(data) {
+      const instrumentsList = document.getElementById('instruments-list');
+      instrumentsList.innerHTML = '';
+
+      let totalClaims = 0;
+
+      if (!data || !data.instrumentation_details || !Array.isArray(data.instrumentation_details)) {
+        instrumentsList.innerHTML = '<p>No instrumentation data available.</p>';
+        return;
+      }
+
+      // Process each instrument
+      data.instrumentation_details.forEach(instrument => {
+        const instrumentSection = document.createElement('div');
+        instrumentSection.className = 'instrument-section';
+
+        // Instrument header
+        const instrumentHeader = document.createElement('h3');
+
+        // Add badge for primary vs referenced instruments
+        const usageBadge = document.createElement('span');
+        usageBadge.className = `badge ${instrument.usage_category === 'primary' ? 'badge-primary' : 'badge-secondary'}`;
+        usageBadge.textContent = instrument.usage_category || 'referenced';
+
+        instrumentHeader.textContent = instrument.instrument_name || 'Unknown Instrument';
+        instrumentHeader.appendChild(usageBadge);
+        instrumentSection.appendChild(instrumentHeader);
+
+        // Add general instrument claims
+        if (instrument.spacecraft) {
+          totalClaims++;
+          const spacecraftClaim = createClaimItem('Spacecraft', instrument.spacecraft, instrument.instrument_name, null, 'spacecraft');
+          instrumentSection.appendChild(spacecraftClaim);
+        }
+
+        if (instrument.general_comments && instrument.general_comments_supporting_quote) {
+          totalClaims++;
+          const generalCommentsClaim = createClaimItem('General Description', instrument.general_comments,
+                                                      instrument.instrument_name, null, 'general_comments');
+          instrumentSection.appendChild(generalCommentsClaim);
+        }
+
+        if (instrument.detectors && instrument.detectors_supporting_quote) {
+          totalClaims++;
+          const detectorsClaim = createClaimItem('Detectors', Array.isArray(instrument.detectors) ?
+                                               instrument.detectors.join(', ') : instrument.detectors,
+                                               instrument.instrument_name, null, 'detectors');
+          instrumentSection.appendChild(detectorsClaim);
+        }
+
+        // Process data collection periods
+        if (instrument.data_collection_periods && Array.isArray(instrument.data_collection_periods)) {
+          instrument.data_collection_periods.forEach((period, periodIndex) => {
+            const periodSection = document.createElement('div');
+            periodSection.className = 'period-section';
+
+            const periodHeader = document.createElement('h4');
+            periodHeader.textContent = period.description || `Data Collection Period ${periodIndex + 1}`;
+            periodSection.appendChild(periodHeader);
+
+            // Date range
+            if (period.start_date || period.end_date) {
+              totalClaims++;
+              const datesClaim = createClaimItem('Date Range',
+                                              `${period.start_date || 'Unknown'} to ${period.end_date || 'Unknown'}`,
+                                              instrument.instrument_name, period.description, 'date_range');
+              periodSection.appendChild(datesClaim);
+            }
+
+            // Wavelengths
+            if (period.wavelengths) {
+              totalClaims++;
+              const wavelengthsClaim = createClaimItem('Wavelengths',
+                                                    Array.isArray(period.wavelengths) ?
+                                                    period.wavelengths.join(', ') : period.wavelengths,
+                                                    instrument.instrument_name, period.description, 'wavelengths');
+              periodSection.appendChild(wavelengthsClaim);
+            }
+
+            // Physical observable
+            if (period.physical_observable) {
+              totalClaims++;
+              const observableClaim = createClaimItem('Physical Observable',
+                                                   period.physical_observable,
+                                                   instrument.instrument_name, period.description, 'physical_observable');
+              periodSection.appendChild(observableClaim);
+            }
+
+            instrumentSection.appendChild(periodSection);
+          });
+        }
+
+        instrumentsList.appendChild(instrumentSection);
+      });
+
+      // Update validation stats
+      document.getElementById('total-claims').textContent = totalClaims;
+      updateValidationStats();
+    }
+
+    // Create a claim item with validation buttons
+    function createClaimItem(label, value, instrumentName, periodDescription, claimType) {
+      const claimId = generateClaimId(instrumentName, periodDescription, claimType, value);
+
+      const claimItem = document.createElement('div');
+      claimItem.className = 'claim-item';
+      claimItem.dataset.id = claimId;
+
+      // Apply saved validation state if exists
+      if (validationState[claimId]) {
+        claimItem.className = `claim-item ${validationState[claimId]}`;
+      }
+
+      const claimLabel = document.createElement('div');
+      claimLabel.className = 'claim-label';
+      claimLabel.textContent = label;
+
+      const claimValue = document.createElement('div');
+      claimValue.className = 'claim-value';
+      claimValue.textContent = value;
+
+      // Add highlight toggle if there are related annotations
+      const tag = generateTag({
+        instrument_name: instrumentName,
+        description: periodDescription
+      }, claimType);
+
+      const relatedAnnotations = annotations.filter(ann => ann.tag.includes(tag));
+
+      if (relatedAnnotations.length > 0) {
+        const highlightToggle = document.createElement('span');
+        highlightToggle.className = 'highlight-toggle';
+        highlightToggle.textContent = 'View in PDF';
+        highlightToggle.addEventListener('click', () => {
+          // Scroll to the first annotation and highlight all related ones
+          const firstAnnotation = relatedAnnotations[0];
+          const element = document.querySelector(`.annotation-overlay[data-tag*="${tag}"]`);
+
+          if (element) {
+            // Remove highlighting from all annotations
+            document.querySelectorAll('.annotation-overlay.highlight-all').forEach(el => {
+              el.classList.remove('highlight-all');
+            });
+
+            // Highlight related annotations
+            document.querySelectorAll(`.annotation-overlay[data-tag*="${tag}"]`).forEach(el => {
+              el.classList.add('highlight-all');
+            });
+
+            // Scroll to the first annotation
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Display tooltip with details
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = firstAnnotation.details;
+            tooltip.style.display = 'block';
+
+            // Position tooltip near the element
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = (rect.right + 10) + 'px';
+            tooltip.style.top = rect.top + 'px';
+
+            // Hide tooltip after 5 seconds
+            setTimeout(() => {
+              tooltip.style.display = 'none';
+            }, 5000);
+          }
+        });
+
+        claimLabel.appendChild(highlightToggle);
+      }
+
+      // Add validation status if present
+      if (validationState[claimId]) {
+        const validationStatus = document.createElement('div');
+        validationStatus.className = `validation-status status-${validationState[claimId]}`;
+        validationStatus.textContent = validationState[claimId] === 'validated' ? '✓ Validated' : '✗ Rejected';
+        claimItem.appendChild(validationStatus);
+      }
+
+      claimItem.appendChild(claimLabel);
+      claimItem.appendChild(claimValue);
+
+      // Add validation buttons
+      const validationButtons = document.createElement('div');
+      validationButtons.className = 'validation-buttons';
+
+      const validateButton = document.createElement('button');
+      validateButton.className = 'btn btn-validate';
+      validateButton.textContent = 'Validate';
+      validateButton.addEventListener('click', () => {
+        validationState[claimId] = 'validated';
+        claimItem.className = 'claim-item validated';
+        updateValidationStatus(claimItem, 'validated');
+        updateValidationStats();
+      });
+
+      const rejectButton = document.createElement('button');
+      rejectButton.className = 'btn btn-reject';
+      rejectButton.textContent = 'Reject';
+      rejectButton.addEventListener('click', () => {
+        validationState[claimId] = 'rejected';
+        claimItem.className = 'claim-item rejected';
+        updateValidationStatus(claimItem, 'rejected');
+        updateValidationStats();
+      });
+
+      const resetButton = document.createElement('button');
+      resetButton.className = 'btn btn-reset';
+      resetButton.textContent = 'Reset';
+      resetButton.addEventListener('click', () => {
+        delete validationState[claimId];
+        claimItem.className = 'claim-item';
+        // Remove validation status
+        const statusEl = claimItem.querySelector('.validation-status');
+        if (statusEl) {
+          claimItem.removeChild(statusEl);
+        }
+        updateValidationStats();
+      });
+
+      validationButtons.appendChild(validateButton);
+      validationButtons.appendChild(rejectButton);
+      validationButtons.appendChild(resetButton);
+
+      claimItem.appendChild(validationButtons);
+
+      return claimItem;
+    }
+
+    // Update validation status element for a claim
+    function updateValidationStatus(claimItem, status) {
+      // Remove existing status if present
+      const existingStatus = claimItem.querySelector('.validation-status');
+      if (existingStatus) {
+        claimItem.removeChild(existingStatus);
+      }
+
+      // Add new status
+      const validationStatus = document.createElement('div');
+      validationStatus.className = `validation-status status-${status}`;
+      validationStatus.textContent = status === 'validated' ? '✓ Validated' : '✗ Rejected';
+
+      // Insert at the beginning
+      claimItem.insertBefore(validationStatus, claimItem.firstChild);
+    }
+
+    // Update validation statistics
+    function updateValidationStats() {
+      let validatedCount = 0;
+      let rejectedCount = 0;
+
+      for (const claimId in validationState) {
+        if (validationState[claimId] === 'validated') {
+          validatedCount++;
+        } else if (validationState[claimId] === 'rejected') {
+          rejectedCount++;
+        }
+      }
+
+      document.getElementById('validated-claims').textContent = validatedCount;
+      document.getElementById('rejected-claims').textContent = rejectedCount;
+
+      const totalClaims = parseInt(document.getElementById('total-claims').textContent) || 0;
+      const progressPercent = totalClaims > 0 ? ((validatedCount + rejectedCount) / totalClaims * 100) : 0;
+
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+    }
+
+    // Generate a tag to connect claims with annotations
+    function generateTag(obj, searchKey) {
+      if (obj.instrument_name) {
+        return obj.instrument_name + '|' + searchKey;
+      } else if (obj.description) {
+        return obj.description + '|' + searchKey;
+      }
+      return searchKey;
+    }
+
+    // Extract annotations from the JSON data
+    function extractAnnotations(data) {
+      if (!data.instrumentation_details || !Array.isArray(data.instrumentation_details)) return;
+
+      data.instrumentation_details.forEach(instr => {
+        // Process top-level annotations
+        if (instr.locations && Array.isArray(instr.locations)) {
+          instr.locations.forEach(loc => {
+            let searchKey = loc.search_key;
+            let tag = generateTag(instr, searchKey);
+            annotations.push({
+              pageNumber: loc.page_number,
+              pdfRect: [loc.x0, loc.y0, loc.x1, loc.y1],
+              details: buildDetailsString(instr, searchKey),
+              tag: tag
+            });
+          });
+        }
+
+        // Process data collection periods
+        if (instr.data_collection_periods && Array.isArray(instr.data_collection_periods)) {
+          instr.data_collection_periods.forEach(period => {
+            // Merge parent's instrument_name and spacecraft into period
+            const combined = Object.assign({}, period, {
+              instrument_name: instr.instrument_name,
+              spacecraft: instr.spacecraft
+            });
+
+            if (combined.locations && Array.isArray(combined.locations)) {
+              combined.locations.forEach(loc => {
+                let searchKey = loc.search_key;
+                let tag = generateTag(combined, searchKey);
+                annotations.push({
+                  pageNumber: loc.page_number,
+                  pdfRect: [loc.x0, loc.y0, loc.x1, loc.y1],
+                  details: buildDetailsString(combined, searchKey),
+                  tag: tag
+                });
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // Build a details string for tooltip
+    function buildDetailsString(obj, searchKey) {
+      let details = '';
+      if (obj.instrument_name) {
+        details += `<strong>Instrument:</strong> ${obj.instrument_name}<br>`;
+      }
+      if (obj.spacecraft) {
+        details += `<strong>Spacecraft:</strong> ${obj.spacecraft}<br>`;
+      }
+      if (obj.start_date) {
+        details += `<strong>Start Date:</strong> ${obj.start_date}<br>`;
+      }
+      if (obj.end_date) {
+        details += `<strong>End Date:</strong> ${obj.end_date}<br>`;
+      }
+      if (obj.description && !obj.start_date && !obj.end_date) {
+        details += `<strong>Data Period:</strong> ${obj.description}<br>`;
+      }
+      if (obj.wavelengths) {
+        if (Array.isArray(obj.wavelengths)) {
+          details += `<strong>Wavelengths:</strong> ${obj.wavelengths.join(', ')}<br>`;
+        } else {
+          details += `<strong>Wavelengths:</strong> ${obj.wavelengths}<br>`;
+        }
+      }
+      if (obj.physical_observable) {
+        details += `<strong>Physical Observable:</strong> ${obj.physical_observable}<br>`;
+      }
+      if (obj.detectors) {
+        if (Array.isArray(obj.detectors)) {
+          details += `<strong>Detectors:</strong> ${obj.detectors.join(', ')}<br>`;
+        } else {
+          details += `<strong>Detectors:</strong> ${obj.detectors}<br>`;
+        }
+      }
+
+      // Add validation status
+      const claimType = searchKey.includes('time_range') ? 'date_range' :
+                        searchKey.includes('wavelengths') ? 'wavelengths' :
+                        searchKey.includes('physical_observable') ? 'physical_observable' :
+                        searchKey.includes('general_comments') ? 'general_comments' :
+                        searchKey.includes('detectors') ? 'detectors' : 'other';
+
+      // Try to get value based on claim type
+      let value = '';
+      if (claimType === 'date_range') {
+        value = `${obj.start_date || 'Unknown'} to ${obj.end_date || 'Unknown'}`;
+      } else if (claimType === 'wavelengths') {
+        value = Array.isArray(obj.wavelengths) ? obj.wavelengths.join(', ') : obj.wavelengths;
+      } else if (claimType === 'physical_observable') {
+        value = obj.physical_observable;
+      } else if (claimType === 'general_comments') {
+        value = obj.general_comments;
+      } else if (claimType === 'detectors') {
+        value = Array.isArray(obj.detectors) ? obj.detectors.join(', ') : obj.detectors;
+      }
+
+      const claimId = generateClaimId(obj.instrument_name, obj.description, claimType, value);
+      if (validationState[claimId]) {
+        const status = validationState[claimId];
+        details += `<br><strong>Validation Status:</strong> <span style="color: ${status === 'validated' ? 'green' : 'red'};">
+                    ${status === 'validated' ? '✓ Validated' : '✗ Rejected'}</span>`;
+      }
+
+      // Finally, display the full supporting quote text
+      details += `<br><strong>${searchKey}:</strong> ${obj[searchKey]}<br>`;
+      return details;
+    }
+
+    // Load and render the PDF
+    function loadPdf() {
+      const loadingTask = pdfjsLib.getDocument(pdfUrl);
+      loadingTask.promise.then(pdf => {
+        console.log('PDF loaded with ' + pdf.numPages + ' pages.');
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          renderPage(pdf, pageNum);
+        }
+      }, function (reason) {
+        console.error(reason);
+      });
+    }
+
+    // Render a single page
+    function renderPage(pdf, pageNum) {
+      pdf.getPage(pageNum).then(page => {
+        const viewport = page.getViewport({ scale: scale });
+        const pageContainer = document.createElement('div');
+        pageContainer.classList.add('pageContainer');
+        pageContainer.style.width = viewport.width + 'px';
+        pageContainer.style.height = viewport.height + 'px';
+        pageContainer.style.position = 'relative';
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const context = canvas.getContext('2d');
+
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        page.render(renderContext).promise.then(() => {
+          addAnnotationsToPage(pageNum, viewport, pageContainer);
+        });
+
+        pageContainer.appendChild(canvas);
+        document.getElementById('pdf-container').appendChild(pageContainer);
+      });
+    }
+
+    // Add annotation overlays to a given page
+    function addAnnotationsToPage(pageNum, viewport, container) {
+      const pageAnnotations = annotations.filter(ann => ann.pageNumber === pageNum);
+      const unscaledHeight = viewport.height / scale;
+
+      pageAnnotations.forEach(ann => {
+        // Convert JSON coordinates (top-left origin) to PDF coordinates (bottom-left origin)
+        const flippedRect = [
+          ann.pdfRect[0],
+          unscaledHeight - ann.pdfRect[3],
+          ann.pdfRect[2],
+          unscaledHeight - ann.pdfRect[1]
+        ];
+
+        // Convert the flipped rectangle to viewport coordinates
+        const rect = viewport.convertToViewportRectangle(flippedRect);
+        const left = Math.floor(Math.min(rect[0], rect[2]));
+        const top = Math.floor(Math.min(rect[1], rect[3]));
+        const width = Math.ceil(Math.abs(rect[0] - rect[2]));
+        const height = Math.ceil(Math.abs(rect[1] - rect[3]));
+
+        const overlay = document.createElement('div');
+        overlay.classList.add('annotation-overlay');
+        overlay.setAttribute('data-tag', ann.tag);
+        overlay.style.left = left + 'px';
+        overlay.style.top = top + 'px';
+        overlay.style.width = width + 'px';
+        overlay.style.height = height + 'px';
+
+        overlay.addEventListener('mouseenter', function(e) {
+          const currentTag = overlay.getAttribute('data-tag');
+          // Highlight all overlays with the same tag
+          document.querySelectorAll(`.annotation-overlay[data-tag="${currentTag}"]`).forEach(o => {
+            o.classList.add('highlight-all');
+          });
+          const tooltip = document.getElementById('tooltip');
+          tooltip.innerHTML = ann.details;
+          tooltip.style.display = 'block';
+          tooltip.style.left = (e.pageX + 10) + 'px';
+          tooltip.style.top = (e.pageY + 10) + 'px';
+        });
+
+        overlay.addEventListener('mousemove', function(e) {
+          const tooltip = document.getElementById('tooltip');
+          tooltip.style.left = (e.pageX + 10) + 'px';
+          tooltip.style.top = (e.pageY + 10) + 'px';
+        });
+
+        overlay.addEventListener('mouseleave', function() {
+          const currentTag = overlay.getAttribute('data-tag');
+          document.querySelectorAll(`.annotation-overlay[data-tag="${currentTag}"]`).forEach(o => {
+            o.classList.remove('highlight-all');
+          });
+          const tooltip = document.getElementById('tooltip');
+          tooltip.style.display = 'none';
+        });
+
+        container.appendChild(overlay);
+      });
+    }
+
+    // Initialize application
+    function init() {
+      // Load saved validation state
+      loadValidationState();
+
+      // Load JSON and extract annotations
+      fetch(jsonUrl)
+        .then(response => response.json())
+        .then(data => {
+          jsonData = data;
+          extractAnnotations(data);
+          createValidationSidebar(data);
+          loadPdf();
+        })
+        .catch(error => {
+          console.error("Error loading JSON:", error);
+        });
+
+      // Set up save button
+      document.getElementById('save-validations').addEventListener('click', saveValidationState);
+
+      // Close tooltip when clicking elsewhere
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.annotation-overlay') && !e.target.closest('.tooltip')) {
+          document.getElementById('tooltip').style.display = 'none';
+        }
+      });
+    }
+
+    // Start the application
+    init();
+  </script>
+</body>
+</html>

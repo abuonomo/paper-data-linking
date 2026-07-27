@@ -1,0 +1,428 @@
+{
+  "summary": {
+    "total": 12,
+    "correct": 11,
+    "incorrect": 1,
+    "errors": 0,
+    "total_time": 40.693427324295044,
+    "average_time": 3.3911189436912537,
+    "accuracy": 91.66666666666666,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "single_spacecraft": {
+      "total": 4,
+      "correct": 4,
+      "incorrect": 0,
+      "errors": 0
+    },
+    "moderately_ambiguous": {
+      "total": 4,
+      "correct": 3,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "instrument_component": {
+      "total": 4,
+      "correct": 4,
+      "incorrect": 0,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "stereo_a_mag_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-A/IMPACT/MAG/spase://SMWG/Observatory/STEREO-A",
+      "time_seconds": 5.887432098388672,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-A",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID\n\nReasoning: The proposed match aligns with t...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID\n\nReasoning: The proposed match aligns with t...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_mag_instrument",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 2.0336501598358154,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "generic_instrument_name"
+      }
+    },
+    {
+      "name": "impact_component_mag",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-A/IMPACT/MAG/spase://SMWG/Observatory/STEREO-A",
+      "time_seconds": 3.7895689010620117,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-A",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match aligns with the origina...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match aligns with the origina...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_a_mag_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-A/IMPACT/MAG/spase://SMWG/Observatory/STEREO-A",
+      "time_seconds": 3.036792039871216,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-A",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match aligns with the origina...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match aligns with the origina...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "impact_subcomponent",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-A/IMPACT/MAG/spase://SMWG/Observatory/STEREO-A",
+      "time_seconds": 4.112900972366333,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-A",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match of the MAG instrument f...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/IMPACT/MAG [Validated: VALID - The proposed match of the MAG instrument f...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-A/IMPACT/MAG",
+        "mission_code": "spase://SMWG/Observatory/STEREO-A",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "instrument_component"
+      }
+    },
+    {
+      "name": "generic_mag_ambiguity",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.3721919059753418,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "multiple_instrument_possibility"
+      }
+    },
+    {
+      "name": "themis_d_eph_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/THEMIS/D/Ephemeris/spase://SMWG/Observatory/THEMIS/D",
+      "time_seconds": 5.261549234390259,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "expected_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "THEMIS",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "themis_d_eph_generic_name",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.5070829391479492,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "general_name"
+      }
+    },
+    {
+      "name": "themis_d_eph_component",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/THEMIS/D/Ephemeris/spase://SMWG/Observatory/THEMIS/D",
+      "time_seconds": 3.96004581451416,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "expected_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "THEMIS",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "themis_d_ephemeris_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/THEMIS/D/Ephemeris/spase://SMWG/Observatory/THEMIS/D",
+      "time_seconds": 4.611717224121094,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "expected_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "THEMIS",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "ephemeris_generic",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.4322569370269775,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "Generic Name Reference"
+      }
+    },
+    {
+      "name": "themis_d_orbital_data_component",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/THEMIS/D/Ephemeris/spase://SMWG/Observatory/THEMIS/D",
+      "time_seconds": 3.688239097595215,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "expected_instrument": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/THEMIS/D",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "THEMIS",
+        "reasoning": "Systematic selection: THEMIS \u2192 spase://SMWG/Instrument/THEMIS/D/Ephemeris [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/THEMIS/D/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/THEMIS/D",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "Component Reference"
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/new_instrument_test_set.jsonl",
+    "total_cases_in_file": 12,
+    "cases_run": 12,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751567107.489019
+  }
+}

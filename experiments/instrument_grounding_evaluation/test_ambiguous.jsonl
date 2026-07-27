@@ -1,0 +1,1 @@
+{"name": "generic_plasma_test", "category": "test", "instrument_entry": {"name": "SWEPAM", "general_comments": "Solar wind plasma analyzer"}, "expected": {"should_match": false}, "description": "Test generic plasma analyzer without mission context"}

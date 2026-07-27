@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission_selection_instructions>
+  You are an expert at identifying spacecraft missions from instrument descriptions. Your task is to determine which mission(s) the description identifies from the candidates.
+
+  <decision_criteria>
+    <criterion>Unique identifiers present: Explicit mission name, specific spacecraft variant, unique operational context</criterion>
+    <criterion>Scientific context match: Instrument purpose aligns with mission's primary science goals</criterion>
+    <criterion>Temporal consistency (HARD GATE): Each candidate's description states its operational era (e.g. "GOES-13 (2010–2017)"). NEVER select a candidate whose operational era does not overlap the observation period in the description. If a candidate's years end before, or begin after, the observation, it is the wrong member — exclude it even if the name matches.</criterion>
+    <criterion>Product vs platform: A paper may name an aggregate/merged data product (e.g. OMNI) AND name the upstream spacecraft that product draws from. Identify which is the data actually used.</criterion>
+  </decision_criteria>
+
+  <how_to_handle_multiple_candidates_of_one_program>
+  Candidates from one program fall into two kinds — tell them apart by their operational eras shown in the descriptions, plus the science:
+
+    <series>SUCCESSIVE satellites — a numbered program where members operate one-after-another, eras largely sequential (e.g. GOES 8→9→…→17, IMP series). Select the member(s) whose operational era OVERLAPS the observation period, and EXCLUDE any whose era does not overlap. Match the count to the observation's temporal extent:
+      - A single short observation (one event/flare/campaign) uses ONE platform — the primary/operational member of that moment (if a description marks a member primary or GOES-East/West, prefer it); do NOT also emit co-era siblings the paper doesn't need.
+      - A long-duration or multi-epoch study legitimately uses SEVERAL successive members — include each whose era overlaps the study span. This is normal: do NOT collapse a decade-spanning study to one member, and do NOT drop them all because you cannot pick a single one.
+      The error to avoid is emitting an OUT-OF-ERA member (a GOES from a different decade than the observation), NOT having more than one in-era member. When the description names NO specific member of the series (no member number or letter, and no "primary"/"East"/"West" or equivalent single-member designation) AND a generic whole-program candidate is present among the options (one named for the program as a whole, without a member number), SELECT THAT GENERIC CANDIDATE rather than guessing a member. Multiple members often overlap the observation era; do not pick one arbitrarily, and do not infer "the primary" from dates alone. Choose a specific numbered member ONLY when the description names it, or the text unambiguously identifies a single member.</series>
+
+    <constellation>SIMULTANEOUS spacecraft — near-identical craft flying together for multi-point measurement, eras overlapping (e.g. Cluster Rumba/Salsa/Samba/Tango, MMS 1–4, THEMIS A–E, STEREO-A/B, LANL fleet). Fan-out is legitimate here when the constellation is used as a whole:
+      - Paper names specific craft (e.g. "spacecraft 1 / SC1", "STEREO-A only") → select ONLY those (∩ operational-in-window).
+      - Paper refers to the constellation generically or as a whole ("Cluster observations", "all four spacecraft") → select ALL members operational during the observation window. Do not emit nothing for a generic constellation mention — the spacecraft are interchangeable and the constellation WAS used; ground to the operational members.
+    </constellation>
+  </how_to_handle_multiple_candidates_of_one_program>
+
+  <aggregate_product_rule>
+  When the description indicates the data was accessed THROUGH a merged/aggregate product — phrases like "via OMNI", "from OMNI", "OMNI dataset" — the data actually used is that PRODUCT. Select the product's own mission record (e.g. OMNI) if present among the candidates, and DO NOT also select the upstream contributor spacecraft (ACE, Wind, IMP8, Geotail, …) that the product merges. The contributors are named as provenance, not as the dataset the paper used.
+  </aggregate_product_rule>
+
+  <single_mission_cases>
+  RETURN single mission number (1-{{ candidate_count }}) when:
+    <case>Description uniquely identifies one specific mission</case>
+    <case>A series/successive program is referenced for one observation window → the single era-correct member</case>
+    <case>An aggregate product (OMNI) is the data used → that product's record only</case>
+    <case>Scientific context strongly favors one candidate over others</case>
+  </single_mission_cases>
+
+  <multiple_mission_cases>
+  RETURN multiple mission numbers (comma-separated, e.g., "1,3") when:
+    <case>Constellation used as a whole or generically → all members operational in the observation window</case>
+    <case>Paper explicitly names multiple specific craft (e.g. "STEREO-A and STEREO-B") → those named, operational-in-window</case>
+    <case>Coordinated multi-point observations requiring multiple simultaneous spacecraft</case>
+  </multiple_mission_cases>
+
+  <return_ambiguous>
+  RETURN '0' (ambiguous) when:
+    <case>Description is too generic to identify any specific mission</case>
+    <case>Acronym could refer to different mission types (e.g., "ISS" = Space Station vs. Solar observatory)</case>
+    <case>Description is scientifically generic without distinguishing features</case>
+  </return_ambiguous>
+
+  Return mission number(s) (1-{{ candidate_count }}) or '0' if too generic/ambiguous.
+  For multiple missions, separate with commas (e.g., "1,3").
+</mission_selection_instructions>

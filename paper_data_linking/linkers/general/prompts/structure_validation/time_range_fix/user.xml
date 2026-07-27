@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure_validation_task>
+  <original_markdown>
+    {{ original_markdown }}
+  </original_markdown>
+
+  <structured_json>
+    {{ structured_json }}
+  </structured_json>
+
+  <issues>
+    The following time_range fields contain descriptive text instead of actual dates.
+    For each one, determine if a real date can be inferred from the markdown or from
+    other instruments' time ranges in the JSON:
+
+    {{ issues_description }}
+  </issues>
+
+  <instruction>
+    Return your fixes as a JSON object matching the TimeRangeFixResponse schema.
+    For each fixable issue, provide a patch with the field_path, the corrected
+    date value, and brief reasoning. For unfixable issues, list the field_path
+    in unfixable_paths.
+  </instruction>
+</structure_validation_task>

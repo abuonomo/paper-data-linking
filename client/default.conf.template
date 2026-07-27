@@ -1,0 +1,117 @@
+server {
+    listen 80;
+    server_name ${NGINX_SERVER_NAME};
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    client_max_body_size 500M;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location = /pdf.worker.min.js {
+        alias /usr/share/nginx/html/pdf.worker.min.js;
+        add_header Content-Type application/javascript;
+        add_header Access-Control-Allow-Origin "*";  # Add this line
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    location /builder/ {
+        proxy_pass http://api:8000/builder/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 500M;
+    }
+
+    location /ws/ {
+        proxy_pass http://api:8000/ws/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 500M;
+    }
+
+    location /token/ {
+        proxy_pass http://api:8000/token/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 500M;
+    }
+
+    location /admin/ {
+        proxy_pass http://api:8000/admin/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 500M;
+    }
+
+    error_page 405 =200 $uri;
+
+    # Static file caching
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    location /media/ {
+        alias /usr/share/nginx/html/media/;
+        add_header Access-Control-Allow-Origin "*";
+        add_header Access-Control-Allow-Methods "GET, OPTIONS";
+    }
+
+    location ^~ /static/ {
+        alias /usr/share/nginx/html/staticfiles/;
+        add_header X-debug-path $request_filename always;  # This will help us see the actual path
+    }
+
+    # Gzip Compression
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    # Add headers to serve security related headers
+    # Before enabling Strict-Transport-Security headers please read into this
+    # topic first.
+    # add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+}
+
+# New server block just for Flower
+server {
+    listen 80;
+    server_name ${NGINX_FLOWER_SERVER_NAME};  # Flower dashboard vhost
+
+    location / {
+        proxy_pass http://flower:5555;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_http_version 1.1;
+    }
+
+    # Static files
+    location /static/ {
+        alias /etc/nginx/flower_static/;
+        expires 30d;
+    }
+}

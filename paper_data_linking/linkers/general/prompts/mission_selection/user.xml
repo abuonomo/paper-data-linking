@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission_selection_task>
+  <instrument_description>
+    {{ mission_context }}
+  </instrument_description>
+
+  <candidate_missions>
+    {{ candidates_text }}
+  </candidate_missions>
+
+  <instruction>
+    Return mission number(s) (1-{{ candidate_count }}) or '0' if too generic/ambiguous.
+    For multiple missions, separate with commas (e.g., "1,3"):
+  </instruction>
+</mission_selection_task>

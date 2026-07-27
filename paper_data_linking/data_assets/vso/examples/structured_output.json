@@ -1,0 +1,67 @@
+{
+  "paper_summary": "This paper investigates the relationships between solar flare properties and the associated coronal mass ejections (CMEs) by extrapolating solar observations to estimate mass and energy losses in active stellar coronae. The authors compile a database spanning 1996\u20132007 of soft X-ray flares observed by GOES and CMEs measured by LASCO on SoHO to establish power law relationships between flare X-ray fluence and CME mass and kinetic energy, and discuss implications for stellar mass loss and dynamo energy budgets.",
+  "instruments": [
+    {
+      "name": "Geostationary Operational Environmental Satellite (GOES)",
+      "general_comments": "GOES is used to observe and record soft X-ray solar flares; its 1\u20138 \u00c5 X-ray band observations provide the X-ray fluence data forming the basis for CME\u2013flare scaling relations over the period 1996\u20132007.",
+      "supporting_quotes": [
+        "They compiled a database of soft X-ray \ufb02ares observed by the Geostationary Operational Environmental Satellite (GOES) that were associated with CMEs observed by the Large Angle and Spectrometric Coronagraph (LASCO) on board the Solar and Heliospheric Observatory (SoHO) mission."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "Solar Flare Observations for CME Scaling",
+          "time_range": "1996\u20132007",
+          "wavelengths": "1\u20138 \u00c5",
+          "physical_observable": "Soft X-ray flare fluxes, peak X-ray fluence, and integrated X-ray energy",
+          "supporting_quotes": [
+            "Yashiro & Gopalswamy (2009) studied the statistical relationships between solar \ufb02ares and CMEs observed over the period 1996-2007.",
+            "...the GOES 1\u20138 \u02daA X\u2010ray \ufb02uence\u2026",
+            "...a good correlation was found between the flare fluence and the CME kinetic energy."
+          ],
+          "additional_comments": "GOES observations provide the primary dataset for quantifying solar flare energy, serving as the empirical basis to extrapolate CME behaviors to active stars."
+        }
+      ]
+    },
+    {
+      "name": "Large Angle and Spectrometric Coronagraph (LASCO) on board the Solar and Heliospheric Observatory (SoHO)",
+      "general_comments": "LASCO is a white-light coronagraph used to image and measure CMEs in the solar corona; its observations are paired with GOES X-ray data to link flare events to the ejected mass and kinetic energy of CMEs over 1996\u20132007.",
+      "supporting_quotes": [
+        "...CMEs observed by the Large Angle and Spectrometric Coronagraph (LASCO) on board the Solar and Heliospheric Observatory (SoHO) mission."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "CME Observations for Mass and Kinetic Energy Assessment",
+          "time_range": "1996\u20132007",
+          "wavelengths": null,
+          "physical_observable": "CME mass, speed, and kinetic energy",
+          "supporting_quotes": [
+            "...studied the statistical relationships between solar \ufb02ares and CMEs observed over the period 1996-2007.",
+            "...a good correlation was found between the flare fluence and the CME kinetic energy.",
+            "...the distribution of CME ejected masses as a function of the associated flare GOES 1\u20138 \u02daA X-ray fluence..."
+          ],
+          "additional_comments": "LASCO measurements of CME properties, combined with GOES flare data, facilitate the derivation of power law relationships for stellar mass and energy loss estimates."
+        }
+      ]
+    },
+    {
+      "name": "Kepler Photometer (Optical Kepler Photometry)",
+      "general_comments": "The Kepler photometer provides optical-band observations of stellar flares; it is referenced for detecting giant flares on solar-type stars that motivate extrapolations of solar CME properties.",
+      "supporting_quotes": [
+        "...recent giant \ufb02are detections on solar-type stars based on optical Kepler photometry by Maehara et al. (2012)."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "Giant Flare Detections on Solar-type Stars",
+          "time_range": "",
+          "wavelengths": "Optical",
+          "physical_observable": "Giant optical flares on solar-type stars",
+          "supporting_quotes": [
+            "...based on optical Kepler photometry\u2026",
+            "...giant flare detections on solar-type stars..."
+          ],
+          "additional_comments": "While not directly used for CME scaling in this paper, Kepler flare detections support the concept of flare-dominated stellar coronae and motivate extrapolation of solar relationships to active stars."
+        }
+      ]
+    }
+  ]
+}

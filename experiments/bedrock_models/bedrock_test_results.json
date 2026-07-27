@@ -1,0 +1,38 @@
+{
+  "gpt-oss-120b": {
+    "success": true,
+    "model_id": "bedrock/openai.gpt-oss-120b-1:0",
+    "response_content": "Machine learning is a branch of artificial intelligence in which computers automatically",
+    "usage": {
+      "prompt_tokens": 65,
+      "completion_tokens": 100,
+      "total_tokens": 165
+    },
+    "finish_reason": "length",
+    "provider": "bedrock"
+  },
+  "gpt-oss-20b": {
+    "success": true,
+    "model_id": "bedrock/openai.gpt-oss-20b-1:0",
+    "response_content": "Machine learning is a branch of artificial intelligence where algorithms automatically learn patterns and relationships from data to",
+    "usage": {
+      "prompt_tokens": 65,
+      "completion_tokens": 100,
+      "total_tokens": 165
+    },
+    "finish_reason": "length",
+    "provider": "bedrock"
+  },
+  "openai_comparison": {
+    "success": true,
+    "model_id": "openai/gpt-4o-mini",
+    "response_content": "Machine learning is a subset of artificial intelligence that focuses on the development of algorithms and statistical models that enable computers to learn from and make predictions or decisions based on data. By identifying patterns and relationships within the data, machine learning systems can improve their performance over time without being explicitly programmed for specific tasks.",
+    "usage": {
+      "prompt_tokens": 17,
+      "completion_tokens": 59,
+      "total_tokens": 76
+    },
+    "finish_reason": "stop",
+    "provider": "openai"
+  }
+}

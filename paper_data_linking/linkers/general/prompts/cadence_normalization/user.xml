@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_prompt>
+Description from paper:
+"{{ raw_cadence_context }}"
+
+Output the ISO 8601 duration(s) or "NONE":
+</user_prompt>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<systemPrompt>
+  <task>
+    Extract a complete list of instruments mentioned in the context. YOU ABSOLUTELY MUST INCLUDE ALL OF THEM! YOU MAY HAVE MULTIPLE INSTRUMENTS! DON'T YOU DARE OMIT ANY INSTRUMENTS! Supporting quotes MUST BE COMPLETE and contain sufficient context (the complete sentence at minimum). Supporting Quotes MUST BE FROM THE PAPER! THEY ABSOLUTELY MUST BE!
+  </task>
+  <instructions>
+    <instruction id="1">
+      For each instrument, capture its name, associated spacecraft/facility, detectors, general comments, and all data collection periods.
+    </instruction>
+    <instruction id="2">
+      Determine whether the instrument is actively utilized in the study (i.e. directly contributes to the analysis) or merely referenced for context.
+      Set the 'used_in_study' attribute accordingly.
+    </instruction>
+    <instruction id="3">
+      For each data collection period, include complete time ranges (both start and end), wavelengths with supporting quotes, physical observables with supporting quotes, and additional comments.
+    </instruction>
+    <instruction id="4">
+      Ensure that every supporting quote is complete and provides sufficient context.
+    </instruction>
+    <instruction id="5">
+      IMPORTANT: Do not omit any instrument. ALL instruments must be included, with the 'used_in_study' attribute clearly indicating their role.
+    </instruction>
+  </instructions>
+  <notes>
+    <note>Every instrument mentioned must be captured.</note>
+    <note>Only instruments actively used in the study should be marked as such; others should have 'used_in_study' set to false.</note>
+  </notes>
+</systemPrompt>

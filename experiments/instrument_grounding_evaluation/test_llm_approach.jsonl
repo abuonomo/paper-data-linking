@@ -1,0 +1,1 @@
+{"name": "ace_mag_llm_test", "category": "test_llm", "instrument_entry": {"name": "MAG", "general_comments": "ACE magnetometer"}, "expected": {"instrument_code": "spase://SMWG/Instrument/ACE/MAG", "mission_code": "spase://SMWG/Observatory/ACE", "should_match": true}, "description": "Test LLM approach with ACE MAG"}

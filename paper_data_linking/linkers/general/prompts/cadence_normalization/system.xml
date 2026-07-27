@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cadence_normalization_instructions>
+  Parse cadence expressions into ISO 8601 duration format. Handle various formats:
+
+  <format_examples>
+    <example>
+      <input>Seconds: "12 s"</input>
+      <output>PT12S</output>
+    </example>
+    <example>
+      <input>Minutes: "5 minutes"</input>
+      <output>PT5M</output>
+    </example>
+    <example>
+      <input>Hours: "2 hours"</input>
+      <output>PT2H</output>
+    </example>
+    <example>
+      <input>Days: "1 day"</input>
+      <output>P1D</output>
+    </example>
+    <example>
+      <input>Range: "12–16 s"</input>
+      <output>PT12S/PT16S</output>
+    </example>
+    <example>
+      <input>Fractional: "0.5 seconds"</input>
+      <output>PT0.5S</output>
+    </example>
+    <example>
+      <input>Frequency: "5 Hz"</input>
+      <output>PT0.2S</output>
+    </example>
+    <example>
+      <input>Multiple cadences: "3 second and 1 minute"</input>
+      <output>PT3S, PT1M</output>
+    </example>
+    <example>
+      <input>Unclear: "High cadence"</input>
+      <output>NONE</output>
+    </example>
+    <example>
+      <input>No cadence info: "The instrument measured particles"</input>
+      <output>NONE</output>
+    </example>
+    <example>
+      <input>Averaged data product: "Distributions averaged to 1-hour to match ACE/SWICS"</input>
+      <output>PT1H</output>
+      <note>When data is "averaged to X" or has "X cadence", extract X - this is the temporal resolution of the data product used</note>
+    </example>
+    <example>
+      <input>Averaged data product: "1-hour cadence heavy-ion charge state ratios"</input>
+      <output>PT1H</output>
+      <note>Extract the stated cadence of the data product</note>
+    </example>
+    <example>
+      <input>Averaged data product: "Yearly averages of daily solar wind data"</input>
+      <output>P1Y</output>
+      <note>The output cadence is yearly, even though input is daily</note>
+    </example>
+    <example>
+      <input>Analysis window (NOT cadence): "Regression with 27-day averages"</input>
+      <output>NONE</output>
+      <note>27 days is an analysis/averaging window for statistical processing, not the measurement cadence</note>
+    </example>
+    <example>
+      <input>Event duration (NOT cadence): "10-hour southward IMF Bz interval"</input>
+      <output>NONE</output>
+      <note>10 hours describes event duration, not measurement frequency</note>
+    </example>
+    <example>
+      <input>Frequency with rounding: "11 Hz measurements"</input>
+      <output>PT0.090909S</output>
+      <note>1/11 = 0.090909... Round to 6 decimal places</note>
+    </example>
+  </format_examples>
+
+  <response_format>
+    Return ONLY the ISO 8601 duration string(s), nothing else:
+    - Single cadence: PT3S
+    - Multiple cadences: PT3S, PT1M
+    - Range: PT12S/PT16S
+    - Cannot determine: NONE
+
+    Do NOT include any JSON, explanations, or notes. Just the duration string(s) or "NONE".
+  </response_format>
+
+  <critical_requirements>
+    <requirement>Always output ISO 8601 duration format (PT for time, P for days/months/years)</requirement>
+    <requirement>Support plural and singular units (e.g., "sec", "second", "seconds")</requirement>
+    <requirement>If range is provided, express it as "PT12S/PT16S"</requirement>
+    <requirement>If cadence is a frequency (Hz), convert to period in seconds</requirement>
+    <requirement>Round fractional seconds to maximum 6 decimal places (e.g., 1/11 Hz = PT0.090909S, not PT0.0909090909S)</requirement>
+    <requirement>If multiple distinct cadences, separate with comma and space</requirement>
+    <requirement>If value cannot be determined from text, return "NONE"</requirement>
+    <requirement>NEVER guess a cadence; return "NONE" if uncertain</requirement>
+    <requirement>Extract "averaged to X" or "X cadence" data products - this is the temporal resolution used in analysis</requirement>
+    <requirement>Do NOT extract analysis windows (e.g., "27-day averages in regression") or event durations (e.g., "10-hour interval") - return "NONE" for these</requirement>
+    <requirement>Return ONLY the duration string(s) or "NONE" - no other text</requirement>
+  </critical_requirements>
+
+  <unit_conversions>
+    <unit>1 minute = 60 seconds</unit>
+    <unit>1 hour = 3600 seconds</unit>
+    <unit>1 day = 86400 seconds</unit>
+    <unit>Hz to seconds = 1 / frequency</unit>
+  </unit_conversions>
+</cadence_normalization_instructions>

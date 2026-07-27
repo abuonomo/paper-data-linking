@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation_task>
+  <original_description>
+    <name>{{ original_name }}</name>
+    <context>{{ original_comments }}</context>
+    {% for info in period_infos %}
+    <data_collection_period>{{ info }}</data_collection_period>
+    {% endfor %}
+  </original_description>
+
+  <proposed_match>
+    <instrument>{{ matched_instrument_name }} ({{ matched_instrument_code }})</instrument>
+    {% if matched_instrument_description %}<instrument_description>{{ matched_instrument_description }}</instrument_description>{% endif %}
+    <mission>{{ matched_mission_name }} ({{ matched_mission_code }})</mission>
+  </proposed_match>
+
+</validation_task>

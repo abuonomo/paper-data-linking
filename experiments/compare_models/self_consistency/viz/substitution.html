@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Substitution Decision — gpt-oss-120b vs gpt-5.4</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+    padding: 20px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  header {
+    background: #2c3e50; color: white;
+    padding: 14px 20px; border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  header h1 { font-size: 1.1rem; margin-bottom: 4px; }
+  header p { font-size: 0.85rem; opacity: 0.85; }
+
+  .controls {
+    background: white; border-radius: 6px;
+    padding: 12px 20px; margin-bottom: 16px;
+    display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    font-size: 0.9rem;
+  }
+  .control-group label { font-weight: 600; margin-right: 8px; color: #555; }
+  .control-group input[type="radio"] { margin-right: 4px; }
+  .control-group span { margin-right: 12px; cursor: pointer; }
+
+  .main {
+    display: grid; grid-template-columns: 1fr 340px; gap: 16px;
+  }
+  .chart-wrap {
+    background: white; border-radius: 6px;
+    padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  svg { display: block; margin: 0 auto; }
+  .axis text { font-size: 11px; fill: #444; }
+  .axis-label { font-size: 12px; font-weight: 600; fill: #222; }
+  .threshold-line { stroke: #000; stroke-width: 1.2; stroke-dasharray: 6,4; opacity: 0.55; }
+  .diag { stroke: #888; stroke-width: 1; stroke-dasharray: 2,3; opacity: 0.45; }
+  .region-label { font-weight: 700; font-size: 12px; pointer-events: none; }
+
+  .summary-marker {
+    stroke: black; stroke-width: 1.4; cursor: pointer;
+    transition: r 120ms, opacity 120ms;
+  }
+  .summary-marker:hover { stroke-width: 2.5; }
+  .summary-label {
+    font-size: 11px; font-weight: 700; pointer-events: none;
+    paint-order: stroke; stroke: white; stroke-width: 3px;
+  }
+  .case-dot { opacity: 0.45; stroke: none; }
+
+  .panel {
+    background: white; border-radius: 6px;
+    padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    font-size: 0.85rem;
+  }
+  .panel h3 { font-size: 0.95rem; margin-bottom: 8px; color: #2c3e50; }
+  .panel table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+  .panel td { padding: 3px 6px; border-bottom: 1px solid #eee; }
+  .panel td:first-child { color: #666; }
+  .panel td:last-child { font-weight: 600; text-align: right; }
+  .verdict {
+    padding: 6px 10px; border-radius: 4px; font-weight: 700;
+    text-align: center; margin-top: 6px;
+  }
+  .v-swap-freely   { background: #d4edda; color: #155724; }
+  .v-swap-if-cost  { background: #fff3cd; color: #856404; }
+  .v-needs-judge   { background: #d1ecf1; color: #0c5460; }
+  .v-dont-swap     { background: #f8d7da; color: #721c24; }
+
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 0.8rem; margin-top: 8px; color: #555;
+  }
+  .legend span::before {
+    content: ""; display: inline-block; width: 12px; height: 12px;
+    border-radius: 2px; margin-right: 4px; vertical-align: middle;
+  }
+  .sub-sep { border-top: 1px solid #ddd; margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Can we replace gpt-5.4 with gpt-oss-120b?</h1>
+    <p>Per call type: cross-model agreement on the x-axis, candidate model (gpt-oss-120b) internal stability on the y-axis. Quadrants encode the substitution verdict.</p>
+  </header>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Metric:</label>
+      <span><input type="radio" name="metric" value="kappa" checked>Kappa (chance-corrected)</span>
+      <span><input type="radio" name="metric" value="jaccard">Jaccard (raw agreement)</span>
+    </div>
+    <div class="control-group">
+      <label>Case scope:</label>
+      <span><input type="radio" name="scope" value="substantive" checked>Substantive only</span>
+      <span><input type="radio" name="scope" value="all">All cases</span>
+    </div>
+    <div class="control-group">
+      <label>Per-case dots:</label>
+      <span><input type="checkbox" id="show-cases">show</span>
+      <span style="color: #888; font-size: 0.8rem;">(Jaccard mode only)</span>
+    </div>
+    <div class="control-group">
+      <label>Threshold:</label>
+      <input type="range" id="threshold" min="0.5" max="0.95" step="0.01" value="0.8" style="vertical-align: middle;">
+      <span id="threshold-value" style="font-family: monospace; font-weight: 700;">0.80</span>
+    </div>
+    <div class="control-group">
+      <button id="reset-zoom" style="padding: 4px 10px; border: 1px solid #aaa; background: #f9f9f9; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Reset zoom</button>
+      <span style="color:#888; font-size: 0.78rem; margin-left: 6px;">(scroll to zoom, drag to pan)</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="chart-wrap">
+      <svg id="chart" width="900" height="700"></svg>
+    </div>
+    <div class="panel" id="detail-panel">
+      <h3>Hover a point</h3>
+      <p style="color:#777">Tooltip details appear here.</p>
+      <div class="sub-sep"></div>
+      <div class="legend">
+        <span style="--c:#27ae60;"><span style="background:#d4edda"></span>SWAP FREELY</span>
+        <span><span style="background:#fff3cd"></span>SWAP IF COST</span>
+        <span><span style="background:#d1ecf1"></span>NEEDS JUDGE</span>
+        <span><span style="background:#f8d7da"></span>DON'T SWAP</span>
+      </div>
+      <p style="margin-top:10px; color:#666; font-size:0.78rem; line-height:1.4;">
+        X: cross-model agreement (gpt-5.4 ↔ gpt-oss-120b).
+        Y: gpt-oss-120b internal stability (across 5 runs).
+        N: number of cases used for the metric.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Config -----------------------------------------------------------------
+const DATA_URL = "data/substitution.json";
+
+function quadrant(x, y, t) {
+  if (x >= t && y >= t) return "swap-freely";
+  if (x >= t && y <  t) return "swap-if-cost";
+  if (x <  t && y >= t) return "needs-judge";
+  return "dont-swap";
+}
+const REGION_FILL = {
+  "swap-freely": "#c8e6c9",
+  "swap-if-cost": "#ffe8a8",
+  "needs-judge": "#cfe2f3",
+  "dont-swap":   "#f4cccc",
+};
+const REGION_LABEL = {
+  "swap-freely":  { title: "SWAP FREELY",              color: "#1b5e20" },
+  "swap-if-cost": { title: "SWAP IF COST MATTERS",     color: "#7d5b00" },
+  "needs-judge":  { title: "NEEDS GROUND-TRUTH JUDGE", color: "#0c3f66" },
+  "dont-swap":    { title: "DON'T SWAP",               color: "#7a1f1f" },
+};
+
+// --- State ------------------------------------------------------------------
+let data = null;
+let state = {
+  metric: "kappa",     // 'kappa' | 'jaccard'
+  scope:  "substantive", // 'substantive' | 'all'
+  showCases: false,
+  threshold: 0.80,
+};
+
+// --- Load + render ----------------------------------------------------------
+d3.json(DATA_URL).then(d => { data = d; render(); });
+
+d3.selectAll('input[name="metric"]').on("change", function() {
+  state.metric = this.value;
+  // Kappa mode hides per-case dots (per-case kappa not defined)
+  if (state.metric === "kappa") d3.select("#show-cases").property("disabled", true);
+  else d3.select("#show-cases").property("disabled", false);
+  render();
+});
+d3.selectAll('input[name="scope"]').on("change", function() {
+  state.scope = this.value; render();
+});
+d3.select("#show-cases").on("change", function() {
+  state.showCases = this.checked; render();
+});
+d3.select("#threshold").on("input", function() {
+  state.threshold = +this.value;
+  d3.select("#threshold-value").text(state.threshold.toFixed(2));
+  render();
+});
+d3.select("#reset-zoom").on("click", () => { if (_resetZoom) _resetZoom(); });
+// Initial disable of per-case in kappa mode
+d3.select("#show-cases").property("disabled", true);
+
+function getSummary(ct) {
+  return ct.metrics[state.scope];
+}
+function pickVal(m, key) {
+  if (!m) return NaN;
+  if (state.metric === "kappa") return m[key + "_kappa"];
+  return m[key + "_jaccard"] / 100;  // 0..1
+}
+
+let _zoomBehavior = null;   // preserved across renders so Reset works
+let _resetZoom = null;
+
+function render() {
+  if (!data) return;
+  const svg = d3.select("#chart");
+  svg.selectAll("*").remove();
+
+  const W = 900, H = 700;
+  const margin = {top: 50, right: 30, bottom: 60, left: 70};
+  const w = W - margin.left - margin.right;
+  const h = H - margin.top - margin.bottom;
+
+  // Clip path so zoomed marks don't escape the plot area
+  svg.append("defs").append("clipPath")
+    .attr("id", "plot-clip")
+    .append("rect").attr("width", w).attr("height", h);
+
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // Invisible rect to capture zoom gestures over the whole plot area
+  g.append("rect")
+    .attr("class", "zoom-capture")
+    .attr("width", w).attr("height", h)
+    .attr("fill", "none").attr("pointer-events", "all");
+
+  // Axis range: kappa can be slightly negative, Jaccard 0..1
+  const xDomain = state.metric === "kappa" ? [-0.05, 1.02] : [0, 1.02];
+  const yDomain = xDomain;
+  const xBase = d3.scaleLinear().domain(xDomain).range([0, w]);
+  const yBase = d3.scaleLinear().domain(yDomain).range([h, 0]);
+  // Current (possibly zoomed) scales — updated on zoom event
+  let x = xBase.copy();
+  let y = yBase.copy();
+
+  // Axes (outside the clipped group so ticks update as we zoom)
+  const fmt = state.metric === "kappa" ? d3.format(".2f") : d => (d * 100).toFixed(0) + "%";
+  const xAxisG = g.append("g").attr("class", "axis x-axis")
+    .attr("transform", `translate(0,${h})`);
+  const yAxisG = g.append("g").attr("class", "axis y-axis");
+  xAxisG.call(d3.axisBottom(x).tickFormat(fmt));
+  yAxisG.call(d3.axisLeft(y).tickFormat(fmt));
+
+  g.append("text").attr("class", "axis-label")
+    .attr("x", w / 2).attr("y", h + 45)
+    .attr("text-anchor", "middle")
+    .text(state.metric === "kappa"
+      ? "Cross-model agreement (Cohen's κ on per-case modal answers)"
+      : "Cross-model agreement (mean pairwise Jaccard %)");
+  g.append("text").attr("class", "axis-label")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -h / 2).attr("y", -48)
+    .attr("text-anchor", "middle")
+    .text(state.metric === "kappa"
+      ? "gpt-oss-120b intra stability (Fleiss' κ across 5 runs)"
+      : "gpt-oss-120b intra stability (mean pairwise Jaccard %)");
+
+  // Content layer — clipped + zoomed
+  const content = g.append("g").attr("clip-path", "url(#plot-clip)");
+
+  // --- Marks (kept in data-space; positions recomputed on zoom) --------------
+  const t = state.threshold;
+  const regions = [
+    {key: "dont-swap",     x0: xDomain[0], y0: yDomain[0], x1: t,         y1: t},
+    {key: "swap-if-cost",  x0: t,          y0: yDomain[0], x1: xDomain[1], y1: t},
+    {key: "needs-judge",   x0: xDomain[0], y0: t,          x1: t,          y1: yDomain[1]},
+    {key: "swap-freely",   x0: t,          y0: t,          x1: xDomain[1], y1: yDomain[1]},
+  ];
+  const regionSel = content.selectAll(".region")
+    .data(regions).join("rect")
+    .attr("class", "region")
+    .attr("fill", d => REGION_FILL[d.key])
+    .attr("opacity", 0.55);
+
+  const regionLabelData = [
+    {key: "swap-freely",   rx: (t + xDomain[1]) / 2,    ry: yDomain[1] - 0.02, anchor: "middle", baseline: "hanging"},
+    {key: "swap-if-cost",  rx: (t + xDomain[1]) / 2,    ry: yDomain[0] + 0.02, anchor: "middle", baseline: "baseline"},
+    {key: "needs-judge",   rx: (xDomain[0] + t) / 2,    ry: yDomain[1] - 0.02, anchor: "middle", baseline: "hanging"},
+    {key: "dont-swap",     rx: (xDomain[0] + t) / 2,    ry: yDomain[0] + 0.02, anchor: "middle", baseline: "baseline"},
+  ];
+  const regionLabelSel = content.selectAll(".region-label")
+    .data(regionLabelData).join("text")
+    .attr("class", "region-label")
+    .attr("text-anchor", d => d.anchor)
+    .attr("dominant-baseline", d => d.baseline)
+    .attr("fill", d => REGION_LABEL[d.key].color)
+    .text(d => REGION_LABEL[d.key].title);
+
+  // Threshold + diagonal lines
+  const xLineV = content.append("line").attr("class", "threshold-line");
+  const yLineH = content.append("line").attr("class", "threshold-line");
+  const diag = content.append("line").attr("class", "diag");
+
+  // Per-case dots (Jaccard mode only)
+  let caseDotSel = content.selectAll(".case-dot").data([]);
+  if (state.metric === "jaccard" && state.showCases) {
+    const casePts = [];
+    data.call_types.forEach(ct => {
+      ct.per_case.forEach(p => {
+        if (state.scope === "substantive" && !p.is_substantive) return;
+        casePts.push({
+          ct: ct.call_type,
+          x: p.cross_jaccard / 100,
+          y: p.oss_intra_jaccard / 100,
+        });
+      });
+    });
+    const color = d3.scaleOrdinal(d3.schemeTableau10)
+      .domain(data.call_types.map(c => c.call_type));
+    caseDotSel = content.selectAll(".case-dot")
+      .data(casePts).join("circle")
+      .attr("class", "case-dot")
+      .attr("r", 3).attr("fill", d => color(d.ct));
+  }
+
+  // Summary markers
+  const pts = data.call_types.map(ct => {
+    const m = getSummary(ct);
+    return {
+      ct, m,
+      x: pickVal(m, "cross"),
+      y: pickVal(m, "oss_intra"),
+      n: m ? m.n : 0,
+      verdict: m ? quadrant(pickVal(m, "cross"), pickVal(m, "oss_intra"), t) : null,
+    };
+  }).filter(p => !isNaN(p.x) && !isNaN(p.y));
+
+  const markerSel = content.selectAll(".summary-marker").data(pts).join("circle")
+    .attr("class", "summary-marker")
+    .attr("r", 10)
+    .attr("fill", d => {
+      const v = d.verdict;
+      return v === "swap-freely" ? "#2e7d32"
+           : v === "swap-if-cost" ? "#ef8a00"
+           : v === "needs-judge"  ? "#1565c0"
+           : "#c62828";
+    })
+    .on("mouseover", (event, d) => updateDetail(d))
+    .on("mouseout", () => updateDetail(null));
+
+  const labelSel = content.selectAll(".summary-label").data(pts).join("text")
+    .attr("class", "summary-label")
+    .text(d => d.ct.display_name);
+
+  // Position everything according to the current scales
+  function reposition() {
+    regionSel
+      .attr("x", d => x(d.x0))
+      .attr("y", d => y(d.y1))
+      .attr("width", d => Math.max(0, x(d.x1) - x(d.x0)))
+      .attr("height", d => Math.max(0, y(d.y0) - y(d.y1)));
+    regionLabelSel
+      .attr("x", d => x(d.rx))
+      .attr("y", d => y(d.ry));
+    xLineV.attr("x1", x(t)).attr("x2", x(t)).attr("y1", 0).attr("y2", h);
+    yLineH.attr("x1", 0).attr("x2", w).attr("y1", y(t)).attr("y2", y(t));
+    const dLo = Math.max(xDomain[0], yDomain[0]);
+    const dHi = Math.min(xDomain[1], yDomain[1]);
+    diag.attr("x1", x(dLo)).attr("y1", y(dLo))
+        .attr("x2", x(dHi)).attr("y2", y(dHi));
+    caseDotSel.attr("cx", d => x(d.x)).attr("cy", d => y(d.y));
+    markerSel.attr("cx", d => x(d.x)).attr("cy", d => y(d.y));
+    labelSel.attr("x", d => x(d.x) + 14).attr("y", d => y(d.y) + 4);
+  }
+  reposition();
+
+  // Title
+  svg.append("text")
+    .attr("x", W / 2).attr("y", 22)
+    .attr("text-anchor", "middle")
+    .style("font-size", "14px").style("font-weight", "700")
+    .text(`${data.test_set} — substitution decision (metric: ${state.metric}, scope: ${state.scope})`);
+
+  // --- Zoom behavior ---------------------------------------------------------
+  _zoomBehavior = d3.zoom()
+    .scaleExtent([1, 30])
+    .translateExtent([[0, 0], [w, h]])   // don't pan off the plot area
+    .extent([[0, 0], [w, h]])
+    .on("zoom", (event) => {
+      x = event.transform.rescaleX(xBase);
+      y = event.transform.rescaleY(yBase);
+      xAxisG.call(d3.axisBottom(x).tickFormat(fmt));
+      yAxisG.call(d3.axisLeft(y).tickFormat(fmt));
+      reposition();
+    });
+  svg.call(_zoomBehavior);
+  _resetZoom = () => svg.transition().duration(250).call(_zoomBehavior.transform, d3.zoomIdentity);
+}
+
+function updateDetail(p) {
+  const panel = d3.select("#detail-panel");
+  if (!p) {
+    panel.html(`
+      <h3>Hover a point</h3>
+      <p style="color:#777">Tooltip details appear here.</p>
+      <div class="sub-sep"></div>
+      <div class="legend">
+        <span><span style="background:#d4edda"></span>SWAP FREELY</span>
+        <span><span style="background:#fff3cd"></span>SWAP IF COST</span>
+        <span><span style="background:#d1ecf1"></span>NEEDS JUDGE</span>
+        <span><span style="background:#f8d7da"></span>DON'T SWAP</span>
+      </div>
+      <p style="margin-top:10px; color:#666; font-size:0.78rem; line-height:1.4;">
+        X: cross-model agreement. Y: gpt-oss-120b internal stability. N: cases used.
+      </p>
+    `);
+    return;
+  }
+  const ct = p.ct;
+  const mAll = ct.metrics.all, mSub = ct.metrics.substantive;
+  const row = (label, val, fmt=(v)=>v==null||isNaN(v)?"—":v.toFixed(3)) =>
+    `<tr><td>${label}</td><td>${fmt(val)}</td></tr>`;
+  const pct = v => v==null||isNaN(v)?"—":v.toFixed(1) + "%";
+  panel.html(`
+    <h3>${ct.display_name} <span style="color:#888;font-weight:400;font-size:0.8em;">(${ct.task_type})</span></h3>
+    <div class="verdict v-${p.verdict}">${REGION_LABEL[p.verdict].title}</div>
+    <p style="color:#777;font-size:0.78rem;margin-top:8px;">
+      Scope: ${state.scope} &nbsp;•&nbsp; N = ${p.n} of ${ct.n_total} total cases
+    </p>
+    <table>
+      <tr><td colspan="2" style="font-weight:700; padding-top:8px;">Kappa</td></tr>
+      ${row("cross (Cohen's)", pickMetric(mSub, "cross_kappa"))}
+      ${row("oss intra (Fleiss')", pickMetric(mSub, "oss_intra_kappa"))}
+      ${row("gpt intra (Fleiss')", pickMetric(mSub, "gpt_intra_kappa"))}
+      <tr><td colspan="2" style="font-weight:700; padding-top:10px;">Jaccard</td></tr>
+      <tr><td>cross</td><td>${pct(pickMetric(mSub, "cross_jaccard"))}</td></tr>
+      <tr><td>oss intra</td><td>${pct(pickMetric(mSub, "oss_intra_jaccard"))}</td></tr>
+      <tr><td>gpt intra</td><td>${pct(pickMetric(mSub, "gpt_intra_jaccard"))}</td></tr>
+      <tr><td colspan="2" style="font-weight:700; padding-top:10px;">Null rate</td></tr>
+      <tr><td>gpt-5.4</td><td>${pct(ct.null_rate_gpt)}</td></tr>
+      <tr><td>gpt-oss-120b</td><td>${pct(ct.null_rate_oss)}</td></tr>
+    </table>
+    <p style="color:#666;font-size:0.75rem;margin-top:6px;">
+      Values shown above are for the <b>substantive-only</b> subset (which the kappa plot uses).
+      ${mSub && mAll ? `All-case cross κ = ${mAll.cross_kappa.toFixed(3)}.` : ''}
+    </p>
+  `);
+}
+
+function pickMetric(m, key) {
+  return m ? m[key] : null;
+}
+</script>
+</body>
+</html>

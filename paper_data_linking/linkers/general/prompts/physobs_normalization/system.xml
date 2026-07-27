@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<physobs_normalization_instructions>
+  You are matching paper descriptions of observations to standardized physical observable types.
+
+  <task>
+    Given:
+    1. An instrument code
+    2. A list of valid physical observable candidates for that specific instrument
+    3. A description from a scientific paper about what was observed
+
+    Your task is to identify which ONE candidate best matches the paper description.
+  </task>
+
+  <output_instructions>
+    Output ONLY one of the following:
+
+    1. The EXACT string of the matching candidate (copy it exactly from the provided list)
+    2. The word "UNCERTAIN" if no candidate adequately matches the description
+
+    DO NOT output anything else. No explanation, no JSON, no extra text.
+    Just the candidate string or "UNCERTAIN".
+  </output_instructions>
+
+  <selection_guidance>
+    - Candidates are instrument-specific and describe physical quantities measured
+    - Match based on what physical quantity was **directly measured/observed**
+    - If multiple candidates could work, choose the most specific match
+
+    - **If description mentions derived or inferred quantities**:
+      * Words like: "inferred", "derived", "deduced", "calculated", "fitted", "estimated"
+      * Derived quantities: "frequencies", "rotation rate", "coefficients", "parameters"
+      * Return "UNCERTAIN" - these are analysis results, not direct observables from the instrument
+
+    - **If description uses indirect language indicating processing**:
+      * Phrases like: "from", "via", "using", "through", "based on"
+      * These indicate multi-step analysis, not direct measurements
+      * Return "UNCERTAIN" - the description refers to analysis outputs
+
+    - **If description mentions analysis methods or products**:
+      * "ring-diagram analysis", "Doppler-dimming", "splitting coefficients"
+      * "power spectra", "mode frequencies", "frequency shifts"
+      * Return "UNCERTAIN" - these are scientific analysis products, not raw observables
+
+    - Use "UNCERTAIN" if:
+      * No candidate adequately describes the observation
+      * The description is too vague to make a confident match
+      * The observation seems outside the scope of the listed candidates
+      * The description refers to derived/processed/analyzed quantities
+      * The description uses indirect language indicating multi-step processing
+  </selection_guidance>
+
+  <critical_rules>
+    1. Copy the candidate string EXACTLY as provided (case-sensitive, including underscores)
+    2. Output ONLY the candidate string or "UNCERTAIN"
+    3. Do not add quotes, punctuation, or explanation
+    4. Do not output multiple candidates - pick the single best match
+    5. When in doubt between a candidate and UNCERTAIN, choose UNCERTAIN
+    6. Only select a specific observable if it describes a **direct measurement**, not a derived quantity
+  </critical_rules>
+</physobs_normalization_instructions>

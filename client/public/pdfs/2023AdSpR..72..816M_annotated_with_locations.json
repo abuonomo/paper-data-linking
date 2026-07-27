@@ -1,0 +1,901 @@
+{
+  "title": "Assessment of Band Splitting Type II Radio Bursts Observed by CALLISTO Spectrometers",
+  "summary": {
+    "content_summary": "This study presents a detailed investigation of band splitting type II radio bursts and their association with CMEs, solar flares, and sunspot number during solar cycle 24. The primary observational data are obtained from CALLISTO spectrometers deployed at several ground stations in the e‐CALLISTO network, covering the period 2010–2017. Complementary observations from instruments such as the Hiraiso Radio Spectrograph, SOHO/LASCO coronagraph, GOES X‐ray sensors, and AIA imaging are used to provide additional context, validate CME speeds, determine solar flare peak times, and identify eruption timings. The analysis includes extraction of spectral properties from the radio dynamic spectra and correlates these with the observational records from the supporting instruments."
+  },
+  "instrumentation_details": [
+    {
+      "instrument_name": "CALLISTO Spectrometer",
+      "spacecraft": "e-CALLISTO Network (Ground Stations)",
+      "general_comments": {
+        "value": "The CALLISTO spectrometers are designed to observe solar radio transient emissions daily over a wide frequency range.",
+        "supporting_quote": "CALLISTO is designed to observe solar radio transient emissions daily in a frequency range of 10 MHz - 870 MHz. Its frequency range can explore the solar corona in a heliospheric range of 1-3 Rs.",
+        "location": {
+          "start": 8816,
+          "end": 9011,
+          "score": 99,
+          "excerpt": ". CALLISTO is designed to observe solar radio transient emissions daily in a frequency range of 10 MHz - 870 MHz. Its frequency range can explore the solar corona in a heliospheric range of 1-3 R"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 187.0800018310547,
+            "y0": 374.29400634765625,
+            "x1": 348.10797119140625,
+            "y1": 390.302001953125,
+            "vertical_middle": 382.2980041503906,
+            "excerpt_image": "excerpts_images/excerpt_5e0747e5e2054a41b418a7fea44883be.png"
+          }
+        ]
+      },
+      "detectors": {
+        "values": [
+          "Greenland station: 10-105 MHz",
+          "DARO station (Germany): 20-80 MHz",
+          "GAURI station (India): 45-410 MHz",
+          "OOTY station (India): 45-445 MHz",
+          "BLENSW station (Switzerland): 150-870 MHz",
+          "BIR station (Ireland): 20-90 MHz",
+          "ROSWELL-NM spectrometer (USA): 20-90 MHz"
+        ],
+        "supporting_quote": "Map showing ground stations within the e-CALLISTO network that detected the band splitting type II radio bursts: Greenland station is located at Kangerlussuaq, Greenland, and operates at 10-105 MHz. DARO is located at Hamminkeln, Germany, and works in 20-80 MHz. GAURI and OOTY are stationed at Gauribidanur and Ooty, Tamil Nadu, India, working between 45-410 MHz and 45-445 MHz, respectively. BLENSW station is in Bleien, Switzerland, and functions at 150-870 MHz. The BIR station is located at Birr Castle, Ireland, and operates within 20-90 MHz. ROSWELL-NM spectrometer is stationed in New Mexico, USA and the working frequency range is 20-90 MHz.",
+        "location": {
+          "start": 12026,
+          "end": 12676,
+          "score": 95,
+          "excerpt": "1. Map showing ground stations within the e-CALLISTO network that detected the band splitting type II radio bursts considered in this study. Greenland station is located at Kangerlussuaq, Greenland, and operates at 10- 105 MHz. DARO is located at Hamminkeln, Germany, and works in 20- 80 MHz. GAURI and OOTY are stationed at Gauribidanur and Ooty, Tamil Nadu, India, working between 45- 410 MHz and 45- 445 MHz, respectively. BLENSW station is in Bleien, Switzerland, and functions at 150- 870 MHz. The BIR station is located at Birr Castle, Ireland, and operates within 20- 90 MHz. ROSWELL-NM spectrometer is stationed in New Mexico, USA and the wor"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 4,
+            "x0": 100.93499755859375,
+            "y0": 484.63299560546875,
+            "x1": 225.39599609375,
+            "y1": 496.63897705078125,
+            "vertical_middle": 490.635986328125,
+            "excerpt_image": "excerpts_images/excerpt_4ea7c8934bf6469094676318ecdd3dfb.png"
+          }
+        ]
+      },
+      "data_collection_periods": [
+        {
+          "description": "Global data collection period for type II radio bursts observed by CALLISTO.",
+          "start_time": {
+            "value": "2010",
+            "supporting_quote": "Using type II radio bursts in a frequency range [20MHz –200MHz] observed by CALLISTO from 2010 to 2017...",
+            "location": {
+              "start": 1241,
+              "end": 1346,
+              "score": 97,
+              "excerpt": "r. Using type II radio bursts in a frequency range [20MHz –200MHz] observed by CALLISTO from 2010 to 2017"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 1,
+                "x0": 511.2359924316406,
+                "y0": 331.81402587890625,
+                "x1": 542.7960205078125,
+                "y1": 347.822021484375,
+                "vertical_middle": 339.8180236816406,
+                "excerpt_image": "excerpts_images/excerpt_6b58c184867d4ea7803a094e23e348e9.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 72.02400207519531,
+                "y0": 345.614013671875,
+                "x1": 178.4600067138672,
+                "y1": 361.62200927734375,
+                "vertical_middle": 353.6180114746094,
+                "excerpt_image": "excerpts_images/excerpt_e5c68e6333a84af39200429a36d2c7aa.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "2017",
+            "supporting_quote": "Using type II radio bursts in a frequency range [20MHz –200MHz] observed by CALLISTO from 2010 to 2017...",
+            "location": {
+              "start": 1241,
+              "end": 1346,
+              "score": 97,
+              "excerpt": "r. Using type II radio bursts in a frequency range [20MHz –200MHz] observed by CALLISTO from 2010 to 2017"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 1,
+                "x0": 511.2359924316406,
+                "y0": 331.81402587890625,
+                "x1": 542.7960205078125,
+                "y1": 347.822021484375,
+                "vertical_middle": 339.8180236816406,
+                "excerpt_image": "excerpts_images/excerpt_3c01118b1c8d4fe6bf4ad3e06ae51a92.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 72.02400207519531,
+                "y0": 345.614013671875,
+                "x1": 178.4600067138672,
+                "y1": 361.62200927734375,
+                "vertical_middle": 353.6180114746094,
+                "excerpt_image": "excerpts_images/excerpt_ec848f60c2f04253b53203f43663c00f.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "20 MHz - 200 MHz (operational subset relevant to type II events)"
+            ],
+            "supporting_quote": "Based on the selection criteria, the selected radio bursts were downloaded within the frequency range 20 MHz - 200 MHz.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 16,
+                "x0": 263.5040283203125,
+                "y0": 111.94401550292969,
+                "x1": 400.8800048828125,
+                "y1": 127.95201873779297,
+                "vertical_middle": 119.94801712036133,
+                "excerpt_image": "excerpts_images/excerpt_9441dab5045542cf8b0220e862888777.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Spectral properties of type II radio bursts including band splitting, drift rate, and frequency components.",
+            "supporting_quote": "The study presents a detailed investigation of the spectral properties of band splitting type II radio bursts...",
+            "location": {
+              "start": 1088,
+              "end": 1200,
+              "score": 92,
+              "excerpt": ". This paper presents a detailed investigation of the spectral properties of band splitting type II radio bursts"
+            },
+            "pdf_locations": []
+          },
+          "additional_comments": "This period represents the full operational span of the observations used in the study from the e-CALLISTO network."
+        },
+        {
+          "description": "Individual event observed by DARO CALLISTO station (Germany).",
+          "start_time": {
+            "value": "May 2, 2013, 05:06 UT",
+            "supporting_quote": "The left panel of Fig.2 shows a dynamic spectrum of a low starting frequency type II sourced from DARO CALLISTO station-Germany in the e-CALLISTO network. The event occurred on May 2, 2013, between 05:06 UT and 05:22 UT...",
+            "location": {
+              "start": 10291,
+              "end": 10513,
+              "score": 99,
+              "excerpt": ". The left panel of Fig.2 shows a dynamic spectrum of a low starting frequency type II sourced from DARO CALLISTO station-Germany in the e-CALLISTO network4. The event occurred on May 2, 2013, between 05:06 UT and 05:22 UT"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 93.6240005493164,
+                "y0": 595.14404296875,
+                "x1": 236.92999267578125,
+                "y1": 611.1520385742188,
+                "vertical_middle": 603.1480407714844,
+                "excerpt_image": "excerpts_images/excerpt_32f7bc20606e4b87aabdda144871d54a.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "May 2, 2013, 05:22 UT",
+            "supporting_quote": "The left panel of Fig.2 shows a dynamic spectrum of a low starting frequency type II sourced from DARO CALLISTO station-Germany in the e-CALLISTO network. The event occurred on May 2, 2013, between 05:06 UT and 05:22 UT...",
+            "location": {
+              "start": 10291,
+              "end": 10513,
+              "score": 99,
+              "excerpt": ". The left panel of Fig.2 shows a dynamic spectrum of a low starting frequency type II sourced from DARO CALLISTO station-Germany in the e-CALLISTO network4. The event occurred on May 2, 2013, between 05:06 UT and 05:22 UT"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 93.6240005493164,
+                "y0": 595.14404296875,
+                "x1": 236.92999267578125,
+                "y1": 611.1520385742188,
+                "vertical_middle": 603.1480407714844,
+                "excerpt_image": "excerpts_images/excerpt_681739375949438f91202dee17eeadaf.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "Approximately within the 20-200 MHz range"
+            ],
+            "supporting_quote": "Based on the selection criteria, radio bursts were selected within the frequency range 20 MHz - 200 MHz.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 16,
+                "x0": 263.5040283203125,
+                "y0": 111.94401550292969,
+                "x1": 400.8800048828125,
+                "y1": 127.95201873779297,
+                "vertical_middle": 119.94801712036133,
+                "excerpt_image": "excerpts_images/excerpt_9ef0f9e7e010475db7aadd8e0a305933.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Dynamic radio spectrum showing band splitting in the fundamental band.",
+            "supporting_quote": "The burst showed band splitting in the fundamental band. However, the harmonic band is relatively not clear.",
+            "location": {
+              "start": 10896,
+              "end": 11004,
+              "score": 100,
+              "excerpt": "The burst showed band splitting in the fundamental band. However, the harmonic band is relatively not clear."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 185.12403869628906,
+                "y0": 70.54399108886719,
+                "x1": 542.7960205078125,
+                "y1": 86.55199432373047,
+                "vertical_middle": 78.54799270629883,
+                "excerpt_image": "excerpts_images/excerpt_9672a7abb4d240239b1bf1ca335aa31d.png"
+              },
+              {
+                "page_number": 4,
+                "x0": 72.02400207519531,
+                "y0": 84.34397888183594,
+                "x1": 256.04400634765625,
+                "y1": 100.35198211669922,
+                "vertical_middle": 92.34798049926758,
+                "excerpt_image": "excerpts_images/excerpt_c154c41757ad4a5e898fe22ec8a35a10.png"
+              }
+            ]
+          },
+          "additional_comments": "This event is characterized by a prominent fundamental component and is used in illustrating the dynamic spectral behavior."
+        },
+        {
+          "description": "Individual event observed by OOTY CALLISTO station (India).",
+          "start_time": {
+            "value": "June 13, 2010, 05:30 UT",
+            "supporting_quote": "Similarly, the radio dynamic spectrum in Fig.2 (right panel) was observed by the OOTY CALLISTO station-India. The event occurred on June 13, 2010, between 05:30 UT and 05:45 UT.",
+            "location": {
+              "start": 11243,
+              "end": 11420,
+              "score": 99,
+              "excerpt": " Similarly, the radio dynamic spectrum in Fig.2 (right panel) was observed by the OOTY CALLISTO station-India5. The event occurred on June 13, 2010, between 05:30 UT and 05:45 U"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 93.6240005493164,
+                "y0": 125.74400329589844,
+                "x1": 245.30401611328125,
+                "y1": 141.7519989013672,
+                "vertical_middle": 133.7480010986328,
+                "excerpt_image": "excerpts_images/excerpt_46b72325eef6483db292a6a1f4078732.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "June 13, 2010, 05:45 UT",
+            "supporting_quote": "Similarly, the radio dynamic spectrum in Fig.2 (right panel) was observed by the OOTY CALLISTO station-India. The event occurred on June 13, 2010, between 05:30 UT and 05:45 UT.",
+            "location": {
+              "start": 11243,
+              "end": 11420,
+              "score": 99,
+              "excerpt": " Similarly, the radio dynamic spectrum in Fig.2 (right panel) was observed by the OOTY CALLISTO station-India5. The event occurred on June 13, 2010, between 05:30 UT and 05:45 U"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 93.6240005493164,
+                "y0": 125.74400329589844,
+                "x1": 245.30401611328125,
+                "y1": 141.7519989013672,
+                "vertical_middle": 133.7480010986328,
+                "excerpt_image": "excerpts_images/excerpt_67965e5e7cbc4eec91598b49ba46a7c3.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "Approximately within the 20-200 MHz range"
+            ],
+            "supporting_quote": "The radio bursts were selected based on their occurrence within 20 MHz - 200 MHz.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "physical_observable": {
+            "value": "Dynamic spectrum with a dominant harmonic band and observable band splitting.",
+            "supporting_quote": "The fundamental band is barely visible, and the harmonic band is the dominant feature with band splitting.",
+            "location": {
+              "start": 13277,
+              "end": 13383,
+              "score": 100,
+              "excerpt": "The fundamental band is barely visible, and the harmonic band is the dominant feature with band splitting."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 205.28701782226562,
+                "y0": 311.4530029296875,
+                "x1": 542.3499755859375,
+                "y1": 323.458984375,
+                "vertical_middle": 317.45599365234375,
+                "excerpt_image": "excerpts_images/excerpt_c39f90825fc841c9a4a89f50a0e9abaf.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 72.02400207519531,
+                "y0": 321.89300537109375,
+                "x1": 123.54000091552734,
+                "y1": 333.89898681640625,
+                "vertical_middle": 327.89599609375,
+                "excerpt_image": "excerpts_images/excerpt_2d912810cf7d40f983d7bdb3e0489cd4.png"
+              }
+            ]
+          },
+          "additional_comments": "This event also has complementary observations from another instrument."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Hiraiso Radio Spectrograph",
+      "spacecraft": "Ground-based Facility (Japan)",
+      "general_comments": {
+        "value": "The Hiraiso Radio Spectrograph provided supplementary observations of type II radio bursts.",
+        "supporting_quote": "It was also recorded by the Hiraiso Radio Spectrograph.",
+        "location": {
+          "start": 11422,
+          "end": 11477,
+          "score": 98,
+          "excerpt": " It was also recorded by the Hiraiso Radio Spectrograph"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 4,
+            "x0": 95.53199768066406,
+            "y0": 153.34397888183594,
+            "x1": 248.66403198242188,
+            "y1": 169.3519744873047,
+            "vertical_middle": 161.3479766845703,
+            "excerpt_image": "excerpts_images/excerpt_f6267cabdd3f465f9be4ab4216f5921c.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Supplementary record of the June 13, 2010 type II radio burst event.",
+          "start_time": {
+            "value": "June 13, 2010, 05:30 UT",
+            "supporting_quote": "It was also recorded by the Hiraiso Radio Spectrograph.",
+            "location": {
+              "start": 11422,
+              "end": 11477,
+              "score": 98,
+              "excerpt": " It was also recorded by the Hiraiso Radio Spectrograph"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 95.53199768066406,
+                "y0": 153.34397888183594,
+                "x1": 248.66403198242188,
+                "y1": 169.3519744873047,
+                "vertical_middle": 161.3479766845703,
+                "excerpt_image": "excerpts_images/excerpt_019519822ad14f1ead62aa1f470a5e59.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "June 13, 2010, 05:45 UT",
+            "supporting_quote": "It was also recorded by the Hiraiso Radio Spectrograph.",
+            "location": {
+              "start": 11422,
+              "end": 11477,
+              "score": 98,
+              "excerpt": " It was also recorded by the Hiraiso Radio Spectrograph"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 95.53199768066406,
+                "y0": 153.34397888183594,
+                "x1": 248.66403198242188,
+                "y1": 169.3519744873047,
+                "vertical_middle": 161.3479766845703,
+                "excerpt_image": "excerpts_images/excerpt_550b6cd400a1412fb9f31b6af7a5fc50.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "Not explicitly stated; assumed similar to CALLISTO observations (20-200 MHz)"
+            ],
+            "supporting_quote": "It was also recorded by the Hiraiso Radio Spectrograph.",
+            "location": {
+              "start": 11422,
+              "end": 11477,
+              "score": 98,
+              "excerpt": " It was also recorded by the Hiraiso Radio Spectrograph"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 95.53199768066406,
+                "y0": 153.34397888183594,
+                "x1": 248.66403198242188,
+                "y1": 169.3519744873047,
+                "vertical_middle": 161.3479766845703,
+                "excerpt_image": "excerpts_images/excerpt_5c78d57f523c49c39a93559ed4b4cc3e.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Dynamic spectrum features including fundamental and harmonic components.",
+            "supporting_quote": "It was also recorded by the Hiraiso Radio Spectrograph.",
+            "location": {
+              "start": 11422,
+              "end": 11477,
+              "score": 98,
+              "excerpt": " It was also recorded by the Hiraiso Radio Spectrograph"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 95.53199768066406,
+                "y0": 153.34397888183594,
+                "x1": 248.66403198242188,
+                "y1": 169.3519744873047,
+                "vertical_middle": 161.3479766845703,
+                "excerpt_image": "excerpts_images/excerpt_acb6840498fd497c94a4543b5b997f1d.png"
+              }
+            ]
+          },
+          "additional_comments": "This instrument provides a contextual reference for the event observed by OOTY CALLISTO."
+        }
+      ],
+      "usage_category": "referenced",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "SOHO/LASCO",
+      "spacecraft": "SOHO (Solar and Heliospheric Observatory)",
+      "general_comments": {
+        "value": "The LASCO coronagraph on SOHO is used to obtain CME parameters such as linear speed and occurrence time.",
+        "supporting_quote": "The linear speed and the estimated time of the associated CMEs were obtained from the SOHO/LASCO CME catalog.",
+        "location": {
+          "start": 14653,
+          "end": 14762,
+          "score": 99,
+          "excerpt": " The linear speed and the estimated time of the associated CMEs were obtained from the SOHO/LASCO CME catalog"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 6,
+            "x0": 440.6039733886719,
+            "y0": 125.74400329589844,
+            "x1": 543.0880737304688,
+            "y1": 141.7519989013672,
+            "vertical_middle": 133.7480010986328,
+            "excerpt_image": "excerpts_images/excerpt_164af22178f54d258c73b2ecd11422ed.png"
+          },
+          {
+            "page_number": 6,
+            "x0": 72.02400207519531,
+            "y0": 139.5439910888672,
+            "x1": 115.4280014038086,
+            "y1": 155.55198669433594,
+            "vertical_middle": 147.54798889160156,
+            "excerpt_image": "excerpts_images/excerpt_e386cf9c274e4e0bbb3a690fe4b2207e.png"
+          },
+          {
+            "page_number": 11,
+            "x0": 534.2818603515625,
+            "y0": 525.4330444335938,
+            "x1": 541.931884765625,
+            "y1": 537.4390258789062,
+            "vertical_middle": 531.43603515625,
+            "excerpt_image": "excerpts_images/excerpt_a319e1bb16b140868b4ac081e0621525.png"
+          },
+          {
+            "page_number": 11,
+            "x0": 72.02400207519531,
+            "y0": 535.8729858398438,
+            "x1": 174.8760528564453,
+            "y1": 547.8789672851562,
+            "vertical_middle": 541.8759765625,
+            "excerpt_image": "excerpts_images/excerpt_d77dc0175eab4615989495d48e77b4e4.png"
+          }
+        ]
+      },
+      "detectors": {
+        "values": [
+          "LASCO C2",
+          "LASCO C3"
+        ],
+        "supporting_quote": "The CME time and average speed from SOHO/LASCO are used for validating the estimated CME/shock speeds from the dynamic spectra.",
+        "location": null,
+        "pdf_locations": [
+          {
+            "page_number": 9,
+            "x0": 192.4639892578125,
+            "y0": 84.34397888183594,
+            "x1": 355.43597412109375,
+            "y1": 100.35198211669922,
+            "vertical_middle": 92.34798049926758,
+            "excerpt_image": "excerpts_images/excerpt_98c52207028a4445927c38192fdb2b04.png"
+          }
+        ]
+      },
+      "data_collection_periods": [
+        {
+          "description": "CME observations corresponding to type II radio burst events during solar cycle 24.",
+          "start_time": {
+            "value": "2010",
+            "supporting_quote": "The type II radio bursts analyzed are associated with CMEs observed in the SOHO/LASCO data over the period 2010-2017.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 8,
+                "x0": 304.3080139160156,
+                "y0": 619.5040283203125,
+                "x1": 444.87603759765625,
+                "y1": 635.5120239257812,
+                "vertical_middle": 627.5080261230469,
+                "excerpt_image": "excerpts_images/excerpt_5c4108de98a649059a1ea72398aa7d58.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "2017",
+            "supporting_quote": "Table 1 lists band splitting type II radio bursts and the associated CMEs/ solar flares from 2010-2017.",
+            "location": {
+              "start": 19656,
+              "end": 19759,
+              "score": 99,
+              "excerpt": "Table 1 lists band splitting type II radio bursts and the associated CMEs/ solar flares from 2010- 2017"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 8,
+                "x0": 72.02400207519531,
+                "y0": 660.9039916992188,
+                "x1": 207.51199340820312,
+                "y1": 676.9119873046875,
+                "vertical_middle": 668.9079895019531,
+                "excerpt_image": "excerpts_images/excerpt_462069bee70742b183afc626d82f7846.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "White-light visible range (coronagraphic observations)"
+            ],
+            "supporting_quote": "The CME speeds are derived from white-light coronagraph images provided by SOHO/LASCO.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "physical_observable": {
+            "value": "CME linear speeds and shock heights.",
+            "supporting_quote": "The estimated CME/shock speeds from the dynamic spectra were compared with the CME speeds from SOHO/LASCO.",
+            "location": {
+              "start": 36636,
+              "end": 36742,
+              "score": 90,
+              "excerpt": "he estimated CME/speeds from the dynamic spectra were compared with the associated CME speeds from SOHO/LA"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 1,
+                "x0": 258.09600830078125,
+                "y0": 428.43402099609375,
+                "x1": 416.0639953613281,
+                "y1": 444.4420166015625,
+                "vertical_middle": 436.4380187988281,
+                "excerpt_image": "excerpts_images/excerpt_d05778149c38401aa23025392fef91fc.png"
+              },
+              {
+                "page_number": 9,
+                "x0": 525.0,
+                "y0": 139.5439910888672,
+                "x1": 542.7479858398438,
+                "y1": 155.55198669433594,
+                "vertical_middle": 147.54798889160156,
+                "excerpt_image": "excerpts_images/excerpt_35ef953aa6b641798321ca97875637ed.png"
+              },
+              {
+                "page_number": 9,
+                "x0": 72.02400207519531,
+                "y0": 153.34397888183594,
+                "x1": 214.260009765625,
+                "y1": 169.3519744873047,
+                "vertical_middle": 161.3479766845703,
+                "excerpt_image": "excerpts_images/excerpt_380115b197df4318819d0bbfdd590073.png"
+              },
+              {
+                "page_number": 11,
+                "x0": 135.0690155029297,
+                "y0": 535.8729858398438,
+                "x1": 256.4250793457031,
+                "y1": 547.8789672851562,
+                "vertical_middle": 541.8759765625,
+                "excerpt_image": "excerpts_images/excerpt_02c2f370a1564e52acf8ee1cf475302e.png"
+              },
+              {
+                "page_number": 11,
+                "x0": 204.9720001220703,
+                "y0": 586.864013671875,
+                "x1": 361.8599548339844,
+                "y1": 602.8720092773438,
+                "vertical_middle": 594.8680114746094,
+                "excerpt_image": "excerpts_images/excerpt_6f44d05db41b4eadac02bcb87bd66fb8.png"
+              },
+              {
+                "page_number": 16,
+                "x0": 475.55804443359375,
+                "y0": 125.74400329589844,
+                "x1": 542.9620361328125,
+                "y1": 141.7519989013672,
+                "vertical_middle": 133.7480010986328,
+                "excerpt_image": "excerpts_images/excerpt_d8df2e9d96d2435da7fc63871b686729.png"
+              },
+              {
+                "page_number": 16,
+                "x0": 72.02400207519531,
+                "y0": 139.5439910888672,
+                "x1": 164.02801513671875,
+                "y1": 155.55198669433594,
+                "vertical_middle": 147.54798889160156,
+                "excerpt_image": "excerpts_images/excerpt_e9aae65e8c984b8f9bfc52e7f06197c5.png"
+              }
+            ]
+          },
+          "additional_comments": "SOHO/LASCO data are used as a validation benchmark for the CME parameters derived from radio observations."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "GOES X-ray Sensor",
+      "spacecraft": "GOES (Geostationary Operational Environmental Satellite)",
+      "general_comments": {
+        "value": "GOES X-ray observations provide solar flare classifications and timings.",
+        "supporting_quote": "Fig. 3 shows the solar flare classifications by the GOES X-ray light curves for the two radio events under review.",
+        "location": {
+          "start": 13899,
+          "end": 14013,
+          "score": 98,
+          "excerpt": " Fig.3 shows the solar flare classifications by the GEOS X-ray light curves for the two radio events under review."
+        },
+        "pdf_locations": []
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "X-ray observations during CME-associated solar flares for event categorization.",
+          "start_time": {
+            "value": "May 2, 2013, around 05:12 UT",
+            "supporting_quote": "The left panel of Fig.3 represents the CME associated solar flare taken at the peak time (05:12 UT) on May 02, 2013.",
+            "location": {
+              "start": 13528,
+              "end": 13644,
+              "score": 87,
+              "excerpt": "ed solar flares. (Left) represents the CME associated solar flare taken at the peak time (05:12 UT) on May 02, 2013."
+            },
+            "pdf_locations": []
+          },
+          "end_time": {
+            "value": "May 2, 2013 (post-peak)",
+            "supporting_quote": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs that co-related with the peaks of the associated flares.",
+            "location": {
+              "start": 13745,
+              "end": 13899,
+              "score": 100,
+              "excerpt": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs that co-related with the peaks of the associated flares."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 189.95101928710938,
+                "y0": 593.5029907226562,
+                "x1": 541.85107421875,
+                "y1": 605.5089721679688,
+                "vertical_middle": 599.5059814453125,
+                "excerpt_image": "excerpts_images/excerpt_df79d0c68376472bb074dbc03de9d6ce.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 72.02400207519531,
+                "y0": 603.9429931640625,
+                "x1": 289.94610595703125,
+                "y1": 615.948974609375,
+                "vertical_middle": 609.9459838867188,
+                "excerpt_image": "excerpts_images/excerpt_21d53bde11644203a761f6c74785e3c2.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "Soft X-ray (1-8 Å and 0.4-5 Å channels)"
+            ],
+            "supporting_quote": "The upper and lower curves in the GOES soft X-ray plot are given by 1-8 Å and 0.4-5 Å channels, respectively.",
+            "location": {
+              "start": 14014,
+              "end": 14123,
+              "score": 100,
+              "excerpt": "The upper and lower curves in the GOES soft X-ray plot are given by 1-8 Å and 0.4-5 Å channels, respectively."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 174.61203002929688,
+                "y0": 637.5040283203125,
+                "x1": 543.075927734375,
+                "y1": 653.5120239257812,
+                "vertical_middle": 645.5080261230469,
+                "excerpt_image": "excerpts_images/excerpt_0fd2baf1c7d54ea0ac5fd6d326ce61ca.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 72.02400207519531,
+                "y0": 651.3040161132812,
+                "x1": 242.70799255371094,
+                "y1": 667.31201171875,
+                "vertical_middle": 659.3080139160156,
+                "excerpt_image": "excerpts_images/excerpt_b26920a6afaf4cd9abbac052cbfac9c8.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Solar flare peak times and classifications.",
+            "supporting_quote": "In each case, the peak of the curves denotes the flare classes and their corresponding peak times.",
+            "location": {
+              "start": 14124,
+              "end": 14222,
+              "score": 100,
+              "excerpt": "In each case, the peak of the curves denotes the flare classes and their corresponding peak times."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 246.3199920654297,
+                "y0": 651.3040161132812,
+                "x1": 542.7800903320312,
+                "y1": 667.31201171875,
+                "vertical_middle": 659.3080139160156,
+                "excerpt_image": "excerpts_images/excerpt_159b44a81b4041f2ba32e9943422a448.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 72.02400207519531,
+                "y0": 665.10400390625,
+                "x1": 240.8280029296875,
+                "y1": 681.1119995117188,
+                "vertical_middle": 673.1080017089844,
+                "excerpt_image": "excerpts_images/excerpt_95e26020a7f443b0b9ec51574b0f5875.png"
+              }
+            ]
+          },
+          "additional_comments": "GOES X-ray data are used to correlate flare activity with the radio burst events."
+        }
+      ],
+      "usage_category": "contextual",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "AIA (Atmospheric Imaging Assembly)",
+      "spacecraft": "SDO (Solar Dynamics Observatory)",
+      "general_comments": {
+        "value": "AIA images are used to identify eruption times of CMEs associated with solar flares.",
+        "supporting_quote": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs that co-related with the peaks of the associated flares.",
+        "location": {
+          "start": 13745,
+          "end": 13899,
+          "score": 100,
+          "excerpt": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs that co-related with the peaks of the associated flares."
+        },
+        "pdf_locations": [
+          {
+            "page_number": 5,
+            "x0": 189.95101928710938,
+            "y0": 593.5029907226562,
+            "x1": 541.85107421875,
+            "y1": 605.5089721679688,
+            "vertical_middle": 599.5059814453125,
+            "excerpt_image": "excerpts_images/excerpt_c2e2a7391e3646d0bb88506f811d96ab.png"
+          },
+          {
+            "page_number": 5,
+            "x0": 72.02400207519531,
+            "y0": 603.9429931640625,
+            "x1": 289.94610595703125,
+            "y1": 615.948974609375,
+            "vertical_middle": 609.9459838867188,
+            "excerpt_image": "excerpts_images/excerpt_64fbddd690254da58b434fa07e8e0b50.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "EUV imaging data capturing CME eruption times during solar flare events.",
+          "start_time": {
+            "value": "Corresponding to observed flare events (e.g., May 2, 2013 and June 13, 2010)",
+            "supporting_quote": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs...",
+            "location": {
+              "start": 13742,
+              "end": 13842,
+              "score": 97,
+              "excerpt": "T. The vertical lines in both windows show the eruption times from AIA images of the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 189.95101928710938,
+                "y0": 593.5029907226562,
+                "x1": 298.52703857421875,
+                "y1": 605.5089721679688,
+                "vertical_middle": 599.5059814453125,
+                "excerpt_image": "excerpts_images/excerpt_7c9750ea0c77494cb19896d5397fc3ec.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "Corresponding to the completion of the flare event imaging",
+            "supporting_quote": "The vertical lines in both windows show the eruption times from AIA images of the associated CMEs...",
+            "location": {
+              "start": 13742,
+              "end": 13842,
+              "score": 97,
+              "excerpt": "T. The vertical lines in both windows show the eruption times from AIA images of the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 189.95101928710938,
+                "y0": 593.5029907226562,
+                "x1": 298.52703857421875,
+                "y1": 605.5089721679688,
+                "vertical_middle": 599.5059814453125,
+                "excerpt_image": "excerpts_images/excerpt_66daaabdfe31433294b3b657ca17e068.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "EUV wavelengths"
+            ],
+            "supporting_quote": "AIA images capture the extreme-ultraviolet (EUV) emissions from the solar corona.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "physical_observable": {
+            "value": "Eruption timing and evolution of CMEs.",
+            "supporting_quote": "The eruption times from AIA images of the associated CMEs that co-related with the peaks of the associated flares provide context to the timing of the type II radio bursts.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 342.2220153808594,
+                "y0": 593.5029907226562,
+                "x1": 459.7621154785156,
+                "y1": 605.5089721679688,
+                "vertical_middle": 599.5059814453125,
+                "excerpt_image": "excerpts_images/excerpt_133a1da8846b40069222c09a2d81194e.png"
+              }
+            ]
+          },
+          "additional_comments": "AIA data complement the GOES X-ray observations to time the evolution of CME events."
+        }
+      ],
+      "usage_category": "contextual",
+      "normalized_name": null,
+      "instrument_id": null
+    }
+  ],
+  "paper_id": null,
+  "bibcode": "2023AdSpR..72..816M",
+  "extraction_timestamp": "2025-03-03T11:07:34.810855",
+  "processed_by": null
+}

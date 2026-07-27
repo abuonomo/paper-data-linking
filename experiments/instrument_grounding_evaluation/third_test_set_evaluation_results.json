@@ -1,0 +1,645 @@
+{
+  "summary": {
+    "total": 18,
+    "correct": 12,
+    "incorrect": 6,
+    "errors": 0,
+    "total_time": 58.036030530929565,
+    "average_time": 3.224223918384976,
+    "accuracy": 66.66666666666666,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "single_spacecraft": {
+      "total": 6,
+      "correct": 5,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "moderately_ambiguous": {
+      "total": 6,
+      "correct": 5,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "instrument_component": {
+      "total": 6,
+      "correct": 2,
+      "incorrect": 4,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "solis_iss_specific_observation",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: ISS/SOLIS",
+      "time_seconds": 4.127684831619263,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "ISS",
+        "actual_mission": "SOLIS",
+        "expected_instrument": "ISS",
+        "expected_mission": "SOLIS",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID\n\nReasoning: The instrument names align as bo...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "ISS",
+        "matched_mission_code": "SOLIS",
+        "matched_instrument_name": "ISS",
+        "matched_mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID\n\nReasoning: The instrument names align as bo...]"
+      },
+      "expected": {
+        "instrument_code": "ISS",
+        "mission_code": "SOLIS",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_iss_mention",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got 3 matches",
+      "time_seconds": 7.10118293762207,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": [
+          "spase://SMWG/Instrument/ISS/AMS-02",
+          "spase://SMWG/Instrument/ISS/TEPC",
+          "spase://SMWG/Instrument/ISS/FPMU"
+        ],
+        "actual_mission": [
+          "spase://SMWG/Observatory/ISS",
+          "spase://SMWG/Observatory/ISS",
+          "spase://SMWG/Observatory/ISS"
+        ],
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Multiple matches found: 3 results",
+        "multiple_results": true,
+        "result_count": 3,
+        "matching_results": 0
+      },
+      "grounding_result": [
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/ISS/AMS-02",
+          "matched_mission_code": "spase://SMWG/Observatory/ISS",
+          "matched_instrument_name": "AMS-02",
+          "matched_mission_name": "International Space Station",
+          "reasoning": "Ambiguous reference - valid match 1/3: International Space Station \u2192 spase://SMWG/Instrument/ISS/AMS-02 [Validated: VALID\n\nReasoning: The proposed match of AMS-02 ali...]"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/ISS/TEPC",
+          "matched_mission_code": "spase://SMWG/Observatory/ISS",
+          "matched_instrument_name": "TEPC",
+          "matched_mission_name": "International Space Station",
+          "reasoning": "Ambiguous reference - valid match 2/3: International Space Station \u2192 spase://SMWG/Instrument/ISS/TEPC [Validated: VALID\n\nReasoning: The proposed match aligns with t...]"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/ISS/FPMU",
+          "matched_mission_code": "spase://SMWG/Observatory/ISS",
+          "matched_instrument_name": "FPMU",
+          "matched_mission_name": "International Space Station",
+          "reasoning": "Ambiguous reference - valid match 3/3: International Space Station \u2192 spase://SMWG/Instrument/ISS/FPMU [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+        }
+      ],
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "insufficient_context"
+      }
+    },
+    {
+      "name": "iss_component_reference",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Expected no match but got ISS/SOLIS",
+      "time_seconds": 4.8292810916900635,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "ISS",
+        "actual_mission": "SOLIS",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "ISS",
+        "matched_mission_code": "SOLIS",
+        "matched_instrument_name": "ISS",
+        "matched_mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_component"
+      }
+    },
+    {
+      "name": "solis_iss_detailed_context",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: ISS/SOLIS",
+      "time_seconds": 3.533315896987915,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "ISS",
+        "actual_mission": "SOLIS",
+        "expected_instrument": "ISS",
+        "expected_mission": "SOLIS",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID - The instrument name \"ISS\" aligns with the ...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "ISS",
+        "matched_mission_code": "SOLIS",
+        "matched_instrument_name": "ISS",
+        "matched_mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID - The instrument name \"ISS\" aligns with the ...]"
+      },
+      "expected": {
+        "instrument_code": "ISS",
+        "mission_code": "SOLIS",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "ambiguous_iss_mention",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.346911907196045,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "moderate"
+      }
+    },
+    {
+      "name": "iss_component_reference",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: ISS/SOLIS",
+      "time_seconds": 3.0097620487213135,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "ISS",
+        "actual_mission": "SOLIS",
+        "expected_instrument": "ISS",
+        "expected_mission": "SOLIS",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID - The proposed match aligns with the origina...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "ISS",
+        "matched_mission_code": "SOLIS",
+        "matched_instrument_name": "ISS",
+        "matched_mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+        "reasoning": "Systematic selection: Synoptic Optical Long-term Investigations of the Sun \u2192 ISS [Validated: VALID - The proposed match aligns with the origina...]"
+      },
+      "expected": {
+        "instrument_code": "ISS",
+        "mission_code": "SOLIS",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "clear_foxsi3_reference",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: FOXSI/FOXSI3",
+      "time_seconds": 3.5784552097320557,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "FOXSI",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "FOXSI",
+        "expected_mission": "FOXSI3",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID\n\nReasoning: The proposed match correctly ide...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "FOXSI",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "Focusing Optics X-ray Solar Imager",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID\n\nReasoning: The proposed match correctly ide...]"
+      },
+      "expected": {
+        "instrument_code": "FOXSI",
+        "mission_code": "FOXSI3",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_xray_imager",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.0042970180511475,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_too_generic"
+      }
+    },
+    {
+      "name": "foxsi_component_reference",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: FOXSI/FOXSI3",
+      "time_seconds": 3.5008959770202637,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "FOXSI",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "FOXSI",
+        "expected_mission": "FOXSI3",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID - The proposed match aligns well with the or...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "FOXSI",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "Focusing Optics X-ray Solar Imager",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID - The proposed match aligns well with the or...]"
+      },
+      "expected": {
+        "instrument_code": "FOXSI",
+        "mission_code": "FOXSI3",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "foxsi3_clear_context",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: FOXSI/FOXSI3",
+      "time_seconds": 3.2685019969940186,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "FOXSI",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "FOXSI",
+        "expected_mission": "FOXSI3",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID\n\nReasoning: The instrument names align as bo...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "FOXSI",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "Focusing Optics X-ray Solar Imager",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID\n\nReasoning: The instrument names align as bo...]"
+      },
+      "expected": {
+        "instrument_code": "FOXSI",
+        "mission_code": "FOXSI3",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "foxsi_generic_name",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correct match: FOXSI/FOXSI3",
+      "time_seconds": 4.198233127593994,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "FOXSI",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "FOXSI",
+        "expected_mission": "FOXSI3",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID - The proposed match \"Focusing Optics X-ray ...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "FOXSI",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "Focusing Optics X-ray Solar Imager",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI [Validated: VALID - The proposed match \"Focusing Optics X-ray ...]"
+      },
+      "expected": {
+        "instrument_code": "FOXSI",
+        "mission_code": "FOXSI3",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "foxsi_component_reference",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected FOXSI, got PHOENIX",
+      "time_seconds": 5.933969020843506,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "PHOENIX",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "FOXSI",
+        "expected_mission": "FOXSI3",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 PHOENIX [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "PHOENIX",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "PHOENIX detector on flight #3 of FOXSI",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 PHOENIX [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "FOXSI",
+        "mission_code": "FOXSI3",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "yk_magnetometer_clear",
+      "category": "single_spacecraft",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.1212971210479736,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_magnetometer_ambiguity",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.1464252471923828,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_name"
+      }
+    },
+    {
+      "name": "yk_mag_component_reference",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 4.095787048339844,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "reasoning": "Original match rejected by validation: INVALID\n\nReasoning: The proposed match references a magnetometer at the Akulivik Geophysical Observa...",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "Original match rejected by validation: INVALID\n\nReasoning: The proposed match references a magnetometer at the Akulivik Geophysical Observa..."
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "yellowknife_mag_detailed",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer/spase://SMWG/Observatory/IAGA/Yellowknife",
+      "time_seconds": 3.5712878704071045,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "reasoning": "Systematic selection: IAGA \u2192 spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer [Validated: VALID\n\nReasoning: The proposed match aligns well w...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "IAGA",
+        "reasoning": "Systematic selection: IAGA \u2192 spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer [Validated: VALID\n\nReasoning: The proposed match aligns well w...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_ground_mag",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.24161696434021,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "location_ambiguity"
+      }
+    },
+    {
+      "name": "yk_mag_component",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.4271252155303955,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Yellowknife/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/IAGA/Yellowknife",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/third_instrument_test_set.jsonl",
+    "total_cases_in_file": 18,
+    "cases_run": 18,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751567645.607471
+  }
+}

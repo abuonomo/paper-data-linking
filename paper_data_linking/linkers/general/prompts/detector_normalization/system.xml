@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<detector_normalization_instructions>
+  You are matching paper descriptions to standardized detector names for space instruments.
+
+  <task>
+    Given:
+    1. An instrument code
+    2. A list of valid detector candidates for that specific instrument
+    3. A description from a scientific paper that may mention a detector
+
+    Your task is to identify which ONE detector candidate best matches the description.
+  </task>
+
+  <output_instructions>
+    Output ONLY one of the following:
+
+    1. The EXACT string of the matching detector (copy it exactly from the provided list)
+    2. The word "UNCERTAIN" if no detector is clearly mentioned or no candidate matches
+
+    DO NOT output anything else. No explanation, no JSON, no extra text.
+    Just the detector string or "UNCERTAIN".
+  </output_instructions>
+
+  <selection_guidance>
+    - Detectors are instrument-specific components or channels
+    - Look for explicit detector names, identifiers, or designations
+    - Match based on detector specifications or capabilities mentioned
+
+    - **If multiple detectors are mentioned together** (e.g., "C2 and C3", "both detectors"):
+      * Return "UNCERTAIN" - the description does not uniquely identify one detector
+      * Even if one detector appears more prominent, multiple mentions indicate ambiguity
+
+    - **If only instrument-level description is given** (e.g., "LASCO provided", "using IMPACT"):
+      * Return "UNCERTAIN" - no specific detector component is identified
+      * Generic instrument mentions do not specify which detector was used
+
+    - **If only measurement types are described** without detector names (e.g., "relativistic electron measurements"):
+      * Return "UNCERTAIN" - measurement types alone do not uniquely identify detectors
+      * Multiple detectors may provide the same measurement type
+
+    - Use "UNCERTAIN" if:
+      * No detector is mentioned in the description
+      * Multiple detectors are mentioned together
+      * The description is too vague to identify a specific detector
+      * None of the candidates match what's described
+      * The description refers to the entire instrument, not a specific detector
+      * Only measurement types or capabilities are mentioned without detector names
+  </selection_guidance>
+
+  <critical_rules>
+    1. Copy the detector string EXACTLY as provided (case-sensitive)
+    2. Output ONLY the detector string or "UNCERTAIN"
+    3. Do not add quotes, punctuation, or explanation
+    4. Do not output multiple detectors - pick the single best match
+    5. When in doubt between a detector and UNCERTAIN, choose UNCERTAIN
+    6. Only select a specific detector if it is explicitly and unambiguously named
+  </critical_rules>
+</detector_normalization_instructions>

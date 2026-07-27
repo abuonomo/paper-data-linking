@@ -1,0 +1,238 @@
+{
+  "call_type": "mission_identification",
+  "model_a": "openai/gpt-5",
+  "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+  "judge_model": "openai/gpt-5.2",
+  "agreement_threshold": 0.5,
+  "exclude_null_pairs": true,
+  "stats": {
+    "total_cases": 20,
+    "model_a_wins": 18,
+    "model_b_wins": 2,
+    "ties": 0,
+    "neither": 0,
+    "errors": 0
+  },
+  "judgments": [
+    {
+      "case_id": "eddefdc3-184e-4411-af05-cef3a7ab3f69",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly states \u201cHelioseismic and Magnetic Imager (HMI) on board Solar Dynamics Observatory (SDO).\u201d Therefore the correct mission should be SDO. In the provided mission list, SDO is not present, while SOHO (307), STEREO (311/312), Solar Orbiter (323), Parker Solar Probe (275), etc. are present.\n\nInstruction-following is the highest priority: the system requires \u201cReturn the numbers (1-361) of the top 10 most likely missions, comma-separated \u2026 If unclear or too generic, return \u2018UNKNOWN\u2019.\u201d  \n- Answer A returns 10 comma-separated mission numbers, so it follows the required format. However, it is incorrect/irrelevant because it does not (and cannot) include SDO, and it includes many missions that do not host HMI (e.g., GOES, Wind, ACE). SOHO is a solar observatory but still not the stated host.  \n- Answer B returns \u201cUNKNOWN,\u201d which is allowed when the correct mission cannot be selected from the provided list. Here, since SDO is explicitly the host but absent from the options, \u201cUNKNOWN\u201d is the most correct choice. However, it fails the \u201ctop 10 numbers\u201d output format requirement (it outputs no numbers).\n\nWeighing these: Answer A satisfies the strict formatting requirement but is substantively wrong; Answer B is substantively appropriate given the option set but violates the required output format. Because instruction-following is explicitly the highest priority and Answer B clearly violates it, Answer A is better overall despite poor correctness.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "307, 119, 360, 127, 275, 99, 323, 1, 312, 311",
+      "answer_b": "UNKNOWN",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "da1b79d6-c54e-4065-9afb-1da76855d0e8",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The instrument description explicitly says \u201cFaraday Cup (FC) instruments on board Wind spacecraft\u201d and references merging with MFI magnetic field data\u2014this is clearly the Wind/SWE + MFI context. However, \u201cWind\u201d is not among the available missions (1\u201345). Per the instructions, if the correct mission is not present and the remaining context is not mappable to a listed mission, the appropriate output is \u201cUNKNOWN\u201d rather than guessing unrelated missions.\n\nInstruction-following: Answer A returns \u201cUNKNOWN\u201d, which is an allowed special-case output. Answer B returns 10 comma-separated numbers, matching the requested format, but format compliance is secondary to correctness when the list does not contain the actual mission and the numbers are essentially guesses.\n\nCorrectness/precision: Answer B lists missions like STEREO_B, GOES-12, RHESSI, SOHO, Solar Orbiter, etc., none of which host Wind\u2019s SWE Faraday Cup; these are incorrect and irrelevant. Answer A correctly recognizes that the described instrument\u2019s host mission (Wind) is not in the provided list and avoids incorrect selections.\n\nTherefore, Answer A is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNKNOWN",
+      "answer_b": "37, 11, 30, 38, 35, 36, 9, 34, 10, 28",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "f3104a5e-f577-46f5-8ff9-f2017c90ac02",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The instrument described is the AE Index, which is not a spacecraft instrument but a high-latitude ground magnetometer network\u2013derived geomagnetic index used to time/classify substorms. Given the available \u201cmissions\u201d list includes many spacecraft plus many individual ground observatories and some ground networks, the correct behavior per instructions is: if the description is scientifically generic/ambiguous, return UNKNOWN. Here, however, it is actually quite specific (AE Index), but the list does not include an explicit \u201cAE Index\u201d mission; the closest relevant entries would be ground magnetometer networks/observatories (e.g., CANOPUS, IAGA stations, possibly WDC) rather than spacecraft like IMAGE/Cluster/FAST/etc. \n\nInstruction-following: Answer A returns 10 comma-separated numbers, matching the required format. Answer B returns \u201cUNKNOWN\u201d, which is allowed only if unclear/too generic; it also violates the \u201creturn numbers\u201d format unless UNKNOWN is appropriate. \n\nCorrectness/precision: Answer A\u2019s selections (e.g., 187 IMAGE, 84/80/85/82/86 Cluster variants, 110 FAST, 131 Geotail, 271 Polar, 122 GOES-10) are largely spacecraft and not the AE ground index itself; they look like missions that might use AE as contextual data, but the task is to identify missions that could host the described instrument. AE is not hosted on those spacecraft. So A is mostly incorrect/irrelevant despite correct formatting. Answer B, while not providing 10 numbers, aligns with the ambiguity rule better than A because AE Index is not represented as a mission in the provided list and is not a spacecraft-hosted instrument.\n\nOverall, A follows formatting but is substantively wrong; B is substantively more appropriate given the mission list mismatch, even though it doesn\u2019t provide 10 numbers. Between them, B better satisfies the intent and the ambiguity handling guidance.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "187, 84, 110, 85, 82, 86, 131, 80, 271, 122",
+      "answer_b": "UNKNOWN",
+      "cross_model_agreement": 0.004210526315789474
+    },
+    {
+      "case_id": "2a494254-b74f-4038-9dca-a752759b72d4",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly names \u201cSOHO (Solar and Heliospheric Observatory)\u201d and references SUMER, which is a SOHO instrument. Therefore the correct mission is #38.\n\nInstruction-following is the highest priority: the system requires \u201cthe numbers (1-45) of the top 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, satisfying the required format/length. It includes #38 (SOHO) but also adds nine other largely irrelevant missions (e.g., PROBA2, STEREO_B, IRIS, TRACE, etc.), reducing precision. Still, it follows instructions and contains the correct mission.  \n- Answer B returns only \u201c38\u201d, which is correct but fails the critical instruction to return 10 items. This is a serious instruction-following failure per the rubric.\n\nGiven the evaluation criteria, Answer A is better overall because it complies with the required output format and includes the correct mission, whereas Answer B does not follow the mandated format.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "27, 37, 17, 42, 38, 35, 36, 34, 15, 32",
+      "answer_b": "38",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "af98892a-912b-41ce-bd7f-cfe0bc72aebe",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cULEIS on ACE,\u201d which directly maps to mission 1 (ACE). The system instruction requires returning the top 10 mission numbers, comma-separated. \n\n- Instruction following: Answer A provides 10 comma-separated numbers, satisfying the required format and count. Answer B returns only a single number (\u201c1\u201d), which is a serious instruction-following failure because 10 were requested.\n- Correctness: Answer B\u2019s single item (1) is correct. Answer A includes 1 as the 7th item, but most of its other entries (e.g., SOHO 307, Wind 360, STEREO 311/312, etc.) do not \u201chost\u201d ULEIS; they are largely irrelevant as host missions, though they are thematically related heliophysics missions. Still, the task is mission hosting, and only ACE is clearly correct from the list.\n- Completeness: Answer A is complete in terms of providing 10 items; Answer B is incomplete.\n- Precision: Answer B is more precise (only the correct mission), but fails the primary instruction. Answer A is less precise due to many incorrect inclusions, but it at least follows the mandated output structure.\n\nGiven instruction-following is the highest priority and Answer B violates it, Answer A is better overall despite extra incorrect missions.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "307, 360, 312, 188, 139, 138, 1, 311, 350, 190",
+      "answer_b": "1",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "31e9f9be-cbc2-4dd8-9e49-eb3316199351",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cWAVES on board WIND,\u201d which directly maps to mission WIND (mission number 360).  \n1) Instruction following: Answer A returns only a single item (\u201c360\u201d), failing the requirement to return the top 10 missions comma-separated. This is a major instruction-following failure. Answer B returns 10 comma-separated mission numbers, matching the required format.  \n2) Correctness: Both include 360, the clearly correct mission. However, Answer B includes many implausible missions for \u201cWAVES on WIND\u201d (e.g., Voyager 1/2, Cassini, ISEE, etc.). Still, the task asks for \u201ctop 10 most likely missions,\u201d and including WIND plus other heliophysics spacecraft is at least a reasonable attempt under ambiguity\u2014though here ambiguity is low because WIND is explicit.  \n3) Completeness: Answer B satisfies the \u201c10 items\u201d requirement; Answer A does not.  \n4) Precision: Answer A is maximally precise but noncompliant; Answer B is compliant but less precise due to irrelevant additions.\n\nGiven instruction-following is the highest priority and Answer B includes the correct mission while meeting the required output format, Answer B is better overall.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "360",
+      "answer_b": "356, 360, 188, 76, 355, 312, 131, 191, 350, 311",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "bb78824d-fb91-4e62-9efd-1f25ec8a5860",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cSUMER on board SOHO\u201d with 1996 observations, so the correct mission is SOHO (38). The system instruction requires returning the top 10 mission numbers, comma-separated.  \n- Answer A follows the required format by providing 10 comma-separated mission numbers. It includes SOHO (38), which is the correct primary mission. However, it also lists many irrelevant missions (e.g., PROBA2, IRIS, TRACE, etc.) that do not host SUMER and are not time-compatible, reducing precision. Still, it satisfies the \u201ctop 10\u201d requirement and contains the correct mission.  \n- Answer B gives only \u201c38\u201d. While correct, it violates the critical instruction to return 10 items, which is a serious instruction-following failure.\n\nTherefore, Answer A is better overall due to instruction compliance and inclusion of the correct mission.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "27, 17, 42, 38, 5, 35, 34, 15, 32, 44",
+      "answer_b": "38",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "4c5d9fce-7ebe-4190-a010-4160378f44f2",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cThree-Dimensional Plasma (3DP) on board Wind,\u201d so the correct mission is Wind, which corresponds to mission number 360 in the provided list.\n\nInstruction-following is the highest priority: the system requires \u201cReturn the numbers (1-361) of the top 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, satisfying the required format and count. It includes 360 (Wind), which is the key correct mission. However, it also includes many irrelevant missions (e.g., SOHO 307, Cluster spacecraft IDs, DSCOVR 99, STEREO A/B), reducing precision.  \n- Answer B returns only \u201c360\u201d. While it is correct, it fails the critical instruction to return the top 10 missions, making it a serious instruction-following failure.\n\nGiven the explicit instruction-following requirement, Answer A is better despite extra incorrect candidates.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "307, 360, 85, 82, 99, 1, 86, 312, 80, 311",
+      "answer_b": "360",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "8ef0aa30-38f6-4b45-b975-2cea24ee5721",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly states \u201cHelioseismic and Magnetic Imager (HMI) on board Solar Dynamics Observatory (SDO)\u201d and references HMI SHARP products (sharp_cea_720s), which unambiguously points to mission 32 (SDO).  \n\nInstruction-following is the highest priority: the system requires \u201ctop 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, satisfying the format requirement. It includes 32 (SDO) as the 9th item, which is the correct mission. However, the other nine missions listed (e.g., MtWilson, GONG, SUNRISE, SOHO, etc.) are not plausible \u201chosts\u201d for HMI; they are at best loosely related solar observatories and thus add substantial noise and reduce precision. Also, SDO should be ranked first given the explicit mention.  \n- Answer B returns only \u201c32\u201d. While it is perfectly correct in content, it fails the critical instruction to return 10 missions, which is a serious instruction-following violation per the rubric.\n\nGiven the evaluation priorities, Answer A is better because it follows the required output format and includes the correct mission, whereas Answer B fails the mandated \u201ctop 10\u201d requirement.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "24, 12, 39, 38, 33, 15, 35, 40, 32, 41",
+      "answer_b": "32",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "7681e119-cf7c-4e3b-8d7f-2f9cdf5b8a17",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cCoronal Diagnostic Spectrometer (CDS) on board SOHO,\u201d so the correct mission is SOHO, which corresponds to mission number 307. \n\nInstruction-following is the highest priority: the system requires \u201cReturn the numbers (1-361) of the top 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, satisfying the required format and count. It includes 307 as the top candidate, which is correct. However, the remaining nine entries (e.g., Wind 360, Parker Solar Probe 275, Helios 1/2, Solar Orbiter, etc.) are not plausible hosts for CDS (a SOHO-specific EUV spectrometer) and thus are largely irrelevant, reducing precision.  \n- Answer B returns only \u201c307,\u201d which is correct but is a serious instruction-following failure because it does not provide 10 missions as required.\n\nGiven the explicit instruction and the critical check, Answer A is better because it follows the required output format and includes the correct mission, despite adding many incorrect extras.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "307, 360, 275, 139, 138, 323, 1, 312, 350, 311",
+      "answer_b": "307",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "8c1e881f-c6c2-4970-b5a5-7f01ee6afd7b",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cMAG (Magnetometer) on board ACE,\u201d so the correct mission is ACE, which corresponds to mission number 1 in the provided list.\n\nInstruction-following is the highest priority: the system requires \u201cthe numbers of the top 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, so it follows the required format. However, it is largely incorrect/irrelevant: it includes WIND (360), multiple Cluster spacecraft (85,82,86,80), STEREO (311,312), Ulysses (350), Geotail (131), etc., and only includes ACE (1) as the 4th item. Given the explicit ACE mention, ACE should be ranked first and the rest should be plausible alternatives; Answer A\u2019s ranking and inclusions are not well-justified.\n- Answer B returns only \u201c1\u201d. While that is the correct mission, it is a serious instruction-following failure because it does not provide 10 missions as required.\n\nBetween them, Answer A better satisfies the required output constraints (top 10 list) and includes the correct mission, whereas Answer B fails the critical formatting/completeness requirement.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "360, 85, 82, 1, 86, 312, 131, 80, 350, 311",
+      "answer_b": "1",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "7ac8c01f-6a47-4a8e-a99f-5de06ed30e2f",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cHSTOF of CELIAS on SOHO,\u201d and the time period (1996\u20131997) matches SOHO operations. The instructions require returning the top 10 mission numbers, comma-separated.\n\nAnswer B returns only \u201c38\u201d. While 38 (SOHO) is the correct mission, it fails the critical instruction-following requirement to provide 10 items, which is a serious failure per the rubric.\n\nAnswer A provides 10 comma-separated mission numbers, satisfying the required format and count. It includes 38 (SOHO), which is the correct and most relevant mission. Although many of the other listed missions (e.g., STEREO, TRACE, Yohkoh, PSP) are not plausible hosts for CELIAS/HSTOF and the ordering is questionable (SOHO should be first), it still meets the primary instruction-following constraint and contains the correct mission within the top 10.\n\nGiven the evaluation priorities, Answer A is better overall due to compliance with the required output format and inclusion of the correct mission.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "37, 11, 42, 38, 10, 36, 45, 9, 35, 28",
+      "answer_b": "38",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "6aac9c54-97d4-4841-8708-9ba3230f2c21",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201con board WIND (WAVES experiment)\u201d, so mission 360 (WIND) is the correct top choice. The system instruction, however, requires returning the numbers of the **top 10** most likely missions, comma-separated.  \n\n- **Answer A**: Provides 10 comma-separated mission numbers, satisfying the required format and count. It correctly includes **360** first. The remaining nine (e.g., IMP8, Parker Solar Probe, Helios, Solar Orbiter, STEREO, etc.) are plausible \u201csimilar context\u201d solar wind/in-situ missions, though some are less time-compatible with 1996. Still, it follows instructions and is reasonably constructed given the explicit WIND mention.\n- **Answer B**: Returns only **one** mission number (\u201c360\u201d). Even though it is correct, it is a serious instruction-following failure because 10 were requested.\n\nTherefore, Answer A is better due to correct identification plus compliance with the required output format and completeness.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "360, 188, 275, 139, 138, 323, 312, 191, 350, 311",
+      "answer_b": "360",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "2da8c90d-81c0-4040-8f1f-fd24e66af629",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument is explicitly \u201cMichelson Doppler Imager (MDI) on board Solar and Heliospheric Observatory (SOHO)\u201d with a SOHO-era time range (1996\u20132008). The correct mission from the provided list is therefore SOHO = 38.\n\nInstruction-following is the highest priority: the system requires \u201ctop 10 most likely missions, comma-separated.\u201d  \n- Answer A provides 10 comma-separated mission numbers, so it follows the required format. It includes 38 (SOHO) but places it 5th and includes many largely irrelevant missions/observatories (e.g., PROBA2=27, KPVT=19, TRACE=42, etc.) that do not \u201chost\u201d MDI. Still, it is at least compliant and contains the correct mission.  \n- Answer B returns only \u201c38\u201d, which is correct but is a serious instruction-following failure because it does not provide 10 items as required.\n\nGiven the explicit instruction-following requirement, Answer A is better overall despite extra incorrect candidates.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "27, 19, 12, 42, 38, 16, 15, 35, 32, 41",
+      "answer_b": "38",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "03bc31e7-1a00-47a2-9220-67873d45971a",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cCELIAS/SEM on board SOHO,\u201d which directly maps to mission SOHO (mission number 307).  \n**Instruction following:** The system requires \u201ctop 10 most likely missions, comma-separated.\u201d Answer A returns only a single mission (\u201c307\u201d), which is a serious instruction-following failure even though it is correct. Answer B returns 10 comma-separated numbers, satisfying the required format and count.  \n**Correctness/precision:** Answer B includes 307 (correct) but also adds many unrelated missions (e.g., GOES satellites 119/127/125/123/120, TIMED 338, STEREO 311/312, Solar Orbiter 323) that do not host CELIAS/SEM. This reduces precision, but the task allows returning top candidates when multiple exist; still, the instrument is explicitly tied to SOHO, so extra missions are largely irrelevant.  \n**Overall:** Because instruction-following is the highest priority and Answer B meets the \u201ctop 10\u201d requirement while Answer A does not, Answer B is better despite being less precise.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "307",
+      "answer_b": "119, 307, 127, 338, 312, 125, 323, 311, 123, 120",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "4c8ec541-00ea-4f12-b2be-b55d17962e63",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument is explicitly \u201cCanopus Ground Magnetometer Network,\u201d which directly matches the available mission/observatory entry **CANOPUS** (#71). \n\n1) **Instruction Following (highest priority):**\n- Answer A returns only a single item (\u201c71\u201d) even though the system instruction requires the **top 10 missions, comma-separated**. This is a major instruction-following failure.\n- Answer B returns **10 comma-separated numbers**, matching the required format.\n\n2) **Correctness:**\n- Both include #71, which is the clearly correct primary match.\n- The additional items in Answer B (various IAGA ground stations) are plausible as \u201cother ground magnetometer observatories,\u201d though not specifically \u201cCANOPUS.\u201d Still, given the task asks for \u201ctop 10 most likely missions,\u201d these are reasonable secondary candidates within the provided list.\n\n3) **Completeness:**\n- Answer A is incomplete (1 instead of 10).\n- Answer B is complete (10 items).\n\n4) **Precision:**\n- Answer A is precise but too incomplete to be acceptable.\n- Answer B is less precise due to extra candidates, but still anchored by the correct #71 and satisfies the required output.\n\nOverall, Answer B is better because it follows the critical formatting/instruction requirement and includes the correct mission.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "71",
+      "answer_b": "71, 172, 280, 154, 317, 183, 168, 161, 111, 157",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "284c6cf5-20d5-4e7e-9576-cafd01404458",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly says \u201cEUV Imager (EUVI) on board STEREO-A\u201d with 2007 observations. The correct mission in the provided list is STEREO_A = 36.\n\nInstruction-following is the highest priority: the system requires \u201ctop 10 most likely missions, comma-separated.\u201d  \n- Answer A returns only a single item (\u201c36\u201d), which is a serious instruction-following failure even though it is the correct mission.  \n- Answer B returns 10 comma-separated mission numbers, satisfying the required format and count. It includes 36 (STEREO_A), but it ranks it 7th and includes many clearly irrelevant missions (e.g., GOES16/17, SDO, Solar Orbiter) and misses the most obvious close alternative STEREO_B (37 is included) and SOHO/TRACE etc. Still, it at least provides a plausible candidate set and follows the output constraints.\n\nGiven the rubric\u2019s emphasis on instruction-following, Answer B is better overall despite lower precision.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "36",
+      "answer_b": "27, 37, 42, 13, 38, 10, 36, 9, 35, 32",
+      "cross_model_agreement": 0.10000000000000002
+    },
+    {
+      "case_id": "ae9260c9-9c8b-4348-ae76-dbcd876cf2f3",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly states \u201cLASCO \u2026 on board SOHO,\u201d so the correct mission is SOHO (mission 38). However, the system instruction requires returning the **top 10** mission numbers, comma-separated.  \n\n- **Answer A** returns only \u201c38\u201d. While correct, it **fails the critical instruction-following requirement** by providing only 1 item instead of 10, which is a serious format/completeness violation.  \n- **Answer B** returns **10 comma-separated mission numbers**, satisfying the required format and count. It includes **38 (SOHO)**, which is the key correct mission. The other entries are mostly irrelevant (e.g., TRACE, SMM, Hinode, SDO, MLSO) and it oddly omits STEREO_A/only includes STEREO_B, but the primary mission is present and the response follows instructions.\n\nGiven instruction-following is highest priority, Answer B is better overall despite extra noise.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "38",
+      "answer_b": "27, 37, 42, 38, 35, 36, 34, 15, 32, 20",
+      "cross_model_agreement": 0.14
+    },
+    {
+      "case_id": "2cea3eb3-a19e-4618-b9d6-ca313f74537b",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The task requires returning the numbers (1\u201345) of the top 10 most likely missions, comma-separated, or \u201cUNKNOWN\u201d only if the instrument description is too generic/ambiguous. The instrument is explicitly \u201cBirmingham Solar-Oscillations Network (BiSON)\u201d, which is a ground-based helioseismology network, not a spacecraft mission. However, within the provided mission list, the closest match by scientific context is GONG (12), another global oscillations network; other ground observatory entries could be plausible \u201chosts\u201d in the sense of data provenance, but none is actually BiSON. \n\nInstruction-following: Answer A returns \u201cUNKNOWN\u201d (not 10 numbers), but this is allowed if unclear/too generic; here it\u2019s not generic, it\u2019s specific but not in the list\u2014still, \u201cUNKNOWN\u201d could be defensible. Answer B follows the required format exactly with 10 comma-separated mission numbers.\n\nCorrectness/precision: Answer B includes GONG (12), which is the best contextual analog, but also includes many unrelated observatories/entries (e.g., SOHO (38) is space-based and not BiSON; several others are generic observatory placeholders). Still, it at least attempts a ranked top-10 and includes the most relevant candidate (12). Answer A provides no candidates and thus is less useful given the task\u2019s goal to return top candidates when multiple exist.\n\nOverall, despite some questionable inclusions, Answer B better satisfies the primary instruction and provides a plausible top candidate (GONG) in the list, whereas Answer A fails to provide the requested top-10 list.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNKNOWN",
+      "answer_b": "3, 19, 29, 24, 12, 38, 4, 21, 20, 41",
+      "cross_model_agreement": 0.14307692307692307
+    },
+    {
+      "case_id": "9f6d29f0-7b20-401c-a9e3-9395112e500d",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The instrument description explicitly names \u201cSOHO (Solar and Heliospheric Observatory)\u201d and says it was used as a positional analog (no data analyzed). From the available missions, SOHO corresponds directly to mission number 307, making 307 the correct top candidate.\n\nInstruction-following is the highest priority: the system requires \u201cthe numbers of the top 10 most likely missions, comma-separated.\u201d  \n- Answer A returns only a single number (\u201c307\u201d), which is a serious instruction-following failure (not 10 items), even though the one item is correct.  \n- Answer B returns 10 comma-separated numbers, satisfying the required format. It includes 307 (correct) but also adds many largely irrelevant missions (e.g., TWINS1/2, Voyager, etc.) that do not match the SOHO positional-analog context. Still, because the task demands 10 missions and Answer B complies with the format while containing the correct mission among its list, it is overall better per the evaluation criteria.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "307",
+      "answer_b": "339, 356, 307, 360, 186, 1, 340, 312, 350, 311",
+      "cross_model_agreement": 0.16571428571428573
+    }
+  ]
+}

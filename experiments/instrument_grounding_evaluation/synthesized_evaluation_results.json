@@ -1,0 +1,610 @@
+{
+  "summary": {
+    "total": 12,
+    "correct": 7,
+    "incorrect": 5,
+    "errors": 0,
+    "total_time": 23.91778802871704,
+    "average_time": 1.9931490023930867,
+    "accuracy": 58.333333333333336,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "single_spacecraft": {
+      "total": 4,
+      "correct": 3,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "acronym_challenge": {
+      "total": 3,
+      "correct": 1,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "instrument_component": {
+      "total": 2,
+      "correct": 1,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "moderately_ambiguous": {
+      "total": 3,
+      "correct": 2,
+      "incorrect": 1,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "barrel_xri_specific_event",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/BARREL/1J/XRI/spase://SMWG/Observatory/BARREL/1J",
+      "time_seconds": 2.9741179943084717,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "actual_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "expected_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "expected_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "reasoning": "Systematic selection: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "matched_mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "matched_instrument_name": "XRI",
+        "matched_mission_name": "BARREL",
+        "reasoning": "Systematic selection: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "xri_acronym_challenge",
+      "category": "acronym_challenge",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected spase://SMWG/Instrument/BARREL/1J/XRI, got FOXSI",
+      "time_seconds": 1.63596510887146,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "FOXSI",
+        "actual_mission": "FOXSI3",
+        "expected_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "expected_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "FOXSI",
+        "matched_mission_code": "FOXSI3",
+        "matched_instrument_name": "Focusing Optics X-ray Solar Imager",
+        "matched_mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+        "reasoning": "Systematic selection: Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) \u2192 FOXSI"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "acronym"
+      }
+    },
+    {
+      "name": "xri_component_reference",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match found among 10 results",
+      "time_seconds": 2.8263351917266846,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": [
+          "spase://SMWG/Instrument/BARREL/1A/XRI",
+          "spase://SMWG/Instrument/BARREL/1B/XRI",
+          "spase://SMWG/Instrument/BARREL/1C/XRI",
+          "spase://SMWG/Instrument/BARREL/1D/XRI",
+          "spase://SMWG/Instrument/BARREL/1G/XRI",
+          "spase://SMWG/Instrument/BARREL/1H/XRI",
+          "spase://SMWG/Instrument/BARREL/1I/XRI",
+          "spase://SMWG/Instrument/BARREL/1J/XRI",
+          "spase://SMWG/Instrument/BARREL/1K/XRI",
+          "spase://SMWG/Instrument/BARREL/1M/XRI"
+        ],
+        "actual_mission": [
+          "spase://SMWG/Observatory/BARREL/1A",
+          "spase://SMWG/Observatory/BARREL/1B",
+          "spase://SMWG/Observatory/BARREL/1C",
+          "spase://SMWG/Observatory/BARREL/1D",
+          "spase://SMWG/Observatory/BARREL/1G",
+          "spase://SMWG/Observatory/BARREL/1H",
+          "spase://SMWG/Observatory/BARREL/1I",
+          "spase://SMWG/Observatory/BARREL/1J",
+          "spase://SMWG/Observatory/BARREL/1K",
+          "spase://SMWG/Observatory/BARREL/1M"
+        ],
+        "expected_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "expected_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "reasoning": "Multiple matches found: 10 results",
+        "multiple_results": true,
+        "result_count": 10,
+        "matching_results": 1
+      },
+      "grounding_result": [
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1A/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1A",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 1/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1A/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1B/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1B",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 2/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1B/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1C/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1C",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 3/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1C/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1D/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1D",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 4/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1D/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1G/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1G",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 5/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1G/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1H/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1H",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 6/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1H/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1I/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1I",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 7/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1I/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1J",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 8/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1K/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1K",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 9/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1K/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1M/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1M",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 10/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1M/XRI"
+        }
+      ],
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "component"
+      }
+    },
+    {
+      "name": "barrel_xri_precise",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/BARREL/1J/XRI/spase://SMWG/Observatory/BARREL/1J",
+      "time_seconds": 2.395632028579712,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "actual_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "expected_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "expected_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "reasoning": "Systematic selection: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "matched_mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "matched_instrument_name": "XRI",
+        "matched_mission_name": "BARREL",
+        "reasoning": "Systematic selection: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_xray_detector",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.173807144165039,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_too_generic"
+      }
+    },
+    {
+      "name": "barrel_xri_acronym",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match found among 10 results",
+      "time_seconds": 2.9225029945373535,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": [
+          "spase://SMWG/Instrument/BARREL/1A/XRI",
+          "spase://SMWG/Instrument/BARREL/1B/XRI",
+          "spase://SMWG/Instrument/BARREL/1C/XRI",
+          "spase://SMWG/Instrument/BARREL/1D/XRI",
+          "spase://SMWG/Instrument/BARREL/1G/XRI",
+          "spase://SMWG/Instrument/BARREL/1H/XRI",
+          "spase://SMWG/Instrument/BARREL/1I/XRI",
+          "spase://SMWG/Instrument/BARREL/1J/XRI",
+          "spase://SMWG/Instrument/BARREL/1K/XRI",
+          "spase://SMWG/Instrument/BARREL/1M/XRI"
+        ],
+        "actual_mission": [
+          "spase://SMWG/Observatory/BARREL/1A",
+          "spase://SMWG/Observatory/BARREL/1B",
+          "spase://SMWG/Observatory/BARREL/1C",
+          "spase://SMWG/Observatory/BARREL/1D",
+          "spase://SMWG/Observatory/BARREL/1G",
+          "spase://SMWG/Observatory/BARREL/1H",
+          "spase://SMWG/Observatory/BARREL/1I",
+          "spase://SMWG/Observatory/BARREL/1J",
+          "spase://SMWG/Observatory/BARREL/1K",
+          "spase://SMWG/Observatory/BARREL/1M"
+        ],
+        "expected_instrument": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "expected_mission": "spase://SMWG/Observatory/BARREL/1J",
+        "reasoning": "Multiple matches found: 10 results",
+        "multiple_results": true,
+        "result_count": 10,
+        "matching_results": 1
+      },
+      "grounding_result": [
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1A/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1A",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 1/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1A/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1B/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1B",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 2/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1B/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1C/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1C",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 3/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1C/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1D/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1D",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 4/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1D/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1G/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1G",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 5/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1G/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1H/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1H",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 6/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1H/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1I/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1I",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 7/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1I/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1J",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 8/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1J/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1K/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1K",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 9/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1K/XRI"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/BARREL/1M/XRI",
+          "matched_mission_code": "spase://SMWG/Observatory/BARREL/1M",
+          "matched_instrument_name": "XRI",
+          "matched_mission_name": "BARREL",
+          "reasoning": "Ambiguous reference - valid match 10/10: BARREL \u2192 spase://SMWG/Instrument/BARREL/1M/XRI"
+        }
+      ],
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/BARREL/1J/XRI",
+        "mission_code": "spase://SMWG/Observatory/BARREL/1J",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "goes_sem_clear_reference",
+      "category": "single_spacecraft",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected spase://SMWG/Instrument/GOES/13/SEM, got SXI-0",
+      "time_seconds": 2.4692859649658203,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SXI-0",
+        "actual_mission": "GOES-12",
+        "expected_instrument": "spase://SMWG/Instrument/GOES/13/SEM",
+        "expected_mission": "spase://SMWG/Observatory/GOES/13",
+        "reasoning": "Systematic selection: Geosyncronous Operational Environmental Satellite - 12 \u2192 SXI-0",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SXI-0",
+        "matched_mission_code": "GOES-12",
+        "matched_instrument_name": "GOES-12 Solar X-ray Imager",
+        "matched_mission_name": "Geosyncronous Operational Environmental Satellite - 12",
+        "reasoning": "Systematic selection: Geosyncronous Operational Environmental Satellite - 12 \u2192 SXI-0"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/GOES/13/SEM",
+        "mission_code": "spase://SMWG/Observatory/GOES/13",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_sem_ambiguity",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.5231220722198486,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_variant"
+      }
+    },
+    {
+      "name": "goes_sem_component_reference",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected spase://SMWG/Instrument/GOES/13/SEM, got SXI-0",
+      "time_seconds": 1.2531359195709229,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SXI-0",
+        "actual_mission": "GOES-12",
+        "expected_instrument": "spase://SMWG/Instrument/GOES/13/SEM",
+        "expected_mission": "spase://SMWG/Observatory/GOES/13",
+        "reasoning": "Systematic selection: Geosyncronous Operational Environmental Satellite - 12 \u2192 SXI-0",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SXI-0",
+        "matched_mission_code": "GOES-12",
+        "matched_instrument_name": "GOES-12 Solar X-ray Imager",
+        "matched_mission_name": "Geosyncronous Operational Environmental Satellite - 12",
+        "reasoning": "Systematic selection: Geosyncronous Operational Environmental Satellite - 12 \u2192 SXI-0"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/GOES/13/SEM",
+        "mission_code": "spase://SMWG/Observatory/GOES/13",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "single_spacecraft_sem_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/GOES/13/SEM/spase://SMWG/Observatory/GOES/13",
+      "time_seconds": 1.9263107776641846,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/GOES/13/SEM",
+        "actual_mission": "spase://SMWG/Observatory/GOES/13",
+        "expected_instrument": "spase://SMWG/Instrument/GOES/13/SEM",
+        "expected_mission": "spase://SMWG/Observatory/GOES/13",
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellites \u2192 spase://SMWG/Instrument/GOES/13/SEM",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/GOES/13/SEM",
+        "matched_mission_code": "spase://SMWG/Observatory/GOES/13",
+        "matched_instrument_name": "SEM",
+        "matched_mission_name": "Geostationary Operational Environmental Satellites",
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellites \u2192 spase://SMWG/Instrument/GOES/13/SEM"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/GOES/13/SEM",
+        "mission_code": "spase://SMWG/Observatory/GOES/13",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "moderately_ambiguous_sem_generic",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got SUVI/GOES16",
+      "time_seconds": 1.273406982421875,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "SUVI",
+        "actual_mission": "GOES16",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellite (GOES-R) Series 16 \u2192 SUVI",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SUVI",
+        "matched_mission_code": "GOES16",
+        "matched_instrument_name": "GOES-R Series Solar Ultraviolet Imager",
+        "matched_mission_name": "Geostationary Operational Environmental Satellite (GOES-R) Series 16",
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellite (GOES-R) Series 16 \u2192 SUVI"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "generic_reference"
+      }
+    },
+    {
+      "name": "instrument_component_sem_acronym",
+      "category": "acronym_challenge",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected spase://SMWG/Instrument/GOES/13/SEM, got SUVI",
+      "time_seconds": 1.544165849685669,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SUVI",
+        "actual_mission": "GOES16",
+        "expected_instrument": "spase://SMWG/Instrument/GOES/13/SEM",
+        "expected_mission": "spase://SMWG/Observatory/GOES/13",
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellite (GOES-R) Series 16 \u2192 SUVI",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SUVI",
+        "matched_mission_code": "GOES16",
+        "matched_instrument_name": "GOES-R Series Solar Ultraviolet Imager",
+        "matched_mission_name": "Geostationary Operational Environmental Satellite (GOES-R) Series 16",
+        "reasoning": "Systematic selection: Geostationary Operational Environmental Satellite (GOES-R) Series 16 \u2192 SUVI"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/GOES/13/SEM",
+        "mission_code": "spase://SMWG/Observatory/GOES/13",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/synthesized_instrument_test_cases.jsonl",
+    "total_cases_in_file": 12,
+    "cases_run": 12,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751562690.298006
+  }
+}

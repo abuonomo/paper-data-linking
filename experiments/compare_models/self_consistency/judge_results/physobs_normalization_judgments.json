@@ -1,0 +1,216 @@
+{
+  "call_type": "physobs_normalization",
+  "model_a": "openai/gpt-5",
+  "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+  "judge_model": "openai/gpt-5.2",
+  "agreement_threshold": 0.5,
+  "exclude_null_pairs": true,
+  "stats": {
+    "total_cases": 18,
+    "model_a_wins": 12,
+    "model_b_wins": 3,
+    "ties": 3,
+    "neither": 0,
+    "errors": 0
+  },
+  "judgments": [
+    {
+      "case_id": "3177a822-19d7-43f8-911f-c00c7fac756b",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description says \u201cPhotospheric magnetic field maps for global coronal modeling.\u201d That indicates magnetograms/maps of the photospheric magnetic field, but it does not specify whether these are line-of-sight (LOS) magnetograms or full vector field maps. HMI commonly provides LOS magnetograms for global coronal modeling (e.g., synoptic LOS/radial maps), while vector products are more specialized and typically explicitly called \u201cvector magnetograms\u201d or \u201cvector field.\u201d Given the instruction to choose UNCERTAIN when in doubt, neither model chose UNCERTAIN; however, between the two, LOS_magnetic_field is the more plausible default interpretation of \u201cmagnetic field maps\u201d in a global coronal modeling context. VECTOR_magnetic_field is less supported by the wording. Therefore A is better than B.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "VECTOR_magnetic_field",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "0f72efd6-7ae9-4cab-8a07-317da174a61d",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description refers to \u201cPhotospheric magnetic field at flare ribbon locations used to compute reconnection flux.\u201d This indicates the magnetic field measurement is being used in a derived calculation (reconnection flux). The instructions say that when the description involves derived/inferred quantities or indirect language indicating processing (\u201cused to compute\u201d), we should return \u201cUNCERTAIN\u201d rather than selecting a direct observable. Answer A follows the required output format (only \u201cUNCERTAIN\u201d) and aligns with the guidance. Answer B violates the output format by returning JSON and also selects \u201cVECTOR_magnetic_field\u201d without justification; moreover, the description does not explicitly specify vector vs LOS, and the \u201cused to compute\u201d phrasing triggers UNCERTAIN per rules. Therefore A is clearly better.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "{\"physical_observable\": \"VECTOR_magnetic_field\", \"original_text\": \"Photospheric magnetic field at flare ribbon locations used to compute reconnection flux.\"}",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "5b4ef2fb-a34b-42f4-b47d-c19a105be669",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The description is \u201cPhotospheric magnetic field maps for global coronal modeling\u201d from HMI. This indicates magnetograms used as boundary conditions; in coronal modeling contexts these are most commonly radial/line-of-sight photospheric field maps (synoptic/LOS magnetograms), not necessarily full vector inversions. The text does not mention \u201cvector,\u201d \u201cStokes,\u201d or transverse components, so selecting a vector product is over-specific. Between the two, LOS_magnetic_field is the safer direct observable match. Therefore B better fits the description and the \u201cwhen in doubt choose UNCERTAIN\u201d rule does not apply because a clear magnetic-field-map candidate exists.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "VECTOR_magnetic_field",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "41270c6d-d84a-4638-b584-122d864f64d8",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description lists three direct solar-wind proton properties: density, temperature, and speed. In the candidate list, density maps to number_density, temperature maps most closely to thermal_velocity (as a proxy for thermal speed), and speed maps to particle_velocity. The task requires choosing ONE best match. Since the description explicitly includes \u201cspeed,\u201d selecting particle_velocity is a valid direct-observable match. Answer A (\u201cUNCERTAIN\u201d) is not warranted because at least one candidate (particle_velocity) clearly matches a directly measured quantity mentioned in the description. Between A and B, B is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "particle_velocity",
+      "cross_model_agreement": 0.04
+    },
+    {
+      "case_id": "09e1622a-2a9a-43f3-b96d-0057934848f6",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description lists three direct solar wind plasma moments: proton density, temperature, and speed. For PLASTIC, these map to number_density (density), thermal_velocity (temperature as thermal speed), and particle_velocity (bulk speed). The task requires choosing ONE best match. Since the description explicitly includes \u201cspeed,\u201d selecting particle_velocity is a valid direct observable match. Answer A (\u201cUNCERTAIN\u201d) is not warranted because at least one candidate clearly matches a directly measured quantity. Between the two, Answer B correctly picks a specific matching observable, while A incorrectly abstains.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "particle_velocity",
+      "cross_model_agreement": 0.08
+    },
+    {
+      "case_id": "235d32ae-b659-49c6-93ae-8889c9bfc96d",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description lists three directly observed solar wind proton properties: density, temperature, and speed. For PLASTIC, these map to number_density (density), thermal_velocity (temperature proxy), and particle_velocity (speed). The task requires choosing ONE best matching candidate. Since \u201cproton density\u201d is explicitly mentioned and directly corresponds to the candidate \u201cnumber_density,\u201d Answer A provides a valid specific match. Answer B (\u201cUNCERTAIN\u201d) is not warranted because at least one candidate clearly matches a directly measured quantity; the description is not purely derived/processed. Therefore A is better.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "number_density",
+      "answer_b": "UNCERTAIN",
+      "cross_model_agreement": 0.12
+    },
+    {
+      "case_id": "80d6dcca-d36b-4181-ad63-b53ea2ba4dfd",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description is \u201cPhotospheric magnetic field map for PFSS connectivity.\u201d PFSS (Potential Field Source Surface) modeling typically uses a photospheric boundary condition of the radial/line-of-sight magnetic field (a magnetogram), not a full vector field. The description does not mention vector components, transverse field, or vector inversion products; it just says \u201cmagnetic field map,\u201d which in common HMI usage for PFSS implies the standard LOS magnetogram (or a derived radial map from LOS, but that derivation isn\u2019t stated). Between the two options, LOS_magnetic_field is the more appropriate and conservative match. VECTOR_magnetic_field would require explicit indication of vector data, which is absent.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "VECTOR_magnetic_field",
+      "cross_model_agreement": 0.12
+    },
+    {
+      "case_id": "11344a03-2acd-4a1d-a1cf-2c6628174e39",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The description is \u201cPhotospheric magnetic field map for PFSS connectivity.\u201d PFSS (Potential Field Source Surface) modeling typically uses photospheric radial/line-of-sight magnetograms as the boundary condition, not full vector field maps. HMI commonly provides LOS magnetograms for such PFSS connectivity maps. The candidate list includes both LOS_magnetic_field and VECTOR_magnetic_field (and a lowercase variant). Since the description does not specify \u201cvector\u201d and PFSS connectivity maps are most directly based on LOS (or inferred radial from LOS) magnetograms, LOS_magnetic_field is the best match among the provided direct observables. Answer A selects VECTOR_magnetic_field, which is less supported by the description and typical PFSS usage. Answer B selects LOS_magnetic_field, which aligns better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "VECTOR_magnetic_field",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.16
+    },
+    {
+      "case_id": "a9aa8663-afdb-4a95-bad7-2a3520bd2b80",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The paper description is \u201cType III radio emission onset timing,\u201d which is a timing/derived event parameter (onset time) rather than a direct physical observable measured by SWAVES. The valid candidates are only \u201cintensity\u201d and \u201cpolarization_vector.\u201d While onset timing is determined from an intensity time series, it is not itself the direct observable; per instructions, derived/processed quantities like timing should yield \u201cUNCERTAIN.\u201d Therefore Answer A follows the guidance, whereas Answer B incorrectly maps a derived timing to \u201cintensity.\u201d",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "intensity",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "3065bc19-159e-41fb-9d0c-1a19a7c3356c",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The paper description is \u201cPhotospheric apparent magnetic inversion line location.\u201d An inversion line location is a derived/processed feature (a boundary where the line-of-sight magnetic field changes sign), not a direct instrument observable. The valid candidates are direct observables like LOS_magnetic_field, LOS_velocity, intensity, etc. Since the description refers to a location of a feature extracted from magnetograms rather than the magnetogram measurement itself, the instructions say to return UNCERTAIN for derived/analysis products. Therefore Answer B follows the guidance, while Answer A incorrectly maps a derived feature to a direct observable.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "UNCERTAIN",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "568b9ebc-14c5-471c-a088-6278c72395ab",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description lists three directly measured solar wind proton properties: density, temperature, and speed. For PLASTIC, \u201cdensity\u201d maps directly to the candidate \u201cnumber_density,\u201d \u201cspeed\u201d maps to \u201cparticle_velocity,\u201d and \u201ctemperature\u201d would correspond most closely to \u201cthermal_velocity\u201d (as a proxy for thermal speed). The task requires choosing ONE best match. Since the description explicitly includes \u201cproton density,\u201d selecting \u201cnumber_density\u201d is a valid direct observable match. \u201cUNCERTAIN\u201d would only be appropriate if the description were primarily about derived/processed quantities or if no candidate matched; here, at least one candidate clearly matches a directly measured quantity. Therefore Answer A is better.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "number_density",
+      "answer_b": "UNCERTAIN",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "73db9bca-f766-455c-8668-ec88c6575795",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The paper description is \u201cPhotospheric magnetic field map for PFSS connectivity.\u201d PFSS (Potential Field Source Surface) modeling typically uses photospheric radial/line-of-sight magnetograms as the boundary condition. With HMI, the most common \u201cmagnetic field map\u201d product used for PFSS is the line-of-sight magnetogram (unless explicitly stated as vector/radial field). Among the candidates, LOS_magnetic_field is the best direct observable match. Both Answer A and Answer B output exactly \u201cLOS_magnetic_field\u201d with correct casing and no extra text, satisfying the output rules. They are identical and equally correct.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.24
+    },
+    {
+      "case_id": "634d0e09-ee61-40bc-9883-5f56041cb5db",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description explicitly lists \u201csolar wind proton density np, temperature Tp, and speed Vsw\u201d measured by PLASTIC. Among the valid candidates, proton density directly corresponds to the physical observable \u201cnumber_density.\u201d Temperature would map to \u201cthermal_velocity\u201d only indirectly (temperature is not listed as a candidate), and speed maps to \u201cparticle_velocity,\u201d but the task requires choosing ONE best match. Since \u201cproton density np\u201d is explicitly named and maps exactly to \u201cnumber_density,\u201d Answer B correctly selects a direct observable. Answer A (\u201cUNCERTAIN\u201d) is not justified because at least one candidate clearly matches a directly measured quantity. Therefore B is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "number_density",
+      "cross_model_agreement": 0.32
+    },
+    {
+      "case_id": "48169436-4d04-4b59-8c89-a1858a1983bb",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The paper description mentions \u201cMagnetogram and velocity oscillation power in the 3-minute band near 6 mHz; rms amplitudes.\u201d This is primarily about oscillation power (a processed/analysis product) derived from magnetogram and velocity time series, which per instructions should generally lead to UNCERTAIN, and if forced to pick a direct observable, \u201cwave_power\u201d would be the closest match. Both Answer A and Answer B select LOS_magnetic_field, which ignores the explicit focus on oscillation power and also omits the velocity component. Since both answers are identical and equally mismatched to the best candidate/UNCERTAIN guidance, neither is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.36
+    },
+    {
+      "case_id": "63bdc6ec-266f-44d8-a766-38545a411d1c",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description refers to \u201cvelocity oscillation power integrated over 2.6\u20133.9 mHz\u201d and also mentions \u201cmagnetogram \u2026 power\u201d plus derived quantities like rms amplitudes and phase lead/lag between signals. Among the candidates, the closest direct observable mentioned is oscillation power, which corresponds to the candidate \u201cwave_power.\u201d However, neither model selected \u201cwave_power.\u201d Answer A selects \u201cLOS_magnetic_field,\u201d which is only one component of the description and ignores that the key reported quantity is integrated oscillation power (an analysis product) and phase relationships. Given the instructions: if the description refers to power spectra/analysis products (integrated power, phase lead/lag), we should return \u201cUNCERTAIN\u201d rather than a direct raw observable. Therefore Answer B aligns with the guidance, while Answer A does not.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "UNCERTAIN",
+      "cross_model_agreement": 0.4
+    },
+    {
+      "case_id": "8bd58a30-e9eb-4fe8-98c1-48cc763048ab",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The paper description refers to \u201cCME leading-edge/pressure-front outlines for ellipsoid fits,\u201d which is an analysis/feature-extraction product (outlines used for fitting a geometric model), not a direct physical observable measured by SECCHI. The valid candidates are \u201cintensity\u201d and \u201cpolarization_vector.\u201d While SECCHI images are based on intensity, the description does not state that intensity itself was the observed quantity; it emphasizes derived outlines and fitting. Per instructions, derived/processed products should yield \u201cUNCERTAIN,\u201d and when in doubt choose UNCERTAIN. Therefore Answer A follows the rules better than Answer B, which overcommits to \u201cintensity.\u201d",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "intensity",
+      "cross_model_agreement": 0.44
+    },
+    {
+      "case_id": "af4ee2f0-b515-40fd-af64-5596e501d2fa",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The paper description refers to \u201cLine-of-sight magnetic field gradients\u201d along separators between opposite polarities. The underlying directly observed quantity from MDI is the line-of-sight magnetic field; \u201cgradients\u201d are a spatial derivative computed from the LOS magnetic field map, i.e., a derived/processed quantity. The instructions explicitly say to return UNCERTAIN when the description refers to derived quantities or uses indirect/processed products. Therefore Answer A (UNCERTAIN) follows the rules. Answer B (LOS_magnetic_field) matches the base measurement but ignores that the described observable is specifically the gradient, making it less compliant with the \u201cderived \u2192 UNCERTAIN\u201d guidance.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "UNCERTAIN",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.44
+    },
+    {
+      "case_id": "f155ba6a-9991-4df4-b613-a1c2c354077f",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The paper description is \u201cPhotospheric magnetic field map for PFSS connectivity.\u201d PFSS (Potential Field Source Surface) connectivity uses photospheric magnetic field maps as boundary conditions; with HMI this is typically the line-of-sight magnetogram product unless explicitly stated as vector. The description does not mention vector field or Stokes parameters, so LOS_magnetic_field is the best match among candidates. Both Answer A and Answer B output exactly \u201cLOS_magnetic_field\u201d with correct formatting and no extra text, satisfying the task rules equally well.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "LOS_magnetic_field",
+      "answer_b": "LOS_magnetic_field",
+      "cross_model_agreement": 0.48
+    }
+  ]
+}

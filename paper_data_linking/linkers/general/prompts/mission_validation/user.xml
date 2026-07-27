@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission_validation_task>
+  <original_description>
+    <name>{{ original_name }}</name>
+    <context>{{ original_comments }}</context>
+    {% for info in period_infos %}
+    <data_collection_period>{{ info }}</data_collection_period>
+    {% endfor %}
+  </original_description>
+  <proposed_match>
+    <mission>{{ matched_mission_name }} ({{ matched_mission_code }})</mission>
+    {% if matched_mission_description %}<mission_description>{{ matched_mission_description }}</mission_description>{% endif %}
+  </proposed_match>
+</mission_validation_task>

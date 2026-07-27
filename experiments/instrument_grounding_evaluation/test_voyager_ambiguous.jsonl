@@ -1,0 +1,1 @@
+{"name": "voyager_ambiguous_test", "category": "test", "instrument_entry": {"name": "MAG", "general_comments": "Voyager magnetometer"}, "expected": {"should_match": false}, "description": "Test Voyager magnetometer without specifying which spacecraft"}

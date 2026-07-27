@@ -1,0 +1,159 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+  init:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: /usr/src/app/init.sh
+    env_file: .env
+    environment:
+      RUNNING_LOCALLY: "false"
+    volumes:
+      - static_volume:/code/staticfiles
+    depends_on:
+      - postgres
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: uvicorn paper_analyzer_app.asgi:application --host 0.0.0.0 --port 8000
+    volumes:
+      - ./api/media:/code/media
+      - ./data/raw/pdfs/soho:/code/data/raw/pdfs/soho
+      - static_volume:/code/staticfiles
+    ports:
+      - "${API_PORT:-8000}:8000"
+    env_file:
+      - .env
+    environment:
+      RUNNING_LOCALLY: "false"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+
+  celery:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: celery -A paper_analyzer_app worker --pool=gevent --concurrency=24 -Q celery,control --loglevel=info --events
+    volumes:
+      - ./api/media:/code/media
+    env_file:
+      - .env
+    environment:
+      RUNNING_LOCALLY: "false"
+      DJANGO_ALLOW_ASYNC_UNSAFE: "1"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+
+  # Periodic scheduler — drives the batch-downstream reconciler (crash backstop).
+  # A single beat process; do NOT scale this to >1 replica (duplicate schedules).
+  celery-beat:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # -s: schedule file must live somewhere writable (cwd is not; beat otherwise
+    # crash-loops with 'Permission denied: celerybeat-schedule' and the reconciler
+    # never runs).
+    command: celery -A paper_analyzer_app beat --loglevel=info -s /tmp/celerybeat-schedule
+    env_file:
+      - .env
+    environment:
+      RUNNING_LOCALLY: "false"
+      DJANGO_ALLOW_ASYNC_UNSAFE: "1"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+
+  # Prefork worker for the hang-prone CPU/subprocess/network stages (PDF text
+  # extraction, analyze_dataset_usage). Process isolation + hard time_limit means a
+  # hung bandit/Fido/PDF kills ONE process, never the worker. NOT gevent-patched
+  # (see celery.py). Consumes only the `cpu` queue.
+  celery-cpu:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # max-tasks-per-child: prefork children hold their peak RSS forever; a 1k
+    # extraction burst left the worker at 97% of its 2g prod ceiling while idle
+    # (observed live, cohort_1k). Recycling children every 100 tasks returns
+    # that memory; respawn overhead is negligible at our task sizes.
+    command: celery -A paper_analyzer_app worker --pool=prefork --concurrency=4 -Q cpu,replay --loglevel=info --time-limit=660 --soft-time-limit=600 --max-tasks-per-child=100
+    volumes:
+      - ./api/media:/code/media
+    env_file:
+      - .env
+    environment:
+      RUNNING_LOCALLY: "false"
+      DJANGO_ALLOW_ASYNC_UNSAFE: "1"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+
+  # To access the production flower, you need to ssh tunnel to the host
+  # ssh -L 5554:localhost:5555 your-prod-host
+  # Then go to localhost:5554 for flower interface.
+  flower:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: celery -A paper_analyzer_app flower --port=5555 --basic-auth=${FLOWER_USERNAME}:${FLOWER_PASSWORD}
+    volumes:
+      - flower_static:/usr/local/lib/python3.10/site-packages/flower/static
+    env_file:
+      - .env
+    ports:
+      - "${FLOWER_PORT:-5555}:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://${REDIS_HOST}:6379/0
+      - CELERY_RESULT_BACKEND=redis://${REDIS_HOST}:6379/0
+    depends_on:
+      celery:
+        condition: service_started
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - BUILD_MODE=${BUILD_MODE:-development}
+    ports:
+      - "${CLIENT_PORT:-80}:80"
+    volumes:
+      - .htpasswd:/etc/nginx/.htpasswd
+      - static_volume:/usr/share/nginx/html/staticfiles
+      - ./api/media:/usr/share/nginx/html/media
+      - flower_static:/etc/nginx/flower_static:ro
+    depends_on:
+      api:
+        condition: service_started
+
+volumes:
+  client_build:
+  postgres_data:
+  static_volume:
+  flower_static:

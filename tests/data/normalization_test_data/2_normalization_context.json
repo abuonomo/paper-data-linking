@@ -1,0 +1,43 @@
+{
+    "paper_summary": "This paper presents Sun-as-a-star analyses of spatially integrated Hα spectra to investigate various solar active events, such as flares, filament eruptions, and off-limb prominence eruptions. The primary dataset is from the Solar Dynamics Doppler Imager (SDDI) on SMART at Hida Observatory, with complementary data from GOES soft X-ray measurements, SOHO/LASCO coronagraph images, and SDO/AIA multi-wavelength imagery. These instruments are used to identify event timing, verify CME occurrence, and interpret event scenarios for events between November 2016 and May 2021.",
+    "instruments": [
+      {
+        "name": "AIA (Atmospheric Imaging Assembly) on SDO",
+        "general_comments": "AIA provides multi-wavelength EUV imagery (e.g., 171 Å and 131 Å) to support event scenario interpretation and complement Hα observations.",
+        "general_quotes": [
+          "In addition to the SDDI data, for some events we used data taken with the Atmospheric Imaging Assembly (AIA; Lemen et al. 2012) on board the Solar Dynamics Observatory (SDO) to ensure the event scenarios.",
+          "...images AIA 171 ˚A, AIA 131 ˚A..."
+        ],
+        "grounding_result": {
+            "matched_instrument_code": "AIA",
+            "matched_mission_code": "SDO",
+            "matched_instrument_name": "Atmospheric Imaging Assembly",
+            "matched_mission_name": "Solar Dynamics Observatory",
+            "data_system": "vso",
+            "reasoning": "Ground truth instrument for testing"
+        },
+        "data_collection_periods": [
+          {
+            "period_name": "Support Imaging for Event (2)",
+            "time_range": "2017-04-02",
+            "time_quotes": [
+              "2017-04-02"
+            ],
+            "wavelengths": "171 Å and 131 Å EUV wavelengths",
+            "wavelength_quotes": [
+              "...images AIA 171 ˚A, AIA 131 ˚A..."
+            ],
+            "physical_observable": "Multi-wavelength EUV imagery for event scenario interpretation and temporal context",
+            "physobs_quotes": [
+              "In addition to the SDDI data, for some events we used data taken with the Atmospheric Imaging Assembly (AIA; Lemen et al. 2012) on board the Solar Dynamics Observatory (SDO) to ensure the event scenarios."
+            ],
+            "general_quotes": [
+              "In addition to the SDDI data, for some events we used data taken with the Atmospheric Imaging Assembly (AIA; Lemen et al. 2012) on board the Solar Dynamics Observatory (SDO) to ensure the event scenarios.",
+              "...images AIA 171 ˚A, AIA 131 ˚A..."
+            ],
+            "additional_comments": "Used complementary to SDDI Hα observations for comprehensive event analysis"
+          }
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,1 @@
+{"name": "truly_generic_test", "category": "test", "instrument_entry": {"name": "Magnetometer", "general_comments": "Measures magnetic field"}, "expected": {"should_match": false}, "description": "Test truly generic description"}

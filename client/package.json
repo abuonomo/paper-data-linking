@@ -1,0 +1,61 @@
+{
+  "name": "my_frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "node validate-env.js",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "ace-builds": "^1.32.6",
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "brace": "^0.11.1",
+    "chart.js": "^4.4.8",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^4.1.0",
+    "pdfjs-dist": "^4.10.38",
+    "plotly.js": "^3.0.1",
+    "react": "^18.2.0",
+    "react-ace": "^10.1.0",
+    "react-bootstrap": "^2.10.9",
+    "react-bootstrap-icons": "^1.11.5",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-icons": "^5.0.1",
+    "react-json-view": "^1.21.3",
+    "react-markdown": "^10.1.0",
+    "react-pdf": "^7.7.0",
+    "react-plotly.js": "^2.6.0",
+    "react-router-dom": "^6.22.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-tabs": "^6.0.2",
+    "react-toastify": "^10.0.4",
+    "recharts": "^2.15.3",
+    "websocket": "^1.0.34"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0"
+  },
+  "overrides": {
+    "react-json-view": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  }
+}

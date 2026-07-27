@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Excerpts and Full Instrument Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3, h4 {
+      margin-top: 0;
+    }
+    .instrument {
+      border: 1px solid #ccc;
+      margin-bottom: 30px;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .details {
+      background: #eef;
+      border: 1px solid #ccd;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .details p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+    .excerpt {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px dashed #ccc;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+    }
+    .excerpt .text, .excerpt .images {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px;
+    }
+    .excerpt .text {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 4px;
+    }
+    .excerpt .images {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .excerpt .images img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+    }
+    .no-image {
+      color: #888;
+      font-style: italic;
+    }
+    .period {
+      margin-left: 20px;
+      padding-left: 15px;
+      border-left: 3px solid #ddd;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Excerpts and Full Instrument Details Overview</h1>
+    <!-- Container where the JS will inject instrument sections -->
+    <div id="container"></div>
+  </div>
+
+  <script>
+    // Helper function: Create an excerpt element.
+    function createExcerptDiv(key, excerptText, images) {
+      const div = document.createElement('div');
+      div.classList.add('excerpt');
+
+      // Text section
+      const textDiv = document.createElement('div');
+      textDiv.classList.add('text');
+      const strong = document.createElement('strong');
+      strong.textContent = key;
+      textDiv.appendChild(strong);
+      const p = document.createElement('p');
+      p.textContent = excerptText;
+      textDiv.appendChild(p);
+      div.appendChild(textDiv);
+
+      // Images section
+      const imagesDiv = document.createElement('div');
+      imagesDiv.classList.add('images');
+      if (images && images.length > 0) {
+        images.forEach(imgSrc => {
+          const img = document.createElement('img');
+          img.src = imgSrc;
+          img.alt = "Excerpt image";
+          imagesDiv.appendChild(img);
+        });
+      } else {
+        const noImageP = document.createElement('p');
+        noImageP.classList.add('no-image');
+        noImageP.textContent = "No image found.";
+        imagesDiv.appendChild(noImageP);
+      }
+      div.appendChild(imagesDiv);
+      return div;
+    }
+
+    // Helper: For a given object's locations array, find images matching the key.
+    function findImagesForKey(locations, key) {
+      if (!locations || !Array.isArray(locations)) return [];
+      return locations.filter(loc => loc.search_key === key && loc.excerpt_image)
+                      .map(loc => loc.excerpt_image);
+    }
+
+    // Helper: Create a details div that displays all keys and values
+    // excluding those specified in the excludeKeys array.
+    function createDetailsDiv(obj, excludeKeys = []) {
+      const div = document.createElement('div');
+      div.classList.add('details');
+      for (const key in obj) {
+        // Skip keys we already handle (like excerpts, locations, data_collection_periods)
+        if (excludeKeys.includes(key) || key.endsWith('_supporting_quote_excerpt')) {
+          continue;
+        }
+        // For arrays and objects, stringify them
+        let value = obj[key];
+        if (typeof value === 'object') {
+          value = JSON.stringify(value, null, 2);
+        }
+        const p = document.createElement('p');
+        p.innerHTML = `<strong>${key}:</strong> ${value}`;
+        div.appendChild(p);
+      }
+      return div;
+    }
+
+    // When DOM content is loaded, fetch and process the JSON.
+    document.addEventListener('DOMContentLoaded', function() {
+      // Adjust the URL as needed.
+      fetch('pdfs/annotated_output_locations.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const container = document.getElementById('container');
+
+          // Process each instrument in instrumentation_details.
+          if (data.instrumentation_details && Array.isArray(data.instrumentation_details)) {
+            data.instrumentation_details.forEach(instrument => {
+              const instrumentDiv = document.createElement('div');
+              instrumentDiv.classList.add('instrument');
+
+              // Instrument title.
+              const title = document.createElement('h2');
+              title.textContent = `Instrument: ${instrument.instrument_name} (${instrument.spacecraft})`;
+              instrumentDiv.appendChild(title);
+
+              // --- Full Instrument Details ---
+              // Display all keys except the ones we process separately.
+              const instrumentDetails = createDetailsDiv(instrument, [
+                "locations", "data_collection_periods"
+              ]);
+              instrumentDiv.appendChild(instrumentDetails);
+
+              // --- Top-level Excerpts ---
+              const topLevelKeys = [];
+              for (let key in instrument) {
+                if (key.endsWith('_supporting_quote_excerpt') && typeof instrument[key] === 'string') {
+                  topLevelKeys.push(key);
+                }
+              }
+              if (topLevelKeys.length > 0) {
+                const topLevelHeader = document.createElement('h3');
+                topLevelHeader.textContent = "Top-level Excerpts";
+                instrumentDiv.appendChild(topLevelHeader);
+                topLevelKeys.forEach(key => {
+                  const images = findImagesForKey(instrument.locations, key);
+                  const excerptDiv = createExcerptDiv(key, instrument[key], images);
+                  instrumentDiv.appendChild(excerptDiv);
+                });
+              }
+
+              // --- Data Collection Period Excerpts and Details ---
+              if (instrument.data_collection_periods && Array.isArray(instrument.data_collection_periods) && instrument.data_collection_periods.length > 0) {
+                const periodsHeader = document.createElement('h3');
+                periodsHeader.textContent = "Data Collection Periods";
+                instrumentDiv.appendChild(periodsHeader);
+                instrument.data_collection_periods.forEach(period => {
+                  const periodDiv = document.createElement('div');
+                  periodDiv.classList.add('period');
+
+                  // Display period details.
+                  if (period.description) {
+                    const periodHeader = document.createElement('h4');
+                    periodHeader.textContent = `Description: ${period.description}`;
+                    periodDiv.appendChild(periodHeader);
+                  }
+                  const periodDetails = createDetailsDiv(period, [
+                    "locations"
+                  ]);
+                  periodDiv.appendChild(periodDetails);
+
+                  // Now display the excerpt keys within this period.
+                  for (let key in period) {
+                    if (key.endsWith('_supporting_quote_excerpt') && typeof period[key] === 'string') {
+                      const images = findImagesForKey(period.locations, key);
+                      const excerptDiv = createExcerptDiv(key, period[key], images);
+                      periodDiv.appendChild(excerptDiv);
+                    }
+                  }
+                  instrumentDiv.appendChild(periodDiv);
+                });
+              }
+
+              container.appendChild(instrumentDiv);
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error loading JSON:", error);
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Python virtual environment and cache
+.venv
+venv
+*.pyc
+__pycache__/
+
+# IDE and OS specific
+.idea/
+.vscode/
+*.DS_Store
+
+# Secrets - should be handled by docker-compose, not copied
+.env*
+!/.env_example
+
+# Documentation and local data
+README.md
+notebooks/
+experiments/
+references/
+training_and_dev_assets/
+data/
+
+# Node.js dependencies (from your client app)
+client/node_modules
+client/build
+client/dist
+
+# Local databases
+*.sqlite3
+*.db
+
+# Test reports and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Large/unnecessary directories
+misc/
+scripts/
+docs/
+scratches/
+debugging/
+tests/
+fixtures/
+inputs/
+exports/
+api/media/
+
+# Build/config artifacts
+chromedriver
+LICENSE.chromedriver
+*.log
+docker-compose*
+.claude/

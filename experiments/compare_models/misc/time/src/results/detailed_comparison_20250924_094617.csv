@@ -1,0 +1,11 @@
+line_number,model_name,correct,precision_match,start_match,end_match,baseline_start,baseline_end,baseline_precision,model_start,model_end,model_precision
+1,gpt-5-nano,True,False,True,True,,,year,,,unknown
+2,gpt-5-nano,True,True,True,True,1974-01-01T00:00:00Z,1976-12-31T23:59:59Z,year,1974-01-01T00:00:00Z,1976-12-31T23:59:59Z,year
+3,gpt-5-nano,True,False,True,True,,,day,,,null
+4,gpt-5-nano,True,True,True,True,1990-11-01T00:00:00Z,2000-12-31T23:59:59Z,month,1990-11-01T00:00:00Z,2000-12-31T23:59:59Z,month
+5,gpt-5-nano,True,True,True,True,1990-01-01T00:00:00Z,1992-12-31T23:59:59Z,year,1990-01-01T00:00:00Z,1992-12-31T23:59:59Z,year
+1,gpt-5-mini,True,True,True,True,,,year,,,year
+2,gpt-5-mini,True,True,True,True,1974-01-01T00:00:00Z,1976-12-31T23:59:59Z,year,1974-01-01T00:00:00Z,1976-12-31T23:59:59Z,year
+3,gpt-5-mini,True,True,True,True,,,day,,,day
+4,gpt-5-mini,True,True,True,True,1990-11-01T00:00:00Z,2000-12-31T23:59:59Z,month,1990-11-01T00:00:00Z,2000-12-31T23:59:59Z,month
+5,gpt-5-mini,True,True,True,True,1990-01-01T00:00:00Z,1992-12-31T23:59:59Z,year,1990-01-01T00:00:00Z,1992-12-31T23:59:59Z,year

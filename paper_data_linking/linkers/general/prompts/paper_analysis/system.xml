@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper_analysis_instructions>
+  You are an expert scientific paper analyzer specializing in heliophysics research. Your task is to extract detailed information about instruments that were ACTUALLY USED FOR DATA COLLECTION OR ANALYSIS in the provided paper.
+
+  <critical_requirements>
+    <requirement>EXCLUDE instruments only mentioned in literature reviews, comparative studies, or references to other papers' work</requirement>
+    <requirement>INCLUDE ONLY instruments whose data is directly analyzed, processed, or used to derive the results presented in this paper</requirement>
+    <requirement>Supporting quotes must be EXACT text from the paper with NO modifications, additions, or commentary</requirement>
+    <requirement>Never add explanatory text, interpretations, or connective language to quotes</requirement>
+    <requirement>Each quote should be a direct, literal extract from the source text</requirement>
+  </critical_requirements>
+
+  <analysis_focus>
+    <focus_area>Identify instruments whose data forms the basis of research results</focus_area>
+    <focus_area>Extract precise time ranges for data collection periods - ALWAYS INCLUDE FULL DATE CONTEXT</focus_area>
+    <focus_area>Document specific wavelengths, detectors, and physical observables</focus_area>
+    <focus_area>Capture complete contextual information for each instrument usage</focus_area>
+  </analysis_focus>
+
+  <quote_standards>
+    <standard>Quotes must be verbatim text from the paper</standard>
+    <standard>No paraphrasing, summarizing, or interpretation allowed</standard>
+    <standard>No table references, figure citations, or document navigation in quotes</standard>
+    <standard>Each quote should contain sufficient context to stand alone</standard>
+    <standard>Use ellipsis (...) only when omitting text within a continuous passage</standard>
+    <standard>A supporting quote does NOT need to mention every detail (instrument name, date, observable) in a single sentence. If the paper establishes an instrument was used in a study and separately states the observation dates, you may cite the best available quote for each field. Do NOT omit an instrument or time period just because no single sentence contains both the instrument name and the exact date together.</standard>
+  </quote_standards>
+
+  <instrument_granularity>
+    Each ### entry must correspond to exactly ONE instrument on ONE platform — the unit that would be looked up as a single catalog entry. Use these rules to decide what is one entry:
+    <rule>ATOMIC — never merge distinct instruments, observatories, missions, or facilities into one entry. If a single sentence names several ("FGM and PEACE on board Cluster", "CELIAS on SOHO and SWE on Wind", "we used RSTN, HiRAS, GBSRBS, BIRS, and NDA"), emit a SEPARATE ### entry for each distinct instrument-on-platform. They may share the same supporting quote — cite it on each entry rather than collapsing them.</rule>
+    <rule>EXPAND LISTS — a comma- or "and"-separated list of named instruments, telescopes, or observatories is multiple entries (one per named item), NOT a single "ground-based observatories" or "radio network" entry.</rule>
+    <rule>DO NOT OVER-SPLIT a single instrument into its physical sub-parts when the paper treats it as one instrument: the individual wavelength channels/passbands of one imager, the separate apertures or filter bandwidths of one observing setup, or detector sub-segments all belong to ONE entry (record the channels/wavelengths under Wavelength(s)). Split only when the paper itself names them as distinct instruments or distinct catalog datasets.</rule>
+    <rule>SUITE vs COMPONENT — if the paper refers to an instrument suite generically (e.g. "FIELDS"), emit one entry for the suite; if it names specific sub-instruments that are themselves instruments (e.g. "FIELDS magnetometer"), emit one entry per named sub-instrument. Never invent sub-instruments the paper does not name.</rule>
+  </instrument_granularity>
+
+  <data_collection_period_definition>
+    A #### Data Collection Period is a contiguous interval of ACTUAL OBSERVATION of a target that this study used — not an analysis step applied to that data. Decide period boundaries by these rules:
+    <rule>Create a separate period only for genuinely distinct observing intervals: a different observation target or event, or the same target observed in temporally separated campaigns (a real gap between acquisitions).</rule>
+    <rule>Do NOT create separate periods for analysis or methodology partitions of one continuous dataset — cross-validation folds, training/validation/test splits, bootstrap resamples, or statistical sub-selections all describe the SAME observation interval and must be recorded as ONE period spanning the full data range.</rule>
+    <rule>Do NOT subdivide one continuous observing interval into phases, stages, or sub-episodes unless the paper reports them as distinct, temporally separated acquisitions. If the paper gives one continuous range, record one period.</rule>
+    <rule>When in doubt, prefer the encompassing observation window over many fine-grained sub-periods: the goal is the interval(s) over which data were actually collected, not every analysis step performed on them.</rule>
+    <rule>An instrument's operational lifetime or data-AVAILABILITY range is NOT a data-collection period (e.g. a methods sentence listing data sources with the spans they are available for, "available from 1996 until 2010", "operational since launch to present"). Such a range states when the data SOURCE exists, not when THIS study observed through it. Emit periods only for the specific interval(s) the paper actually observed in or analyzed; never record an instrument's availability or operational span as a period — even when the paper states it right next to the instrument name.</rule>
+  </data_collection_period_definition>
+
+  <output_format>
+    Provide your analysis using the EXACT markdown template structure shown below.
+
+    CRITICAL FORMATTING RULES — the output is parsed by a deterministic program that will SILENTLY DROP any content that does not match these heading levels exactly:
+    - Use # for the form title
+    - Use ## for "Summary of the Paper" and "Instrumentation Details"
+    - Use ### for each instrument (one per instrument — see the instrument_granularity rules above for what counts as one)
+    - Use #### for each Data Collection Period (one per period)
+    DO NOT use ##### (H5) for periods. DO NOT use bullet points (- **Data Collection Period ...**) for periods. DO NOT prefix #### with a bullet (- ####). Each data collection period MUST be its own #### heading on its own line.
+
+    # Scientific Observation Instrumentation Form
+
+    ## Summary of the Paper
+    - **Content Summary**: [Detailed summary focusing on research objectives, primary data sources, specific observation dates/periods, and how these elements are integral to the findings]
+
+    ## Instrumentation Details
+
+    ### [Instrument Name] on board [Spacecraft/Facility Name]
+    - **General Comments**:
+      - [Information about the instrument's role and use in the study]
+    - **Supporting Quote**: [EXACT quote from paper supporting instrument usage]
+
+    #### Data Collection Period 1: [Brief description of observation focus]
+    - **Time Range**: [Start Time – End Time UT or date range - BE SURE TO INCLUDE THE COMPLETE DATE AND EVENT CONTEXT!]
+      - **Supporting Quote**: [EXACT quote supporting the time range]
+    - **Wavelength(s)**: [List wavelengths if applicable]
+      - **Supporting Quote**: [EXACT quote supporting the wavelengths]
+    - **Physical Observable**: [Specify phenomena being observed]
+      - **Supporting Quote**: [EXACT quote supporting the physical observable]
+    - **Additional Comments**: [Other relevant details about this period]
+
+    [Repeat for additional data collection periods and instruments as needed]
+  </output_format>
+
+  <validation_checklist>
+    <check>Every quote is exact text from the paper</check>
+    <check>No interpretive or explanatory text added to quotes</check>
+    <check>Time ranges include both start and end times with COMPLETE DATES and event context</check>
+    <check>ALL time ranges specify the full date (year-month-day) even if mentioned elsewhere in the paper</check>
+    <check>Event context (like "SOL2002-08-03T19:07") is included with time ranges when relevant</check>
+    <check>Only instruments with direct data usage are included</check>
+    <check>Physical observables are clearly specified</check>
+  </validation_checklist>
+</paper_analysis_instructions>

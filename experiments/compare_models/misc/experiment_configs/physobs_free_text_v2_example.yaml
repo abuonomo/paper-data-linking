@@ -1,0 +1,39 @@
+# Experiment configuration for physobs_normalization
+#
+# V2 adds stricter guidance for UNCERTAIN responses:
+# - Explicitly handles derived/inferred quantities (frequencies, rates, coefficients)
+# - Clarifies behavior for indirect language ("from", "via", "using")
+# - Provides clearer decision criteria for direct vs processed measurements
+#
+# Usage:
+#   python experiments/compare_models/run_parallel_experiment.py \
+#     --config experiment_configs/physobs_free_text_v2_example.yaml
+
+experiment_name: physobs_free_text_v2_bedrock_120b_full
+description: "Full physobs normalization test with Bedrock 120B using v2 free-text handler (stricter UNCERTAIN guidance for derived quantities)"
+
+# Models to test
+models:
+  - bedrock/openai.gpt-oss-120b-1:0
+
+# Call types to run
+call_types:
+  - physobs_normalization
+
+# Experiment parameters
+max_cases: 100
+max_workers: 2
+timeout_seconds: 600
+output_dir: experiments/compare_models/prompt_experiments
+
+# Call type configurations
+call_type_configs:
+  physobs_normalization:
+    # Path to system prompt XML (v2 with stricter guidance)
+    prompt: paper_data_linking/linkers/general/prompts/physobs_normalization/system.xml
+
+    # Path to test data JSONL
+    input: inputs/test_set/physobs_normalization.jsonl
+
+    # Handler class to use
+    handler_class: PhysObsNormalizationFreeTextV2Handler

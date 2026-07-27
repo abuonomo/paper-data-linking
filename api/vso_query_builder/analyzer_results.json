@@ -1,0 +1,139 @@
+{
+  "execution_successful": true,
+  "execution_error": null,
+  "execution_error_type": null,
+  "execution_error_traceback": null,
+  "search_results": [
+    {
+      "variable": "search_result_1",
+      "num_results": 19,
+      "providers": [],
+      "all_columns": [
+        "End Time",
+        "Extent Type",
+        "Instrument",
+        "Physobs",
+        "Provider",
+        "Size",
+        "Source",
+        "Start Time",
+        "fileid"
+      ],
+      "path_format_keys": [
+        "size",
+        "provider",
+        "extent_type",
+        "start_time",
+        "fileid",
+        "source",
+        "physobs",
+        "instrument",
+        "end_time"
+      ]
+    },
+    {
+      "variable": "search_result_2",
+      "num_results": 2,
+      "providers": [],
+      "all_columns": [
+        "End Time",
+        "Extent Type",
+        "Instrument",
+        "Physobs",
+        "Provider",
+        "Size",
+        "Source",
+        "Start Time",
+        "Wavelength",
+        "Wavetype",
+        "fileid"
+      ],
+      "path_format_keys": [
+        "size",
+        "provider",
+        "wavetype",
+        "extent_type",
+        "start_time",
+        "fileid",
+        "wavelength",
+        "source",
+        "physobs",
+        "instrument",
+        "end_time"
+      ]
+    },
+    {
+      "variable": "search_result_3",
+      "num_results": 2,
+      "providers": [],
+      "all_columns": [
+        "End Time",
+        "Extent Type",
+        "Instrument",
+        "Provider",
+        "Size",
+        "Source",
+        "Start Time",
+        "Wavelength",
+        "Wavetype",
+        "fileid"
+      ],
+      "path_format_keys": [
+        "size",
+        "provider",
+        "wavetype",
+        "extent_type",
+        "start_time",
+        "fileid",
+        "wavelength",
+        "source",
+        "instrument",
+        "end_time"
+      ]
+    }
+  ],
+  "total_results": 23,
+  "total_search_calls": 3,
+  "successful_search_calls": 3,
+  "search_calls_summary": [
+    {
+      "call_index": 1,
+      "has_results": true,
+      "num_results": 19,
+      "args": [
+        "<sunpy.net.attrs.Time(2017-07-23 01:30:00.000, 2017-07-23 05:00:00.000)>",
+        "<sunpy.net.attrs.Source(SOHO: Solar and Heliospheric Observatory) object at 0x1665ef700>",
+        "<sunpy.net.attrs.Instrument(LASCO: Large Angle and Spectrometric Coronagraph) object at 0x1665ef550>",
+        "<sunpy.net.attrs.Detector(C2: Coronograph 2) object at 0x1665ef520>",
+        "<sunpy.net.attrs.Physobs(intensity: the direct intensity, either integrated over the spectral\nobserving range or as a function of wavelength (spectral density)) object at 0x1665ef640>"
+      ]
+    },
+    {
+      "call_index": 2,
+      "has_results": true,
+      "num_results": 2,
+      "args": [
+        "<sunpy.net.attrs.Time(2017-07-22 22:30:00.000, 2017-07-22 22:45:00.000)>",
+        "<sunpy.net.attrs.Source: STEREO_A object at 0x1698d2440>",
+        "<sunpy.net.attrs.Instrument(SECCHI: Sun Earth Connection Coronal and Heliospheric Investigation)\nobject at 0x1698d3730>",
+        "<sunpy.net.attrs.Detector(EUVI: Extreme Ultraviolet Imager) object at 0x1698d3760>",
+        "<sunpy.net.attrs.Wavelength(304.0, 304.0, 'Angstrom')>",
+        "<sunpy.net.attrs.Physobs(intensity: the direct intensity, either integrated over the spectral\nobserving range or as a function of wavelength (spectral density)) object at 0x1698d3790>"
+      ]
+    },
+    {
+      "call_index": 3,
+      "has_results": true,
+      "num_results": 2,
+      "args": [
+        "<sunpy.net.attrs.Time(2017-07-23 04:30:00.000, 2017-07-23 05:00:00.000)>",
+        "<sunpy.net.attrs.Source: STEREO_A object at 0x16997a4a0>",
+        "<sunpy.net.attrs.Instrument(SECCHI: Sun Earth Connection Coronal and Heliospheric Investigation)\nobject at 0x169979090>",
+        "<sunpy.net.attrs.Detector(COR2: Coronograph 2) object at 0x169979330>",
+        "<sunpy.net.attrs.Wavelength(6500.0, 7500.0, 'Angstrom')>",
+        "<sunpy.net.attrs.Physobs(intensity: the direct intensity, either integrated over the spectral\nobserving range or as a function of wavelength (spectral density)) object at 0x1699793f0>"
+      ]
+    }
+  ],
+  "output": "SOHO LASCO C2 Query Results:\nResults from 1 Provider:\n\n19 Results from the VSOClient:\nSource: http://vso.stanford.edu/cgi-bin/search\nTotal estimated size: 36.914 Mbyte\n\n       Start Time               End Time        Source ... Extent Type   Size \n                                                       ...              Mibyte\n----------------------- ----------------------- ------ ... ----------- -------\n2017-07-23 01:36:09.000 2017-07-23 01:36:34.000   SOHO ...      CORONA 2.01074\n2017-07-23 01:48:07.000 2017-07-23 01:48:32.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:00:05.000 2017-07-23 02:00:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:12:05.000 2017-07-23 02:12:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:24:05.000 2017-07-23 02:24:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:36:05.000 2017-07-23 02:36:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:48:05.000 2017-07-23 02:48:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 02:54:08.000 2017-07-23 02:55:48.000   SOHO ...      CORONA 1.01074\n2017-07-23 02:57:58.000 2017-07-23 02:59:38.000   SOHO ...      CORONA 1.01074\n2017-07-23 03:01:47.000 2017-07-23 03:03:27.000   SOHO ...      CORONA 1.01074\n2017-07-23 03:12:08.000 2017-07-23 03:12:33.000   SOHO ...      CORONA 2.01074\n2017-07-23 03:24:05.000 2017-07-23 03:24:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 03:36:05.000 2017-07-23 03:36:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 03:48:05.000 2017-07-23 03:48:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 04:00:05.000 2017-07-23 04:00:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 04:12:06.000 2017-07-23 04:12:31.000   SOHO ...      CORONA 2.01074\n2017-07-23 04:24:05.000 2017-07-23 04:24:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 04:36:05.000 2017-07-23 04:36:30.000   SOHO ...      CORONA 2.01074\n2017-07-23 04:48:05.000 2017-07-23 04:48:30.000   SOHO ...      CORONA 2.01074\n\n\nSTEREO-A SECCHI EUVI (304 \u212b) Query Results:\nResults from 1 Provider:\n\n2 Results from the VSOClient:\nSource: http://vso.stanford.edu/cgi-bin/search\nTotal estimated size: 16.819 Mbyte\n\n       Start Time               End Time         Source  ... Extent Type   Size \n                                                         ...              Mibyte\n----------------------- ----------------------- -------- ... ----------- -------\n2017-07-22 22:36:15.000 2017-07-22 22:36:19.000 STEREO_A ...    FULLDISK 8.02002\n2017-07-22 22:43:45.000 2017-07-22 22:43:49.000 STEREO_A ...    FULLDISK 8.02002\n\n\nSTEREO-A SECCHI COR2 Query Results:\nResults from 1 Provider:\n\n2 Results from the VSOClient:\nSource: http://vso.stanford.edu/cgi-bin/search\nTotal estimated size: 16.854 Mbyte\n\n       Start Time               End Time         Source  ... Extent Type  Size \n                                                         ...             Mibyte\n----------------------- ----------------------- -------- ... ----------- ------\n2017-07-23 04:39:00.000 2017-07-23 04:39:26.000 STEREO_A ...      CORONA 8.0365\n2017-07-23 04:54:00.000 2017-07-23 04:54:26.000 STEREO_A ...      CORONA 8.0365\n\n\n"
+}

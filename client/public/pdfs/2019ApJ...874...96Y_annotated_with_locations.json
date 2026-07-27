@@ -1,0 +1,1459 @@
+{
+  "title": "Filament Eruption and Its Reformation Caused by Emerging Magnetic Flux",
+  "summary": {
+    "content_summary": "This study observes and analyzes the eruption and reformation of a solar filament induced by emerging magnetic flux. The instruments actively used include the New Vacuum Solar Telescope (NVST) and instruments from the Solar Dynamics Observatory (SDO) - specifically the Atmospheric Imaging Assembly (AIA) and Helioseismic and Magnetic Imager (HMI). Additionally, data from the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI) and Geostationary Operational Environmental Satellite (GOES) were utilized for complementary observations, particularly focusing on hard X-ray sources and solar flare flux. Observations also included inputs from the Large Angle and Spectrometric Coronagraph Experiment (LASCO) onboard the Solar and Heliospheric Observatory (SOHO) that assisted in identifying associated Coronal Mass Ejections (CMEs). Data collection spanned multiple periods throughout July 15, 2013, with precise temporal coordination between instruments to study magnetic field evolution, flare activities, and the dynamic movements within the corona, directly contributing to the comprehensive understanding of the filament behaviors and their triggers."
+  },
+  "instrumentation_details": [
+    {
+      "instrument_name": "New Vacuum Solar Telescope (NVST)",
+      "spacecraft": "Ground-based facility",
+      "general_comments": {
+        "value": "The NVST provided high-resolution observations in Hα 6562.8 Å and TiO, capturing the filament's chromospheric and photospheric activities.",
+        "supporting_quote": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT).",
+        "location": {
+          "start": 19258,
+          "end": 19389,
+          "score": 100,
+          "excerpt": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT)."
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 52.89517593383789,
+            "y0": 511.0715026855469,
+            "x1": 293.97802734375,
+            "y1": 522.0602416992188,
+            "vertical_middle": 516.5658721923828,
+            "excerpt_image": "excerpts_images/excerpt_eded76e8bb10489886b7ce3d96fe6abc.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.917633056640625,
+            "y0": 522.2396240234375,
+            "x1": 60.61519241333008,
+            "y1": 533.2283325195312,
+            "vertical_middle": 527.7339782714844,
+            "excerpt_image": "excerpts_images/excerpt_a24fe55f1a8d4ef5b190761420ed383d.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 60.604698181152344,
+            "y0": 527.3553466796875,
+            "x1": 65.34928894042969,
+            "y1": 534.3995361328125,
+            "vertical_middle": 530.87744140625,
+            "excerpt_image": "excerpts_images/excerpt_a47dfb23697e4a51b3b2361557287fa9.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 65.34928894042969,
+            "y0": 522.2393798828125,
+            "x1": 293.99493408203125,
+            "y1": 534.8721923828125,
+            "vertical_middle": 528.5557861328125,
+            "excerpt_image": "excerpts_images/excerpt_69145a26b5a34eea91631d43832a0220.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.917510986328125,
+            "y0": 533.1813354492188,
+            "x1": 114.7438735961914,
+            "y1": 544.1700439453125,
+            "vertical_middle": 538.6756896972656,
+            "excerpt_image": "excerpts_images/excerpt_1d22ba2009734a6a8ceb572008ceeffe.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Observations focused on the period before and after the filament eruption, capturing dynamic changes.",
+          "start_time": {
+            "value": "01:15 UT",
+            "supporting_quote": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT).",
+            "location": {
+              "start": 19258,
+              "end": 19389,
+              "score": 100,
+              "excerpt": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT)."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 52.89517593383789,
+                "y0": 511.0715026855469,
+                "x1": 293.97802734375,
+                "y1": 522.0602416992188,
+                "vertical_middle": 516.5658721923828,
+                "excerpt_image": "excerpts_images/excerpt_18dbbf036bb04d33961569d2363cf5f4.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917633056640625,
+                "y0": 522.2396240234375,
+                "x1": 60.61519241333008,
+                "y1": 533.2283325195312,
+                "vertical_middle": 527.7339782714844,
+                "excerpt_image": "excerpts_images/excerpt_62ad5bd3ca7547c7b2caf92f62a83aa2.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 60.604698181152344,
+                "y0": 527.3553466796875,
+                "x1": 65.34928894042969,
+                "y1": 534.3995361328125,
+                "vertical_middle": 530.87744140625,
+                "excerpt_image": "excerpts_images/excerpt_bedb512a20fb474e85f5aabfedc94c7d.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 65.34928894042969,
+                "y0": 522.2393798828125,
+                "x1": 293.99493408203125,
+                "y1": 534.8721923828125,
+                "vertical_middle": 528.5557861328125,
+                "excerpt_image": "excerpts_images/excerpt_4a6ff5af0a474c188789a33edfe42e0d.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917510986328125,
+                "y0": 533.1813354492188,
+                "x1": 114.7438735961914,
+                "y1": 544.1700439453125,
+                "vertical_middle": 538.6756896972656,
+                "excerpt_image": "excerpts_images/excerpt_469d6ab2ec344fdcb3172e7d81cdd09d.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "08:19 UT",
+            "supporting_quote": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT).",
+            "location": {
+              "start": 19258,
+              "end": 19389,
+              "score": 100,
+              "excerpt": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT)."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 52.89517593383789,
+                "y0": 511.0715026855469,
+                "x1": 293.97802734375,
+                "y1": 522.0602416992188,
+                "vertical_middle": 516.5658721923828,
+                "excerpt_image": "excerpts_images/excerpt_e2bc46649f4b421e8e1bc899fce0d5ea.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917633056640625,
+                "y0": 522.2396240234375,
+                "x1": 60.61519241333008,
+                "y1": 533.2283325195312,
+                "vertical_middle": 527.7339782714844,
+                "excerpt_image": "excerpts_images/excerpt_65434a8f20814affa72646f6dc721284.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 60.604698181152344,
+                "y0": 527.3553466796875,
+                "x1": 65.34928894042969,
+                "y1": 534.3995361328125,
+                "vertical_middle": 530.87744140625,
+                "excerpt_image": "excerpts_images/excerpt_9c89de5e961f42a5b2838f162f176f1c.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 65.34928894042969,
+                "y0": 522.2393798828125,
+                "x1": 293.99493408203125,
+                "y1": 534.8721923828125,
+                "vertical_middle": 528.5557861328125,
+                "excerpt_image": "excerpts_images/excerpt_7616ff34e18142f3b4eacf3f654deb0a.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917510986328125,
+                "y0": 533.1813354492188,
+                "x1": 114.7438735961914,
+                "y1": 544.1700439453125,
+                "vertical_middle": 538.6756896972656,
+                "excerpt_image": "excerpts_images/excerpt_bf1d7f3ca20f4671b9e0ea69f533993d.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "6562.8 Å (Hα)",
+              "TiO"
+            ],
+            "supporting_quote": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT).",
+            "location": {
+              "start": 19258,
+              "end": 19389,
+              "score": 100,
+              "excerpt": "On 2013 July 15, AR 11791 was also observed by the NVST in Hα 6562.8 Å and TiO during two periods (01:15–02:18 UT; 06:10–08:19 UT)."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 52.89517593383789,
+                "y0": 511.0715026855469,
+                "x1": 293.97802734375,
+                "y1": 522.0602416992188,
+                "vertical_middle": 516.5658721923828,
+                "excerpt_image": "excerpts_images/excerpt_d46a5fcc50174018bf8effb2c92f59fa.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917633056640625,
+                "y0": 522.2396240234375,
+                "x1": 60.61519241333008,
+                "y1": 533.2283325195312,
+                "vertical_middle": 527.7339782714844,
+                "excerpt_image": "excerpts_images/excerpt_39ca36d8564d4d4cb01441c82b33aea8.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 60.604698181152344,
+                "y0": 527.3553466796875,
+                "x1": 65.34928894042969,
+                "y1": 534.3995361328125,
+                "vertical_middle": 530.87744140625,
+                "excerpt_image": "excerpts_images/excerpt_933756db8a574340ad1512405a70193e.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 65.34928894042969,
+                "y0": 522.2393798828125,
+                "x1": 293.99493408203125,
+                "y1": 534.8721923828125,
+                "vertical_middle": 528.5557861328125,
+                "excerpt_image": "excerpts_images/excerpt_415673623baa4fe68ff524ed7b6c9c31.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917510986328125,
+                "y0": 533.1813354492188,
+                "x1": 114.7438735961914,
+                "y1": 544.1700439453125,
+                "vertical_middle": 538.6756896972656,
+                "excerpt_image": "excerpts_images/excerpt_e36dca203d524cecbc060a332642a510.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Filament dynamics in the chromosphere and photosphere",
+            "supporting_quote": "The NVST provided high-resolution observations in Hα 6562.8 Å and TiO, capturing the filament's chromospheric and photospheric activities.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "additional_comments": "The NVST offered insight into the filament's structure and its changes before and after the eruption."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Atmospheric Imaging Assembly (AIA)",
+      "spacecraft": "Solar Dynamics Observatory (SDO)",
+      "general_comments": {
+        "value": "AIA provides full-disk images of the Sun in multiple UV and EUV wavelengths with high spatial and temporal resolution, crucial for observing the filament and associated magnetic field changes.",
+        "supporting_quote": "The AIA instrument takes the full-disk images of the Sun in 10 ultraviolet (UV) and EUV wavelengths and up to 0.5 R☉above the solar limb.",
+        "location": {
+          "start": 18236,
+          "end": 18373,
+          "score": 100,
+          "excerpt": "The AIA instrument takes the full-disk images of the Sun in 10 ultraviolet (UV) and EUV wavelengths and up to 0.5 R☉above the solar limb."
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 172.979248046875,
+            "y0": 313.330810546875,
+            "x1": 293.966064453125,
+            "y1": 324.319580078125,
+            "vertical_middle": 318.8251953125,
+            "excerpt_image": "excerpts_images/excerpt_1b486513739a435ea26261a4e9daddb5.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.926483154296875,
+            "y0": 324.32952880859375,
+            "x1": 293.98895263671875,
+            "y1": 335.31829833984375,
+            "vertical_middle": 329.82391357421875,
+            "excerpt_image": "excerpts_images/excerpt_8d7199c1ba544d81bad1a05be1f1a2eb.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.926483154296875,
+            "y0": 335.2714538574219,
+            "x1": 156.03587341308594,
+            "y1": 346.2602233886719,
+            "vertical_middle": 340.7658386230469,
+            "excerpt_image": "excerpts_images/excerpt_60389fc9e90d416eaf7c307749a8f962.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 156.07550048828125,
+            "y0": 339.0530700683594,
+            "x1": 161.7540740966797,
+            "y1": 347.6199645996094,
+            "vertical_middle": 343.3365173339844,
+            "excerpt_image": "excerpts_images/excerpt_a2ec235fd1a1473387e43cc3e6ff86e7.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 164.40939331054688,
+            "y0": 335.2662658691406,
+            "x1": 247.68968200683594,
+            "y1": 346.2550354003906,
+            "vertical_middle": 340.7606506347656,
+            "excerpt_image": "excerpts_images/excerpt_e1673504951047bb9625a4443326dd95.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Before, during, and after the filament eruption to observe solar dynamics in different wavelengths.",
+          "start_time": {
+            "value": "00:30 UT",
+            "supporting_quote": "Figure 1. Overview of the NOAA AR 11791 and the ﬁlament at 00:30 UT on 2013 July 15.",
+            "location": {
+              "start": 20575,
+              "end": 20660,
+              "score": 100,
+              "excerpt": "Figure 1. Overview of the NOAA AR 11791 and the filament at 00:30 UT on 2013 July 15."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 4,
+                "x0": 42.916500091552734,
+                "y0": 413.7833251953125,
+                "x1": 212.63400268554688,
+                "y1": 422.8294982910156,
+                "vertical_middle": 418.30641174316406,
+                "excerpt_image": "excerpts_images/excerpt_853e7999209e4afab704567cb27ee588.png"
+              },
+              {
+                "page_number": 4,
+                "x0": 212.63400268554688,
+                "y0": 414.97857666015625,
+                "x1": 219.21014404296875,
+                "y1": 422.9487609863281,
+                "vertical_middle": 418.9636688232422,
+                "excerpt_image": "excerpts_images/excerpt_600a3174453a4727836bd449fc092d91.png"
+              },
+              {
+                "page_number": 4,
+                "x0": 219.17587280273438,
+                "y0": 414.0383605957031,
+                "x1": 336.8519592285156,
+                "y1": 422.8294982910156,
+                "vertical_middle": 418.4339294433594,
+                "excerpt_image": "excerpts_images/excerpt_6387a13beb054d909a417e11de082525.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "08:20 UT",
+            "supporting_quote": "The animation has an 8 s cadence, covering 06:10 UT–08:20 UT.",
+            "location": {
+              "start": 34667,
+              "end": 34728,
+              "score": 100,
+              "excerpt": "The animation has an 8 s cadence, covering 06:10 UT–08:20 UT."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 8,
+                "x0": 500.93597412109375,
+                "y0": 403.3807678222656,
+                "x1": 568.9505615234375,
+                "y1": 412.1719055175781,
+                "vertical_middle": 407.7763366699219,
+                "excerpt_image": "excerpts_images/excerpt_05f42d15d05a457da0afe113eb24a1ca.png"
+              },
+              {
+                "page_number": 8,
+                "x0": 42.915618896484375,
+                "y0": 412.3950500488281,
+                "x1": 183.570556640625,
+                "y1": 421.1861877441406,
+                "vertical_middle": 416.7906188964844,
+                "excerpt_image": "excerpts_images/excerpt_901affa36e9643cab14a0d48d9cd06fa.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "304 Å (He II)",
+              "94 Å (Fe XVIII)",
+              "193 Å (Fe XII and Fe XXIV)"
+            ],
+            "supporting_quote": "In this study, the 304 Å (He II, 0.05 MK), 94 Å (Fe XVIII, 7 MK), and 193 Å (Fe XII, 1.3 MK and Fe XXIV, 20 MK) images were used.",
+            "location": {
+              "start": 18483,
+              "end": 18612,
+              "score": 100,
+              "excerpt": "In this study, the 304 Å (He II, 0.05 MK), 94 Å (Fe XVIII, 7 MK), and 193 Å (Fe XII, 1.3 MK and Fe XXIV, 20 MK) images were used."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 196.10012817382812,
+                "y0": 356.691650390625,
+                "x1": 293.9617919921875,
+                "y1": 368.30804443359375,
+                "vertical_middle": 362.4998474121094,
+                "excerpt_image": "excerpts_images/excerpt_bfa1bacd18e74108950ae51252ce3bdb.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917236328125,
+                "y0": 367.8597106933594,
+                "x1": 57.65591049194336,
+                "y1": 379.4761047363281,
+                "vertical_middle": 373.66790771484375,
+                "excerpt_image": "excerpts_images/excerpt_6e36b47d257d4d2695555fc2952849ec.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 57.65591049194336,
+                "y0": 369.8248291015625,
+                "x1": 65.09442138671875,
+                "y1": 379.1661682128906,
+                "vertical_middle": 374.49549865722656,
+                "excerpt_image": "excerpts_images/excerpt_085b26408c5d47fabe2c581f155e78fe.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 65.14009857177734,
+                "y0": 368.4882507324219,
+                "x1": 154.13800048828125,
+                "y1": 379.4770202636719,
+                "vertical_middle": 373.9826354980469,
+                "excerpt_image": "excerpts_images/excerpt_49a0381a03c94b47a7c360d512eeafcf.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 154.13800048828125,
+                "y0": 369.82574462890625,
+                "x1": 176.4728240966797,
+                "y1": 379.1661682128906,
+                "vertical_middle": 374.49595642089844,
+                "excerpt_image": "excerpts_images/excerpt_c2069353252f4c669100948f1ced9cf6.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 176.48500061035156,
+                "y0": 368.4882507324219,
+                "x1": 276.139892578125,
+                "y1": 379.4770202636719,
+                "vertical_middle": 373.9826354980469,
+                "excerpt_image": "excerpts_images/excerpt_057e610c346640b9938a5db1b38d63fb.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 276.139892578125,
+                "y0": 369.82574462890625,
+                "x1": 291.483154296875,
+                "y1": 379.1661682128906,
+                "vertical_middle": 374.49595642089844,
+                "excerpt_image": "excerpts_images/excerpt_18333c4a9bda4482ab676aeefb113f30.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 291.514892578125,
+                "y0": 368.4882507324219,
+                "x1": 294.00555419921875,
+                "y1": 379.4770202636719,
+                "vertical_middle": 373.9826354980469,
+                "excerpt_image": "excerpts_images/excerpt_1ac88df15b1242acb9538eb50076d241.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.917144775390625,
+                "y0": 379.43017578125,
+                "x1": 107.42098999023438,
+                "y1": 390.4189453125,
+                "vertical_middle": 384.924560546875,
+                "excerpt_image": "excerpts_images/excerpt_e1dabbdb0365437090adc9c908317b73.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 107.42098999023438,
+                "y0": 380.7675476074219,
+                "x1": 132.36875915527344,
+                "y1": 390.10809326171875,
+                "vertical_middle": 385.4378204345703,
+                "excerpt_image": "excerpts_images/excerpt_5f58622e6f9c4904a562a24d33a70e09.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 132.37789916992188,
+                "y0": 379.4300537109375,
+                "x1": 251.4936981201172,
+                "y1": 390.4188232421875,
+                "vertical_middle": 384.9244384765625,
+                "excerpt_image": "excerpts_images/excerpt_0aee2cdd15db42a5acc10bbdf2251efc.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Solar eruptions and chromospheric activities",
+            "supporting_quote": "We present observations of the eruption and then reformation of a ﬁlament caused by its nearby emerging magnetic ﬂux.",
+            "location": {
+              "start": 940,
+              "end": 1059,
+              "score": 100,
+              "excerpt": "We present observations of the eruption and then reformation of a filament caused by its nearby emerging magnetic flux."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 1,
+                "x0": 78.80384826660156,
+                "y0": 181.74172973632812,
+                "x1": 337.93096923828125,
+                "y1": 192.73048400878906,
+                "vertical_middle": 187.2361068725586,
+                "excerpt_image": "excerpts_images/excerpt_340f917494ee4a979342ec585af76d36.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 337.93096923828125,
+                "y0": 182.91697692871094,
+                "x1": 345.8264465332031,
+                "y1": 192.87957763671875,
+                "vertical_middle": 187.89827728271484,
+                "excerpt_image": "excerpts_images/excerpt_f0d990b6ddc84983a6c87f62be4a007d.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 345.8264465332031,
+                "y0": 181.74172973632812,
+                "x1": 533.0416259765625,
+                "y1": 192.73048400878906,
+                "vertical_middle": 187.2361068725586,
+                "excerpt_image": "excerpts_images/excerpt_042a6526000c4a85bede95a89a79de28.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 78.80386352539062,
+                "y0": 193.9156951904297,
+                "x1": 84.30321502685547,
+                "y1": 203.8782958984375,
+                "vertical_middle": 198.8969955444336,
+                "excerpt_image": "excerpts_images/excerpt_1aaa78e0c0cc4e6b8bb567174fa1dff6.png"
+              },
+              {
+                "page_number": 1,
+                "x0": 84.30321502685547,
+                "y0": 192.74044799804688,
+                "x1": 96.75646209716797,
+                "y1": 203.7292022705078,
+                "vertical_middle": 198.23482513427734,
+                "excerpt_image": "excerpts_images/excerpt_8213955ead454725b3b60fc2e9502169.png"
+              }
+            ]
+          },
+          "additional_comments": "SDO/AIA observations provide crucial data on the sun’s corona and facilitate the study of rapid solar events."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Helioseismic and Magnetic Imager (HMI)",
+      "spacecraft": "Solar Dynamics Observatory (SDO)",
+      "general_comments": {
+        "value": "HMI provides measurements of the full-disk continuum intensity images and line-of-sight magnetic fields crucial for assessing magnetic activity before, during, and after the filament eruption.",
+        "supporting_quote": "The HMI instrument measures the full-disk continuum intensity images and the line-of-sight (LOS) magnetic ﬁeld for the Fe I absorption line at 6173 Å.",
+        "location": {
+          "start": 18613,
+          "end": 18764,
+          "score": 100,
+          "excerpt": "The HMI instrument measures the full-disk continuum intensity images and the line-of-sight (LOS) magnetic field for the Fe I absorption line at 6173 Å."
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 255.45582580566406,
+            "y0": 379.4300537109375,
+            "x1": 293.96624755859375,
+            "y1": 390.4188232421875,
+            "vertical_middle": 384.9244384765625,
+            "excerpt_image": "excerpts_images/excerpt_b693fe4ec2bb4f54afaffa8c2938df38.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.91673278808594,
+            "y0": 390.3719787597656,
+            "x1": 293.9432373046875,
+            "y1": 401.3607482910156,
+            "vertical_middle": 395.8663635253906,
+            "excerpt_image": "excerpts_images/excerpt_086a6e88a52d4cd5bda16307d84d0ed8.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.91673278808594,
+            "y0": 401.3706970214844,
+            "x1": 208.70433044433594,
+            "y1": 412.3594665527344,
+            "vertical_middle": 406.8650817871094,
+            "excerpt_image": "excerpts_images/excerpt_d50a7f5ea93b4427bd03e547d68dc258.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 208.70433044433594,
+            "y0": 402.54595947265625,
+            "x1": 221.668701171875,
+            "y1": 412.508544921875,
+            "vertical_middle": 407.5272521972656,
+            "excerpt_image": "excerpts_images/excerpt_bb5435e5f1ba4e2982abe30d56205ab9.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 221.668701171875,
+            "y0": 401.3706970214844,
+            "x1": 289.23406982421875,
+            "y1": 412.3594665527344,
+            "vertical_middle": 406.8650817871094,
+            "excerpt_image": "excerpts_images/excerpt_936cd23d81dd4a7e90ccdb12862bf3e3.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 289.23406982421875,
+            "y0": 402.7076721191406,
+            "x1": 293.9581604003906,
+            "y1": 412.0486145019531,
+            "vertical_middle": 407.3781433105469,
+            "excerpt_image": "excerpts_images/excerpt_239a65795b8e46beb480c36ee9c0ea98.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.916500091552734,
+            "y0": 412.4819641113281,
+            "x1": 149.8351287841797,
+            "y1": 423.4707336425781,
+            "vertical_middle": 417.9763488769531,
+            "excerpt_image": "excerpts_images/excerpt_ec7a46d4fe1c4561bf14e83b97b30788.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Observational period focused on capturing magnetic field dynamics associated with the filament.",
+          "start_time": {
+            "value": "Befoe 20:00 UT",
+            "supporting_quote": "The negative and positive ﬂux showed a persistent increase before the onset of flux eruption observed over a duration that started before 20:00 UT on 2013 July 14.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "end_time": {
+            "value": "08:20 UT",
+            "supporting_quote": "The animation has an 8 s cadence, covering 06:10 UT–08:20 UT.",
+            "location": {
+              "start": 34667,
+              "end": 34728,
+              "score": 100,
+              "excerpt": "The animation has an 8 s cadence, covering 06:10 UT–08:20 UT."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 8,
+                "x0": 500.93597412109375,
+                "y0": 403.3807678222656,
+                "x1": 568.9505615234375,
+                "y1": 412.1719055175781,
+                "vertical_middle": 407.7763366699219,
+                "excerpt_image": "excerpts_images/excerpt_9991523bf4204e0ca241222437c54c19.png"
+              },
+              {
+                "page_number": 8,
+                "x0": 42.915618896484375,
+                "y0": 412.3950500488281,
+                "x1": 183.570556640625,
+                "y1": 421.1861877441406,
+                "vertical_middle": 416.7906188964844,
+                "excerpt_image": "excerpts_images/excerpt_6a7b309248d841efb6c5a0242dbccee1.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "6173 Å (Fe I absorption line)"
+            ],
+            "supporting_quote": "The HMI instrument measures the full-disk continuum intensity images and the line-of-sight (LOS) magnetic ﬁeld for the Fe I absorption line at 6173 Å.",
+            "location": {
+              "start": 18613,
+              "end": 18764,
+              "score": 100,
+              "excerpt": "The HMI instrument measures the full-disk continuum intensity images and the line-of-sight (LOS) magnetic field for the Fe I absorption line at 6173 Å."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 255.45582580566406,
+                "y0": 379.4300537109375,
+                "x1": 293.96624755859375,
+                "y1": 390.4188232421875,
+                "vertical_middle": 384.9244384765625,
+                "excerpt_image": "excerpts_images/excerpt_cb69c90d26f645ebbc8512c2b7c3d532.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.91673278808594,
+                "y0": 390.3719787597656,
+                "x1": 293.9432373046875,
+                "y1": 401.3607482910156,
+                "vertical_middle": 395.8663635253906,
+                "excerpt_image": "excerpts_images/excerpt_adbc8930d9db4534a2a35764ca07ceee.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.91673278808594,
+                "y0": 401.3706970214844,
+                "x1": 208.70433044433594,
+                "y1": 412.3594665527344,
+                "vertical_middle": 406.8650817871094,
+                "excerpt_image": "excerpts_images/excerpt_142cc8ee1d394298a5836f93a541cd0b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 208.70433044433594,
+                "y0": 402.54595947265625,
+                "x1": 221.668701171875,
+                "y1": 412.508544921875,
+                "vertical_middle": 407.5272521972656,
+                "excerpt_image": "excerpts_images/excerpt_90919686aea448bdac25bbf801a42127.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 221.668701171875,
+                "y0": 401.3706970214844,
+                "x1": 289.23406982421875,
+                "y1": 412.3594665527344,
+                "vertical_middle": 406.8650817871094,
+                "excerpt_image": "excerpts_images/excerpt_a82bbc1b60764d328408b7d13cfe5117.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 289.23406982421875,
+                "y0": 402.7076721191406,
+                "x1": 293.9581604003906,
+                "y1": 412.0486145019531,
+                "vertical_middle": 407.3781433105469,
+                "excerpt_image": "excerpts_images/excerpt_63622da8fd6f4c8e9baacc1d4663d23d.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.916500091552734,
+                "y0": 412.4819641113281,
+                "x1": 149.8351287841797,
+                "y1": 423.4707336425781,
+                "vertical_middle": 417.9763488769531,
+                "excerpt_image": "excerpts_images/excerpt_34ec205ef3fd431d865340d8603e1748.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Solar magnetic activities and continuum intensity",
+            "supporting_quote": "Simultaneous HMI magnetograms are overplotted on panels as blue/white contours for positive/negative polarity.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 218.379638671875,
+                "y0": 547.4935302734375,
+                "x1": 331.420166015625,
+                "y1": 556.2846069335938,
+                "vertical_middle": 551.8890686035156,
+                "excerpt_image": "excerpts_images/excerpt_06ae4040c551443e814ea1130398e55b.png"
+              }
+            ]
+          },
+          "additional_comments": "HMI's capabilities allow for the analysis of the dynamic magnetic field changes, essential for understanding solar eruptions."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI)",
+      "spacecraft": "RHESSI satellite",
+      "general_comments": {
+        "value": "RHESSI was used for investigating the hard X-ray sources related to particle acceleration sites.",
+        "supporting_quote": "In the present study, the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI; Lin et al. 2002) was also utilized to investigate the hard X-ray sources related to the particle acceleration sites.",
+        "location": {
+          "start": 19998,
+          "end": 20202,
+          "score": 100,
+          "excerpt": " In the present study, the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI; Lin et al. 2002) was also utilized to investigate the hard X-ray sources related to the particle acceleration sites"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 157.72303771972656,
+            "y0": 642.7705688476562,
+            "x1": 293.97161865234375,
+            "y1": 653.75927734375,
+            "vertical_middle": 648.2649230957031,
+            "excerpt_image": "excerpts_images/excerpt_667e727339e348628a1bb4c8b5e368f6.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.922027587890625,
+            "y0": 653.7124633789062,
+            "x1": 293.9825134277344,
+            "y1": 664.701171875,
+            "vertical_middle": 659.2068176269531,
+            "excerpt_image": "excerpts_images/excerpt_01900db429994361909ee665b655892e.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.9219970703125,
+            "y0": 664.711181640625,
+            "x1": 293.95440673828125,
+            "y1": 675.6998901367188,
+            "vertical_middle": 670.2055358886719,
+            "excerpt_image": "excerpts_images/excerpt_1998d430c9a34132a8d29ac508854c21.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.92200469970703,
+            "y0": 675.6531372070312,
+            "x1": 238.56246948242188,
+            "y1": 686.641845703125,
+            "vertical_middle": 681.1474914550781,
+            "excerpt_image": "excerpts_images/excerpt_ff6d01eb7248471199a888475ccdf690.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Observational period when high energy X-ray sources were recorded through imaging spectroscopy.",
+          "start_time": {
+            "value": "01:54 UT",
+            "supporting_quote": "We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT).",
+            "location": {
+              "start": 20203,
+              "end": 20412,
+              "score": 100,
+              "excerpt": " We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT)"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 242.42098999023438,
+                "y0": 675.6531372070312,
+                "x1": 293.9605407714844,
+                "y1": 686.641845703125,
+                "vertical_middle": 681.1474914550781,
+                "excerpt_image": "excerpts_images/excerpt_b130f6ac881b4b22a3d4d274f92f768e.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92200469970703,
+                "y0": 686.5950317382812,
+                "x1": 293.96356201171875,
+                "y1": 697.583740234375,
+                "vertical_middle": 692.0893859863281,
+                "excerpt_image": "excerpts_images/excerpt_9eeefad816534a72801df68e16632717.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92298889160156,
+                "y0": 697.59375,
+                "x1": 294.0013732910156,
+                "y1": 708.5824584960938,
+                "vertical_middle": 703.0881042480469,
+                "excerpt_image": "excerpts_images/excerpt_83986665bc7546c5a9d425452998094b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92295837402344,
+                "y0": 708.53564453125,
+                "x1": 294.00244140625,
+                "y1": 719.5243530273438,
+                "vertical_middle": 714.0299987792969,
+                "excerpt_image": "excerpts_images/excerpt_b41317702b9248bf890a3f73fe21d687.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92399597167969,
+                "y0": 719.4776000976562,
+                "x1": 186.1264190673828,
+                "y1": 730.46630859375,
+                "vertical_middle": 724.9719543457031,
+                "excerpt_image": "excerpts_images/excerpt_02125a4e73984f7f93a52298b1c350a4.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "06:41 UT",
+            "supporting_quote": "We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT).",
+            "location": {
+              "start": 20203,
+              "end": 20412,
+              "score": 100,
+              "excerpt": " We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT)"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 242.42098999023438,
+                "y0": 675.6531372070312,
+                "x1": 293.9605407714844,
+                "y1": 686.641845703125,
+                "vertical_middle": 681.1474914550781,
+                "excerpt_image": "excerpts_images/excerpt_dae53c5408a2495583f9a0548f7dfcae.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92200469970703,
+                "y0": 686.5950317382812,
+                "x1": 293.96356201171875,
+                "y1": 697.583740234375,
+                "vertical_middle": 692.0893859863281,
+                "excerpt_image": "excerpts_images/excerpt_c5a42caee72a4677b789fc1d520ada7b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92298889160156,
+                "y0": 697.59375,
+                "x1": 294.0013732910156,
+                "y1": 708.5824584960938,
+                "vertical_middle": 703.0881042480469,
+                "excerpt_image": "excerpts_images/excerpt_4eef1f4f363d4a67a95ab3ec30c881f7.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92295837402344,
+                "y0": 708.53564453125,
+                "x1": 294.00244140625,
+                "y1": 719.5243530273438,
+                "vertical_middle": 714.0299987792969,
+                "excerpt_image": "excerpts_images/excerpt_e6e7bd8649cf4da2a4d8303136c0ff18.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92399597167969,
+                "y0": 719.4776000976562,
+                "x1": 186.1264190673828,
+                "y1": 730.46630859375,
+                "vertical_middle": 724.9719543457031,
+                "excerpt_image": "excerpts_images/excerpt_f05f07113f6145fdbdbc1f96a3e26ea6.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "6–12 keV",
+              "12–25 keV"
+            ],
+            "supporting_quote": "We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT).",
+            "location": {
+              "start": 20203,
+              "end": 20412,
+              "score": 100,
+              "excerpt": " We used the CLEAN method (Hurford et al. 2002) to reconstruct the RHESSI image at the energy bands of 6–12 and 12–25 keV, with an integration time of 2 minutes (01:54–01:56 UT; 03:01–03:03 UT; 06:39–06:41 UT)"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 242.42098999023438,
+                "y0": 675.6531372070312,
+                "x1": 293.9605407714844,
+                "y1": 686.641845703125,
+                "vertical_middle": 681.1474914550781,
+                "excerpt_image": "excerpts_images/excerpt_b1da5e6bd09f45cd838cc2245331fb49.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92200469970703,
+                "y0": 686.5950317382812,
+                "x1": 293.96356201171875,
+                "y1": 697.583740234375,
+                "vertical_middle": 692.0893859863281,
+                "excerpt_image": "excerpts_images/excerpt_89fd8a0c3a944abb903a9537f1cca86f.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92298889160156,
+                "y0": 697.59375,
+                "x1": 294.0013732910156,
+                "y1": 708.5824584960938,
+                "vertical_middle": 703.0881042480469,
+                "excerpt_image": "excerpts_images/excerpt_9c39b575f0054335975fd85e85d94066.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92295837402344,
+                "y0": 708.53564453125,
+                "x1": 294.00244140625,
+                "y1": 719.5243530273438,
+                "vertical_middle": 714.0299987792969,
+                "excerpt_image": "excerpts_images/excerpt_87591ddf488a4d5ba60a8d323ba3e5e0.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92399597167969,
+                "y0": 719.4776000976562,
+                "x1": 186.1264190673828,
+                "y1": 730.46630859375,
+                "vertical_middle": 724.9719543457031,
+                "excerpt_image": "excerpts_images/excerpt_9dca93d94be0493a9b31817d6a4490cc.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Hard X-ray sources indicating particle acceleration sites",
+            "supporting_quote": "In the present study, the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI; Lin et al. 2002) was also utilized to investigate the hard X-ray sources related to the particle acceleration sites.",
+            "location": {
+              "start": 19998,
+              "end": 20202,
+              "score": 100,
+              "excerpt": " In the present study, the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI; Lin et al. 2002) was also utilized to investigate the hard X-ray sources related to the particle acceleration sites"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 157.72303771972656,
+                "y0": 642.7705688476562,
+                "x1": 293.97161865234375,
+                "y1": 653.75927734375,
+                "vertical_middle": 648.2649230957031,
+                "excerpt_image": "excerpts_images/excerpt_794c59c84c804175a0e113e062410584.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.922027587890625,
+                "y0": 653.7124633789062,
+                "x1": 293.9825134277344,
+                "y1": 664.701171875,
+                "vertical_middle": 659.2068176269531,
+                "excerpt_image": "excerpts_images/excerpt_7d84ce13950d4dd08c1341a99d20962e.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.9219970703125,
+                "y0": 664.711181640625,
+                "x1": 293.95440673828125,
+                "y1": 675.6998901367188,
+                "vertical_middle": 670.2055358886719,
+                "excerpt_image": "excerpts_images/excerpt_e4eff48fb1824349a685771f7d0b8e1b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92200469970703,
+                "y0": 675.6531372070312,
+                "x1": 238.56246948242188,
+                "y1": 686.641845703125,
+                "vertical_middle": 681.1474914550781,
+                "excerpt_image": "excerpts_images/excerpt_576e8f376a86496ca696a14fb3c4a7c7.png"
+              }
+            ]
+          },
+          "additional_comments": "Key for identifying the energetic particle processes contributing to flare dynamics."
+        }
+      ],
+      "usage_category": "primary",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Geostationary Operational Environmental Satellite (GOES)",
+      "spacecraft": "GOES",
+      "general_comments": {
+        "value": "GOES provides continuous observations of soft X-ray solar flux, used here to track solar flare activity associated with the filament eruption.",
+        "supporting_quote": "To present the variation of SXR 1–8 Å ﬂux in the course of recurrent brightenings and the ﬁlament eruption, the observations from the Geostationary Operational Environmental Satellite (GOES) were also uti-lized.",
+        "location": null,
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 188.73760986328125,
+            "y0": 719.4776000976562,
+            "x1": 293.98345947265625,
+            "y1": 730.46630859375,
+            "vertical_middle": 724.9719543457031,
+            "excerpt_image": "excerpts_images/excerpt_54152d4e9a294e59b0776d4e29c45081.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 42.92500305175781,
+            "y0": 730.5888671875,
+            "x1": 55.5775032043457,
+            "y1": 741.5775756835938,
+            "vertical_middle": 736.0832214355469,
+            "excerpt_image": "excerpts_images/excerpt_e51f065ce8434f8e95d8e466863818a1.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Recording of SXR flux variability to assess flare strength and progression across time.",
+          "start_time": {
+            "value": "00:30 UT",
+            "supporting_quote": "Panel (a) displays the GOES SXR ﬂux at 1–8 Å (black) and added the RHESSI HXR light curves at the energy ranges of 3–6 keV (blue) and 6–12 keV (pink), respectively.",
+            "location": {
+              "start": 24359,
+              "end": 24524,
+              "score": 100,
+              "excerpt": "Panel (a) displays the GOES SXR flux at 1–8 Å (black) and added the RHESSI HXR light curves at the energy ranges of 3–6 keV (blue) and 6–12 keV (pink), respectively."
+            },
+            "pdf_locations": [
+              {
+                "page_number": 5,
+                "x0": 359.3190612792969,
+                "y0": 528.218017578125,
+                "x1": 466.65057373046875,
+                "y1": 537.0090942382812,
+                "vertical_middle": 532.6135559082031,
+                "excerpt_image": "excerpts_images/excerpt_91953a37d66048f6864622d3d788a470.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 466.65057373046875,
+                "y0": 529.158203125,
+                "x1": 473.0809326171875,
+                "y1": 537.12841796875,
+                "vertical_middle": 533.143310546875,
+                "excerpt_image": "excerpts_images/excerpt_f883ccece3484198ad026881b5c1f22b.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 473.0466613769531,
+                "y0": 528.218017578125,
+                "x1": 568.9576416015625,
+                "y1": 537.0090942382812,
+                "vertical_middle": 532.6135559082031,
+                "excerpt_image": "excerpts_images/excerpt_d7b53a03401a464d92d77801dbf7748a.png"
+              },
+              {
+                "page_number": 5,
+                "x0": 42.916473388671875,
+                "y0": 537.8555908203125,
+                "x1": 375.7631530761719,
+                "y1": 546.6466674804688,
+                "vertical_middle": 542.2511291503906,
+                "excerpt_image": "excerpts_images/excerpt_33d7cab0315949af99ed0ff18b711ca2.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "end-of-reference-period",
+            "supporting_quote": "The SXR activity from GOES-related observations was ongoing over the orange reference timeline.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "wavelengths": {
+            "values": [
+              "1–8 Å (soft X-ray)"
+            ],
+            "supporting_quote": "To present the variation of SXR 1–8 Å ﬂux in the course of recurrent brightenings and the filament eruption, the observations from the Geostationary Operational Environmental Satellite (GOES) were also utilized.",
+            "location": null,
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 188.73760986328125,
+                "y0": 719.4776000976562,
+                "x1": 293.98345947265625,
+                "y1": 730.46630859375,
+                "vertical_middle": 724.9719543457031,
+                "excerpt_image": "excerpts_images/excerpt_6f0cd30ef5594b588408fdb6f497c9f5.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 42.92500305175781,
+                "y0": 730.5888671875,
+                "x1": 55.5775032043457,
+                "y1": 741.5775756835938,
+                "vertical_middle": 736.0832214355469,
+                "excerpt_image": "excerpts_images/excerpt_d92a706080db4d249b4217bcfbab39aa.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Soft X-Ray flux for solar flare tracking",
+            "supporting_quote": "The associated variation of SXR 1–8 Å flux in the course of recurrent brightenings and the filament eruption, the observations from the Geostationary Operational Environmental Satellite (GOES) were also utilized.",
+            "location": null,
+            "pdf_locations": []
+          },
+          "additional_comments": "GOES' long-term continuous monitoring supports contextual tracking of solar activity levels."
+        }
+      ],
+      "usage_category": "contextual",
+      "normalized_name": null,
+      "instrument_id": null
+    },
+    {
+      "instrument_name": "Large Angle and Spectrometric Coronagraph Experiment (LASCO)",
+      "spacecraft": "Solar and Heliospheric Observatory (SOHO)",
+      "general_comments": {
+        "value": "LASCO images assisted in identifying CMEs correlated with filament activities, contributing to comprehending broader solar eruptions.",
+        "supporting_quote": "Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs.",
+        "location": {
+          "start": 14723,
+          "end": 14941,
+          "score": 100,
+          "excerpt": " Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs"
+        },
+        "pdf_locations": [
+          {
+            "page_number": 3,
+            "x0": 346.0042724609375,
+            "y0": 73.06815338134766,
+            "x1": 568.9483642578125,
+            "y1": 84.05690002441406,
+            "vertical_middle": 78.56252670288086,
+            "excerpt_image": "excerpts_images/excerpt_e6f5acd7523046c08bc91c4b12e6588b.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 317.94158935546875,
+            "y0": 84.0668716430664,
+            "x1": 568.9302978515625,
+            "y1": 95.05561828613281,
+            "vertical_middle": 89.56124496459961,
+            "excerpt_image": "excerpts_images/excerpt_172c5f4c113249818f5037f3976e2d64.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 317.94256591796875,
+            "y0": 95.0087661743164,
+            "x1": 568.953125,
+            "y1": 105.99751281738281,
+            "vertical_middle": 100.50313949584961,
+            "excerpt_image": "excerpts_images/excerpt_3581bc62141c4085ba0be014b3e43f71.png"
+          },
+          {
+            "page_number": 3,
+            "x0": 317.94354248046875,
+            "y0": 105.32301330566406,
+            "x1": 568.936279296875,
+            "y1": 116.93940734863281,
+            "vertical_middle": 111.13121032714844,
+            "excerpt_image": "excerpts_images/excerpt_f8151c1c275b4c449e4e4ce4332dd390.png"
+          }
+        ]
+      },
+      "detectors": null,
+      "data_collection_periods": [
+        {
+          "description": "Detection and monitoring of CMEs related to filament eruptions.",
+          "start_time": {
+            "value": "simultaneous with other observations",
+            "supporting_quote": "Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs.",
+            "location": {
+              "start": 14723,
+              "end": 14941,
+              "score": 100,
+              "excerpt": " Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 346.0042724609375,
+                "y0": 73.06815338134766,
+                "x1": 568.9483642578125,
+                "y1": 84.05690002441406,
+                "vertical_middle": 78.56252670288086,
+                "excerpt_image": "excerpts_images/excerpt_f1813eb64b8b4b63bd6ceb5844271f2b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94158935546875,
+                "y0": 84.0668716430664,
+                "x1": 568.9302978515625,
+                "y1": 95.05561828613281,
+                "vertical_middle": 89.56124496459961,
+                "excerpt_image": "excerpts_images/excerpt_e7e2f8e51527436d816826135bf8fac9.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94256591796875,
+                "y0": 95.0087661743164,
+                "x1": 568.953125,
+                "y1": 105.99751281738281,
+                "vertical_middle": 100.50313949584961,
+                "excerpt_image": "excerpts_images/excerpt_433aff7d13234964a091d47e91922a8e.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94354248046875,
+                "y0": 105.32301330566406,
+                "x1": 568.936279296875,
+                "y1": 116.93940734863281,
+                "vertical_middle": 111.13121032714844,
+                "excerpt_image": "excerpts_images/excerpt_12389f3cdccd4e288cf442214b76efe3.png"
+              }
+            ]
+          },
+          "end_time": {
+            "value": "simultaneous with other observations",
+            "supporting_quote": "Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs.",
+            "location": {
+              "start": 14723,
+              "end": 14941,
+              "score": 100,
+              "excerpt": " Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 346.0042724609375,
+                "y0": 73.06815338134766,
+                "x1": 568.9483642578125,
+                "y1": 84.05690002441406,
+                "vertical_middle": 78.56252670288086,
+                "excerpt_image": "excerpts_images/excerpt_d3bb1f8f9735437bb3cabe0b8c45e47b.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94158935546875,
+                "y0": 84.0668716430664,
+                "x1": 568.9302978515625,
+                "y1": 95.05561828613281,
+                "vertical_middle": 89.56124496459961,
+                "excerpt_image": "excerpts_images/excerpt_eedeb72db30a4ab19317793f1f00c736.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94256591796875,
+                "y0": 95.0087661743164,
+                "x1": 568.953125,
+                "y1": 105.99751281738281,
+                "vertical_middle": 100.50313949584961,
+                "excerpt_image": "excerpts_images/excerpt_bd22a83232524daa94aca29cd14c6547.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94354248046875,
+                "y0": 105.32301330566406,
+                "x1": 568.936279296875,
+                "y1": 116.93940734863281,
+                "vertical_middle": 111.13121032714844,
+                "excerpt_image": "excerpts_images/excerpt_12ea61792e034b9cae7ce1a3267346ab.png"
+              }
+            ]
+          },
+          "wavelengths": {
+            "values": [
+              "Ultraviolet images used"
+            ],
+            "supporting_quote": "Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs.",
+            "location": {
+              "start": 14723,
+              "end": 14941,
+              "score": 100,
+              "excerpt": " Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 346.0042724609375,
+                "y0": 73.06815338134766,
+                "x1": 568.9483642578125,
+                "y1": 84.05690002441406,
+                "vertical_middle": 78.56252670288086,
+                "excerpt_image": "excerpts_images/excerpt_fc60888aaaf1402d86a8f0dc5270806d.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94158935546875,
+                "y0": 84.0668716430664,
+                "x1": 568.9302978515625,
+                "y1": 95.05561828613281,
+                "vertical_middle": 89.56124496459961,
+                "excerpt_image": "excerpts_images/excerpt_a91fa8e313fc440aa00fd0936b2f397c.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94256591796875,
+                "y0": 95.0087661743164,
+                "x1": 568.953125,
+                "y1": 105.99751281738281,
+                "vertical_middle": 100.50313949584961,
+                "excerpt_image": "excerpts_images/excerpt_42d69420a2964271ae8c0ca1a4fd0d8d.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94354248046875,
+                "y0": 105.32301330566406,
+                "x1": 568.936279296875,
+                "y1": 116.93940734863281,
+                "vertical_middle": 111.13121032714844,
+                "excerpt_image": "excerpts_images/excerpt_4b00218bf1914d1f9b0aee746cded722.png"
+              }
+            ]
+          },
+          "physical_observable": {
+            "value": "Coronal Mass Ejections",
+            "supporting_quote": "Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs.",
+            "location": {
+              "start": 14723,
+              "end": 14941,
+              "score": 100,
+              "excerpt": " Moreover, observations from the Large Angle and Spectrometric Coronagraph Experiment (LASCO; Brueckner et al. 1995) on board the Solar Heliospheric Observatory (SOHO) were also employed to identify the associated CMEs"
+            },
+            "pdf_locations": [
+              {
+                "page_number": 3,
+                "x0": 346.0042724609375,
+                "y0": 73.06815338134766,
+                "x1": 568.9483642578125,
+                "y1": 84.05690002441406,
+                "vertical_middle": 78.56252670288086,
+                "excerpt_image": "excerpts_images/excerpt_8cf2f384f5a7490bad008fb4ff1fa394.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94158935546875,
+                "y0": 84.0668716430664,
+                "x1": 568.9302978515625,
+                "y1": 95.05561828613281,
+                "vertical_middle": 89.56124496459961,
+                "excerpt_image": "excerpts_images/excerpt_1641f6f863ea4453a145f19d5e6aaa22.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94256591796875,
+                "y0": 95.0087661743164,
+                "x1": 568.953125,
+                "y1": 105.99751281738281,
+                "vertical_middle": 100.50313949584961,
+                "excerpt_image": "excerpts_images/excerpt_c6fac1099aba4f0b8fb2012209304bf0.png"
+              },
+              {
+                "page_number": 3,
+                "x0": 317.94354248046875,
+                "y0": 105.32301330566406,
+                "x1": 568.936279296875,
+                "y1": 116.93940734863281,
+                "vertical_middle": 111.13121032714844,
+                "excerpt_image": "excerpts_images/excerpt_b8747f31e0e34b67b40ca059422c30b2.png"
+              }
+            ]
+          },
+          "additional_comments": "LASCO's observations supplementing context by confirming the mass ejection dynamics."
+        }
+      ],
+      "usage_category": "contextual",
+      "normalized_name": null,
+      "instrument_id": null
+    }
+  ],
+  "paper_id": null,
+  "bibcode": "2019ApJ...874...96Y",
+  "extraction_timestamp": "2025-03-05T12:02:36.590470",
+  "processed_by": null
+}

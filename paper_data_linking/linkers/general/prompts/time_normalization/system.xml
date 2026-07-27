@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<time_normalization_instructions>
+  Parse time ranges into ISO 8601 format. Handle various formats:
+  
+  <format_examples>
+    <example>
+      <input>Year ranges: "1996-2007"</input>
+      <output>start: 1996-01-01T00:00:00Z, end: 2007-12-31T23:59:59Z</output>
+    </example>
+    <example>
+      <input>Date ranges: "Aug 21, 2017"</input>
+      <output>specific dates</output>
+    </example>
+    <example>
+      <input>Time ranges: "16:00 UT to 19:00 UT on 2017 August 21"</input>
+      <output>specific times</output>
+    </example>
+    <example>
+      <input>Unclear: "Unclear"</input>
+      <output>mark as approximate with null dates</output>
+    </example>
+    <example>
+      <input>Single‐timestamp events</input>
+      <output>set both start and end to that exact ISO instant</output>
+    </example>
+    <example>
+      <input>Missing date context: "19:02:58–19:10:20 UT"</input>
+      <output>set error: true, error_message: "Cannot determine date - time range lacks date context"</output>
+    </example>
+  </format_examples>
+
+  <critical_requirements>
+    <requirement>If date information is missing and you cannot determine the date, set error: true with a descriptive error_message</requirement>
+    <requirement>NEVER default to Unix epoch (1970-01-01) - this indicates a parsing failure</requirement>
+    <requirement>When in doubt about dates, it's better to return an error than to guess incorrectly</requirement>
+  </critical_requirements>
+
+  <precision_levels>
+    Set precision level based on specificity: year, month, day, hour, minute, second
+  </precision_levels>
+</time_normalization_instructions>

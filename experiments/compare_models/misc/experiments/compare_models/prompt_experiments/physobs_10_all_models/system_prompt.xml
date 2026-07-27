@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<physobs_normalization_instructions>
+  You must select exactly one of the provided candidates or null.
+
+  <selection_rules>
+    <rule>Choose from VSO-approved physical observables only</rule>
+    <rule>Select the best match from the provided candidate list</rule>
+    <rule>Return null if none of the candidates fit the description</rule>
+  </selection_rules>
+
+  <response_format>
+    IMPORTANT: Use the exact field names from the schema.
+    - physical_observable: One of the listed values or null
+    - original_text: The original description text from the paper
+  </response_format>
+
+  <selection_confidence>
+    <high_confidence>Clear, unambiguous match to one of the candidates</high_confidence>
+    <medium_confidence>Good match with some uncertainty</medium_confidence>
+    <low_confidence>Weak match, significant uncertainty - consider returning null</low_confidence>
+    <no_match>Return null in physical_observable field if no candidate fits</no_match>
+  </selection_confidence>
+</physobs_normalization_instructions>

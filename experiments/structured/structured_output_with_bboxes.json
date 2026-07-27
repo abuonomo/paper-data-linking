@@ -1,0 +1,1085 @@
+{
+  "title": "Scientific Observation Form for Bright Ray-like Features in CME Aftermath",
+  "summary": {
+    "content_summary": "This study analyzes current sheet candidates observed in the aftermath of CMEs using both white light and ultraviolet observations. The primary instruments employed are the LASCO C2 white light coronagraph and the UVCS ultraviolet spectrometer, both onboard the SOHO spacecraft. LASCO C2 images, collected during two main periods (1996 April–1998 December for solar minimum and 2001 for solar maximum), were used to detect ray-like features. UVCS observations, spanning from 1996 June to 2005 December, provided spectral data in key lines (e.g., O VI, H I Lyα, Si XII, and [Fe XVIII]) to assess plasma properties. Several other instruments—including SUMER, the Transition Region and Coronal Explorer, the Solar Dynamics Observatory/Atmospheric Imaging Assembly (AIA), STEREO coronagraphs, and the MLSO Mark-III/Mark-IV K-coronameters—are referenced in the text to provide additional context regarding observational techniques and supporting evidence from different wavelengths."
+  },
+  "instrumentation_details": [
+    {
+      "instrument_name": "LASCO C2",
+      "spacecraft": "SOHO",
+      "general_comments": "LASCO C2 is a white light coronagraph that continuously observes the solar corona from 2.3 to 6 R⊙ with a cadence of about 20 minutes and a pixel size of 11.4 arcseconds. It is used to detect ray-like features associated with current sheets in the aftermath of CMEs.",
+      "general_comments_supporting_quote": "LASCO C2 is a white light coronagraph, that continuously observes the solar corona from 2.3 to 6 R⊙ with a cadence of about 20 min and a pixel size of 11.4′′ (Brueckner et al. 1995).",
+      "detectors": null,
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [
+        {
+          "description": "White light observations during solar minimum.",
+          "start_date": "1996 April",
+          "end_date": "1998 December",
+          "time_range_supporting_quote": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "wavelengths": [
+            "White light (broadband visible)"
+          ],
+          "wavelengths_supporting_quote": "LASCO images are white light observations that reveal the ray‐like features in the wake of CMEs.",
+          "physical_observable": "Brightness and morphological features of current sheet candidate rays in the corona.",
+          "physical_observable_supporting_quote": "The white light ray-like features we analyzed in this paper were selected from the LASCO C2 observations.",
+          "additional_comments": "Used to identify and track the evolution of ray-like features behind CMEs.",
+          "time_range_supporting_quote_location": {
+            "start": 6051,
+            "end": 6198,
+            "score": 100
+          },
+          "time_range_supporting_quote_excerpt": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "physical_observable_supporting_quote_location": {
+            "start": 8270,
+            "end": 8375,
+            "score": 100
+          },
+          "physical_observable_supporting_quote_excerpt": "The white light ray-like features we analyzed in this paper were selected from the LASCO C2 observations.",
+          "time_range_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                168.23880004882812,
+                149.36834716796875,
+                295.282958984375,
+                159.33099365234375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                159.80853271484375,
+                295.0202941894531,
+                169.77117919921875
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                170.36834716796875,
+                295.2538757324219,
+                180.33099365234375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                180.92816162109375,
+                96.71945190429688,
+                190.89080810546875
+              ]
+            }
+          ],
+          "time_range_supporting_quote_images": [
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box1.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box2.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box3.png"
+          ],
+          "physical_observable_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                326.6390380859375,
+                433.4053955078125,
+                561.9217529296875,
+                443.3680419921875
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                317.6390380859375,
+                443.8451843261719,
+                550.5581665039062,
+                453.8078308105469
+              ]
+            }
+          ],
+          "physical_observable_supporting_quote_images": [
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box1.png"
+          ]
+        },
+        {
+          "description": "White light observations during solar maximum.",
+          "start_date": "2001",
+          "end_date": "2001",
+          "time_range_supporting_quote": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "wavelengths": [
+            "White light (broadband visible)"
+          ],
+          "wavelengths_supporting_quote": "LASCO images provide a complete view of the solar corona in white light.",
+          "physical_observable": "Ray-like structures and brightness enhancements indicating current sheet morphology.",
+          "physical_observable_supporting_quote": "The images show the pre-CME corona, the ray in the wake of the CME, and the post-ray corona.",
+          "additional_comments": "Serves as the primary dataset for selecting candidate current sheets during solar maximum.",
+          "time_range_supporting_quote_location": {
+            "start": 6051,
+            "end": 6198,
+            "score": 100
+          },
+          "time_range_supporting_quote_excerpt": "The white light selected rays cover the periods 1996 April through 1998 December to sample solar minimum and the year 2001 to sample solar maximum.",
+          "time_range_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                168.23880004882812,
+                149.36834716796875,
+                295.282958984375,
+                159.33099365234375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                159.80853271484375,
+                295.0202941894531,
+                169.77117919921875
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                170.36834716796875,
+                295.2538757324219,
+                180.33099365234375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                180.92816162109375,
+                96.71945190429688,
+                190.89080810546875
+              ]
+            }
+          ],
+          "time_range_supporting_quote_images": [
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box1.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box2.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box3.png"
+          ]
+        }
+      ],
+      "usage_category": "primary",
+      "general_comments_supporting_quote_location": {
+        "start": 10057,
+        "end": 10239,
+        "score": 100
+      },
+      "general_comments_supporting_quote_excerpt": "LASCO C2 is a white light coronagraph, that continuously observes the solar corona from 2.3 to 6 R⊙ with a cadence of about 20 min and a pixel size of 11.4′′ (Brueckner et al. 1995).",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 2,
+          "bbox": [
+            85.55978393554688,
+            323.84716796875,
+            295.1032409667969,
+            333.809814453125
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.760128021240234,
+            334.2869567871094,
+            288.37188720703125,
+            344.2496032714844
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            288.3601379394531,
+            337.3418884277344,
+            294.580810546875,
+            344.31573486328125
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.7601318359375,
+            344.84710693359375,
+            289.6202087402344,
+            354.80975341796875
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            289.68011474609375,
+            342.86181640625,
+            294.6143798828125,
+            349.8356628417969
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.76011657714844,
+            355.40728759765625,
+            155.03897094726562,
+            365.36993408203125
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box3.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box4.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box5.png"
+      ]
+    },
+    {
+      "instrument_name": "UVCS (UltraViolet Coronagraph Spectrometer)",
+      "spacecraft": "SOHO",
+      "general_comments": "UVCS is a spectrometer with a narrow entrance slit that can be positioned at various polar angles and heliocentric heights (1.5 to 9 R⊙). It observes key ultraviolet emission lines, including the O VI doublet, H I Lyα, Si XII, and the high-temperature [Fe XVIII] line, to diagnose the plasma conditions in the corona.",
+      "general_comments_supporting_quote": "Unlike the WL coronagraph with its complete view of the solar corona, the UVCS spectrometer has a field of view defined by its narrow entrance slit 42′ long and up to 82′′ wide. The slit can be placed at any polar angle and at heliocentric heights between 1.5 and 9 R⊙. UVCS has two UV channels optimized to detect the O VI λλ 1032, 1037 doublet and HI Lyα lines.",
+      "detectors": [
+        "Two UV channels with spatial pixels of 7 arcseconds and spectral pixels of 0.0993 Å (OVI channel) and 0.1437 Å (Lyα channel)"
+      ],
+      "detectors_supporting_quote": "The spatial pixels are 7′′ and spectral pixels are 0.0993 ˚A (0.0915 ˚A for the redundant path) and 0.1437˚A for the OVI and LYA channels, respectively.",
+      "data_collection_periods": [
+        {
+          "description": "UV spectroscopic observations covering current sheet features.",
+          "start_date": "1996 June",
+          "end_date": "2005 December",
+          "time_range_supporting_quote": "The UV selected rays were obtained from the period 1996 June through 2005 December.",
+          "wavelengths": [
+            "945 to 1270 Å (first order)",
+            "473 to 635 Å (second order)",
+            "[Fe XVIII], Si XII, O VI, H I Lyα, C III L977"
+          ],
+          "wavelengths_supporting_quote": "The spectra always included the O VI doublet, Si XII λλ 499 or 521, Lyα, Lyβ and C III L977. During most of 2001, the synoptic scans also included the high temperature line of [Fe XVIII].",
+          "physical_observable": "Ultraviolet emission lines diagnostic of plasma temperature, density, and dynamics in current sheets.",
+          "physical_observable_supporting_quote": "In ultraviolet spectra, current sheets were identified as narrow regions of very hot plasma seen with UVCS between flare loops and CME cores.",
+          "additional_comments": "Data were acquired both from daily synoptic scans and targeted observations with varying spatial and spectral resolutions.",
+          "time_range_supporting_quote_location": {
+            "start": 6199,
+            "end": 6282,
+            "score": 100
+          },
+          "time_range_supporting_quote_excerpt": "The UV selected rays were obtained from the period 1996 June through 2005 December.",
+          "wavelengths_supporting_quote_location": {
+            "start": 7210,
+            "end": 7397,
+            "score": 98
+          },
+          "wavelengths_supporting_quote_excerpt": "the spectra always included the O VI doublet, Si XII λλ 499 or 521, Lyα , Lyβ and C III L977. During most of 2001, the synoptic scans also included the high tem- perature line of [Fe XVII",
+          "physical_observable_supporting_quote_location": {
+            "start": 3727,
+            "end": 3868,
+            "score": 99
+          },
+          "physical_observable_supporting_quote_excerpt": "In ultraviolet spectra, current sheets were iden- tified as narrow regions of very hot plasma seen with UVCS between flare loops and CME core",
+          "time_range_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                100.91960906982422,
+                180.92816162109375,
+                295.0625,
+                190.89080810546875
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.760128021240234,
+                191.36798095703125,
+                235.68006896972656,
+                201.33062744140625
+              ]
+            }
+          ],
+          "time_range_supporting_quote_images": [
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box1.png"
+          ],
+          "wavelengths_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                338.99908447265625,
+                191.36614990234375,
+                468.0076599121094,
+                201.32879638671875
+              ]
+            }
+          ],
+          "wavelengths_supporting_quote_images": [
+            "excerpt_images/wavelengths_supporting_quote_excerpt_page2_box0.png"
+          ],
+          "physical_observable_supporting_quote_bbox": [
+            {
+              "page": 1,
+              "bbox": [
+                326.6405029296875,
+                424.2878112792969,
+                430.5589904785156,
+                434.2504577636719
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                439.5589904785156,
+                424.2878112792969,
+                561.916259765625,
+                434.2504577636719
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                317.6405029296875,
+                434.8476257324219,
+                561.9691162109375,
+                444.8102722167969
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                317.6405029296875,
+                445.28741455078125,
+                336.96942138671875,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                345.6003112792969,
+                445.28741455078125,
+                372.9694519042969,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                381.600341796875,
+                445.28741455078125,
+                416.7697448730469,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                425.4003601074219,
+                445.28741455078125,
+                444.34381103515625,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                452.76055908203125,
+                445.28741455078125,
+                475.285400390625,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                483.8399353027344,
+                445.28741455078125,
+                499.92926025390625,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                508.5599365234375,
+                445.28741455078125,
+                531.6546020507812,
+                455.25006103515625
+              ]
+            },
+            {
+              "page": 1,
+              "bbox": [
+                540.2400512695312,
+                445.28741455078125,
+                558.1034545898438,
+                455.25006103515625
+              ]
+            }
+          ],
+          "physical_observable_supporting_quote_images": [
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box0.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box1.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box2.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box3.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box4.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box5.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box6.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box7.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box8.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box9.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page1_box10.png"
+          ]
+        }
+      ],
+      "usage_category": "primary",
+      "general_comments_supporting_quote_location": {
+        "start": 10849,
+        "end": 11212,
+        "score": 100
+      },
+      "general_comments_supporting_quote_excerpt": " Unlike the WL coronagraph with its complete view of the solar corona, the UVCS spectrometer has a field of view defined by its narrow entrance slit 42′ long and up to 82′′ wide. The slit can be placed at any polar angle and at heliocentric heights between 1.5 and 9 R⊙. UVCS has two UV channels optimized to detect the O VI λλ 1032, 1037 doublet and HI Lyα lines",
+      "detectors_supporting_quote_location": {
+        "start": 11469,
+        "end": 11622,
+        "score": 98
+      },
+      "detectors_supporting_quote_excerpt": "The spatial pixels are 7′′ and spectral pixels are 0.0993 ̊ A (0.0915 ̊ A for the redundant path) and 0.1437 ̊ A for the OVI and LYA channels, respective",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 2,
+          "bbox": [
+            59.759796142578125,
+            482.7274475097656,
+            295.1161193847656,
+            492.6900939941406
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.759796142578125,
+            493.167236328125,
+            295.11785888671875,
+            503.1298828125
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.759796142578125,
+            503.7274475097656,
+            228.8997344970703,
+            513.6900634765625
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            228.9597930908203,
+            501.7421569824219,
+            231.2541961669922,
+            508.71600341796875
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            231.2541961669922,
+            500.12744140625,
+            295.02056884765625,
+            513.6900634765625
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.75962829589844,
+            514.2872924804688,
+            60.78095245361328,
+            524.2499389648438
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            60.83932876586914,
+            512.3019409179688,
+            65.77356719970703,
+            519.2758178710938
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            65.77356719970703,
+            510.687255859375,
+            295.08624267578125,
+            524.2499389648438
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.75968933105469,
+            524.7274780273438,
+            234.490478515625,
+            534.6901245117188
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            234.4796905517578,
+            527.781982421875,
+            240.7003631591797,
+            534.755859375
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            243.7195281982422,
+            524.7274780273438,
+            295.1646423339844,
+            534.6901245117188
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.759521484375,
+            535.2872314453125,
+            295.31915283203125,
+            545.2498779296875
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            50.75953674316406,
+            545.8474731445312,
+            180.68421936035156,
+            555.8101196289062
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box3.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box4.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box5.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box6.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box7.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box8.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box9.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box10.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box11.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box12.png"
+      ],
+      "detectors_supporting_quote_bbox": [
+        {
+          "page": 2,
+          "bbox": [
+            76.79840850830078,
+            600.5673217773438,
+            183.5385284423828,
+            610.5299682617188
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            183.599609375,
+            598.58203125,
+            188.6541748046875,
+            605.555908203125
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            188.6541748046875,
+            596.9673461914062,
+            209.6490478515625,
+            610.5299682617188
+          ]
+        }
+      ],
+      "detectors_supporting_quote_images": [
+        "excerpt_images/detectors_supporting_quote_excerpt_page2_box0.png",
+        "excerpt_images/detectors_supporting_quote_excerpt_page2_box1.png",
+        "excerpt_images/detectors_supporting_quote_excerpt_page2_box2.png"
+      ]
+    },
+    {
+      "instrument_name": "SUMER (Solar Ultraviolet Measurements of Emitted Radiation)",
+      "spacecraft": "SOHO",
+      "general_comments": "SUMER is referenced as having observed hot gas with very large line widths above flare loops, providing complementary information on high-temperature plasma in solar eruptions.",
+      "general_comments_supporting_quote": "or as hot gas with very large line widths above flare loops observed by the Solar Ultraviolet Measurements of Emitted Radiation (SUMER), (Innes et al. 2003; Wang et al. 2007).",
+      "detectors": null,
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced",
+      "general_comments_supporting_quote_location": {
+        "start": 3985,
+        "end": 4160,
+        "score": 99
+      },
+      "general_comments_supporting_quote_excerpt": "or as hot gas with very large line widths above flare loops observed by the Solar Ultraviolet Measure- ments of Emitted Radiation (SUMER), (Innes et al. 2003; Wang et al. 2007",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 1,
+          "bbox": [
+            345.9607849121094,
+            476.8468322753906,
+            562.0625610351562,
+            486.8094787597656
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            487.40704345703125,
+            562.0367431640625,
+            497.36968994140625
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            497.9672546386719,
+            557.5185546875,
+            507.9299011230469
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            508.40740966796875,
+            395.7598571777344,
+            518.3700561523438
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            405.359619140625,
+            508.40740966796875,
+            425.4610290527344,
+            518.3700561523438
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box3.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box4.png"
+      ]
+    },
+    {
+      "instrument_name": "Transition Region and Coronal Explorer",
+      "spacecraft": "MSFC/NASA (operates as an independent mission)",
+      "general_comments": "The Transition Region and Coronal Explorer is mentioned in the context of narrow band EUV imaging that reveals hot gas in current sheets above the solar limb.",
+      "general_comments_supporting_quote": "Narrow band EUV images also show hot gas in current sheets above the limb, notably the Transition Region and Coronal Explorer images of Innes et al. (2003).",
+      "detectors": [
+        "EUV imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced",
+      "general_comments_supporting_quote_location": {
+        "start": 4161,
+        "end": 4317,
+        "score": 99
+      },
+      "general_comments_supporting_quote_excerpt": ". Narrow band EUV images also show hot gas in current sheets above the limb, notably the Transition Region and Coronal Explorer images of Innes et al. (2003",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 1,
+          "bbox": [
+            429.1195983886719,
+            508.40740966796875,
+            431.8792419433594,
+            518.3700561523438
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            441.7190856933594,
+            508.40740966796875,
+            562.0440063476562,
+            518.3700561523438
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            518.9672241210938,
+            561.9591064453125,
+            528.9298706054688
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            529.5270385742188,
+            562.1344604492188,
+            539.4896850585938
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            539.9668579101562,
+            414.7193298339844,
+            549.9295043945312
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            424.7995300292969,
+            539.9668579101562,
+            448.74090576171875,
+            549.9295043945312
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box3.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box4.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box5.png"
+      ]
+    },
+    {
+      "instrument_name": "Solar Dynamics Observatory/Atmospheric Imaging Assembly (SDO/AIA)",
+      "spacecraft": "SDO",
+      "general_comments": "SDO/AIA is cited as providing high-resolution images that reveal the structure and evolution of current sheets in the solar corona, particularly above flare loops.",
+      "general_comments_supporting_quote": "and the Solar Dynamics Observatory/Atmospheric Imaging Assembly (AIA) images of Reeves & Golub (2011) and Cheng et al. (2011).",
+      "detectors": [
+        "Multi-wavelength EUV imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced",
+      "general_comments_supporting_quote_location": {
+        "start": 4318,
+        "end": 4444,
+        "score": 98
+      },
+      "general_comments_supporting_quote_excerpt": " and the Solar Dynam- ics Observatory/Atmospheric Imaging Assembly (AIA) images of Reeves & Golub (2011) and Cheng et al. (201",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 1,
+          "bbox": [
+            458.03997802734375,
+            539.9668579101562,
+            561.9169921875,
+            549.9295043945312
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            550.5270385742188,
+            561.8650512695312,
+            560.4896850585938
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            561.0872192382812,
+            438.24884033203125,
+            571.0498657226562
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            447.9601135253906,
+            561.0872192382812,
+            557.519775390625,
+            571.0498657226562
+          ]
+        },
+        {
+          "page": 1,
+          "bbox": [
+            317.6405029296875,
+            571.5274658203125,
+            336.54180908203125,
+            581.4901123046875
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box3.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page1_box4.png"
+      ]
+    },
+    {
+      "instrument_name": "STEREO Coronagraphs",
+      "spacecraft": "STEREO",
+      "general_comments": "STEREO coronagraph data are mentioned as providing additional examples of disconnection events and ray-like features associated with CME current sheets.",
+      "general_comments_supporting_quote": "Recently, Howard et al. (2012) have presented beautiful examples of a few disconnection events seen in STEREO coronagraph data and tracked their evolution into the heliosphere.",
+      "detectors": [
+        "Coronagraph imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [],
+      "usage_category": "referenced",
+      "general_comments_supporting_quote_location": {
+        "start": 8968,
+        "end": 9144,
+        "score": 100
+      },
+      "general_comments_supporting_quote_excerpt": "Recently, Howard et al. (2012) have presented beautiful examples of a few disconnection events seen in STEREO coronagraph data and tracked their evolution into the heliosphere.",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 2,
+          "bbox": [
+            425.1582336425781,
+            570.0848388671875,
+            561.9827270507812,
+            580.0474853515625
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            317.6390380859375,
+            580.64501953125,
+            561.9661254882812,
+            590.607666015625
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            317.6390380859375,
+            591.2052612304688,
+            562.0877075195312,
+            601.1679077148438
+          ]
+        },
+        {
+          "page": 2,
+          "bbox": [
+            317.6390380859375,
+            601.64501953125,
+            474.356689453125,
+            611.607666015625
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box0.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box1.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box2.png",
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box3.png"
+      ]
+    },
+    {
+      "instrument_name": "MLSO Mark-III/Mark-IV K-Coronameters",
+      "spacecraft": "Mauna Loa Solar Observatory (MLSO)",
+      "general_comments": "The MLSO K-coronameters are ground-based instruments that produce polarization brightness maps of the solar corona and are used when the UVCS slit is positioned below the LASCO C2 occulter.",
+      "general_comments_supporting_quote": "For those events in which the UVCS slit was located below the LASCO C2 occulter disk we also examined, whenever the data were available, the Mark-III or Mark-IV K-coronameter data from Mauna Loa Solar Observatory (MLSO). The MLSO coronagraphs are ground-based instruments that produce polarization brightness maps of the solar corona from 1.14 to 2.86 R⊙ in the range 7000 - 9000 ˚A with a 3 min cadence.",
+      "detectors": [
+        "Polarimetric imaging detectors"
+      ],
+      "detectors_supporting_quote": null,
+      "data_collection_periods": [
+        {
+          "description": "Routine ground-based observations.",
+          "start_date": "Approximately 17:00 UT",
+          "end_date": "Approximately 02:00 UT",
+          "time_range_supporting_quote": "The typical observing period is from ∼17:00 to ∼02:00 UT each day.",
+          "wavelengths": [
+            "7000 - 9000 Å"
+          ],
+          "wavelengths_supporting_quote": "MLSO coronagraphs produce polarization brightness maps of the solar corona in the range 7000 - 9000 ˚A with a 3 min cadence.",
+          "physical_observable": "Polarization brightness maps of the corona.",
+          "physical_observable_supporting_quote": "The MLSO coronagraphs are ground-based instruments that produce polarization brightness maps of the solar corona from 1.14 to 2.86 R⊙.",
+          "additional_comments": "Used for supplementary comparison when UVCS observations are taken below the LASCO occulter.",
+          "time_range_supporting_quote_location": {
+            "start": 10653,
+            "end": 10719,
+            "score": 100
+          },
+          "time_range_supporting_quote_excerpt": "The typical observing period is from ∼17:00 to ∼02:00 UT each day.",
+          "wavelengths_supporting_quote_location": {
+            "start": 10518,
+            "end": 10642,
+            "score": 81
+          },
+          "wavelengths_supporting_quote_excerpt": "at produce po- larization brightness maps of the solar corona from 1.14 to 2.86 R⊙in the range 7000 - 9000 ̊ A with a 3 min ",
+          "physical_observable_supporting_quote_location": {
+            "start": 10463,
+            "end": 10597,
+            "score": 97
+          },
+          "physical_observable_supporting_quote_excerpt": "The MLSO coro- nagraphs are ground-based instruments that produce po- larization brightness maps of the solar corona from 1.14 to 2.86",
+          "time_range_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                83.51992797851562,
+                439.8824462890625,
+                256.0210876464844,
+                450.570068359375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                259.8000183105469,
+                440.607421875,
+                295.0209655761719,
+                450.570068359375
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.76002502441406,
+                450.4422607421875,
+                58.50099563598633,
+                460.4049072265625
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                61.44012451171875,
+                451.167236328125,
+                144.11952209472656,
+                461.1298828125
+              ]
+            }
+          ],
+          "time_range_supporting_quote_images": [
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box1.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box2.png",
+            "excerpt_images/time_range_supporting_quote_excerpt_page2_box3.png"
+          ],
+          "wavelengths_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                232.43980407714844,
+                407.9674987792969,
+                295.0376892089844,
+                417.9301452636719
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.76011657714844,
+                418.5273132324219,
+                112.38007354736328,
+                428.4899597167969
+              ]
+            }
+          ],
+          "wavelengths_supporting_quote_images": [
+            "excerpt_images/wavelengths_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/wavelengths_supporting_quote_excerpt_page2_box1.png"
+          ],
+          "physical_observable_supporting_quote_bbox": [
+            {
+              "page": 2,
+              "bbox": [
+                223.0797882080078,
+                397.4076843261719,
+                295.27734375,
+                407.3703308105469
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.76011657714844,
+                407.9674987792969,
+                295.0376892089844,
+                417.9301452636719
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.76011657714844,
+                418.5273132324219,
+                295.139892578125,
+                428.4899597167969
+              ]
+            },
+            {
+              "page": 2,
+              "bbox": [
+                50.76011657714844,
+                430.0472106933594,
+                80.8209457397461,
+                440.0098571777344
+              ]
+            }
+          ],
+          "physical_observable_supporting_quote_images": [
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box0.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box1.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box2.png",
+            "excerpt_images/physical_observable_supporting_quote_excerpt_page2_box3.png"
+          ]
+        }
+      ],
+      "usage_category": "contextual",
+      "general_comments_supporting_quote_location": {
+        "start": 10237,
+        "end": 10641,
+        "score": 98
+      },
+      "general_comments_supporting_quote_excerpt": "). For those events in which the UVCS slit was located below the LASCO C2 occulter disk we also examined, whenever the data were avail- able, the Mark-III or Mark-IV K-coronameter data from Mauna Loa Solar Observatory (MLSO). The MLSO coro- nagraphs are ground-based instruments that produce po- larization brightness maps of the solar corona from 1.14 to 2.86 R⊙in the range 7000 - 9000 ̊ A with a 3 min",
+      "general_comments_supporting_quote_bbox": [
+        {
+          "page": 2,
+          "bbox": [
+            148.43930053710938,
+            355.40728759765625,
+            285.1435852050781,
+            365.36993408203125
+          ]
+        }
+      ],
+      "general_comments_supporting_quote_images": [
+        "excerpt_images/general_comments_supporting_quote_excerpt_page2_box0.png"
+      ]
+    }
+  ]
+}

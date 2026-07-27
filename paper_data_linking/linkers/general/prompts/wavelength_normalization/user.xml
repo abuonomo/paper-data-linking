@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_prompt>
+Parse this wavelength description and output in simple format (values and unit only):
+
+{{ raw_wavelength }}
+</user_prompt>

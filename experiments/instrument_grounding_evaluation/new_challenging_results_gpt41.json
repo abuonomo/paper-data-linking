@@ -1,0 +1,949 @@
+{
+  "summary": {
+    "total": 27,
+    "correct": 22,
+    "incorrect": 5,
+    "errors": 0,
+    "total_time": 105.81021976470947,
+    "average_time": 3.918897028322573,
+    "accuracy": 81.48148148148148,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "single_spacecraft": {
+      "total": 9,
+      "correct": 9,
+      "incorrect": 0,
+      "errors": 0
+    },
+    "instrument_component": {
+      "total": 4,
+      "correct": 3,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "acronym_challenge": {
+      "total": 6,
+      "correct": 6,
+      "incorrect": 0,
+      "errors": 0
+    },
+    "moderately_ambiguous": {
+      "total": 8,
+      "correct": 4,
+      "incorrect": 4,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "soho_golf_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: GOLF/SOHO",
+      "time_seconds": 3.761439085006714,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. The instrument names/types ...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. The instrument names/types ...]"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "instrument_component_reference",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: GOLF/SOHO",
+      "time_seconds": 5.712862014770508,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "acronym_challenge_generic",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.5818300247192383,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "acronym_uncertainty"
+      }
+    },
+    {
+      "name": "soho_golf_clear_reference",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: GOLF/SOHO",
+      "time_seconds": 3.251769781112671,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "golf_ambiguous_reference",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got GOLF/SOHO",
+      "time_seconds": 6.575829267501831,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_name"
+      }
+    },
+    {
+      "name": "golf_component_reference",
+      "category": "instrument_component",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 0.8986120223999023,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": "instrument_component"
+      }
+    },
+    {
+      "name": "soho_golf_clear_reference",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: GOLF/SOHO",
+      "time_seconds": 3.0747599601745605,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. The instrument names/types ...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. The instrument names/types ...]"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "golf_acronym_challenge",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match: GOLF/SOHO",
+      "time_seconds": 5.287152051925659,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": "GOLF",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "GOLF",
+        "mission_code": "SOHO",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_solar_oscillations_instrument",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got GOLF/SOHO",
+      "time_seconds": 3.8224658966064453,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "GOLF",
+        "actual_mission": "SOHO",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "GOLF",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Global Oscillations at Low Frequencies",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 GOLF [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "instrument_too_generic"
+      }
+    },
+    {
+      "name": "valdor_specific_magnetometer",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 2.631396770477295,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_magnetometer_mention",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.5689857006072998,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "generic_name"
+      }
+    },
+    {
+      "name": "valdor_acronym",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 4.521050691604614,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "valdor_magnetometer_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 2.9073121547698975,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_magnetometer_ambiguity",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.2720460891723633,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "generic_instrument"
+      }
+    },
+    {
+      "name": "valdor_obs_acronym_challenge",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 4.884554862976074,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "valdor_mag_specific_period",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 6.219391107559204,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "ground_station_mag_generic",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.0349140167236328,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "network_generic"
+      }
+    },
+    {
+      "name": "valdor_mag_acronym",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer/spase://SMWG/Observatory/Ground/Val.d.Or",
+      "time_seconds": 4.643840074539185,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "actual_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "expected_instrument": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "expected_mission": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "matched_mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "matched_instrument_name": "Magnetometer",
+        "matched_mission_name": "Val-d'Or Geophysical Observatory",
+        "reasoning": "Systematic selection: Val-d'Or Geophysical Observatory \u2192 spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ground/Val.d.Or/Magnetometer",
+        "mission_code": "spase://SMWG/Observatory/Ground/Val.d.Or",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_b_ephemeris_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 3.416002035140991,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_ephemeris_generic",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got 2 matches",
+      "time_seconds": 6.983132362365723,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": [
+          "spase://SMWG/Instrument/STEREO-A/Ephemeris",
+          "spase://SMWG/Instrument/STEREO-B/Ephemeris"
+        ],
+        "actual_mission": [
+          "spase://SMWG/Observatory/STEREO-A",
+          "spase://SMWG/Observatory/STEREO-B"
+        ],
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Multiple matches found: 2 results",
+        "multiple_results": true,
+        "result_count": 2,
+        "matching_results": 0
+      },
+      "grounding_result": [
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/Ephemeris",
+          "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+          "matched_instrument_name": "Ephemeris",
+          "matched_mission_name": "STEREO Mission",
+          "reasoning": "Ambiguous reference - valid match 1/2: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+          "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+          "matched_instrument_name": "Ephemeris",
+          "matched_mission_name": "STEREO Mission",
+          "reasoning": "Ambiguous reference - valid match 2/2: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+        }
+      ],
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "moderately_ambiguous"
+      }
+    },
+    {
+      "name": "stereo_b_orbital_data_component",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 3.411454916000366,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_b_ephemeris_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 4.978894233703613,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "generic_ephemeris_mention",
+      "category": "moderately_ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.4192218780517578,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate",
+        "multiple_results": false,
+        "result_count": 0
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": null,
+        "should_match": false,
+        "ambiguity_type": "generic"
+      }
+    },
+    {
+      "name": "stereo_b_acronym_challenge",
+      "category": "acronym_challenge",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 6.020174980163574,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_b_ephemeris_clear",
+      "category": "single_spacecraft",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 3.6724328994750977,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    },
+    {
+      "name": "stereo_generic_ephemeris",
+      "category": "moderately_ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got 2 matches",
+      "time_seconds": 6.456516742706299,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": [
+          "spase://SMWG/Instrument/STEREO-A/Ephemeris",
+          "spase://SMWG/Instrument/STEREO-B/Ephemeris"
+        ],
+        "actual_mission": [
+          "spase://SMWG/Observatory/STEREO-A",
+          "spase://SMWG/Observatory/STEREO-B"
+        ],
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Multiple matches found: 2 results",
+        "multiple_results": true,
+        "result_count": 2,
+        "matching_results": 0
+      },
+      "grounding_result": [
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/STEREO-A/Ephemeris",
+          "matched_mission_code": "spase://SMWG/Observatory/STEREO-A",
+          "matched_instrument_name": "Ephemeris",
+          "matched_mission_name": "STEREO Mission",
+          "reasoning": "Ambiguous reference - valid match 1/2: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-A/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+        },
+        {
+          "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+          "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+          "matched_instrument_name": "Ephemeris",
+          "matched_mission_name": "STEREO Mission",
+          "reasoning": "Ambiguous reference - valid match 2/2: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+        }
+      ],
+      "expected": {
+        "instrument_code": null,
+        "mission_code": null,
+        "mission_codes": [
+          "spase://SMWG/Observatory/STEREO-A",
+          "spase://SMWG/Observatory/STEREO-B"
+        ],
+        "should_match": false,
+        "ambiguity_type": "spacecraft_ambiguity"
+      }
+    },
+    {
+      "name": "stereo_b_position_reference",
+      "category": "instrument_component",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/STEREO-B/Ephemeris/spase://SMWG/Observatory/STEREO-B",
+      "time_seconds": 5.802178144454956,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "actual_mission": "spase://SMWG/Observatory/STEREO-B",
+        "expected_instrument": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "expected_mission": "spase://SMWG/Observatory/STEREO-B",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]",
+        "multiple_results": false,
+        "result_count": 1
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "matched_mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "matched_instrument_name": "Ephemeris",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 spase://SMWG/Instrument/STEREO-B/Ephemeris [Validated: VALID\n\nReasoning:  \n1. Instrument names/types alig...]"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/STEREO-B/Ephemeris",
+        "mission_code": "spase://SMWG/Observatory/STEREO-B",
+        "mission_codes": null,
+        "should_match": true,
+        "ambiguity_type": null
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/new_challenging_test_cases.jsonl",
+    "total_cases_in_file": 27,
+    "cases_run": 27,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751902329.468163
+  }
+}

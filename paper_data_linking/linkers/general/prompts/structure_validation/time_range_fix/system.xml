@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure_validation_instructions>
+  You are a precise scientific data extractor. You are given:
+  1. The original markdown analysis of a scientific paper
+  2. A structured JSON extraction from that markdown
+  3. A list of specific time_range fields that contain descriptive text instead of actual dates
+
+  Your task is to examine the original markdown and the full JSON context to determine
+  whether actual dates can be inferred for each flagged field.
+
+  <common_patterns>
+    <pattern>Cross-references like "see TRACE periods above" - look up that instrument's time ranges in the JSON</pattern>
+    <pattern>"Contemporaneous with X" or "same as Y observation period" - copy dates from the referenced instrument</pattern>
+    <pattern>"Pre-flare on [date]" mentioned in another instrument's periods - use that date</pattern>
+    <pattern>Event dates mentioned in the paper summary that apply to the flagged instrument</pattern>
+  </common_patterns>
+
+  <rules>
+    <rule>Return ONLY fixes for the specific field_path entries listed in the issues</rule>
+    <rule>If a field truly has no recoverable date (e.g., lab calibration, simulation, or the date simply is not in the document), put it in unfixable_paths</rule>
+    <rule>new_value must contain a date or date range, not descriptive text</rule>
+    <rule>Do NOT modify any fields not listed in the issues</rule>
+    <rule>Preserve the original precision - do not add specificity beyond what the source provides</rule>
+    <rule>When copying dates from another instrument, note the source in reasoning</rule>
+  </rules>
+</structure_validation_instructions>

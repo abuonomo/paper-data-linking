@@ -1,0 +1,81 @@
+# Fake-Bedrock overlay: run the FULL stack (real workers, queues, S3 flow,
+# polling) against a local fake Bedrock + MinIO — fast, free, offline, and with
+# deterministic failure injection. Usage:
+#
+#   docker compose -f docker-compose.yaml -f docker-compose.override.yml \
+#                  -f docker-compose.fake.yaml up -d
+#
+# boto3 picks up AWS_ENDPOINT_URL_BEDROCK / AWS_ENDPOINT_URL_S3 natively, so the
+# real BatchClient runs unmodified. Env-var creds take precedence over the
+# shared-credentials file in boto3's chain, so the override's creds file is
+# harmless. PDL_MIN_BATCH_SIZE / PDL_BEDROCK_MIN_RECORDS drop the 100-record
+# floor so every group exercises the (fake) batch path — no live-LLM fallback.
+#
+# Knobs on fake-bedrock: FAKE_MODE=replay|echo, FAKE_LATENCY_S,
+# FAKE_THROTTLE_PCT, FAKE_STRAGGLER_PCT, FAKE_JOB_FAIL_PCT.
+# Replay data: mount a JSONL of {"h": hash, "c": content, "u": usage, "f": finish}
+# at /data/replay.jsonl (see scratches/export_replay_pairs.py).
+
+x-fake-aws-env: &fake_aws_env
+  # The E2E replay database (restored side-by-side; the worktree's original DB
+  # is untouched). Comment out to run against the default DB.
+  DB_NAME: "${FAKE_DB_NAME:-paper_analyzer_db_replay}"
+  # Containers talk to redis on the INTERNAL port; the worktree .env sets
+  # REDIS_PORT to the unique HOST mapping, which breaks the broker URL in-container.
+  REDIS_PORT: "6379"
+  AWS_ENDPOINT_URL_BEDROCK: "http://fake-bedrock:8080"
+  AWS_ENDPOINT_URL_S3: "http://minio:9000"
+  AWS_ACCESS_KEY_ID: "minioadmin"
+  AWS_SECRET_ACCESS_KEY: "minioadmin"
+  AWS_DEFAULT_REGION: "us-fake-1"
+  AWS_BATCH_ROLE_ARN: "arn:aws:iam::000000000000:role/fake-batch-role"
+  AWS_BATCH_BUCKET: "pdl-fake-batch"
+  PDL_MIN_BATCH_SIZE: "1"
+  PDL_BEDROCK_MIN_RECORDS: "1"
+  # Poll fast: fake jobs finish in seconds, not the ~1h of real Bedrock.
+  PDL_POLL_COUNTDOWN: "5"
+  # Scale rehearsals: synthetic production-shaped call chain instead of the
+  # real pipeline (see _synthetic_chain). Off unless exported at `up` time.
+  PDL_SYNTHETIC_CHAIN: "${PDL_SYNTHETIC_CHAIN:-0}"
+  PDL_SYNTHETIC_BRANCHES: "${PDL_SYNTHETIC_BRANCHES:-6}"
+  PDL_SYNTHETIC_DEPTH: "${PDL_SYNTHETIC_DEPTH:-2}"
+
+services:
+  minio:
+    image: minio/minio:latest
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+
+  fake-bedrock:
+    build: ./fake_bedrock
+    environment:
+      <<: *fake_aws_env
+      FAKE_MODE: "${FAKE_MODE:-replay}"
+      FAKE_LATENCY_S: "${FAKE_LATENCY_S:-5}"
+      FAKE_THROTTLE_PCT: "${FAKE_THROTTLE_PCT:-0}"
+      FAKE_STRAGGLER_PCT: "${FAKE_STRAGGLER_PCT:-0}"
+      FAKE_JOB_FAIL_PCT: "${FAKE_JOB_FAIL_PCT:-0}"
+      FAKE_REPLAY_FILE: "/data/replay.jsonl"
+    volumes:
+      - ./fake_bedrock/data:/data
+    depends_on:
+      - minio
+
+  api:
+    environment:
+      <<: *fake_aws_env
+  celery:
+    environment:
+      <<: *fake_aws_env
+    depends_on:
+      - fake-bedrock
+  celery-cpu:
+    environment:
+      <<: *fake_aws_env
+    depends_on:
+      - fake-bedrock
+  celery-beat:
+    environment:
+      <<: *fake_aws_env

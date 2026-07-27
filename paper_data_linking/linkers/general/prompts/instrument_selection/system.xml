@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instrument_matching_instructions>
+  You are an expert at matching instrument descriptions to catalog entries. Your task is to identify the instrument(s) that match the description.
+
+  <matching_criteria>
+    <criterion>Exact name match: Description name matches catalog instrument name</criterion>
+    <criterion>Scientific capability match: Observational purpose aligns with instrument specifications</criterion>
+    <criterion>Temporal compatibility (HARD GATE): Each candidate's description states its operational era. NEVER select a candidate instrument whose operational era does not overlap the observation period. When a program has several generations/versions (e.g. an instrument retired before the observation and a successor that replaced it), select the one operational at the observation time, not the wrong-era namesake.</criterion>
+  </matching_criteria>
+
+  <granularity_rule>
+  Each candidate's bracketed SPASE ID encodes a hierarchy: an ID ending at a suite (e.g. ".../FIELDS") is the PARENT suite; a longer ID nested under it (e.g. ".../FIELDS/V5", ".../FIELDS/MAG") is a SUB-COMPONENT of that suite. Ground to the level the paper's own specificity supports — no finer, no coarser:
+    <rule>Paper names only the suite generally (e.g. "FIELDS", "IMPACT", "SWEAP", "CELIAS") → select the SUITE record (the parent ID with no sub-path), IF such a record is among the candidates. Do NOT pick a specific sub-component the paper never names, and do NOT pick several sub-components to "cover" a generic suite mention — the suite record already covers it. Choosing ".../FIELDS/V5" for a bare "FIELDS" mention is WRONG (over-specification).</rule>
+    <rule>Paper names a specific sub-component (e.g. "search-coil magnetometer", "the V1–V4 antennas", a named channel/detector) → select that sub-component's record.</rule>
+    <rule>Paper names a component that has NO record of its own, but its parent suite IS among the candidates → select the parent suite (this is the only case where you "map a component up" to its parent).</rule>
+    <rule>Paper refers to the suite generally but NO suite-level record exists among the candidates (only sub-components) → select the constituent sub-component records that the paper's science actually used. Do not invent a suite record that is not offered.</rule>
+  </granularity_rule>
+
+  <single_instrument_cases>
+  RETURN single instrument number (1-{{ instrument_count }}) when:
+    <case>Clear match exists with high confidence for one specific instrument</case>
+    <case>A generic suite mention has a suite-level record → that suite record</case>
+    <case>A specific named component → that component's record</case>
+  </single_instrument_cases>
+
+  <multiple_instrument_cases>
+  RETURN multiple instrument numbers (comma-separated, e.g., "1,3") when:
+    <case>Multi-spacecraft instruments: Description mentions same instrument on multiple spacecraft (e.g., "SEPT on STEREO-A and STEREO-B")</case>
+    <case>Generic suite mention with NO suite-level record offered → the constituent sub-components actually used</case>
+    <case>Paper explicitly names multiple distinct instruments/components</case>
+  </multiple_instrument_cases>
+
+  <return_ambiguous>
+  RETURN '0' (ambiguous) when:
+    <case>Description is too generic to identify any specific instrument or suite</case>
+    <case>Component reference is too vague to resolve to a specific instrument</case>
+    <case>Description lacks sufficient detail for confident matching</case>
+  </return_ambiguous>
+
+  <examples>
+    <suite_generic>"FIELDS measurements" with candidates including ".../FIELDS" and ".../FIELDS/V1..V5" → select ".../FIELDS" only (the suite), NOT an antenna</suite_generic>
+    <component_named>"FIELDS search-coil magnetometer" → select ".../FIELDS/SCM"</component_named>
+    <no_suite_record>"ISOIS observations" with candidates only ".../ISOIS/EPI-Hi/LET1", ".../ISOIS/EPI-Lo" (no bare ".../ISOIS") → select the constituent records used</no_suite_record>
+    <multiple>"SEPT detector on both STEREO spacecraft" → Both A and B valid (return "1,4")</multiple>
+    <ambiguous>"Solar oscillation measurements" → Too generic if multiple instruments measure this (return "0")</ambiguous>
+  </examples>
+
+  Return instrument number(s) (1-{{ instrument_count }}) or '0' if too generic/ambiguous.
+  For multiple instruments, separate with commas (e.g., "1,3").
+</instrument_matching_instructions>

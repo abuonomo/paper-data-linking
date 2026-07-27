@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper-Data Linking: Vision</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f0f0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1e3a5f;
+            color: white;
+            padding: 24px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
+        /* Top section: Summary + Foundation side by side */
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        /* Executive Summary */
+        .exec-summary {
+            background: #ffffff;
+            padding: 24px 32px;
+            border-right: 1px solid #e5e5e5;
+        }
+
+        .exec-summary h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+        }
+
+        .exec-summary p {
+            font-size: 13px;
+            line-height: 1.55;
+            color: #525252;
+        }
+
+        .exec-summary strong {
+            color: #1f2937;
+        }
+
+        /* Proven Foundation Section */
+        .foundation-section {
+            background: #ffffff;
+            color: #333;
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .foundation-content h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+        }
+
+        .foundation-content p {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .foundation-content ul {
+            font-size: 11px;
+            color: #666;
+            margin: 0;
+            padding-left: 16px;
+            line-height: 1.6;
+        }
+
+        .foundation-stats {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+            border-left: 1px solid #ddd;
+            padding-left: 24px;
+        }
+
+        .foundation-stat {
+            text-align: center;
+        }
+
+        .foundation-stat .value {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+
+        .foundation-stat .label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+        }
+
+        /* Column headers */
+        .column-headers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .column-header {
+            padding: 14px 32px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .column-header.chat {
+            background: #ffffff;
+            color: #888;
+        }
+
+        .column-header.right {
+            background: #ffffff;
+            color: #888;
+        }
+
+        /* Aligned rows */
+        .aligned-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 120px;
+        }
+
+        /* Chat cell */
+        .chat-cell {
+            background: #ffffff;
+            padding: 20px 32px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .chat-exchange {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .chat-message.user .bubble {
+            background: #f0f0f0;
+            color: #333;
+            align-self: flex-end;
+            border-radius: 12px 12px 4px 12px;
+        }
+
+        .chat-message.ai .bubble {
+            background: #e8e8ec;
+            color: #333;
+            align-self: flex-start;
+            border-radius: 12px 12px 12px 4px;
+        }
+
+        .bubble {
+            padding: 10px 14px;
+            max-width: 95%;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .chat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #999;
+            margin-left: 4px;
+        }
+
+        .chat-message.user .chat-label {
+            text-align: right;
+            margin-right: 4px;
+        }
+
+        /* Annotation cell */
+        .annotation-cell {
+            padding: 20px 32px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .annotation {
+            background: white;
+            border-radius: 0;
+            padding: 14px 18px;
+            border-left: 4px solid;
+            width: 100%;
+        }
+
+        .annotation.done {
+            border-left-color: #22c55e;
+        }
+
+        .annotation.proposed {
+            border-left-color: #eab308;
+        }
+
+        .annotation-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 7px;
+            border-radius: 3px;
+            margin-bottom: 6px;
+        }
+
+        .annotation.done .annotation-badge {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .annotation.proposed .annotation-badge {
+            background: #fef9c3;
+            color: #a16207;
+        }
+
+        .annotation h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1f2937;
+        }
+
+        .annotation p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .annotation .stats {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e5e5;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .annotation .stats strong {
+            color: #525252;
+        }
+
+        /* Connector arrow */
+        .connector {
+            position: relative;
+        }
+
+        .connector::after {
+            display: none;
+        }
+
+
+
+        .chat-cell {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* Divider row */
+        .divider-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 32px;
+            background: #fff;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ccc, transparent);
+        }
+
+        .divider-text {
+            padding: 0 24px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            white-space: nowrap;
+            color: #888;
+        }
+
+        /* External link indicators */
+        .ext-link {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+
+        .ext-link .text {
+            color: #2563eb;
+            text-decoration: underline;
+            text-decoration-color: #93c5fd;
+            text-underline-offset: 2px;
+        }
+
+        .ext-link.paper .text {
+            color: #1e40af;
+            text-decoration-color: #93c5fd;
+        }
+
+        .ext-link.data .text {
+            color: #166534;
+            text-decoration-color: #86efac;
+        }
+
+        .ext-link.code .text {
+            color: #7c3aed;
+            text-decoration-color: #c4b5fd;
+        }
+
+        .ext-link.event .text {
+            color: #b45309;
+            text-decoration-color: #fcd34d;
+        }
+
+        .ext-link .label {
+            font-size: 7px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        .ext-link.paper .label {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .ext-link.data .label {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .ext-link.code .label {
+            background: #ede9fe;
+            color: #6b21a8;
+        }
+
+        .ext-link.event .label {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Research Intelligence Section */
+        .section-header {
+            padding: 20px 32px;
+            text-align: center;
+            border-top: 2px solid #e5e5e5;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .section-header.research {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ecfeff 100%);
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 4px;
+        }
+
+        .section-header p {
+            font-size: 12px;
+            color: #0369a1;
+            opacity: 0.85;
+        }
+
+        /* Meta-analysis query styling */
+        /* Meta-analysis uses same chat styling for consistency */
+        .meta-exchange {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .meta-exchange .bubble.response {
+            max-width: 100%;
+            padding: 14px 16px;
+        }
+
+        .meta-exchange .pipeline-wrapper {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+        }
+
+        /* Output table styling */
+        .output-table {
+            width: 100%;
+            font-size: 11px;
+            border-collapse: collapse;
+        }
+
+        .output-table th {
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            padding: 4px 8px 4px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .output-table td {
+            padding: 6px 8px 6px 0;
+            color: #334155;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .output-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .output-table .count {
+            color: #0369a1;
+            font-weight: 600;
+        }
+
+        /* Themed summary styling */
+        .themed-summary {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #334155;
+        }
+
+        .themed-summary .summary-stat {
+            font-weight: 600;
+            color: #0c4a6e;
+        }
+
+        .themed-summary .theme-list {
+            margin-top: 8px;
+            padding-left: 16px;
+        }
+
+        .themed-summary .theme-list li {
+            margin-bottom: 4px;
+            color: #475569;
+        }
+
+        .themed-summary .theme-list strong {
+            color: #1e293b;
+        }
+
+        /* Coverage analysis styling */
+        .coverage-analysis {
+            font-size: 11px;
+        }
+
+        .coverage-section {
+            margin-bottom: 10px;
+        }
+
+        .coverage-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .coverage-section .section-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .coverage-section.well-studied .section-title {
+            color: #166534;
+        }
+
+        .coverage-section.gaps .section-title {
+            color: #b45309;
+        }
+
+        .coverage-section ul {
+            padding-left: 14px;
+            margin: 0;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* Trend indicator styling */
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+        }
+
+        .trend-point {
+            text-align: center;
+        }
+
+        .trend-point .year {
+            color: #64748b;
+            font-size: 10px;
+        }
+
+        .trend-point .value {
+            font-weight: 600;
+            color: #0c4a6e;
+            font-size: 14px;
+        }
+
+        .trend-arrow {
+            color: #22c55e;
+            font-size: 16px;
+        }
+
+        .trend-summary {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #475569;
+            font-style: italic;
+        }
+
+        /* Capabilities list for research section */
+        .capabilities-list {
+            font-size: 11px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .capabilities-list .capability {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .capabilities-list .capability:last-child {
+            margin-bottom: 0;
+        }
+
+        .capabilities-list .icon {
+            color: #0369a1;
+            font-weight: bold;
+        }
+
+        /* Pipeline indicator */
+        .pipeline-wrapper {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .pipeline-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-step {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 9px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .pipeline-arrow {
+            color: #94a3b8;
+            font-size: 10px;
+        }
+
+        /* 2x2 Meta-analysis grid */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .meta-cell {
+            padding: 20px 32px;
+            background: #ffffff;
+        }
+
+        .meta-cell:nth-child(odd) {
+            border-right: 1px solid #e5e5e5;
+        }
+
+        .meta-cell:nth-child(1),
+        .meta-cell:nth-child(2) {
+            border-bottom: 1px solid #e5e5e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI-Powered Science Discovery for Heliophysics</h1>
+        </div>
+
+        <div class="top-section">
+            <div class="exec-summary">
+                <h3>The Vision</h3>
+                <p>
+                    <strong>Published science is hard to find and harder to reproduce.</strong>
+                    We extract what was actually studied (instruments, time ranges, methods, phenomena) and
+                    link every paper to downloadable data. Today this works for instrument and time extraction.
+                    With funding, we extend to methods and phenomena, enabling synthesis across the literature:
+                    summarize all research using a given dataset, identify understudied events, track how techniques evolve.
+                </p>
+            </div>
+
+            <div class="foundation-section">
+                <div class="foundation-content">
+                    <h3>Proven Foundation</h3>
+                    <p>Production system extracting dataset claims (instrument + time range) from papers:</p>
+                    <ul>
+                        <li>Public search interface, internal validation tool, REST API</li>
+                        <li>Integrates with ADS, VSO, and CDAWeb</li>
+                        <li>Generates Python snippets to download referenced datasets</li>
+                        <li>LLM evaluation framework</li>
+                    </ul>
+                </div>
+                <div class="foundation-stats">
+                    <div class="foundation-stat">
+                        <div class="value">98%</div>
+                        <div class="label">Claim Precision</div>
+                    </div>
+                    <div class="foundation-stat">
+                        <div class="value">1,000+</div>
+                        <div class="label">Papers</div>
+                    </div>
+                    <div class="foundation-stat">
+                        <div class="value">5,800+</div>
+                        <div class="label">Claims Validated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column-headers">
+            <div class="column-header chat">Example Conversation</div>
+            <div class="column-header right">What Enables This Query</div>
+        </div>
+
+        <!-- Row 1: Multi-Instrument + Time -->
+        <div class="aligned-row">
+            <div class="chat-cell connector">
+                <div class="chat-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">What papers used both LASCO and ACE data between 2010-2015?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble">Found <strong>47 papers</strong> combining LASCO imaging with ACE in-situ measurements. Top cited: <span class="ext-link paper"><span class="text">Richardson &amp; Cane (2010)</span><span class="label">ADS</span></span>. I can generate <span class="ext-link data"><span class="text">VSO</span><span class="label">↗</span></span> and <span class="ext-link data"><span class="text">CDAWeb</span><span class="label">↗</span></span> download scripts to reproduce any of these datasets.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="annotation-cell">
+                <div class="annotation done">
+                    <div class="annotation-badge">Built</div>
+                    <h4>Multi-Instrument + Time Queries</h4>
+                    <p>Extract instrument combinations, time ranges, wavelengths, and detectors. Generate data system queries.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider: Built vs Proposed -->
+        <div class="divider-row">
+            <div class="divider-line"></div>
+            <span class="divider-text">With Funding...</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Row 2: Methodology -->
+        <div class="aligned-row">
+            <div class="chat-cell connector">
+                <div class="chat-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">Which used machine learning for CME detection?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble"><strong>8 papers</strong> applied ML to CME detection. 5 used CNNs on coronagraph images, 3 used random forests on in-situ signatures. <span class="ext-link paper"><span class="text">Bobra &amp; Ilonidis (2016)</span><span class="label">ADS</span></span> achieved highest reported accuracy.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="annotation-cell">
+                <div class="annotation proposed">
+                    <div class="annotation-badge">Proposed</div>
+                    <h4>Methodology Extraction</h4>
+                    <p>Extract analysis techniques: ML methods, statistical approaches, simulation frameworks, model types.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Software -->
+        <div class="aligned-row">
+            <div class="chat-cell connector">
+                <div class="chat-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">What software did they use? Any shared code?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble">6 used <strong>SunPy</strong>, 4 used <strong>aiapy</strong>. 3 papers have GitHub repos linked. <span class="ext-link paper"><span class="text">Chen et al. (2019)</span><span class="label">ADS</span></span> released their trained model at <span class="ext-link code"><span class="text">github.com/chen-cme-detect</span><span class="label">GitHub</span></span>.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="annotation-cell">
+                <div class="annotation proposed">
+                    <div class="annotation-badge">Proposed</div>
+                    <h4>Software + Code Linking</h4>
+                    <p>Extract software packages, libraries, and link to code repositories when available.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Phenomena + Events -->
+        <div class="aligned-row">
+            <div class="chat-cell connector">
+                <div class="chat-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">Which studied the St. Patrick's Day 2015 storm?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble"><strong>3 papers</strong> on that event (<span class="ext-link event"><span class="text">2015-03-17</span><span class="label">DONKI</span></span>). <span class="ext-link paper"><span class="text">Wu et al.</span><span class="label">ADS</span></span> modeled propagation, <span class="ext-link paper"><span class="text">Liu et al.</span><span class="label">ADS</span></span> analyzed the shock. Cross-referenced with 12 related SEP and geomagnetic storm studies.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="annotation-cell">
+                <div class="annotation proposed">
+                    <div class="annotation-badge">Proposed</div>
+                    <h4>Phenomena + Event Linking</h4>
+                    <p>Extract phenomena studied (CMEs, flares, SEPs) and link to HEK/DONKI event catalogs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Intelligence Section Header -->
+        <div class="section-header research">
+            <h2>Research Intelligence: Cross-Paper Analysis</h2>
+            <p>Single questions that synthesize insights across the entire corpus</p>
+        </div>
+
+        <!-- 2x2 Meta-analysis grid -->
+        <div class="meta-grid">
+            <!-- Software Ecosystem -->
+            <div class="meta-cell">
+                <div class="meta-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">What software is used to analyze SDO/AIA data?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble response">
+                            <table class="output-table">
+                                <thead>
+                                    <tr>
+                                        <th>Package</th>
+                                        <th>Papers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>SunPy</td>
+                                        <td class="count">45</td>
+                                    </tr>
+                                    <tr>
+                                        <td>aiapy</td>
+                                        <td class="count">23</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IDL SolarSoft</td>
+                                        <td class="count">18</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pipeline-wrapper">
+                                <div class="pipeline-label">Agent called 3 tools</div>
+                                <div class="pipeline">
+                                    <span class="pipeline-step">Instrument Filter</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Software Extraction</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Aggregate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-Mission Synthesis -->
+            <div class="meta-cell">
+                <div class="meta-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">Summarize findings from papers combining SOHO and SDO observations</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble response">
+                            <div class="themed-summary">
+                                <span class="summary-stat">47 papers</span> compared SOHO and SDO data.
+                                <ul class="theme-list">
+                                    <li><strong>Cross-calibration</strong> (12 papers)</li>
+                                    <li><strong>Long-term trends</strong> (18 papers)</li>
+                                    <li><strong>Event tracking</strong> (17 papers)</li>
+                                </ul>
+                            </div>
+                            <div class="pipeline-wrapper">
+                                <div class="pipeline-label">Agent called 3 tools</div>
+                                <div class="pipeline">
+                                    <span class="pipeline-step">Multi-Instrument Filter</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Topic Extraction</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Synthesize</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Coverage Gaps -->
+            <div class="meta-cell">
+                <div class="meta-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">What DONKI events from 2020-2023 have been studied vs understudied?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble response">
+                            <div class="coverage-analysis">
+                                <div class="coverage-section well-studied">
+                                    <div class="section-title">Well-Studied Events</div>
+                                    <ul>
+                                        <li>Sept 2017 SEP events (23 papers)</li>
+                                        <li>Dec 2020 X-class flare (15 papers)</li>
+                                    </ul>
+                                </div>
+                                <div class="coverage-section gaps">
+                                    <div class="section-title">Identified Gaps</div>
+                                    <ul>
+                                        <li>12 M-class events with &lt;2 papers each</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pipeline-wrapper">
+                                <div class="pipeline-label">Agent called 3 tools</div>
+                                <div class="pipeline">
+                                    <span class="pipeline-step">Event Catalog</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Paper Linking</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Gap Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Adoption Trends -->
+            <div class="meta-cell">
+                <div class="meta-exchange">
+                    <div class="chat-message user">
+                        <div class="chat-label">Scientist</div>
+                        <div class="bubble">How has machine learning adoption changed in heliophysics over time?</div>
+                    </div>
+                    <div class="chat-message ai">
+                        <div class="chat-label">AI Assistant</div>
+                        <div class="bubble response">
+                            <div class="trend-indicator">
+                                <div class="trend-point">
+                                    <div class="year">2015</div>
+                                    <div class="value">12</div>
+                                </div>
+                                <div class="trend-arrow">→</div>
+                                <div class="trend-point">
+                                    <div class="year">2020</div>
+                                    <div class="value">47</div>
+                                </div>
+                                <div class="trend-arrow">→</div>
+                                <div class="trend-point">
+                                    <div class="year">2024</div>
+                                    <div class="value">89</div>
+                                </div>
+                            </div>
+                            <div class="trend-summary">7.4x growth in ML-based heliophysics papers over 9 years</div>
+                            <div class="pipeline-wrapper">
+                                <div class="pipeline-label">Agent called 3 tools</div>
+                                <div class="pipeline">
+                                    <span class="pipeline-step">Methodology Extraction</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Temporal Grouping</span>
+                                    <span class="pipeline-arrow">→</span>
+                                    <span class="pipeline-step">Trend Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

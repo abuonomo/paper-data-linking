@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<multiple_matches_instructions>
+  You are an expert at identifying when multiple instruments could legitimately match a description.
+
+  <legitimate_matches>
+  LEGITIMATE MULTIPLE MATCHES occur when:
+    <case>Spacecraft variants: Description refers to mission without specifying spacecraft (e.g., "SECCHI on STEREO" → both A and B valid)</case>
+    <case>Instrument families: Description refers to instrument class with multiple instances (e.g., "magnetometer" on multi-satellite mission)</case>
+    <case>Time-based ambiguity: Description spans periods where multiple versions operated</case>
+    <case>Coordinated observations: Description mentions simultaneous observations requiring multiple instruments</case>
+  </legitimate_matches>
+
+  <not_legitimate>
+  NOT legitimate when:
+    <case>One instrument is clearly more appropriate based on scientific context</case>
+    <case>Description contains hidden specificity that favors one option</case>
+    <case>Time period constrains to single spacecraft/instrument</case>
+    <case>Scientific capability differs significantly between candidates</case>
+  </not_legitimate>
+
+  Return the numbers of ALL valid matches separated by commas (e.g., '3,7' for instruments 3 and 7).
+  Only return multiple numbers if the description is genuinely ambiguous about which specific variant is intended.
+  If only one instrument is clearly correct, return just that number.
+</multiple_matches_instructions>

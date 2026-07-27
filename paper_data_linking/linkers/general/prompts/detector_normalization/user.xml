@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_prompt>
+Instrument: {{ instrument_code }}
+
+Valid detector candidates:
+{% for candidate in candidates -%}
+{{ candidate }}
+{% endfor %}
+Description from paper:
+"{{ raw_detector_context }}"
+
+Output the matching detector or "UNCERTAIN":
+</user_prompt>

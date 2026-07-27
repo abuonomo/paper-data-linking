@@ -1,0 +1,458 @@
+{
+  "summary": {
+    "total": 15,
+    "correct": 10,
+    "incorrect": 5,
+    "errors": 0,
+    "total_time": 36.78036117553711,
+    "average_time": 2.4520240783691407,
+    "accuracy": 66.66666666666666,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "debug": {
+      "total": 2,
+      "correct": 1,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "challenging": {
+      "total": 11,
+      "correct": 9,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "ambiguous": {
+      "total": 2,
+      "correct": 0,
+      "incorrect": 2,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "debug_cor1_search",
+      "category": "debug",
+      "status": "correct",
+      "explanation": "Correct match: SECCHI/STEREO_A",
+      "time_seconds": 2.6836438179016113,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SECCHI",
+        "actual_mission": "STEREO_A",
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": "Systematic selection: Solar TErrestrial RElations Observatory - Ahead \u2192 SECCHI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SECCHI",
+        "matched_mission_code": "STEREO_A",
+        "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+        "matched_mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+        "reasoning": "Systematic selection: Solar TErrestrial RElations Observatory - Ahead \u2192 SECCHI"
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "debug_ephin_search",
+      "category": "debug",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 2.558786153793335,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "COSTEP",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "COSTEP",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "ace_mag_challenge",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/ACE/MAG/spase://SMWG/Observatory/ACE",
+      "time_seconds": 5.249743938446045,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/ACE/MAG",
+        "actual_mission": "spase://SMWG/Observatory/ACE",
+        "expected_instrument": "spase://SMWG/Instrument/ACE/MAG",
+        "expected_mission": "spase://SMWG/Observatory/ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/MAG"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/ACE/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/ACE",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/MAG"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/ACE/MAG",
+        "mission_code": "spase://SMWG/Observatory/ACE",
+        "should_match": true
+      }
+    },
+    {
+      "name": "wind_mfi_challenge",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Wind/MFI/spase://SMWG/Observatory/Wind",
+      "time_seconds": 2.77565598487854,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Wind/MFI",
+        "actual_mission": "spase://SMWG/Observatory/Wind",
+        "expected_instrument": "spase://SMWG/Instrument/Wind/MFI",
+        "expected_mission": "spase://SMWG/Observatory/Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Wind/MFI",
+        "matched_mission_code": "spase://SMWG/Observatory/Wind",
+        "matched_instrument_name": "MFI",
+        "matched_mission_name": "Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Wind/MFI",
+        "mission_code": "spase://SMWG/Observatory/Wind",
+        "should_match": true
+      }
+    },
+    {
+      "name": "soho_erne_challenge",
+      "category": "challenging",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected ERNE, got spase://SMWG/Instrument/SOHO/ERNE",
+      "time_seconds": 1.7029170989990234,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/SOHO/ERNE",
+        "actual_mission": "spase://SMWG/Observatory/SOHO",
+        "expected_instrument": "ERNE",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: SOHO \u2192 spase://SMWG/Instrument/SOHO/ERNE"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/SOHO/ERNE",
+        "matched_mission_code": "spase://SMWG/Observatory/SOHO",
+        "matched_instrument_name": "ERNE",
+        "matched_mission_name": "SOHO",
+        "reasoning": "Systematic selection: SOHO \u2192 spase://SMWG/Instrument/SOHO/ERNE"
+      },
+      "expected": {
+        "instrument_code": "ERNE",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "generic_plasma_ambiguous",
+      "category": "ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/ACE/SWEPAM/spase://SMWG/Observatory/ACE",
+      "time_seconds": 2.4950308799743652,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "actual_mission": "spase://SMWG/Observatory/ACE",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "matched_mission_code": "spase://SMWG/Observatory/ACE",
+        "matched_instrument_name": "SWEPAM",
+        "matched_mission_name": "ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "ace_swepam_specific",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/ACE/SWEPAM/spase://SMWG/Observatory/ACE",
+      "time_seconds": 3.5416641235351562,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "actual_mission": "spase://SMWG/Observatory/ACE",
+        "expected_instrument": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "expected_mission": "spase://SMWG/Observatory/ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "matched_mission_code": "spase://SMWG/Observatory/ACE",
+        "matched_instrument_name": "SWEPAM",
+        "matched_mission_name": "ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "mission_code": "spase://SMWG/Observatory/ACE",
+        "should_match": true
+      }
+    },
+    {
+      "name": "ulysses_swoops_specific",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Ulysses/SWOOPS/spase://SMWG/Observatory/Ulysses",
+      "time_seconds": 1.5335917472839355,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Ulysses/SWOOPS",
+        "actual_mission": "spase://SMWG/Observatory/Ulysses",
+        "expected_instrument": "spase://SMWG/Instrument/Ulysses/SWOOPS",
+        "expected_mission": "spase://SMWG/Observatory/Ulysses",
+        "reasoning": "Systematic selection: Ulysses \u2192 spase://SMWG/Instrument/Ulysses/SWOOPS"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Ulysses/SWOOPS",
+        "matched_mission_code": "spase://SMWG/Observatory/Ulysses",
+        "matched_instrument_name": "SWOOPS",
+        "matched_mission_name": "Ulysses",
+        "reasoning": "Systematic selection: Ulysses \u2192 spase://SMWG/Instrument/Ulysses/SWOOPS"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Ulysses/SWOOPS",
+        "mission_code": "spase://SMWG/Observatory/Ulysses",
+        "should_match": true
+      }
+    },
+    {
+      "name": "cluster_fgm_multi",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 3.387669086456299,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "cluster1_fgm_specific",
+      "category": "challenging",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected spase://SMWG/Instrument/Cluster-Rumba/FGM, got spase://SMWG/Instrument/Cluster-Samba/FGM",
+      "time_seconds": 2.047136068344116,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Cluster-Samba/FGM",
+        "actual_mission": "spase://SMWG/Observatory/Cluster-Samba",
+        "expected_instrument": "spase://SMWG/Instrument/Cluster-Rumba/FGM",
+        "expected_mission": "spase://SMWG/Observatory/Cluster-Rumba",
+        "reasoning": "Systematic selection: Cluster Mission \u2192 spase://SMWG/Instrument/Cluster-Samba/FGM"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Cluster-Samba/FGM",
+        "matched_mission_code": "spase://SMWG/Observatory/Cluster-Samba",
+        "matched_instrument_name": "FGM",
+        "matched_mission_name": "Cluster Mission",
+        "reasoning": "Systematic selection: Cluster Mission \u2192 spase://SMWG/Instrument/Cluster-Samba/FGM"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Cluster-Rumba/FGM",
+        "mission_code": "spase://SMWG/Observatory/Cluster-Rumba",
+        "should_match": true
+      }
+    },
+    {
+      "name": "voyager_mag_ambiguous",
+      "category": "ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Voyager1/MAG/spase://SMWG/Observatory/Voyager1",
+      "time_seconds": 1.7168550491333008,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Voyager1/MAG",
+        "actual_mission": "spase://SMWG/Observatory/Voyager1",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Voyager Spacecraft \u2192 spase://SMWG/Instrument/Voyager1/MAG"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Voyager1/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/Voyager1",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "Voyager Spacecraft",
+        "reasoning": "Systematic selection: Voyager Spacecraft \u2192 spase://SMWG/Instrument/Voyager1/MAG"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "voyager1_mag_specific",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Voyager1/MAG/spase://SMWG/Observatory/Voyager1",
+      "time_seconds": 2.3787448406219482,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Voyager1/MAG",
+        "actual_mission": "spase://SMWG/Observatory/Voyager1",
+        "expected_instrument": "spase://SMWG/Instrument/Voyager1/MAG",
+        "expected_mission": "spase://SMWG/Observatory/Voyager1",
+        "reasoning": "Systematic selection: Voyager Spacecraft \u2192 spase://SMWG/Instrument/Voyager1/MAG"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Voyager1/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/Voyager1",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "Voyager Spacecraft",
+        "reasoning": "Systematic selection: Voyager Spacecraft \u2192 spase://SMWG/Instrument/Voyager1/MAG"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Voyager1/MAG",
+        "mission_code": "spase://SMWG/Observatory/Voyager1",
+        "should_match": true
+      }
+    },
+    {
+      "name": "polar_mfe_challenging",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/POLAR/MFE/spase://SMWG/Observatory/POLAR",
+      "time_seconds": 1.7413372993469238,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/POLAR/MFE",
+        "actual_mission": "spase://SMWG/Observatory/POLAR",
+        "expected_instrument": "spase://SMWG/Instrument/POLAR/MFE",
+        "expected_mission": "spase://SMWG/Observatory/POLAR",
+        "reasoning": "Systematic selection: POLAR \u2192 spase://SMWG/Instrument/POLAR/MFE"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/POLAR/MFE",
+        "matched_mission_code": "spase://SMWG/Observatory/POLAR",
+        "matched_instrument_name": "MFE",
+        "matched_mission_name": "POLAR",
+        "reasoning": "Systematic selection: POLAR \u2192 spase://SMWG/Instrument/POLAR/MFE"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/POLAR/MFE",
+        "mission_code": "spase://SMWG/Observatory/POLAR",
+        "should_match": true
+      }
+    },
+    {
+      "name": "geotail_mgf_challenging",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/Geotail/MGF/spase://SMWG/Observatory/Geotail",
+      "time_seconds": 1.2749519348144531,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/Geotail/MGF",
+        "actual_mission": "spase://SMWG/Observatory/Geotail",
+        "expected_instrument": "spase://SMWG/Instrument/Geotail/MGF",
+        "expected_mission": "spase://SMWG/Observatory/Geotail",
+        "reasoning": "Systematic selection: Geotail \u2192 spase://SMWG/Instrument/Geotail/MGF"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Geotail/MGF",
+        "matched_mission_code": "spase://SMWG/Observatory/Geotail",
+        "matched_instrument_name": "MGF",
+        "matched_mission_name": "Geotail",
+        "reasoning": "Systematic selection: Geotail \u2192 spase://SMWG/Instrument/Geotail/MGF"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/Geotail/MGF",
+        "mission_code": "spase://SMWG/Observatory/Geotail",
+        "should_match": true
+      }
+    },
+    {
+      "name": "isee3_mag_vintage",
+      "category": "challenging",
+      "status": "correct",
+      "explanation": "Correct match: spase://SMWG/Instrument/ISEE3/MAG/spase://SMWG/Observatory/ISEE3",
+      "time_seconds": 1.6926331520080566,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/ISEE3/MAG",
+        "actual_mission": "spase://SMWG/Observatory/ISEE3",
+        "expected_instrument": "spase://SMWG/Instrument/ISEE3/MAG",
+        "expected_mission": "spase://SMWG/Observatory/ISEE3",
+        "reasoning": "Systematic selection: ISEE Mission \u2192 spase://SMWG/Instrument/ISEE3/MAG"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/ISEE3/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/ISEE3",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "ISEE Mission",
+        "reasoning": "Systematic selection: ISEE Mission \u2192 spase://SMWG/Instrument/ISEE3/MAG"
+      },
+      "expected": {
+        "instrument_code": "spase://SMWG/Instrument/ISEE3/MAG",
+        "mission_code": "spase://SMWG/Observatory/ISEE3",
+        "should_match": true
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/challenging_test_cases.jsonl",
+    "total_cases_in_file": 15,
+    "cases_run": 15,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751464038.301311
+  }
+}

@@ -1,0 +1,35 @@
+# Worktree override — mount large data dirs from the main repo
+# so we don't need to copy gigabytes of PDFs/media into each worktree.
+services:
+  api:
+    volumes:
+      - /Users/abuonomo/code/nasa/pdl-workspace/paper-data-linking/api/media:/code/media
+      - /Users/abuonomo/code/nasa/pdl-workspace/paper-data-linking/data/raw/pdfs:/code/data/raw/pdfs
+      - static_volume:/code/staticfiles
+
+  celery:
+    volumes:
+      - /Users/abuonomo/code/nasa/pdl-workspace/paper-data-linking/api/media:/code/media
+    environment: &local_aws_creds
+      # LOCAL-ONLY: file-based AWS creds for local SSO sessions (renewals rewrite
+      # the file; fresh boto3 Sessions re-read it live). Prod uses the EC2
+      # instance-role/assume-role path and must NOT get these blanked keys.
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+      AWS_SESSION_TOKEN: ""
+      AWS_SHARED_CREDENTIALS_FILE: /code/media/papers/.aws_credentials
+
+  celery-cpu:
+    volumes:
+      - /Users/abuonomo/code/nasa/pdl-workspace/paper-data-linking/api/media:/code/media
+    environment: *local_aws_creds
+
+  celery-beat:
+    environment: *local_aws_creds
+
+  client:
+    volumes:
+      - .htpasswd:/etc/nginx/.htpasswd
+      - static_volume:/usr/share/nginx/html/staticfiles
+      - /Users/abuonomo/code/nasa/pdl-workspace/paper-data-linking/api/media:/usr/share/nginx/html/media
+      - flower_static:/etc/nginx/flower_static:ro

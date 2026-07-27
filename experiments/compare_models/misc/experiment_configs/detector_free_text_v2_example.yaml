@@ -1,0 +1,39 @@
+# Experiment configuration for detector_normalization
+#
+# V2 adds stricter guidance for UNCERTAIN responses:
+# - Explicitly handles multi-detector mentions (e.g., "C2 and C3")
+# - Clarifies behavior for generic measurement descriptions
+# - Provides clearer decision criteria
+#
+# Usage:
+#   python experiments/compare_models/run_parallel_experiment.py \
+#     --config experiment_configs/detector_free_text_v2_example.yaml
+
+experiment_name: detector_free_text_v2_bedrock_120b_full
+description: "Full detector normalization test with Bedrock 120B using v2 free-text handler (stricter UNCERTAIN guidance)"
+
+# Models to test
+models:
+  - bedrock/openai.gpt-oss-120b-1:0
+
+# Call types to run
+call_types:
+  - detector_free_text_v2
+
+# Experiment parameters
+max_cases: 100
+max_workers: 2
+timeout_seconds: 600
+output_dir: experiments/compare_models/prompt_experiments
+
+# Call type configurations
+call_type_configs:
+  detector_free_text_v2:
+    # Path to system prompt XML (v2 with stricter guidance)
+    prompt: paper_data_linking/linkers/general/prompts/detector_normalization/system.xml
+
+    # Path to test data JSONL
+    input: inputs/test_set/detector_normalization.jsonl
+
+    # Handler class to use
+    handler_class: DetectorNormalizationFreeTextV2Handler

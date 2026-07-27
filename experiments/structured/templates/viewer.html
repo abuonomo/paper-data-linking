@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Annotations for {{ BIBCODE }}</title>
+  <link rel="stylesheet" href="../assets/css/viewer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf_viewer.min.css">
+  <!-- Include PDF.js from a CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="pdf-container">
+      <h1>PDF Annotations for {{ BIBCODE }}</h1>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+    <div id="sidebar">
+      <h2>Validation Dashboard</h2>
+      <div id="validation-stats">
+        <div>Claims to validate: <span id="total-claims">0</span></div>
+        <div>Validated: <span id="validated-claims">0</span></div>
+        <div>Rejected: <span id="rejected-claims">0</span></div>
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+      </div>
+      <div id="instruments-list"></div>
+      <button id="save-validations" class="save-button">Save Validations</button>
+    </div>
+  </div>
+
+  <script>
+    // Pass bibcode to JavaScript
+    const bibcode = '{{ BIBCODE }}';
+  </script>
+  <script src="../assets/js/viewer.js"></script>
+</body>
+</html>

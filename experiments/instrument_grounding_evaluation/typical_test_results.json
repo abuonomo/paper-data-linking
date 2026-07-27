@@ -1,0 +1,640 @@
+{
+  "summary": {
+    "total": 21,
+    "correct": 11,
+    "incorrect": 10,
+    "errors": 0,
+    "total_time": 68.4782783985138,
+    "average_time": 3.260870399929228,
+    "accuracy": 52.38095238095239,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "exact_match": {
+      "total": 4,
+      "correct": 2,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "abbreviation": {
+      "total": 2,
+      "correct": 0,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "contextual": {
+      "total": 4,
+      "correct": 2,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "ambiguous": {
+      "total": 3,
+      "correct": 3,
+      "incorrect": 0,
+      "errors": 0
+    },
+    "non_vso": {
+      "total": 5,
+      "correct": 3,
+      "incorrect": 2,
+      "errors": 0
+    },
+    "similar_instruments": {
+      "total": 1,
+      "correct": 0,
+      "incorrect": 1,
+      "errors": 0
+    },
+    "edge_cases": {
+      "total": 2,
+      "correct": 1,
+      "incorrect": 1,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "lasco_exact_match",
+      "category": "exact_match",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 7.577412128448486,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "aia_exact_match",
+      "category": "exact_match",
+      "status": "correct",
+      "explanation": "Correct match: AIA/SDO",
+      "time_seconds": 5.162089824676514,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "AIA",
+        "actual_mission": "SDO",
+        "expected_instrument": "AIA",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "AIA",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Atmospheric Imaging Assembly",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "expected": {
+        "instrument_code": "AIA",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "hmi_exact_match",
+      "category": "exact_match",
+      "status": "correct",
+      "explanation": "Correct match: HMI/SDO",
+      "time_seconds": 2.6064913272857666,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "HMI",
+        "actual_mission": "SDO",
+        "expected_instrument": "HMI",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "HMI",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Helioseismic and Magnetic Imager",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "expected": {
+        "instrument_code": "HMI",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "eit_exact_match",
+      "category": "exact_match",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.9143810272216797,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "EIT",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "EIT",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "lasco_abbreviation",
+      "category": "abbreviation",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.867016077041626,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "soho_lasco_variant",
+      "category": "abbreviation",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 1.7466320991516113,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "hmi_from_context",
+      "category": "contextual",
+      "status": "correct",
+      "explanation": "Correct match: HMI/SDO",
+      "time_seconds": 1.8419108390808105,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "HMI",
+        "actual_mission": "SDO",
+        "expected_instrument": "HMI",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "HMI",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Helioseismic and Magnetic Imager",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "expected": {
+        "instrument_code": "HMI",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "sdo_context_clue",
+      "category": "contextual",
+      "status": "correct",
+      "explanation": "Correct match: AIA/SDO",
+      "time_seconds": 1.4944031238555908,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "AIA",
+        "actual_mission": "SDO",
+        "expected_instrument": "AIA",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "AIA",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Atmospheric Imaging Assembly",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "expected": {
+        "instrument_code": "AIA",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "ambiguous_coronagraph",
+      "category": "ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.6791412830352783,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "ambiguous_euv_telescope",
+      "category": "ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 6.2064080238342285,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "ambiguous_magnetometer",
+      "category": "ambiguous",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 3.319514751434326,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "non_vso_ground_telescope",
+      "category": "non_vso",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 3.482175827026367,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "non_vso_theoretical",
+      "category": "non_vso",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 2.5795793533325195,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No candidate missions identified - too generic or unclear"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No candidate missions identified - too generic or unclear"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "non_vso_lab_experiment",
+      "category": "non_vso",
+      "status": "correct",
+      "explanation": "Correctly identified as no match",
+      "time_seconds": 1.2906970977783203,
+      "details": {
+        "actual_match": false,
+        "expected_match": false,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final mission selected - description too ambiguous to disambiguate"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "wind_mfi",
+      "category": "non_vso",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Wind/MFI/spase://SMWG/Observatory/Wind",
+      "time_seconds": 1.8356280326843262,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Wind/MFI",
+        "actual_mission": "spase://SMWG/Observatory/Wind",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Wind/MFI",
+        "matched_mission_code": "spase://SMWG/Observatory/Wind",
+        "matched_instrument_name": "MFI",
+        "matched_mission_name": "Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "wind_3dp",
+      "category": "non_vso",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Wind/3DP/spase://SMWG/Observatory/Wind",
+      "time_seconds": 2.022045135498047,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Wind/3DP",
+        "actual_mission": "spase://SMWG/Observatory/Wind",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/3DP"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Wind/3DP",
+        "matched_mission_code": "spase://SMWG/Observatory/Wind",
+        "matched_instrument_name": "3DP",
+        "matched_mission_name": "Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/3DP"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "stereo_cor1",
+      "category": "contextual",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 10.883288860321045,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "soho_ephin",
+      "category": "contextual",
+      "status": "incorrect",
+      "explanation": "Wrong instrument: expected COSTEP, got spase://SMWG/Instrument/SOHO/COSTEP",
+      "time_seconds": 2.2260582447052,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "spase://SMWG/Instrument/SOHO/COSTEP",
+        "actual_mission": "spase://SMWG/Observatory/SOHO",
+        "expected_instrument": "COSTEP",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: SOHO \u2192 spase://SMWG/Instrument/SOHO/COSTEP"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/SOHO/COSTEP",
+        "matched_mission_code": "spase://SMWG/Observatory/SOHO",
+        "matched_instrument_name": "COSTEP",
+        "matched_mission_name": "SOHO",
+        "reasoning": "Systematic selection: SOHO \u2192 spase://SMWG/Instrument/SOHO/COSTEP"
+      },
+      "expected": {
+        "instrument_code": "COSTEP",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "stereo_secchi",
+      "category": "similar_instruments",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 3.9019713401794434,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "edge_case_typo",
+      "category": "edge_cases",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 2.8830509185791016,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": "No final instrument selected - multiple instruments could match equally"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "edge_case_mixed_case",
+      "category": "edge_cases",
+      "status": "correct",
+      "explanation": "Correct match: AIA/SDO",
+      "time_seconds": 1.9583830833435059,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "AIA",
+        "actual_mission": "SDO",
+        "expected_instrument": "AIA",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "AIA",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Atmospheric Imaging Assembly",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 AIA"
+      },
+      "expected": {
+        "instrument_code": "AIA",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/test_cases.jsonl",
+    "total_cases_in_file": 21,
+    "cases_run": 21,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751466780.030578
+  }
+}

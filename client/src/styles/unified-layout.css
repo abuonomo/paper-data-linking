@@ -1,0 +1,160 @@
+/* Unified Layout — single design language for all pages */
+
+/* ── Navbar ─────────────────────────────────────────── */
+.unified-navbar {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+  border-bottom: 3px solid #e74c3c;
+  padding: 0.5rem 0;
+}
+
+.unified-navbar .navbar-brand {
+  font-weight: 600;
+  font-size: var(--font-lg, 1.1rem);
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+.unified-navbar .nav-link,
+.unified-navbar .dropdown-toggle {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: var(--font-base, 0.945rem);
+  padding: 0.5rem 0.75rem !important;
+  transition: color 0.2s;
+}
+
+.unified-navbar .nav-link:hover,
+.unified-navbar .dropdown-toggle:hover,
+.unified-navbar .nav-link:focus,
+.unified-navbar .dropdown-toggle:focus {
+  color: #ffffff !important;
+}
+
+.unified-navbar .nav-link.active,
+.unified-navbar .dropdown-toggle.show {
+  color: #ffffff !important;
+}
+
+/* Dropdown menus */
+.unified-navbar .dropdown-menu {
+  background: #16213e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  margin-top: 0.25rem;
+  padding: 0.25rem 0;
+}
+
+.unified-navbar .dropdown-item {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--font-base, 0.945rem);
+  padding: 0.5rem 1rem;
+  transition: all 0.15s;
+}
+
+.unified-navbar .dropdown-item:hover,
+.unified-navbar .dropdown-item:focus {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.unified-navbar .dropdown-item.active,
+.unified-navbar .dropdown-item:active {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.unified-navbar .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Login button — styled as a regular nav link so navbar height stays constant */
+.unified-navbar .btn-login {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: var(--font-base, 0.945rem);
+  padding: 0.5rem 0.75rem !important;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.unified-navbar .btn-login:hover {
+  color: #ffffff !important;
+}
+
+/* Hamburger toggle */
+.unified-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.unified-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.15rem rgba(231, 76, 60, 0.25);
+}
+
+/* ── Main content ───────────────────────────────────── */
+.unified-main {
+  flex: 1;
+  background-color: #fafafa;
+  padding: 2rem;
+  width: 100%;
+}
+
+.unified-main-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Full-bleed mode — used by validation pages that need fixed viewport height */
+.unified-main.full-bleed {
+  padding: 0;
+  overflow: hidden;
+}
+
+.unified-main.full-bleed .unified-main-inner {
+  max-width: none;
+  height: 100%;
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.unified-footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-top: 3px solid #e74c3c;
+  color: white;
+  width: 100%;
+  padding: 2rem 2rem 1.5rem;
+}
+
+.unified-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.unified-footer a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.unified-footer a:hover {
+  color: white;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .unified-navbar .navbar-collapse {
+    background: #16213e;
+    margin: 0.5rem -0.75rem -0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .unified-navbar .dropdown-menu {
+    background: transparent;
+    border: none;
+    padding-left: 1rem;
+  }
+
+}

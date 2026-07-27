@@ -1,0 +1,308 @@
+{
+  "summary": {
+    "total": 10,
+    "correct": 7,
+    "incorrect": 3,
+    "errors": 0,
+    "total_time": 27.165499925613403,
+    "average_time": 2.7165499925613403,
+    "accuracy": 70.0,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "debug_failed": {
+      "total": 10,
+      "correct": 7,
+      "incorrect": 3,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "eit_exact_match_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: EIT/SOHO",
+      "time_seconds": 2.4224910736083984,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "EIT",
+        "actual_mission": "SOHO",
+        "expected_instrument": "EIT",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 EIT"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "EIT",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Extreme ultraviolet Imaging Telescope",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 EIT"
+      },
+      "expected": {
+        "instrument_code": "EIT",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "hmi_exact_match_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: HMI/SDO",
+      "time_seconds": 2.206176996231079,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "HMI",
+        "actual_mission": "SDO",
+        "expected_instrument": "HMI",
+        "expected_mission": "SDO",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "HMI",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Helioseismic and Magnetic Imager",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "reasoning": "Systematic selection: Solar Dynamics Observatory \u2192 HMI"
+      },
+      "expected": {
+        "instrument_code": "HMI",
+        "mission_code": "SDO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "lasco_abbreviation_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: LASCO/SOHO",
+      "time_seconds": 1.777768850326538,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "LASCO",
+        "actual_mission": "SOHO",
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "LASCO",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Large Angle and Spectrometric Coronagraph",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "soho_lasco_variant_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: LASCO/SOHO",
+      "time_seconds": 1.8853020668029785,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "LASCO",
+        "actual_mission": "SOHO",
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "LASCO",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Large Angle and Spectrometric Coronagraph",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "stereo_cor1_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: SECCHI/STEREO_A",
+      "time_seconds": 6.680077075958252,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SECCHI",
+        "actual_mission": "STEREO_A",
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 SECCHI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SECCHI",
+        "matched_mission_code": "STEREO_A",
+        "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 SECCHI"
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "soho_ephin_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: COSTEP/SOHO",
+      "time_seconds": 1.8418190479278564,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "COSTEP",
+        "actual_mission": "SOHO",
+        "expected_instrument": "COSTEP",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 COSTEP"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "COSTEP",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Comprehensive Suprathermal and Energetic Particle Analyzer",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 COSTEP"
+      },
+      "expected": {
+        "instrument_code": "COSTEP",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "wind_mfi_debug",
+      "category": "debug_failed",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Wind/MFI/spase://SMWG/Observatory/Wind",
+      "time_seconds": 1.995244026184082,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Wind/MFI",
+        "actual_mission": "spase://SMWG/Observatory/Wind",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Wind/MFI",
+        "matched_mission_code": "spase://SMWG/Observatory/Wind",
+        "matched_instrument_name": "MFI",
+        "matched_mission_name": "Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/MFI"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "wind_3dp_debug",
+      "category": "debug_failed",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Wind/3DP/spase://SMWG/Observatory/Wind",
+      "time_seconds": 4.4565229415893555,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Wind/3DP",
+        "actual_mission": "spase://SMWG/Observatory/Wind",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/3DP"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Wind/3DP",
+        "matched_mission_code": "spase://SMWG/Observatory/Wind",
+        "matched_instrument_name": "3DP",
+        "matched_mission_name": "Wind",
+        "reasoning": "Systematic selection: Wind \u2192 spase://SMWG/Instrument/Wind/3DP"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "stereo_secchi_debug",
+      "category": "debug_failed",
+      "status": "incorrect",
+      "explanation": "Wrong mission: expected STEREO_A, got STEREO_B",
+      "time_seconds": 1.8429999351501465,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SECCHI",
+        "actual_mission": "STEREO_B",
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 SECCHI"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SECCHI",
+        "matched_mission_code": "STEREO_B",
+        "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+        "matched_mission_name": "STEREO Mission",
+        "reasoning": "Systematic selection: STEREO Mission \u2192 SECCHI"
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "edge_case_typo_debug",
+      "category": "debug_failed",
+      "status": "correct",
+      "explanation": "Correct match: LASCO/SOHO",
+      "time_seconds": 2.057097911834717,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "LASCO",
+        "actual_mission": "SOHO",
+        "expected_instrument": "LASCO",
+        "expected_mission": "SOHO",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "LASCO",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Large Angle and Spectrometric Coronagraph",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": "Systematic selection: Solar and Heliospheric Observatory \u2192 LASCO"
+      },
+      "expected": {
+        "instrument_code": "LASCO",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/debug_failed_cases.jsonl",
+    "total_cases_in_file": 10,
+    "cases_run": 10,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751479864.9371378
+  }
+}

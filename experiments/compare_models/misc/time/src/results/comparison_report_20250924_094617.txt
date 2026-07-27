@@ -1,0 +1,12 @@
+MODEL COMPARISON REPORT - 20250924_094617
+============================================================
+
+SUMMARY TABLE:
+------------------------------------------------------------
+Model           Accuracy     Precision    Total   
+------------------------------------------------------------
+gpt-5-nano      5/5 (100.0%)   60.0%         5       
+gpt-5-mini      5/5 (100.0%)   100.0%         5       
+
+Detailed results: detailed_comparison_20250924_094617.csv
+Summary data: summary_20250924_094617.csv

@@ -1,0 +1,64 @@
+output_dir: "data/raw/bibcodes/helio"
+year_range: [1990, 2026]
+request_delay: 1.0
+max_results_per_strategy: null
+fields: ["bibcode"]
+
+strategies:
+  - name: "helio_keywords"
+    type: "keyword"
+    params:
+      keywords:
+        - "heliophysics"
+        - "solar wind"
+        - "coronal mass ejection"
+        - "solar flare"
+        - "magnetosphere"
+        - "chromosphere"
+        - "heliosphere"
+        - "solar energetic particles"
+        - "interplanetary magnetic field"
+        - "space weather"
+        - "solar corona"
+        - "magnetohydrodynamics"
+        - "photosphere"
+        - "solar cycle"
+
+  - name: "helio_journals"
+    type: "bibstem"
+    params:
+      bibstems:
+        - "SoPh"    # Solar Physics
+        - "JGRA"    # J. Geophys. Res. Space Physics
+        - "SpWea"   # Space Weather
+        - "GeoRL"   # Geophysical Research Letters
+        - "LRSP"    # Living Reviews in Solar Physics
+        - "SSRv"    # Space Science Reviews
+        - "AnGeo"   # Annales Geophysicae
+        - "AdSpR"   # Advances in Space Research
+
+  - name: "mission_groups"
+    type: "bibgroup"
+    params:
+      bibgroups:
+        - "SOHO"
+        - "STEREO"
+
+  - name: "arxiv_solar"
+    type: "arxiv_class"
+    params:
+      classes:
+        - "astro-ph.SR"
+        - "physics.space-ph"
+        - "physics.plasm-ph"
+
+  - name: "mission_libraries"
+    type: "library"
+    params:
+      libraries:
+        SOHO: "HLx1YisxRhyufHOCBhs_Gg"
+        Wind: "DdelsbGYT5a8sM7CLujv_g"
+        ACE: "3ftcQJm3SsSv26bbZiPfqg"
+        IRIS: "30bDOCvOTJiAgacWhJxkmA"
+        PSP_FIELDS: "QdlkTDaJTkuhuKTF-tRx3Q"
+        PSP_SWEAP: "NJUKzz3xS0K_e0668NdO3w"

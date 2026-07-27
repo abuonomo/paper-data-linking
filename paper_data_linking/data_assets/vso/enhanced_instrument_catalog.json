@@ -1,0 +1,842 @@
+[
+  {
+    "description": "CLASP2 Slit-Jaw (SJ) of Chromospheric LAyer SpectroPolarimeter 2 (CLASP2)",
+    "instrument_code": "SJ",
+    "instrument_name": "CLASP2 Slit-Jaw",
+    "mission_code": "CLASP2",
+    "mission_name": "Chromospheric LAyer SpectroPolarimeter 2",
+    "provider": "MSFC_CLASP2"
+  },
+  {
+    "description": "CLASP2 Spectropolarimeter1 (SP1) of Chromospheric LAyer SpectroPolarimeter 2 (CLASP2)",
+    "instrument_code": "SP1",
+    "instrument_name": "CLASP2 Spectropolarimeter1",
+    "mission_code": "CLASP2",
+    "mission_name": "Chromospheric LAyer SpectroPolarimeter 2",
+    "provider": "MSFC_CLASP2"
+  },
+  {
+    "description": "CLASP2 Spectropolarimeter2 (SP2) of Chromospheric LAyer SpectroPolarimeter 2 (CLASP2)",
+    "instrument_code": "SP2",
+    "instrument_name": "CLASP2 Spectropolarimeter2",
+    "mission_code": "CLASP2",
+    "mission_name": "Chromospheric LAyer SpectroPolarimeter 2",
+    "provider": "MSFC_CLASP2"
+  },
+  {
+    "description": "ChroTel (ChroTel) of ChroTel (ChroTel)",
+    "instrument_code": "ChroTel",
+    "instrument_name": "ChroTel",
+    "mission_code": "ChroTel",
+    "mission_name": "ChroTel",
+    "provider": "KIS"
+  },
+  {
+    "description": "Full longwave EUV observation of Sun with EUNIS (2006 flight) (LONGWAVE-LOBE-06) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "LONGWAVE-LOBE-06",
+    "instrument_name": "Full longwave EUV observation of Sun with EUNIS (2006 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Full longwave EUV observation of Sun with EUNIS (2007 flight) (LONGWAVE-LOBE-07) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "LONGWAVE-LOBE-07",
+    "instrument_name": "Full longwave EUV observation of Sun with EUNIS (2007 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Full longwave EUV observation of Sun with EUNIS (trimmed/2006 flight) (LONGWAVE-SLIT-06) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "LONGWAVE-SLIT-06",
+    "instrument_name": "Full longwave EUV observation of Sun with EUNIS (trimmed/2006 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Full longwave EUV observation of Sun with EUNIS (trimmed/2007 flight) (LONGWAVE-SLIT-07) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "LONGWAVE-SLIT-07",
+    "instrument_name": "Full longwave EUV observation of Sun with EUNIS (trimmed/2007 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Shortwave EUV observation of Sun with EUNIS (2006 flight) (SHORTWAVE-LOBE-06) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "SHORTWAVE-LOBE-06",
+    "instrument_name": "Shortwave EUV observation of Sun with EUNIS (2006 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Shortwave EUV observation of Sun with EUNIS (2007 flight) (SHORTWAVE-LOBE-07) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "SHORTWAVE-LOBE-07",
+    "instrument_name": "Shortwave EUV observation of Sun with EUNIS (2007 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Shortwave EUV observation of Sun with EUNIS (trimmed/2006 flight) (SHORTWAVE-SLIT-06) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "SHORTWAVE-SLIT-06",
+    "instrument_name": "Shortwave EUV observation of Sun with EUNIS (trimmed/2006 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "Shortwave EUV observation of Sun with EUNIS (trimmed/2007 flight) (SHORTWAVE-SLIT-07) of Extreme Ultraviolet Normal-incidence Spectrograph (EUNIS)",
+    "instrument_code": "SHORTWAVE-SLIT-07",
+    "instrument_name": "Shortwave EUV observation of Sun with EUNIS (trimmed/2007 flight)",
+    "mission_code": "EUNIS",
+    "mission_name": "Extreme Ultraviolet Normal-incidence Spectrograph",
+    "provider": "SDAC_EUNIS"
+  },
+  {
+    "description": "spectroheliograph (spectroheliograph) of Evans (Evans)",
+    "instrument_code": "spectroheliograph",
+    "instrument_name": "spectroheliograph",
+    "mission_code": "Evans",
+    "mission_name": "Evans",
+    "provider": "NSO"
+  },
+  {
+    "description": "Focusing Optics X-ray Solar Imager (FOXSI) of Focusing Optics X-ray Solar Imager (flight #1: 11/02/12) (FOXSI1)",
+    "instrument_code": "FOXSI",
+    "instrument_name": "Focusing Optics X-ray Solar Imager",
+    "mission_code": "FOXSI1",
+    "mission_name": "Focusing Optics X-ray Solar Imager (flight #1: 11/02/12)",
+    "provider": "SDAC_FOXSI1"
+  },
+  {
+    "description": "Focusing Optics X-ray Solar Imager (FOXSI) of Focusing Optics X-ray Solar Imager (flight #2: 12/11/14) (FOXSI2)",
+    "instrument_code": "FOXSI",
+    "instrument_name": "Focusing Optics X-ray Solar Imager",
+    "mission_code": "FOXSI2",
+    "mission_name": "Focusing Optics X-ray Solar Imager (flight #2: 12/11/14)",
+    "provider": "SDAC_FOXSI2"
+  },
+  {
+    "description": "Focusing Optics X-ray Solar Imager (FOXSI) of Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) (FOXSI3)",
+    "instrument_code": "FOXSI",
+    "instrument_name": "Focusing Optics X-ray Solar Imager",
+    "mission_code": "FOXSI3",
+    "mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+    "provider": "SDAC_FOXSI3"
+  },
+  {
+    "description": "PHOENIX detector on flight #3 of FOXSI (PHOENIX) of Focusing Optics X-ray Solar Imager (flight #3: 09/07/18) (FOXSI3)",
+    "instrument_code": "PHOENIX",
+    "instrument_name": "PHOENIX detector on flight #3 of FOXSI",
+    "mission_code": "FOXSI3",
+    "mission_name": "Focusing Optics X-ray Solar Imager (flight #3: 09/07/18)",
+    "provider": "SDAC_FOXSI3"
+  },
+  {
+    "description": "GOES-12 Solar X-ray Imager (SXI-0) of Geosyncronous Operational Environmental Satellite - 12 (GOES-12)",
+    "instrument_code": "SXI-0",
+    "instrument_name": "GOES-12 Solar X-ray Imager",
+    "mission_code": "GOES-12",
+    "mission_name": "Geosyncronous Operational Environmental Satellite - 12",
+    "provider": "NGDC"
+  },
+  {
+    "description": "GOES-R Series Solar Ultraviolet Imager (SUVI) of Geostationary Operational Environmental Satellite (GOES-R) Series 16 (GOES16)",
+    "instrument_code": "SUVI",
+    "instrument_name": "GOES-R Series Solar Ultraviolet Imager",
+    "mission_code": "GOES16",
+    "mission_name": "Geostationary Operational Environmental Satellite (GOES-R) Series 16",
+    "provider": "NOAA"
+  },
+  {
+    "description": "GOES-R Series Solar Ultraviolet Imager (SUVI) of Geostationary Operational Environmental Satellite (GOES-R) Series 17 (GOES17)",
+    "instrument_code": "SUVI",
+    "instrument_name": "GOES-R Series Solar Ultraviolet Imager",
+    "mission_code": "GOES17",
+    "mission_name": "Geostationary Operational Environmental Satellite (GOES-R) Series 17",
+    "provider": "NOAA"
+  },
+  {
+    "description": "Big Bear (Big Bear) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "Big Bear",
+    "instrument_name": "Big Bear",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "Cerro Tololo (Cerro Tololo) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "Cerro Tololo",
+    "instrument_name": "Cerro Tololo",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "El Teide (El Teide) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "El Teide",
+    "instrument_name": "El Teide",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "Learmonth (Learmonth) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "Learmonth",
+    "instrument_name": "Learmonth",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "MERGED GONG (MERGED GONG) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "MERGED GONG",
+    "instrument_name": "MERGED GONG",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "Mauna Loa (Mauna Loa) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "Mauna Loa",
+    "instrument_name": "Mauna Loa",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "Udaipur (Udaipur) of Global Oscillations Network Group (GONG)",
+    "instrument_code": "Udaipur",
+    "instrument_name": "Udaipur",
+    "mission_code": "GONG",
+    "mission_name": "Global Oscillations Network Group",
+    "provider": "NSO"
+  },
+  {
+    "description": "UCAR HAO Historical Eclipse Archive (HXECLIPSE) of UCAR HAO Historical Eclipse Archive (HXECLIPSE)",
+    "instrument_code": "HXECLIPSE",
+    "instrument_name": "UCAR HAO Historical Eclipse Archive",
+    "mission_code": "HXECLIPSE",
+    "mission_name": "UCAR HAO Historical Eclipse Archive",
+    "provider": "NSO"
+  },
+  {
+    "description": "Hi-C (Hi-C) of Hi-C (Hi-C)",
+    "instrument_code": "Hi-C",
+    "instrument_name": "Hi-C",
+    "mission_code": "Hi-C",
+    "mission_name": "Hi-C",
+    "provider": "MSFC"
+  },
+  {
+    "description": "Hi-C21 (Hi-C21) of Hi-C21 (Hi-C21)",
+    "instrument_code": "Hi-C21",
+    "instrument_name": "Hi-C21",
+    "mission_code": "Hi-C21",
+    "mission_name": "Hi-C21",
+    "provider": "MSFC_HIC21I"
+  },
+  {
+    "description": "EUV Imaging Spectrometer (EIS) of Hinode (Hinode)",
+    "instrument_code": "EIS",
+    "instrument_name": "EUV Imaging Spectrometer",
+    "mission_code": "Hinode",
+    "mission_name": "Hinode",
+    "provider": "SDAC_EIS"
+  },
+  {
+    "description": "Hinode Solar Optical Telescope (SOT) of Hinode (Hinode)",
+    "instrument_code": "SOT",
+    "instrument_name": "Hinode Solar Optical Telescope",
+    "mission_code": "Hinode",
+    "mission_name": "Hinode",
+    "provider": "SDAC_SOT"
+  },
+  {
+    "description": "X-Ray Telescope (XRT) of Hinode (Hinode)",
+    "instrument_code": "XRT",
+    "instrument_name": "X-Ray Telescope",
+    "mission_code": "Hinode",
+    "mission_name": "Hinode",
+    "provider": "SAO"
+  },
+  {
+    "description": "Interface Region Imaging Spectrograph (IRIS) of Interface Region Imaging Spectrograph (IRIS)",
+    "instrument_code": "IRIS",
+    "instrument_name": "Interface Region Imaging Spectrograph",
+    "mission_code": "IRIS",
+    "mission_name": "Interface Region Imaging Spectrograph",
+    "provider": "LMSAL"
+  },
+  {
+    "description": "Improved Solar Observing Optical Network (ISOON) of Improved Solar Observing Optical Network (ISOON)",
+    "instrument_code": "ISOON",
+    "instrument_name": "Improved Solar Observing Optical Network",
+    "mission_code": "ISOON",
+    "mission_name": "Improved Solar Observing Optical Network",
+    "provider": "NSO"
+  },
+  {
+    "description": "512-channel magnetograph (512-channel magnetograph) of Kitt Peak Vacuum Tower Telescope (KPVT)",
+    "instrument_code": "512-channel magnetograph",
+    "instrument_name": "512-channel magnetograph",
+    "mission_code": "KPVT",
+    "mission_name": "Kitt Peak Vacuum Tower Telescope",
+    "provider": "NSO"
+  },
+  {
+    "description": "spectromagnetograph (spectromagnetograph) of Kitt Peak Vacuum Tower Telescope (KPVT)",
+    "instrument_code": "spectromagnetograph",
+    "instrument_name": "spectromagnetograph",
+    "mission_code": "KPVT",
+    "mission_name": "Kitt Peak Vacuum Tower Telescope",
+    "provider": "NSO"
+  },
+  {
+    "description": "Kanzelhöhe Ca II k Instrument (CAII) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "CAII",
+    "instrument_name": "Kanzelhöhe Ca II k Instrument",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Hα Film Camera (FILM) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "FILM",
+    "instrument_name": "Kanzelhöhe Hα Film Camera",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Hα Patrol Instrument (HA2) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "HA2",
+    "instrument_name": "Kanzelhöhe Hα Patrol Instrument",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Photosphere Digital Camera (KPDC) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "KPDC",
+    "instrument_name": "Kanzelhöhe Photosphere Digital Camera",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Photoheliograph (PHOKA) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "PHOKA",
+    "instrument_name": "Kanzelhöhe Photoheliograph",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Hα Pulnix TM-1001 Camera (TM-1001) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "TM-1001",
+    "instrument_name": "Kanzelhöhe Hα Pulnix TM-1001 Camera",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Kanzelhöhe Hα Pulnix TM-1010 Camera (TM-1010) of Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria (KSO)",
+    "instrument_code": "TM-1010",
+    "instrument_name": "Kanzelhöhe Hα Pulnix TM-1010 Camera",
+    "mission_code": "KSO",
+    "mission_name": "Kanzelhöhe Solar Observatory, Karl-Franzens-Universität, Graz, Austria",
+    "provider": "KSO"
+  },
+  {
+    "description": "Mees Solar Observatory Imaging Spectrograph on Haleakala, Maui (MEES) of Mees CCD Imaging Spectrograph (MCCD)",
+    "instrument_code": "MEES",
+    "instrument_name": "Mees Solar Observatory Imaging Spectrograph on Haleakala, Maui",
+    "mission_code": "MCCD",
+    "mission_name": "Mees CCD Imaging Spectrograph",
+    "provider": "NWRA"
+  },
+  {
+    "description": "X123 SXR Spectometer (X123) of Miniature X-Ray Solar Spectrometer Cubesat #1 (MINXSS1)",
+    "instrument_code": "X123",
+    "instrument_name": "X123 SXR Spectometer",
+    "mission_code": "MINXSS1",
+    "mission_name": "Miniature X-Ray Solar Spectrometer Cubesat #1",
+    "provider": "LASP_MINXSS1"
+  },
+  {
+    "description": "K-Cor (K-Cor) of Mauna Loa Solar Observatory (MLSO)",
+    "instrument_code": "K-Cor",
+    "instrument_name": "K-Cor",
+    "mission_code": "MLSO",
+    "mission_name": "Mauna Loa Solar Observatory",
+    "provider": "HAO"
+  },
+  {
+    "description": "chp (chp) of Mauna Loa Solar Observatory (MLSO)",
+    "instrument_code": "chp",
+    "instrument_name": "chp",
+    "mission_code": "MLSO",
+    "mission_name": "Mauna Loa Solar Observatory",
+    "provider": "HAO"
+  },
+  {
+    "description": "dpm (dpm) of Mauna Loa Solar Observatory (MLSO)",
+    "instrument_code": "dpm",
+    "instrument_name": "dpm",
+    "mission_code": "MLSO",
+    "mission_name": "Mauna Loa Solar Observatory",
+    "provider": "HAO"
+  },
+  {
+    "description": "mk4 (mk4) of Mauna Loa Solar Observatory (MLSO)",
+    "instrument_code": "mk4",
+    "instrument_name": "mk4",
+    "mission_code": "MLSO",
+    "mission_name": "Mauna Loa Solar Observatory",
+    "provider": "HAO"
+  },
+  {
+    "description": "solar fts spectrometer (solar fts spectrometer) of McMath (McMath)",
+    "instrument_code": "solar fts spectrometer",
+    "instrument_name": "solar fts spectrometer",
+    "mission_code": "McMath",
+    "mission_name": "McMath",
+    "provider": "NSO"
+  },
+  {
+    "description": "60-ft SHG (60-ft SHG) of MtWilson (MtWilson)",
+    "instrument_code": "60-ft SHG",
+    "instrument_name": "60-ft SHG",
+    "mission_code": "MtWilson",
+    "mission_name": "MtWilson",
+    "provider": "MWSPADP"
+  },
+  {
+    "description": "BE-Continuum (BE-Continuum) of Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY (OACT)",
+    "instrument_code": "BE-Continuum",
+    "instrument_name": "BE-Continuum",
+    "mission_code": "OACT",
+    "mission_name": "Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY",
+    "provider": "INAF-OACT"
+  },
+  {
+    "description": "BE-Halpha (BE-Halpha) of Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY (OACT)",
+    "instrument_code": "BE-Halpha",
+    "instrument_name": "BE-Halpha",
+    "mission_code": "OACT",
+    "mission_name": "Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY",
+    "provider": "INAF-OACT"
+  },
+  {
+    "description": "Cook_Refractor (Cook_Refractor) of Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY (OACT)",
+    "instrument_code": "Cook_Refractor",
+    "instrument_name": "Cook_Refractor",
+    "mission_code": "OACT",
+    "mission_name": "Osservatorio Astrofisico di Catania, Via S.Sofia 78, 95123 Catania ITALY",
+    "provider": "INAF-OACT"
+  },
+  {
+    "description": "Meudon Spectroheliograph (Meudon Spectroheliograph) of Département d'Astronomie Solaire de l'Observatoire de Paris, Paris, France (OBSPM)",
+    "instrument_code": "Meudon Spectroheliograph",
+    "instrument_name": "Meudon Spectroheliograph",
+    "mission_code": "OBSPM",
+    "mission_name": "Département d'Astronomie Solaire de l'Observatoire de Paris, Paris, France",
+    "provider": "OBSPM"
+  },
+  {
+    "description": "Christian Latouche IMageur SOlaire (CLIMSO) of Pic-du-Midi, France (OMP)",
+    "instrument_code": "CLIMSO",
+    "instrument_name": "Christian Latouche IMageur SOlaire",
+    "mission_code": "OMP",
+    "mission_name": "Pic-du-Midi, France",
+    "provider": "OMP"
+  },
+  {
+    "description": "Owens Valley Solar Array (OVSA) of Owens Valley Radio Observatory (OVRO)",
+    "instrument_code": "OVSA",
+    "instrument_name": "Owens Valley Solar Array",
+    "mission_code": "OVRO",
+    "mission_name": "Owens Valley Radio Observatory",
+    "provider": "OVRO"
+  },
+  {
+    "description": "LYman alpha RAdiometer (LYRA) of PRoject for Onboard Autonomy (PROBA2)",
+    "instrument_code": "LYRA",
+    "instrument_name": "LYman alpha RAdiometer",
+    "mission_code": "PROBA2",
+    "mission_name": "PRoject for Onboard Autonomy",
+    "provider": "ESA"
+  },
+  {
+    "description": "Sun Watcher using Active pixel system detector and image Processing (SWAP) of PRoject for Onboard Autonomy (PROBA2)",
+    "instrument_code": "SWAP",
+    "instrument_name": "Sun Watcher using Active pixel system detector and image Processing",
+    "mission_code": "PROBA2",
+    "mission_name": "PRoject for Onboard Autonomy",
+    "provider": "ESA"
+  },
+  {
+    "description": "Wide-Field Imager for Solar Probe Plus (WISPR) of Parker Solar Probe (PSP)",
+    "instrument_code": "WISPR",
+    "instrument_name": "Wide-Field Imager for Solar Probe Plus",
+    "mission_code": "PSP",
+    "mission_name": "Parker Solar Probe",
+    "provider": "NRL"
+  },
+  {
+    "description": "Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI) of Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI)",
+    "instrument_code": "RHESSI",
+    "instrument_name": "Reuven Ramaty High Energy Solar Spectroscopic Imager",
+    "mission_code": "RHESSI",
+    "mission_name": "Reuven Ramaty High Energy Solar Spectroscopic Imager",
+    "provider": "LSSP"
+  },
+  {
+    "description": "The Solar Upper Transition Region Imager (SUTRI) of SATech-01 (SATech-01)",
+    "instrument_code": "SUTRI",
+    "instrument_name": "The Solar Upper Transition Region Imager",
+    "mission_code": "SATech-01",
+    "mission_name": "SATech-01",
+    "provider": "HSOS"
+  },
+  {
+    "description": "Atmospheric Imaging Assembly (AIA) of Solar Dynamics Observatory (SDO)",
+    "instrument_code": "AIA",
+    "instrument_name": "Atmospheric Imaging Assembly",
+    "mission_code": "SDO",
+    "mission_name": "Solar Dynamics Observatory",
+    "provider": "JSOC"
+  },
+  {
+    "description": "Extreme Ultraviolet Variability Experiment (EVE) of Solar Dynamics Observatory (SDO)",
+    "instrument_code": "EVE",
+    "instrument_name": "Extreme Ultraviolet Variability Experiment",
+    "mission_code": "SDO",
+    "mission_name": "Solar Dynamics Observatory",
+    "provider": "LASP"
+  },
+  {
+    "description": "Helioseismic and Magnetic Imager (HMI) of Solar Dynamics Observatory (SDO)",
+    "instrument_code": "HMI",
+    "instrument_name": "Helioseismic and Magnetic Imager",
+    "mission_code": "SDO",
+    "mission_name": "Solar Dynamics Observatory",
+    "provider": "JSOC"
+  },
+  {
+    "description": "SFT T1 Ha Fulldisk (T1-HALPHA) of Solar Flare Telescope (SFT)",
+    "instrument_code": "T1-HALPHA",
+    "instrument_name": "SFT T1 Ha Fulldisk",
+    "mission_code": "SFT",
+    "mission_name": "Solar Flare Telescope",
+    "provider": "NAOJ"
+  },
+  {
+    "description": "cp (cp) of Solar Maximum Mission (SMM)",
+    "instrument_code": "cp",
+    "instrument_name": "cp",
+    "mission_code": "SMM",
+    "mission_name": "Solar Maximum Mission",
+    "provider": "HAO_SMM"
+  },
+  {
+    "description": "Extreme Ultravoilet Imager (EUI) of Solar Orbiter (SO)",
+    "instrument_code": "EUI",
+    "instrument_name": "Extreme Ultravoilet Imager",
+    "mission_code": "SO",
+    "mission_name": "Solar Orbiter",
+    "provider": "SDAC_SO"
+  },
+  {
+    "description": "Spectral Imaging of the Coronal Environment (SPICE) of Solar Orbiter (SO)",
+    "instrument_code": "SPICE",
+    "instrument_name": "Spectral Imaging of the Coronal Environment",
+    "mission_code": "SO",
+    "mission_name": "Solar Orbiter",
+    "provider": "SDAC_SO"
+  },
+  {
+    "description": "SoloHI (SoloHI) of Solar Orbiter (SO)",
+    "instrument_code": "SoloHI",
+    "instrument_name": "SoloHI",
+    "mission_code": "SO",
+    "mission_name": "Solar Orbiter",
+    "provider": "SDAC_SO"
+  },
+  {
+    "description": "Coronal Diagnostic Spectrometer (CDS) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "CDS",
+    "instrument_name": "Coronal Diagnostic Spectrometer",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Charge, Element, and Isotope Analysis System (CELIAS) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "CELIAS",
+    "instrument_name": "Charge, Element, and Isotope Analysis System",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Comprehensive Suprathermal and Energetic Particle Analyzer (COSTEP) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "COSTEP",
+    "instrument_name": "Comprehensive Suprathermal and Energetic Particle Analyzer",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Extreme ultraviolet Imaging Telescope (EIT) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "EIT",
+    "instrument_name": "Extreme ultraviolet Imaging Telescope",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Energetic and Relativistic Nuclei and Electron experiment (ERNE) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "ERNE",
+    "instrument_name": "Energetic and Relativistic Nuclei and Electron experiment",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Global Oscillations at Low Frequencies (GOLF) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "GOLF",
+    "instrument_name": "Global Oscillations at Low Frequencies",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Large Angle and Spectrometric Coronagraph (LASCO) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "LASCO",
+    "instrument_name": "Large Angle and Spectrometric Coronagraph",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Michelson Doppler Imager (MDI) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "MDI",
+    "instrument_name": "Michelson Doppler Imager",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SHA"
+  },
+  {
+    "description": "Solar Ultraviolet Measurements of Emitted Radiation (SUMER) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "SUMER",
+    "instrument_name": "Solar Ultraviolet Measurements of Emitted Radiation",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Solar Wind Anisotropies (SWAN) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "SWAN",
+    "instrument_name": "Solar Wind Anisotropies",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Ultraviolet Coronagraph Spectrometer (UVCS) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "UVCS",
+    "instrument_name": "Ultraviolet Coronagraph Spectrometer",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "Variability of Solar Irradiance and Gravity Oscillations (VIRGO) of Solar and Heliospheric Observatory (SOHO)",
+    "instrument_code": "VIRGO",
+    "instrument_name": "Variability of Solar Irradiance and Gravity Oscillations",
+    "mission_code": "SOHO",
+    "mission_name": "Solar and Heliospheric Observatory",
+    "provider": "SDAC"
+  },
+  {
+    "description": "ISS (ISS) of Synoptic Optical Long-term Investigations of the Sun (SOLIS)",
+    "instrument_code": "ISS",
+    "instrument_name": "ISS",
+    "mission_code": "SOLIS",
+    "mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+    "provider": "NSO"
+  },
+  {
+    "description": "vsm (vsm) of Synoptic Optical Long-term Investigations of the Sun (SOLIS)",
+    "instrument_code": "vsm",
+    "instrument_name": "vsm",
+    "mission_code": "SOLIS",
+    "mission_name": "Synoptic Optical Long-term Investigations of the Sun",
+    "provider": "NSO"
+  },
+  {
+    "description": "In-situ Measurements of Particles and CME Transients (IMPACT) of Solar TErrestrial RElations Observatory - Ahead (STEREO_A)",
+    "instrument_code": "IMPACT",
+    "instrument_name": "In-situ Measurements of Particles and CME Transients",
+    "mission_code": "STEREO_A",
+    "mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+    "provider": "SSC"
+  },
+  {
+    "description": "PLasma And SupraThermal Ion Composition (PLASTIC) of Solar TErrestrial RElations Observatory - Ahead (STEREO_A)",
+    "instrument_code": "PLASTIC",
+    "instrument_name": "PLasma And SupraThermal Ion Composition",
+    "mission_code": "STEREO_A",
+    "mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+    "provider": "SSC"
+  },
+  {
+    "description": "Sun Earth Connection Coronal and\n  Heliospheric Investigation including COR1 coronagraph component",
+    "instrument_code": "SECCHI",
+    "instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+    "mission_code": "STEREO_A",
+    "mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+    "provider": "SSC"
+  },
+  {
+    "description": "STEREO/WAVES (SWAVES) of Solar TErrestrial RElations Observatory - Ahead (STEREO_A)",
+    "instrument_code": "SWAVES",
+    "instrument_name": "STEREO/WAVES",
+    "mission_code": "STEREO_A",
+    "mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+    "provider": "SSC"
+  },
+  {
+    "description": "In-situ Measurements of Particles and CME Transients (IMPACT) of Solar TErrestrial RElations Observatory - Behind (STEREO_B)",
+    "instrument_code": "IMPACT",
+    "instrument_name": "In-situ Measurements of Particles and CME Transients",
+    "mission_code": "STEREO_B",
+    "mission_name": "Solar TErrestrial RElations Observatory - Behind",
+    "provider": "SSC"
+  },
+  {
+    "description": "PLasma And SupraThermal Ion Composition (PLASTIC) of Solar TErrestrial RElations Observatory - Behind (STEREO_B)",
+    "instrument_code": "PLASTIC",
+    "instrument_name": "PLasma And SupraThermal Ion Composition",
+    "mission_code": "STEREO_B",
+    "mission_name": "Solar TErrestrial RElations Observatory - Behind",
+    "provider": "SSC"
+  },
+  {
+    "description": "Sun Earth Connection Coronal and Heliospheric Investigation (SECCHI) of Solar TErrestrial RElations Observatory - Behind (STEREO_B)",
+    "instrument_code": "SECCHI",
+    "instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+    "mission_code": "STEREO_B",
+    "mission_name": "Solar TErrestrial RElations Observatory - Behind",
+    "provider": "SSC"
+  },
+  {
+    "description": "STEREO/WAVES (SWAVES) of Solar TErrestrial RElations Observatory - Behind (STEREO_B)",
+    "instrument_code": "SWAVES",
+    "instrument_name": "STEREO/WAVES",
+    "mission_code": "STEREO_B",
+    "mission_name": "Solar TErrestrial RElations Observatory - Behind",
+    "provider": "SSC"
+  },
+  {
+    "description": "IMaX (IMaX) of Sunrise Balloon Flight #1 (June 9-13, 2009) (SUNRISE1)",
+    "instrument_code": "IMaX",
+    "instrument_name": "IMaX",
+    "mission_code": "SUNRISE1",
+    "mission_name": "Sunrise Balloon Flight #1 (June 9-13, 2009)",
+    "provider": "MPS"
+  },
+  {
+    "description": "SuFI (SuFI) of Sunrise Balloon Flight #1 (June 9-13, 2009) (SUNRISE1)",
+    "instrument_code": "SuFI",
+    "instrument_name": "SuFI",
+    "mission_code": "SUNRISE1",
+    "mission_name": "Sunrise Balloon Flight #1 (June 9-13, 2009)",
+    "provider": "MPS"
+  },
+  {
+    "description": "IMaX (IMaX) of Sunrise Balloon Flight #2 (June 12-17, 2013) (SUNRISE2)",
+    "instrument_code": "IMaX",
+    "instrument_name": "IMaX",
+    "mission_code": "SUNRISE2",
+    "mission_name": "Sunrise Balloon Flight #2 (June 12-17, 2013)",
+    "provider": "MPS"
+  },
+  {
+    "description": "SuFI (SuFI) of Sunrise Balloon Flight #2 (June 12-17, 2013) (SUNRISE2)",
+    "instrument_code": "SuFI",
+    "instrument_name": "SuFI",
+    "mission_code": "SUNRISE2",
+    "mission_name": "Sunrise Balloon Flight #2 (June 12-17, 2013)",
+    "provider": "MPS"
+  },
+  {
+    "description": "Transition Region And Coronal Explorer (TRACE) of Transition Region And Coronal Explorer (TRACE)",
+    "instrument_code": "TRACE",
+    "instrument_name": "Transition Region And Coronal Explorer",
+    "mission_code": "TRACE",
+    "mission_name": "Transition Region And Coronal Explorer",
+    "provider": "SDAC_TRACE"
+  },
+  {
+    "description": "Very High Angular Resolution Ultraviolet Telescope (1999 flight) (VAULT-1999) of Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0) (VAULT)",
+    "instrument_code": "VAULT-1999",
+    "instrument_name": "Very High Angular Resolution Ultraviolet Telescope (1999 flight)",
+    "mission_code": "VAULT",
+    "mission_name": "Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0)",
+    "provider": "SDAC_VAULT"
+  },
+  {
+    "description": "Very High Angular Resolution Ultraviolet Telescope (2002 flight) (VAULT-2002) of Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0) (VAULT)",
+    "instrument_code": "VAULT-2002",
+    "instrument_name": "Very High Angular Resolution Ultraviolet Telescope (2002 flight)",
+    "mission_code": "VAULT",
+    "mission_name": "Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0)",
+    "provider": "SDAC_VAULT"
+  },
+  {
+    "description": "Very High Angular Resolution Ultraviolet Telescope (2014 flight) (VAULT-2014) of Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0) (VAULT)",
+    "instrument_code": "VAULT-2014",
+    "instrument_name": "Very High Angular Resolution Ultraviolet Telescope (2014 flight)",
+    "mission_code": "VAULT",
+    "mission_name": "Upgraded Very High Angular Resolution Ultraviolet Telescope (VAULT2.0)",
+    "provider": "SDAC_VAULT"
+  },
+  {
+    "description": "Bragg Crystal Spectrometer (BCS) of Yohkoh Satellite, Japan (YOHKOH)",
+    "instrument_code": "BCS",
+    "instrument_name": "Bragg Crystal Spectrometer",
+    "mission_code": "YOHKOH",
+    "mission_name": "Yohkoh Satellite, Japan",
+    "provider": "MSU"
+  },
+  {
+    "description": "YOHKOH Hard X-Ray Telescope (HXT) of Yohkoh Satellite, Japan (YOHKOH)",
+    "instrument_code": "HXT",
+    "instrument_name": "YOHKOH Hard X-Ray Telescope",
+    "mission_code": "YOHKOH",
+    "mission_name": "Yohkoh Satellite, Japan",
+    "provider": "MSU"
+  },
+  {
+    "description": "YOHKOH Soft X-Ray Telescope (SXT) of Yohkoh Satellite, Japan (YOHKOH)",
+    "instrument_code": "SXT",
+    "instrument_name": "YOHKOH Soft X-Ray Telescope",
+    "mission_code": "YOHKOH",
+    "mission_name": "Yohkoh Satellite, Japan",
+    "provider": "MSU"
+  },
+  {
+    "description": "Wide Band Spectrometer (WBS) of Yohkoh Satellite, Japan (YOHKOH)",
+    "instrument_code": "WBS",
+    "instrument_name": "Wide Band Spectrometer",
+    "mission_code": "YOHKOH",
+    "mission_name": "Yohkoh Satellite, Japan",
+    "provider": "MSU"
+  }
+]

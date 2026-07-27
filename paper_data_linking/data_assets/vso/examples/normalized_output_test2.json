@@ -1,0 +1,654 @@
+{
+  "paper_summary": "This paper investigates the structure and evolution of solar coronal mass ejections (CMEs) in both extreme-ultraviolet (EUV) and white-light passbands, focusing on the early eruption stage in the low corona (below 1.3 R\u2299). Multiple instruments are used to observe different aspects of CME morphology, particularly the three-part structure (leading edge, low-density zone, and core). The study correlates EUV observations from SDO, STEREO, and GOES-16 with white-light coronagraph data from SOHO and STEREO for four limb CME events.",
+  "instruments": [
+    {
+      "name": {
+        "original": "Atmospheric Imaging Assembly (AIA) on board the Solar Dynamics Observatory (SDO)",
+        "normalized": {
+          "matched_instrument_code": "AIA",
+          "matched_mission_code": "SDO",
+          "matched_instrument_name": "Atmospheric Imaging Assembly",
+          "matched_mission_name": "Solar Dynamics Observatory",
+          "confidence": 0.99,
+          "reasoning": null,
+          "original_text": "Atmospheric Imaging Assembly (AIA) on board the Solar Dynamics Observatory (SDO)"
+        }
+      },
+      "general_comments": "AIA images the low corona with a field of view (FOV) of 1.3 R\u2299, a high cadence of 12 s, and a resolution of 0.6\u2033 per pixel. It provides observations in seven EUV passbands. In this study, AIA data at 193 \u00c5 and 131 \u00c5 are used to reveal the early three-part appearance of CMEs.",
+      "supporting_quotes": [
+        "The AIA records the low corona with the FOV (\ufb01eld of view) of 1.3 R\u2299, cadence of 12 s and resolution of 0.\u2032\u20326 per pixel in seven EUV passbands."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "2013 September 24 \u2013 Filament Eruption",
+          "time_range": {
+            "original": "19:40 UT \u2013 20:10 UT on 2013 September 24",
+            "normalized": {
+              "start_datetime": "2013-09-24T19:40:00Z",
+              "end_datetime": "2013-09-24T20:10:00Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "19:40 UT \u2013 20:10 UT on 2013 September 24"
+            }
+          },
+          "wavelengths": {
+            "original": "193 \u00c5",
+            "normalized": {
+              "values": [
+                193.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "193 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "Low-corona structure (leading edge, filament, and low-density zone) manifesting the early three\u2010part CME structure.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "Low-corona structure (leading edge, filament, and low-density zone) manifesting the early three\u2010part CME structure."
+            }
+          },
+          "supporting_quotes": [
+            "Panel (a2) is accompanied by an animation that displays the \ufb01lament eruption process from 19:40 UT to 20:10 UT...",
+            "...one snapshot of the \ufb01lament eruption provided by the AIA running-di\ufb00erence image at 193 \u02daA wavelength...",
+            "...demonstrates that the event already possesses the three-part appearance in the early stage, i.e., the leading edge as marked with blue dots, the \ufb01lament as denoted with the red arrow..."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2015 February 09 \u2013 Hot Channel Eruption",
+          "time_range": {
+            "original": "Approximately between 22:50 UT and 23:14 UT on 2015 February 09",
+            "normalized": {
+              "start_datetime": "2015-02-09T22:50:00Z",
+              "end_datetime": "2015-02-09T23:14:00Z",
+              "precision": "minute",
+              "is_approximate": true,
+              "original_text": "Approximately between 22:50 UT and 23:14 UT on 2015 February 09"
+            }
+          },
+          "wavelengths": {
+            "original": "193 \u00c5 (running-difference image) and 131 \u00c5 (direct image)",
+            "normalized": {
+              "values": [
+                193.0,
+                131.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "193 \u00c5 (running-difference image) and 131 \u00c5 (direct image)"
+            }
+          },
+          "physical_observable": {
+            "original": "The hot channel (interpreted as a manifestation of the magnetic flux rope) along with the leading edge and an intervening low-density zone.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "static",
+              "original_text": "The hot channel (interpreted as a manifestation of the magnetic flux rope) along with the leading edge and an intervening low-density zone."
+            }
+          },
+          "supporting_quotes": [
+            "Panel (b2) is accompanied by the same animation that also displays the hot channel eruption process from 22:50 UT to 23:14 UT.",
+            "Figure 1(b2) is a composite observation of AIA 193 \u02daA running-di\ufb00erence image (gray) and 131 \u02daA direct image (cyan)...",
+            "...shows the leading edge (193 \u02daA) and the hot channel (131 \u02daA) depicted with blue and red dots, respectively..."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2017 September 10 \u2013 Hot Blob Observation",
+          "time_range": {
+            "original": "Observation noted at approximately 15:55 UT (specifically, an image at 15:55:06 UT) on 2017 September 10",
+            "normalized": {
+              "start_datetime": "2017-09-10T15:55:06Z",
+              "end_datetime": "2017-09-10T15:55:06Z",
+              "precision": "second",
+              "is_approximate": true,
+              "original_text": "Observation noted at approximately 15:55 UT (specifically, an image at 15:55:06 UT) on 2017 September 10"
+            }
+          },
+          "wavelengths": {
+            "original": "131 \u00c5",
+            "normalized": {
+              "values": [
+                131.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "131 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "High-temperature coronal structure (hot blob) serving as the CME core, along with indications of the leading edge.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "static",
+              "original_text": "High-temperature coronal structure (hot blob) serving as the CME core, along with indications of the leading edge."
+            }
+          },
+          "supporting_quotes": [
+            "Due to the AIA limited FOV, partial blob and the leading edge are not imaged by the AIA at 15:55:30 UT. We acquire the blob outline based on the observation at 15:55:06 UT...",
+            "Figure 3(b3) presents the AIA 131 \u02daA observations, clearly showing that the CME is driven by the eruption of a hot blob.",
+            "...demonstrates that the leading edge and the hot blob evolve into the bright front and the core of CME, respectively."
+          ],
+          "additional_comments": null
+        }
+      ]
+    },
+    {
+      "name": {
+        "original": "Extreme Ultraviolet Imager (EUVI) on board the Solar Terrestrial Relations Observatory (STEREO)",
+        "normalized": {
+          "matched_instrument_code": "EUVI",
+          "matched_mission_code": "STEREO_A",
+          "matched_instrument_name": null,
+          "matched_mission_name": null,
+          "confidence": 0.95,
+          "reasoning": null,
+          "original_text": "Extreme Ultraviolet Imager (EUVI) on board the Solar Terrestrial Relations Observatory (STEREO)"
+        }
+      },
+      "general_comments": "EUVI provides solar EUV images at four wavelengths with a field of view of 1.7 R\u2299. It partially overlaps with the white-light coronagraph COR1 (FOV of 1.4\u20134 R\u2299) such that continuous observations from the solar surface to the outer corona are possible. Both STEREO-A and STEREO-B are used to capture events from distinct viewing angles.",
+      "supporting_quotes": [
+        "The EUVI provides the solar EUV images at four wavelength with an FOV of 1.7 R\u2299, partially overlapping with that of COR1 (1.4\u20134 R\u2299)..."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "2013 September 24 (STEREO-B)",
+          "time_range": {
+            "original": "Image at 20:16 UT on 2013 September 24",
+            "normalized": {
+              "start_datetime": "2013-09-24T20:16:00Z",
+              "end_datetime": "2013-09-24T20:16:59Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "Image at 20:16 UT on 2013 September 24"
+            }
+          },
+          "wavelengths": {
+            "original": "195 \u00c5",
+            "normalized": {
+              "values": [
+                195.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "195 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "The EUV appearance of the CME\u2019s three-part structure (showing the leading edge and the filament, with the filament initially blocked by the occulter).",
+            "normalized": {
+              "chosen_physobs": null,
+              "candidates": [],
+              "confidence": 0.0,
+              "original_text": "The EUV appearance of the CME\u2019s three-part structure (showing the leading edge and the filament, with the filament initially blocked by the occulter)."
+            }
+          },
+          "supporting_quotes": [
+            "Figure 2(a) presents the EUVI B 195 \u02daA running-di\ufb00erence image at 20:16 UT...",
+            "...the EUVI B 195 \u02daA running-di\ufb00erence image...",
+            "Both the EUVI B and COR1 B record the CME and its source region... the filament as denoted with the red dots is still blocked by the occulter at 20:16 UT."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2014 January 06 (STEREO-B)",
+          "time_range": {
+            "original": "Corresponding to the early phase of the 2014 January 06 event (specific UT not explicitly stated, but coordinated with the LASCO C2 appearance at 08:00 UT)",
+            "normalized": {
+              "start_datetime": "2014-01-06T08:00:00Z",
+              "end_datetime": null,
+              "precision": "hour",
+              "is_approximate": true,
+              "original_text": "Corresponding to the early phase of the 2014 January 06 event (specific UT not explicitly stated, but coordinated with the LASCO C2 appearance at 08:00 UT)"
+            }
+          },
+          "wavelengths": {
+            "original": "195 \u00c5",
+            "normalized": {
+              "values": [
+                195.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "195 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "The emerging three-part structure (leading edge, filament, and the intervening zone) in the EUV images.",
+            "normalized": {
+              "chosen_physobs": null,
+              "candidates": [],
+              "confidence": 0.0,
+              "original_text": "The emerging three-part structure (leading edge, filament, and the intervening zone) in the EUV images."
+            }
+          },
+          "supporting_quotes": [
+            "The CME results from a \ufb01lament eruption that is recorded by the AIA and EUVI B simultaneously...",
+            "Figure 3(a4) shows the EUVI B 195 \u02daA observation, where the \ufb01lament is depicted with the red arrow.",
+            "The leading edge, the \ufb01lament and the zone between them in the EUV images should evolve into the bright front, bright core and dark cavity in the white-light images..."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2017 September 10 (STEREO-A)",
+          "time_range": {
+            "original": "Image at 15:58 UT on 2017 September 10",
+            "normalized": {
+              "start_datetime": "2017-09-10T15:58:00Z",
+              "end_datetime": "2017-09-10T15:58:00Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "Image at 15:58 UT on 2017 September 10"
+            }
+          },
+          "wavelengths": {
+            "original": "195 \u00c5",
+            "normalized": {
+              "values": [
+                195.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "195 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "The leading edge of the CME captured in EUV.",
+            "normalized": {
+              "chosen_physobs": null,
+              "candidates": [],
+              "confidence": 0.0,
+              "original_text": "The leading edge of the CME captured in EUV."
+            }
+          },
+          "supporting_quotes": [
+            "Figure 4(a) displays the EUVI A 195 \u02daA observation at 15:58 UT...",
+            "The running-di\ufb00erence image of EUVI A 195 \u02daA...",
+            "...only showing the leading edge as depicted with the blue dots."
+          ],
+          "additional_comments": null
+        }
+      ]
+    },
+    {
+      "name": {
+        "original": "Solar Ultraviolet Imager (SUVI) on board GOES-16",
+        "normalized": {
+          "matched_instrument_code": "SUVI",
+          "matched_mission_code": "GOES16",
+          "matched_instrument_name": "GOES-R Series Solar Ultraviolet Imager",
+          "matched_mission_name": "Geostationary Operational Environmental Satellite (GOES-R) Series 16",
+          "confidence": 0.89,
+          "reasoning": null,
+          "original_text": "Solar Ultraviolet Imager (SUVI) on board GOES-16"
+        }
+      },
+      "general_comments": "SUVI images the solar corona in six EUV passbands with a horizontal field of view larger than 1.6 R\u2299. It is used here to capture the extended corona when AIA\u2019s FOV is limited.",
+      "supporting_quotes": [
+        "The SUVI images the solar corona with an FOV larger than 1.6 R\u2299 in the horizontal direction in six EUV passbands."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "2017 September 10",
+          "time_range": {
+            "original": "Coordinated with the 2017 September 10 event (exact UT not separately stated; used concurrently with other instruments around 16:00 UT)",
+            "normalized": {
+              "start_datetime": "2017-09-10T16:00:00Z",
+              "end_datetime": "2017-09-10T16:59:59Z",
+              "precision": "hour",
+              "is_approximate": true,
+              "original_text": "Coordinated with the 2017 September 10 event (exact UT not separately stated; used concurrently with other instruments around 16:00 UT)"
+            }
+          },
+          "wavelengths": {
+            "original": "195 \u00c5",
+            "normalized": {
+              "values": [
+                195.0
+              ],
+              "unit": "angstrom",
+              "type": "discrete",
+              "band_name": null,
+              "original_text": "195 \u00c5"
+            }
+          },
+          "physical_observable": {
+            "original": "The extended leading edge of the CME, aiding in the reconstruction of the three-part structure by complementing observations from AIA.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "The extended leading edge of the CME, aiding in the reconstruction of the three-part structure by complementing observations from AIA."
+            }
+          },
+          "supporting_quotes": [
+            "At the same time, the leading edge can be observed clearly in the SUVI FOV through the 195 \u02daA passband as shown in Figure 3(b4)...",
+            "Figure 3(b4) \u2026 running-di\ufb00erence image of the SUVI 195 \u02daA with the 131 \u02daA hot blob outline overplotted.",
+            "\u2026demonstrates that the CME also possesses the three-part appearance in the EUV passbands."
+          ],
+          "additional_comments": null
+        }
+      ]
+    },
+    {
+      "name": {
+        "original": "COR1 Coronagraph on board STEREO",
+        "normalized": {
+          "matched_instrument_code": "SECCHI",
+          "matched_mission_code": "STEREO_A",
+          "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+          "matched_mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+          "confidence": 0.68,
+          "reasoning": null,
+          "original_text": "COR1 Coronagraph on board STEREO"
+        }
+      },
+      "general_comments": "COR1 is a white-light coronagraph with a field of view of approximately 1.4\u20134 R\u2299. It detects Thomson-scattered light from free electrons, thereby revealing density structures in the corona. It is used in conjunction with EUVI to link observations from the inner corona to the white-light features.",
+      "supporting_quotes": [
+        "The white-light coronagraphs COR1 (Howard et al. 2008) on board the STEREO... are used to analyze the CME structure in the high corona."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "2013 September 24 (STEREO-B)",
+          "time_range": {
+            "original": "Observations at 20:16 UT and twenty minutes later (circa 20:36 UT) on 2013 September 24",
+            "normalized": {
+              "start_datetime": "2013-09-24T20:16:00Z",
+              "end_datetime": "2013-09-24T20:36:00Z",
+              "precision": "minute",
+              "is_approximate": true,
+              "original_text": "Observations at 20:16 UT and twenty minutes later (circa 20:36 UT) on 2013 September 24"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light (imaging Thomson-scattered light from free electrons)",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light (imaging Thomson-scattered light from free electrons)"
+            }
+          },
+          "physical_observable": {
+            "original": "Changes in the density structure as the low-corona features (filament/leading edge) evolve into the bright front and core in white-light.",
+            "normalized": {
+              "categories": [
+                "density structure",
+                "white-light"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "Changes in the density structure as the low-corona features (filament/leading edge) evolve into the bright front and core in white-light."
+            }
+          },
+          "supporting_quotes": [
+            "At 20:16 UT, the \ufb01lament as denoted with the red dots is still blocked by the occulter... Twenty minutes later, the \ufb01lament ascends as presented in Figure 2(c) and (d)...",
+            "...the dots are superimposed on the COR1 image recorded at the same time, which clearly demonstrates that the \ufb01lament corresponds to the CME core.",
+            "Therefore, we conclude that the leading edge and \ufb01lament observed in the EUV passband evolve into the bright front and core of three-part CME in the white-light images."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2017 September 10 (STEREO-A)",
+          "time_range": {
+            "original": "Starting observations from 16:05 UT on 2017 September 10",
+            "normalized": {
+              "start_datetime": "2017-09-10T16:05:00Z",
+              "end_datetime": null,
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "Starting observations from 16:05 UT on 2017 September 10"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light"
+            }
+          },
+          "physical_observable": {
+            "original": "Imaging of the evolving CME structure \u2013 particularly the bright front (leading edge) and the developing core as tracked from the low to higher corona.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "Imaging of the evolving CME structure \u2013 particularly the bright front (leading edge) and the developing core as tracked from the low to higher corona."
+            }
+          },
+          "supporting_quotes": [
+            "The running-di\ufb00erence image of COR1 A... after they entered into the COR1 FOV at 16:05 UT.",
+            "\u2026the blue and red dots depict the leading edge and the core, respectively.",
+            "...demonstrates again that the leading edge and the hot blob evolve into the bright front and the core of CME, respectively."
+          ],
+          "additional_comments": null
+        }
+      ]
+    },
+    {
+      "name": {
+        "original": "Large Angle and Spectrometric Coronagraph (LASCO) on board the Solar and Heliospheric Observatory (SOHO)",
+        "normalized": {
+          "matched_instrument_code": "LASCO",
+          "matched_mission_code": "SOHO",
+          "matched_instrument_name": "Large Angle and Spectrometric Coronagraph",
+          "matched_mission_name": "Solar and Heliospheric Observatory",
+          "confidence": 0.98,
+          "reasoning": null,
+          "original_text": "Large Angle and Spectrometric Coronagraph (LASCO) on board the Solar and Heliospheric Observatory (SOHO)"
+        }
+      },
+      "general_comments": "LASCO is a white-light coronagraph with a field of view covering 2.2\u201330 R\u2299 (with C2 covering 2.2\u20136 R\u2299 and C3 covering 4\u201330 R\u2299). It detects Thomson-scattered light and is used to monitor CME evolution in the high corona.",
+      "supporting_quotes": [
+        "The Large Angle and Spectrometric Coronagraph (LASCO; Brueckner et al. 1995) on board the Solar and Heliospheric Observatory (SOHO)..."
+      ],
+      "data_collection_periods": [
+        {
+          "period_name": "2013 September 24",
+          "time_range": {
+            "original": "CME first appearance in the C2 FOV at 20:36 UT on 2013 September 24",
+            "normalized": {
+              "start_datetime": "2013-09-24T20:36:00Z",
+              "end_datetime": "2013-09-24T20:36:00Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "CME first appearance in the C2 FOV at 20:36 UT on 2013 September 24"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light"
+            }
+          },
+          "physical_observable": {
+            "original": "The bright front, dark cavity (or low-density zone) and the core (stemming from filament/hot channel) in the high corona.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "static",
+              "original_text": "The bright front, dark cavity (or low-density zone) and the core (stemming from filament/hot channel) in the high corona."
+            }
+          },
+          "supporting_quotes": [
+            "A CME was recorded by the LASCO on 2013 September 24... which \ufb01rst appeared in the C2 FOV at 20:36 UT...",
+            "The white-light coronagraphs ... capture the Thomson-scattered light from the free electrons in the corona...",
+            "...exhibits a clear and typical three-part structure (i.e., bright front, dark cavity, and bright core)."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2015 February 09",
+          "time_range": {
+            "original": "CME first appearance in the C2 FOV at 23:24 UT on 2015 February 09",
+            "normalized": {
+              "start_datetime": "2015-02-09T23:24:00Z",
+              "end_datetime": "2015-02-09T23:24:59Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "CME first appearance in the C2 FOV at 23:24 UT on 2015 February 09"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light"
+            }
+          },
+          "physical_observable": {
+            "original": "The evolution of the CME from an EUV three-part structure (as seen by AIA) into a corresponding three-part structure in white-light.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "The evolution of the CME from an EUV three-part structure (as seen by AIA) into a corresponding three-part structure in white-light."
+            }
+          },
+          "supporting_quotes": [
+            "The CME \ufb01rst appeared in the C2 FOV at 23:24 UT and moved outward at the linear speed of 1106 km s\u22121...",
+            "The LASCO observation shows that the CME also possesses the three-part appearance in the white-light images.",
+            "...the leading edge and the hot channel observed in the EUV passbands evolve into the bright front and the core of the CME in the white-light coronagraph."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2014 January 06",
+          "time_range": {
+            "original": "CME first appearance in the C2 FOV at 08:00 UT on 2014 January 06",
+            "normalized": {
+              "start_datetime": "2014-01-06T08:00:00Z",
+              "end_datetime": "2014-01-06T08:00:00Z",
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "CME first appearance in the C2 FOV at 08:00 UT on 2014 January 06"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light"
+            }
+          },
+          "physical_observable": {
+            "original": "The morphology of a CME lacking an obvious dark cavity in the white-light images despite a clear three-part EUV appearance.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "static",
+              "original_text": "The morphology of a CME lacking an obvious dark cavity in the white-light images despite a clear three-part EUV appearance."
+            }
+          },
+          "supporting_quotes": [
+            "The LASCO recorded a CME on 2014 January 6 that \ufb01rst appeared in the C2 FOV at 08:00 UT...",
+            "Through inspecting both the white-light and EUV observations...",
+            "...the CME does not exhibit the clear three-part structure in the white-light image as no obvious dark cavity can be distinguished."
+          ],
+          "additional_comments": null
+        },
+        {
+          "period_name": "2017 September 10",
+          "time_range": {
+            "original": "CME first appearance in the C2 FOV at 16:00 UT on 2017 September 10; additional observations in the C3 FOV (multiple frames shown in Figure 5)",
+            "normalized": {
+              "start_datetime": "2017-09-10T16:00:00Z",
+              "end_datetime": null,
+              "precision": "minute",
+              "is_approximate": false,
+              "original_text": "CME first appearance in the C2 FOV at 16:00 UT on 2017 September 10; additional observations in the C3 FOV (multiple frames shown in Figure 5)"
+            }
+          },
+          "wavelengths": {
+            "original": "White-light",
+            "normalized": {
+              "values": [
+                400.0,
+                700.0
+              ],
+              "unit": "nm",
+              "type": "band",
+              "band_name": "visible",
+              "original_text": "White-light"
+            }
+          },
+          "physical_observable": {
+            "original": "The overall CME structure, including the bulge in the CME front, the separation between the driven shock and the CME front, and the evolution of the cavity and core.",
+            "normalized": {
+              "categories": [
+                "intensity"
+              ],
+              "measurement_type": "imaging",
+              "temporal_aspect": "evolution",
+              "original_text": "The overall CME structure, including the bulge in the CME front, the separation between the driven shock and the CME front, and the evolution of the cavity and core."
+            }
+          },
+          "supporting_quotes": [
+            "The CME \ufb01rst appeared in the C2 FOV at 16:00 UT at a high linear speed of 3163 km s\u22121...",
+            "Figure 5 presents six running-di\ufb00erence images recorded by the LASCO/C3.",
+            "The white-light coronagraphs capture the Thomson-scattered light from the free electrons...",
+            "The bulge at the CME front keeps obvious... locates in the propagation direction of the expanding core... the separation between the driven shock and the CME front appeared gradually..."
+          ],
+          "additional_comments": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Test configuration for physobs_normalization (5 cases only)
+
+experiment_name: physobs_free_text_v2_bedrock_120b_test
+description: "Test physobs normalization v2 with 5 cases"
+
+models:
+  - bedrock/openai.gpt-oss-120b-1:0
+
+call_types:
+  - physobs_normalization
+
+max_cases: 5
+max_workers: 2
+timeout_seconds: 600
+output_dir: experiments/compare_models/prompt_experiments
+
+call_type_configs:
+  physobs_normalization:
+    prompt: paper_data_linking/linkers/general/prompts/physobs_normalization/system.xml
+    input: inputs/test_set/physobs_normalization.jsonl
+    handler_class: PhysObsNormalizationFreeTextV2Handler

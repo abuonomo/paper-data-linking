@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<multiple_matches_task>
+  <instrument_description>
+    {{ full_context }}
+  </instrument_description>
+
+  <candidate_instruments>
+    {{ instruments_text }}
+  </candidate_instruments>
+
+  <instruction>
+    Return the numbers of all instruments that legitimately match (comma-separated if multiple):
+  </instruction>
+</multiple_matches_task>

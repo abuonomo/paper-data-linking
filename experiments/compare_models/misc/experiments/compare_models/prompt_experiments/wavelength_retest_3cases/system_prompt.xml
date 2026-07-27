@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wavelength_normalization_instructions>
+  Parse wavelength/frequency descriptions into structured format.
+
+  <format_examples>
+    <example>
+      <input>"211 Å and 193 Å"</input>
+      <output>values: [211, 193], unit: "angstrom", type: "discrete"</output>
+    </example>
+    <example>
+      <input>"7155 MHz"</input>
+      <output>values: [7155], unit: "MHz", type: "discrete"</output>
+    </example>
+    <example>
+      <input>"1-8 Å"</input>
+      <output>values: [1, 8], unit: "angstrom", type: "range"</output>
+    </example>
+    <example>
+      <input>"White-light"</input>
+      <output>values: [400, 700], unit: "nm", type: "band", band_name: "visible"</output>
+    </example>
+    <example>
+      <input>"Not specified"</input>
+      <output>type: "not_applicable"</output>
+    </example>
+  </format_examples>
+
+  <output_types>
+    <discrete>Single or multiple specific wavelength values</discrete>
+    <range>A continuous range between two values</range>
+    <band>A named spectral band (e.g., visible, UV, X-ray)</band>
+    <not_applicable>When wavelength is not specified or applicable</not_applicable>
+  </output_types>
+</wavelength_normalization_instructions>

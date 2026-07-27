@@ -1,0 +1,172 @@
+{
+  "call_type": "time_normalization",
+  "model_a": "openai/gpt-5",
+  "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+  "judge_model": "openai/gpt-5.2",
+  "agreement_threshold": 0.5,
+  "exclude_null_pairs": true,
+  "stats": {
+    "total_cases": 14,
+    "model_a_wins": 1,
+    "model_b_wins": 8,
+    "ties": 4,
+    "neither": 1,
+    "errors": 0
+  },
+  "judgments": [
+    {
+      "case_id": "0e5860e9-0181-44d2-a7da-ebe2792c0d9c",
+      "winner": "neither",
+      "actual_winner": "neither",
+      "reasoning": "The input provides a specific date (\u201c2007-11-12\u201d) plus a duration (\u201clifetime 16 minutes\u201d). A correct normalization should produce a start at the beginning of the event on 2007-11-12 and an end 16 minutes later, but the time-of-day is not given. Per instructions, when date context exists but time is missing, the model should not invent a full-day range; it should either (a) return an error/approximate with nulls, or (b) represent an approximate start at the day level and an end that reflects the 16-minute lifetime only if a start time is known (it isn\u2019t). \n\nAnswer A incorrectly expands the event to the entire day (00:00:00Z to 23:59:59Z), ignoring the \u201c16 minutes\u201d lifetime and over-asserting precision (second-level timestamps) without justification. Answer B returns [None, None], which at least avoids making up an incorrect full-day interval, but it is incomplete because it does not include the required error flag/error_message or precision level, and it also fails to leverage the known date.\n\nBetween the two, B is less wrong because it does not fabricate an incorrect interval, but both fail the task requirements (ISO range + precision level, and proper error handling/approximation).",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2007-11-12T00:00:00Z', '2007-11-12T23:59:59Z']",
+      "answer_b": "[None, None]",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "95ea18a1-aa55-43d9-a97b-c64c9d3bb040",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a clear calendar date (\u201c2014-09-01\u201d) and a relative duration (\u201cfirst hour after CME onset (approx.)\u201d). While the exact CME onset time is not given, the range is still interpretable as an approximate 1-hour interval anchored to that date; the best practice would be to return a 1-hour window and mark it approximate with hour-level precision (and ideally include an \u201capproximate\u201d flag). \n\nAnswer A returns a plausible ISO interval from 2014-09-01T00:00:00Z to 2014-09-01T01:00:00Z. It does not explicitly state approximation or precision level, and it assumes onset at 00:00Z, which is a guess. However, it at least provides a concrete ISO range on the correct date and correct duration.\n\nAnswer B returns [None, None] with no error flag or message. Given the instructions, if the model cannot determine the time, it should set error: true with a descriptive error_message, not silently return nulls. Thus B is incomplete and noncompliant.\n\nBetween the two, A is more useful and closer to the requested conversion, despite the implicit assumption about onset time and missing precision metadata.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "['2014-09-01T00:00:00Z', '2014-09-01T01:00:00Z']",
+      "answer_b": "[None, None]",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "1005ada0-5696-478c-bac8-8a095b3267d0",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input is \u201c2014-01-06 (four-day interval around the event, approx.)\u201d. The anchor date is 2014-01-06, and we need a 4-day interval \u201caround\u201d it. A reasonable interpretation is a symmetric window centered on the event date, i.e., two days before through one day after if counting four calendar days inclusive, or one could choose two before through two after but that would be five days inclusive. Both answers provide exactly four full days inclusive (start at 00:00:00Z, end at 23:59:59Z), but they choose different windows:  \n- Answer A: 2014-01-05 to 2014-01-08 (includes the event date and extends 2 days after, 1 day before).  \n- Answer B: 2014-01-04 to 2014-01-07 (includes the event date and extends 2 days before, 1 day after).  \n\nGiven \u201caround the event,\u201d the more balanced choice would typically include more pre- and post-event coverage; if forced to pick a 4-day inclusive window, having two days before the event is at least as justifiable as two days after, and arguably better for \u201caround\u201d (capturing lead-up). Neither response includes the required precision level or notes approximation, so both are incomplete, but on the interval choice alone B is slightly more defensible as \u201caround\u201d the event date.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2014-01-05T00:00:00Z', '2014-01-08T23:59:59Z']",
+      "answer_b": "['2014-01-04T00:00:00Z', '2014-01-07T23:59:59Z']",
+      "cross_model_agreement": 0.08
+    },
+    {
+      "case_id": "3c593177-55c5-4d50-8c37-b4f33bed0ee5",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a full start timestamp (\u201c2005-01-20 06:46 UT\u201d) and an end time (\u201c06:47 UT\u201d) on the same date, so the normalized range should be from 2005-01-20T06:46:00Z to 2005-01-20T06:47:00Z. The precision implied is minute-level (no seconds given). Answer B matches this exactly by setting the end to 06:47:00Z. Answer A instead expands the end to 06:47:59Z, which invents an extra 59 seconds not stated; that would only be appropriate if the range were specified as \u201c06:47\u201d meaning the entire minute, but the notation \u201c06:46 \u2013 06:47\u201d is more naturally interpreted as endpoints at those minute marks. Neither answer reports the requested precision level explicitly, but on correctness of the ISO endpoints, B is better.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2005-01-20T06:46:00Z', '2005-01-20T06:47:59Z']",
+      "answer_b": "['2005-01-20T06:46:00Z', '2005-01-20T06:47:00Z']",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "5eba190b-8208-4c7e-9a7b-3a4eeda05245",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a clear start and end datetime down to the minute (\u201c00:00\u201d) with an implied seconds value of 00. The task also asks for ISO 8601 conversion and a precision level. \n\nAnswer A converts both endpoints to ISO 8601 with seconds and includes the \u201cZ\u201d UTC designator: `2003-07-28T00:00:00Z` to `2003-08-01T00:00:00Z`. This matches the expected ISO style in the instructions (examples use `Z`). It still omits the explicit precision level, but the timestamps themselves are correct and unambiguous.\n\nAnswer B omits the timezone designator (`Z`) and thus is not fully normalized to the UTC ISO format implied by the instructions. It also omits the precision level.\n\nBetween the two, A is more correct and closer to the required ISO normalization (UTC). Neither includes the requested precision level (which should be \u201cminute\u201d given the input), but A is still clearly better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "['2003-07-28T00:00:00Z', '2003-08-01T00:00:00Z']",
+      "answer_b": "['2003-07-28T00:00:00', '2003-08-01T00:00:00']",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "8d3e1b08-68de-4125-9716-db534f58d218",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a clear start and end datetime: 2000-02-25 00:00 to 2000-02-27 00:00. The instructions require ISO 8601 and examples consistently use a trailing \u201cZ\u201d to indicate UTC. Answer B outputs ISO 8601 timestamps with \u201cZ\u201d, matching the expected UTC form. Answer A omits the timezone designator, making it ambiguous and less compliant with the provided examples. Both answers also fail to explicitly state the requested precision level (hour/minute/second); however, between the two, B is more correct on ISO formatting. Therefore B is better.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2000-02-25T00:00:00', '2000-02-27T00:00:00']",
+      "answer_b": "['2000-02-25T00:00:00Z', '2000-02-27T00:00:00Z']",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "1c90f1af-4d25-46e7-beaf-bd81299c7eb6",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a fully specified date-time range: start \u201c2000-01-28 00:00\u201d and end \u201c2000-01-30 00:00\u201d. The instructions ask for ISO 8601 and imply UTC with \u201cZ\u201d in examples; also, precision level should be determined (minute-level, since seconds are not specified). \n\nAnswer A outputs ISO-like timestamps but omits the UTC designator \u201cZ\u201d, making the timezone ambiguous and not strictly matching the provided examples. It also does not report precision level.\n\nAnswer B outputs proper ISO 8601 UTC timestamps with \u201cZ\u201d, aligning with the instruction examples and avoiding ambiguity. It still omits the requested precision level, but between the two, B is more correct on the ISO formatting requirement.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2000-01-28T00:00:00', '2000-01-30T00:00:00']",
+      "answer_b": "['2000-01-28T00:00:00Z', '2000-01-30T00:00:00Z']",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "6db4d880-039b-4b8d-9305-7701c9170bdd",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input is a single date \u201c2013-10-11\u201d with the note \u201cfour-day interval around the event, approx.\u201d That implies an approximate window centered on (or at least around) Oct 11, spanning 4 days total. A reasonable interpretation is two days before through one day after (Oct 9\u201312) or one day before through two days after (Oct 10\u201313); both are 4-day inclusive ranges. However, \u201caround the event\u201d more naturally suggests a symmetric window about the event date when possible. For an even number of days, the closest symmetric inclusive window is Oct 9\u201312 (two days before, event day, one day after), which keeps the event date near the middle of the interval. Answer B provides 2013-10-09T00:00:00Z to 2013-10-12T23:59:59Z, which includes Oct 11 and is more centered around it than Answer A (Oct 10\u201313), which skews later. \n\nBoth answers are incomplete relative to the full task because neither reports the required precision level nor marks the approximation, but between the two, B better matches \u201caround the event\u201d centering.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2013-10-10T00:00:00Z', '2013-10-13T23:59:59Z']",
+      "answer_b": "['2013-10-09T00:00:00Z', '2013-10-12T23:59:59Z']",
+      "cross_model_agreement": 0.32
+    },
+    {
+      "case_id": "51794fd4-0bda-46b9-aaac-6373154e753f",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The input provides a specific timestamp \u201c2009-09-26 15:53:10.860 UT\u201d plus an approximate \u201c\u223c340 ms time window.\u201d That implies an interval centered on the given timestamp with total duration 0.340 s, i.e., \u00b10.170 s. Converting to ISO 8601 UTC (\u201cZ\u201d): start = 15:53:10.860 \u2212 0.170 = 15:53:10.690Z; end = 15:53:10.860 + 0.170 = 15:53:11.030Z. Answer A matches this interpretation and correctly expands the window. Answer B treats it as a single instant (start=end), ignoring the stated time window, so it is less correct/incomplete. Neither answer explicitly states the precision level, but A at least reflects millisecond-level timestamps and the window. Therefore A better satisfies the task.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2009-09-26T15:53:10.690Z', '2009-09-26T15:53:11.030Z']",
+      "answer_b": "['2009-09-26T15:53:10.860Z', '2009-09-26T15:53:10.860Z']",
+      "cross_model_agreement": 0.32
+    },
+    {
+      "case_id": "ac3a3205-7a3e-429a-a8f8-32f8f1f73e70",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The input provides a single timestamp \u201c2009-07-13 08:59:52.890 UT\u201d plus an approximate duration \u201c\u223c40 ms time window.\u201d A correct normalization should (a) convert to ISO 8601 with Z, and (b) represent the time window as a range (start/end) or at least indicate approximation and precision level (millisecond/second). Both Answer A and Answer B output identical start and end timestamps, effectively treating it as an instantaneous event and ignoring the stated ~40 ms window. They also omit the required \u201cprecision level\u201d determination entirely. While the ISO timestamp itself is correctly formatted, both responses are incomplete and do not follow the instruction to determine precision level, and they fail to incorporate the time window information. Since they are identical and share the same shortcomings, neither is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "['2009-07-13T08:59:52.890Z', '2009-07-13T08:59:52.890Z']",
+      "answer_b": "['2009-07-13T08:59:52.890Z', '2009-07-13T08:59:52.890Z']",
+      "cross_model_agreement": 0.36
+    },
+    {
+      "case_id": "25eea005-0029-4839-b7e2-7be43a10b56d",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The input provides a clear start and end datetime: 2015-02-26 00:00 to 2015-02-28 00:00. The instructions require ISO 8601 output and examples consistently include a trailing \u201cZ\u201d to indicate UTC (e.g., `...T00:00:00Z`). Answer B includes the `Z` suffix, matching the expected ISO 8601 UTC form. Answer A omits the timezone designator, making it ambiguous (local time vs UTC) and less compliant with the provided examples. Additionally, the user asked to \u201cdetermine precision level\u201d; neither answer provides it, but between the two, B is still more correct on the ISO formatting requirement. Precision level here should be \u201cminute\u201d (since input specifies to 00:00) or arguably \u201chour+minute\u201d; in the given schema it would be \u201cminute\u201d. Since both omit it, that does not differentiate them.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2015-02-26T00:00:00', '2015-02-28T00:00:00']",
+      "answer_b": "['2015-02-26T00:00:00Z', '2015-02-28T00:00:00Z']",
+      "cross_model_agreement": 0.4
+    },
+    {
+      "case_id": "496fb041-96c1-49e3-9dd7-080acf8fbf17",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The input provides a specific timestamp \u201c2009-09-26 15:53:10.860 UT\u201d plus an approximate duration \u201c\u223c340 ms time window\u201d. A fully correct normalization would ideally either (a) treat it as a single-timestamp event (start=end at that instant) and report precision \u201cmillisecond\u201d, or (b) compute an approximate end time by adding 0.340 s (end = 15:53:11.200Z) and mark it approximate. Both Answer A and Answer B output identical start and end timestamps at 2009-09-26T15:53:10.860Z, which is acceptable under the \u201csingle-timestamp events\u201d rule but they omit the required \u201cprecision level\u201d entirely and do not address the \u223c340 ms window. Since both responses are identical and share the same omissions, neither is better than the other.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2009-09-26T15:53:10.860Z', '2009-09-26T15:53:10.860Z']",
+      "answer_b": "['2009-09-26T15:53:10.860Z', '2009-09-26T15:53:10.860Z']",
+      "cross_model_agreement": 0.48
+    },
+    {
+      "case_id": "5e5caee4-f4c8-4702-bf2e-5ac886e2230c",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The input is \u201c2013-10-11 (four-day interval around the event, approx.)\u201d. A four-day interval \u201caround\u201d the event is ambiguous: it could mean 2 days before through 1 day after (Oct 9\u201312), or 2 days before through 2 days after (Oct 9\u201313), or even Oct 10\u201313 depending on interpretation. Both answers choose Oct 9 00:00:00Z to Oct 12 23:59:59Z, which is a plausible 4-day window including Oct 11, but they do not mark the range as approximate, do not provide a precision level, and do not include any error/approximation metadata despite the prompt explicitly asking for precision level and noting \u201capprox.\u201d. Since both responses are identical and share the same omissions, neither is better than the other; they are equally incomplete relative to requirements.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "['2013-10-09T00:00:00Z', '2013-10-12T23:59:59Z']",
+      "answer_b": "['2013-10-09T00:00:00Z', '2013-10-12T23:59:59Z']",
+      "cross_model_agreement": 0.48
+    },
+    {
+      "case_id": "80425844-ae77-480b-bcfe-835a16d6bb5a",
+      "winner": "tie",
+      "actual_winner": "tie",
+      "reasoning": "The input provides a fully specified date and UT times for both start and end: 2002-08-11 16:40 UT to 2002-08-11 16:54 UT. Both Answer A and Answer B correctly convert these to ISO 8601 UTC instants with seconds set to :00 and the Z suffix: 2002-08-11T16:40:00Z and 2002-08-11T16:54:00Z. However, the user also asked to \u201cdetermine precision level.\u201d Neither response includes any precision metadata (it should be \u201cminute\u201d precision, since seconds are not specified in the input). They also don\u2019t label start/end explicitly, though the list order is acceptable. Since both responses are identical and share the same omission, neither is better.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "['2002-08-11T16:40:00Z', '2002-08-11T16:54:00Z']",
+      "answer_b": "['2002-08-11T16:40:00Z', '2002-08-11T16:54:00Z']",
+      "cross_model_agreement": 0.48
+    }
+  ]
+}

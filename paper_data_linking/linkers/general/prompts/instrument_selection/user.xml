@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instrument_matching_task>
+  <instrument_description>
+    {{ full_context }}
+  </instrument_description>
+
+  <candidate_instruments>
+    {{ instruments_text }}
+  </candidate_instruments>
+
+  <instruction>
+    Return instrument number(s) (1-{{ instrument_count }}) or '0' if too generic/ambiguous.
+    For multiple instruments, separate with commas (e.g., "1,3"):
+  </instruction>
+</instrument_matching_task>

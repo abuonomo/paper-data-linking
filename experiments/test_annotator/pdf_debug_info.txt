@@ -1,0 +1,342 @@
+
+=======================================================
+ DEBUG INFO FOR PAGE 6
+=======================================================
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 294.24, 74.62, 317.81, 85.53 ]
+  Text: "– 6 –"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 220.32, 110.50, 246.94, 121.41 ]
+  Text: "3.2.1."
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 258.24, 110.50, 391.70, 121.41 ]
+  Text: "The 2014 January 06 Event"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 93.84, 137.14, 539.81, 148.05 ]
+  Text: "The LASCO recorded a CME on 2014 January 6 that ﬁrst appeared in the C2 FOV at 08:00"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 152.02, 426.58, 162.93 ]
+  Text: "UT and moved in the coronagraphic FOV at a linear speed of 1402 km s"
+
+Font: 'CMSY8', Size: 7.97, Color: #000000
+  Bbox: [ 426.60, 149.44, 433.18, 157.41 ]
+  Text: "−"
+
+Font: 'CMR8', Size: 7.97, Color: #000000
+  Bbox: [ 433.20, 148.51, 437.43, 156.48 ]
+  Text: "1"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 437.43, 148.06, 441.96, 162.93 ]
+  Text: " "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 441.96, 152.02, 539.98, 162.93 ]
+  Text: "(CDAW). The CME"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 166.90, 539.75, 177.81 ]
+  Text: "does not exhibit the clear three-part structure in the white-light image as no obvious dark cavity"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 181.90, 539.98, 192.81 ]
+  Text: "can be distinguished as displayed in Figure 3(a1). One interesting phenomenon is that the CME"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 196.78, 238.22, 207.69 ]
+  Text: "front exhibits a local deformation,"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 238.22, 196.78, 261.58, 207.69 ]
+  Text: " i.e.,"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 261.58, 196.78, 539.72, 207.69 ]
+  Text: " a bulge appears at the front as denoted with the yellow"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 211.66, 501.86, 222.57 ]
+  Text: "arrow, which can be observed more clearly in the running-diﬀerence image (Figure 3(a2))."
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 93.84, 233.62, 112.72, 244.53 ]
+  Text: "The"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 112.72, 233.62, 172.43, 244.53 ]
+  Text: " STEREO-B"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 172.43, 233.62, 183.70, 244.53 ]
+  Text: " is"
+
+Font: 'CMSY10', Size: 10.91, Color: #000000
+  Bbox: [ 183.70, 230.89, 195.31, 241.80 ]
+  Text: " ∼"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 195.36, 233.62, 211.61, 244.53 ]
+  Text: "153"
+
+Font: 'CMSY8', Size: 7.97, Color: #000000
+  Bbox: [ 211.56, 231.04, 215.79, 239.01 ]
+  Text: "◦"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 219.36, 233.62, 540.04, 244.53 ]
+  Text: "east of the Earth during this eruption. Through inspecting both the"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 248.50, 539.98, 259.41 ]
+  Text: "white-light and EUV observations, the source region can be identiﬁed unambiguously. The CME"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 263.38, 539.97, 274.29 ]
+  Text: "results from a ﬁlament eruption that is recorded by the AIA and EUVI B simultaneously from"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 276.34, 317.64, 289.17 ]
+  Text: "two viewpoints. Figure 3(a3) presents the AIA 193 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 317.64, 276.34, 325.82, 287.25 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 317.64, 278.26, 540.04, 289.17 ]
+  Text: "A running-diﬀerence image, demonstrating the"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 293.26, 180.38, 304.17 ]
+  Text: "three-part appearance,"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 180.38, 293.26, 202.66, 304.17 ]
+  Text: " i.e.,"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 202.66, 293.26, 540.04, 304.17 ]
+  Text: " the leading edge, the ﬁlament as denoted with the red arrow, and the"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 306.22, 254.88, 319.05 ]
+  Text: "zone between them. The EUVI B 195 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 254.88, 306.22, 263.06, 317.13 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 254.88, 308.14, 539.92, 319.05 ]
+  Text: "A observation presents the similar result as shown in Figure"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 323.02, 540.04, 333.93 ]
+  Text: "3(a4), where the ﬁlament is depicted with the red arrow. The leading edge, the ﬁlament and the"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 337.90, 540.03, 348.81 ]
+  Text: "zone between them in the EUV images (panel (a3)) should evolve into the bright front, bright"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 352.78, 539.98, 363.69 ]
+  Text: "core and dark cavity in the white-light images, respectively. However, no obvious dark cavity is"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 367.78, 540.03, 378.69 ]
+  Text: "recorded in the coronagraph as shown in panel (a1). This will be discussed later with the next"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 382.66, 143.06, 393.57 ]
+  Text: "event together."
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 215.52, 428.02, 242.14, 438.93 ]
+  Text: "3.2.2."
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 253.44, 428.02, 396.50, 438.93 ]
+  Text: "The 2017 September 10 Event"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 93.84, 454.78, 238.96, 465.69 ]
+  Text: "This event was recorded by the"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 238.96, 454.78, 272.83, 465.69 ]
+  Text: " SOHO"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 272.83, 454.78, 294.17, 465.69 ]
+  Text: " and"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 294.17, 454.78, 354.18, 465.69 ]
+  Text: " STEREO-A"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 354.18, 454.78, 540.03, 465.69 ]
+  Text: " from two perspectives on 2017 Septem-"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 469.66, 148.96, 480.57 ]
+  Text: "ber 10 when the"
+
+Font: 'CMTI10', Size: 10.91, Color: #000000
+  Bbox: [ 148.96, 469.66, 209.58, 480.57 ]
+  Text: " STEREO-A"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 209.58, 469.66, 250.13, 480.57 ]
+  Text: " was 128"
+
+Font: 'CMSY8', Size: 7.97, Color: #000000
+  Bbox: [ 250.08, 467.08, 254.31, 475.05 ]
+  Text: "◦"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 258.48, 469.66, 539.86, 480.57 ]
+  Text: "east of the Earth, which was accompanied by an X8.2 class"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 484.54, 539.90, 495.45 ]
+  Text: "ﬂare and has been used to investigate various aspects of CMEs (Yan et al. 2018; Veronig et al."
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 499.42, 539.95, 510.33 ]
+  Text: "2018 and references therein). The CME ﬁrst appeared in the C2 FOV at 16:00 UT at a high linear"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 514.30, 165.70, 525.21 ]
+  Text: "speed of 3163 km s"
+
+Font: 'CMSY8', Size: 7.97, Color: #000000
+  Bbox: [ 165.72, 511.72, 172.30, 519.69 ]
+  Text: "−"
+
+Font: 'CMR8', Size: 7.97, Color: #000000
+  Bbox: [ 172.32, 510.79, 176.55, 518.76 ]
+  Text: "1"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 176.55, 510.34, 181.32, 525.21 ]
+  Text: " "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 181.32, 514.30, 540.10, 525.21 ]
+  Text: "(CDAW). The LASCO observation shows that the CME does not possess"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 529.30, 540.04, 540.21 ]
+  Text: "the obvious dark cavity either as displayed in Figure 3(b1). The CME front also exhibits a bulge"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 544.18, 539.92, 555.09 ]
+  Text: "as depicted with the yellow arrow, which is more distinguishable in the running-diﬀerence image"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 559.06, 143.18, 569.97 ]
+  Text: "(Figure 3(b2))."
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 93.84, 581.02, 540.03, 591.93 ]
+  Text: "Through inspecting the LASCO and AIA observations, we can ﬁnd the source region without"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 593.98, 302.04, 606.81 ]
+  Text: "ambiguity. Figure 3(b3) presents the AIA 131 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 302.04, 593.98, 310.22, 604.89 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 302.04, 595.90, 539.98, 606.81 ]
+  Text: "A observations, clearly showing that the CME is"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 610.78, 539.92, 621.69 ]
+  Text: "driven by the eruption of a hot blob. Due to the AIA limited FOV, partial blob and the leading edge"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 625.66, 539.91, 636.57 ]
+  Text: "are not imaged by the AIA at 15:55:30 UT. We acquire the blob outline based on the observation at"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 640.66, 539.98, 651.57 ]
+  Text: "15:55:06 UT as marked with red dots in the inset panel, assuming that the blob does not change its"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 655.54, 539.98, 666.45 ]
+  Text: "morphology signiﬁcantly. At the same time, the leading edge can be observed clearly in the SUVI"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 668.50, 176.52, 681.33 ]
+  Text: "FOV through the 195 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 176.52, 668.50, 184.70, 679.41 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 176.52, 670.42, 539.99, 681.33 ]
+  Text: "A passband as shown in Figure 3(b4), where the hot blob outline recorded by"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 685.30, 539.98, 696.21 ]
+  Text: "the AIA is replotted with red dots. This ﬁgure clearly demonstrates that the CME also possesses"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 700.18, 539.81, 711.09 ]
+  Text: "the three-part appearance in the EUV passbands. The bulge is formed in the propagation direction"
+
+
+=======================================================
+ DEBUG INFO FOR PAGE 13
+=======================================================
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 291.48, 74.62, 320.57, 85.53 ]
+  Text: "– 13 –"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 618.46, 540.04, 629.37 ]
+  Text: "Fig. 2.— Observations of the event on 2013 September 24 by the EUVI B and COR1 B. (a) The"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 631.42, 265.68, 644.25 ]
+  Text: "running-diﬀerence image of EUVI B 195 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 265.68, 631.42, 273.86, 642.33 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 265.68, 633.34, 540.04, 644.25 ]
+  Text: "A. (b) and (d) The direct images of COR1 B, showing the"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 646.30, 299.16, 659.13 ]
+  Text: "CME morphology. (c) The direct image of 304 "
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 299.16, 646.30, 307.34, 657.21 ]
+  Text: "˚"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 299.16, 648.22, 539.91, 659.13 ]
+  Text: "A. Panel (a) is accompanied by an animation that"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 663.22, 539.96, 674.13 ]
+  Text: "displays the complete eruption process recorded by the EUVI B. The animation starts at 19:41 UT"
+
+Font: 'CMR10', Size: 10.91, Color: #000000
+  Bbox: [ 72.00, 678.10, 318.26, 689.01 ]
+  Text: "and ends at 20:26 UT with a duration of 2 seconds."
+

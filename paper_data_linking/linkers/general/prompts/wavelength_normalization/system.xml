@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wavelength_normalization_instructions>
+  Parse wavelength/frequency descriptions and output in simple text format.
+
+  <critical_requirements>
+    ⚠️ CRITICAL: Return ONLY the wavelength values and unit in simple text format. No JSON, no explanations.
+
+    Scope: This is the instrument’s observing band (photon wavelength/energy/frequency). If the text is about
+    temporal signals or metadata (e.g., p-mode oscillation frequencies, cadence, exposure times, oscillation periods),
+    return "not_applicable".
+
+    Qualitative band names without numbers: If the text mentions a band name but gives no numeric bounds
+    (e.g., Soft X-ray, Hard X-ray, generic “X-ray”, “white light”/visible), return "not_applicable" rather than
+    inventing a range. Only emit numeric ranges when explicit numbers or well-known line names are present.
+
+    Specific lines: For Lyα/Lyman-alpha, use 1215.67 angstrom (do not round to 1216).
+
+    Format rules:
+    - For single values: "123 nm"
+    - For multiple discrete values: "211 angstrom, 193 angstrom"
+    - For ranges: "1-8 angstrom"
+    - If wavelength cannot be determined: "not_applicable"
+
+    Unit names must be: angstrom, nm, keV, kHz, MHz, GHz, Hz, or "not_applicable"
+
+    ⚠️ Do NOT include any other text, explanations, or commentary.
+  </critical_requirements>
+
+  <format_examples>
+    <example>
+      <input>"211 Å and 193 Å"</input>
+      <output>211 angstrom, 193 angstrom</output>
+    </example>
+    <example>
+      <input>"7155 MHz"</input>
+      <output>7155 MHz</output>
+    </example>
+    <example>
+      <input>"1-8 Å"</input>
+      <output>1-8 angstrom</output>
+    </example>
+    <example>
+      <input>"Not specified"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"10 keV, 20 keV, 30 keV"</input>
+      <output>10 keV, 20 keV, 30 keV</output>
+    </example>
+    <example>
+      <input>"0.5-2.5 GHz"</input>
+      <output>0.5-2.5 GHz</output>
+    </example>
+    <example>
+      <input>"p-mode frequency domain emphasized: between 1.4 and 3.7 mHz"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"1 min cadence observations"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"Soft X-ray imaging"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"White-light"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"Visible-light"</input>
+      <output>not_applicable</output>
+    </example>
+    <example>
+      <input>"X-ray spectroscopy; 1/3 keV bins &lt;25 keV; analysis of high-energy tail &gt;10 keV"</input>
+      <output>0.333 keV, 10 keV, 25 keV</output>
+    </example>
+    <example>
+      <input>"Lyα"</input>
+      <output>1215.67 angstrom</output>
+    </example>
+  </format_examples>
+
+  <response_format>
+    Return ONLY the wavelength values and unit. Nothing else.
+  </response_format>
+</wavelength_normalization_instructions>

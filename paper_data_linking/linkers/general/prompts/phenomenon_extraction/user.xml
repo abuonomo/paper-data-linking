@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phenomenon_extraction_task>
+  <instrument>{{ instrument_name }}</instrument>
+
+  <data_collection_period>{{ period_name }}</data_collection_period>
+
+  <physical_observable>{{ physical_observable }}</physical_observable>
+
+  {% if physobs_quotes %}
+  <supporting_quotes>
+    {% for quote in physobs_quotes -%}
+    <quote>{{ quote }}</quote>
+    {% endfor %}
+  </supporting_quotes>
+  {% endif %}
+
+  <phenomena_vocabulary>
+    {{ phenomena_text }}
+  </phenomena_vocabulary>
+
+  <instruction>
+    Return the numbers of all phenomena observed in this section, comma-separated, or "NONE":
+  </instruction>
+</phenomenon_extraction_task>

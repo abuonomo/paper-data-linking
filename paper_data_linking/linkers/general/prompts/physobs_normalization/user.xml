@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_prompt>
+Instrument: {{ instrument_code }}
+
+Valid candidates:
+{% for candidate in candidates -%}
+{{ candidate }}
+{% endfor %}
+Paper description:
+"{{ raw_observable }}"
+
+Output the matching candidate or "UNCERTAIN":
+</user_prompt>

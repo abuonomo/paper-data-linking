@@ -1,0 +1,87 @@
+{
+  "instruments": [
+    {
+      "name": "Atmospheric Imaging Assembly (AIA) on board Solar Dynamics Observatory (SDO)",
+      "grounding_result": {
+        "matched_instrument_code": "AIA",
+        "matched_mission_code": "SDO",
+        "matched_instrument_name": "Atmospheric Imaging Assembly",
+        "matched_mission_name": "Solar Dynamics Observatory",
+        "data_system": "vso",
+        "reasoning": "Primary EUV imaging instrument for flux rope analysis"
+      },
+      "general_comments": "AIA multi-channel EUV imaging was the primary dataset to detect, thermally characterize (via DEM), and track the kinematics of the flux rope and related structures in the low corona during 2012-07-18 to 2012-07-19. AIA cadence reduced to 1 minute for data volume; earliest measurable change after 21:59:33 UT; AIA pixel size 0.6 arcsec.",
+      "data_collection_periods": [
+        {
+          "period_name": "Flux rope formation and failed eruption (confined flare)",
+          "time_range": "2012-07-18 22:00 UT to 2012-07-18 22:20 UT",
+          "wavelengths": "EUV 131 Å for height-time tracing; DEM analysis using six coronal channels: 94, 131, 193, 171, 211, 335 Å",
+          "physical_observable": "Flux rope rise and height-time tracking; hot core and cusp-like loops; DEM-derived temperatures ≈10 MK during the confined flare",
+          "general_quotes": [
+            "We used AIA images (level 1.5) recorded in narrow-band channels centered at ≈304, 171, 193, 211, 335, 94 and 131 ˚A, which have peak responses at temperatures of ≈0.05, 0.6, 1.6, 2.0, 2.5, 6.3 and 10 MK respectively",
+            "To reduce data volume, we used AIA images with a reduced cadence of 1 minute.",
+            "Pixel sizes for AIA, EUVI and LASCO C2 images are 0.6, 1.6 and 12 arcsec respectively."
+          ],
+          "additional_comments": "Single detector system - no detector selection needed"
+        }
+      ]
+    },
+    {
+      "name": "EUV Imager (EUVI-A) on board STEREO/SECCHI (Spacecraft A)",
+      "grounding_result": {
+        "matched_instrument_code": "SECCHI",
+        "matched_mission_code": "STEREO_A",
+        "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+        "matched_mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+        "data_system": "vso",
+        "reasoning": "Face-on EUV imaging complementary to AIA edge-on view"
+      },
+      "general_comments": "EUVI-A provided face-on 195 Å and 304 Å EUV imaging of the source AR to trace brightenings along the neutral line, infer footpoint locations, and support 3D morphology complementary to AIA's edge-on view. STEREO-A EUVI 195 Å cadence was 5 minutes; pixel size 1.6 arcsec.",
+      "data_collection_periods": [
+        {
+          "period_name": "Face-on view of brightenings and footpoint mapping",
+          "time_range": "2012-07-18 22:10 UT to 2012-07-18 22:10 UT",
+          "wavelengths": "EUV 195 Å (peak response ≈1.6 MK; includes Fe XXIV 192 Å contributions at ≈16 MK) and 304 Å",
+          "physical_observable": "Three distinct brightenings along the neutral line used to infer loop connectivity, footpoint locations, and the 3D configuration of the flux rope",
+          "general_quotes": [
+            "had both edge-on (AIA) and face-on (EUVI-A) observations of the target AR.",
+            "The answer lies in the EUVI-A images taken at 22:10 UT (Figure 3c) almost simultaneously to the AIA 131 images in Figure 2c.",
+            "EUVI images from the 195 ˚A channel having a peak response for ≈1.6 MK were also used.",
+            "Proxies of the NL shape and extensions during the period of interest could be inferred by the inspection of dark ﬁlament material images of the target AR as seen from above in 304 and 195 EUVI-A images.",
+            "Although SECCHI lacks a dedicated hot channel like the AIA 131, the 195 passband includes contributions from a Fe XXIV line at 192 ˚A with peak temperature of 16 MK."
+          ],
+          "additional_comments": "SECCHI/EUVI-A with multiple spectral channels; EUVI is the detector providing the imaging"
+        }
+      ]
+    },
+    {
+      "name": "Large Angle and Spectrometric Coronagraph (LASCO C2) on board SOHO",
+      "grounding_result": {
+        "matched_instrument_code": "LASCO",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Large Angle and Spectrometric Coronagraph",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "data_system": "vso",
+        "reasoning": "White-light coronagraph for CME detection and kinematics"
+      },
+      "general_comments": "LASCO C2 white-light imaging was used to detect the CME, determine its appearance time, and extend height–time measurements of the erupting flux rope/CME core beyond the AIA FOV. LASCO C2 cadence was 12 minutes; pixel size 12 arcsec.",
+      "data_collection_periods": [
+        {
+          "period_name": "CME detection and height-time extension",
+          "time_range": "2012-07-19 05:36 UT to 2012-07-19 06:00 UT",
+          "wavelengths": "White light (total brightness) imaging of the outer corona (2.2–6 R⊙)",
+          "physical_observable": "White-light CME front and core height–time measurements; typical flux rope CME morphology",
+          "general_quotes": [
+            "WL images of the outer corona (2.2-6 R⊙) from the Large Angle and Spectrometric Coronograph (LASCO; Brueckner et al. 1995) C2 coronagraph on board the SOHO mission.",
+            "Around 05:36 UT a WL CME emerges in the LASCO C2 coronagraph. The CME front exits the C2 FOV at around 06:00 UT",
+            "Moreover, total brightness images of the corona taken by LASCO on SOHO were analyzed.",
+            "These measurements are complemented by the h−t of the resulting WL CME core observed in LASCO C2 (the last 3 datapoints in the upper panel of Figure 10).",
+            "The CME is a typical flux rope CME",
+            "The cadence of the STA 195 and LASCO images was 5 and 12 minutes, respectively. Pixel sizes for AIA, EUVI and LASCO C2 images are 0.6, 1.6 and 12 arcsec respectively."
+          ],
+          "additional_comments": "LASCO is a multi-detector system with C2 (outer coronagraph) being the primary imaging detector used in this analysis"
+        }
+      ]
+    }
+  ]
+}

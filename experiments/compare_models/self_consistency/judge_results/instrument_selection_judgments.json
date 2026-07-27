@@ -1,0 +1,95 @@
+{
+  "call_type": "instrument_selection",
+  "model_a": "openai/gpt-5",
+  "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+  "judge_model": "openai/gpt-5.2",
+  "agreement_threshold": 0.5,
+  "exclude_null_pairs": true,
+  "stats": {
+    "total_cases": 7,
+    "model_a_wins": 3,
+    "model_b_wins": 4,
+    "ties": 0,
+    "neither": 0,
+    "errors": 0
+  },
+  "judgments": [
+    {
+      "case_id": "25ca3dca-7e7a-469f-af81-89261ffa3f78",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The description\u2019s \u201cInstrument Name: SOHO\u201d refers to the spacecraft/observatory, not a specific SOHO instrument. It explicitly says SOHO is mentioned only to indicate UVCS and SUMER are onboard, and that no SOHO observations are used/analyzed. Under the matching rules, when the description is too generic or not actually selecting an instrument for use, the correct output is ambiguous (\u201c0\u201d). \n\nAnswer A (9,11) selects SUMER and UVCS because they are mentioned as onboard, but the prompt is not asking \u201cwhich onboard instruments are referenced\u201d; it is asking to match the described \u201cInstrument Name: SOHO\u201d to a catalog instrument entry. Since SOHO itself is not among the candidate instruments and no specific instrument is being used, mapping to SUMER/UVCS is over-specific and not justified by the description.\n\nAnswer B (\u201c0\u201d) correctly treats this as ambiguous/non-matching to any single instrument entry.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "9, 11",
+      "answer_b": "0",
+      "cross_model_agreement": 0.0
+    },
+    {
+      "case_id": "55b2ebc1-abd1-48b4-a3c8-e3d3de85f313",
+      "winner": "B",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The description is about using the GOES flare catalog and correlating EUV wave parameters with the flare soft X-ray class. Soft X-ray flare class on GOES comes from the X-ray Sensor (XRS), which is part of the GOES Space Environment Monitor (SEM) suite. In the candidate list, the only relevant instrument type is \u201cSpace Environment Monitor (SEM)\u201d (or \u201cSpace Environment Monitor\u201d) on specific GOES spacecraft (e.g., GOES-9/10/11/13/14/15). \n\nHowever, the description does not specify which GOES satellite(s) provided the XRS data during 2007\u20132011 (commonly GOES-10/11/12 were used operationally, but that is not stated). Therefore, we cannot uniquely map to a specific SEM entry number from the list. The correct action per instructions is to return 0 (ambiguous) when the description is too generic to resolve to a specific catalog instrument.\n\nAnswer A (25, 17) selects SEM on GOES-13 and SEM on GOES-11, but this is an unjustified guess and also incomplete if multiple GOES SEM/XRS sources were used. Answer B correctly flags the ambiguity.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "25, 17",
+      "answer_b": "0",
+      "cross_model_agreement": 0.06666666666666667
+    },
+    {
+      "case_id": "cccd95bb-7e12-46b6-b02c-0b37187504ca",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The description explicitly names the \u201cElectric Field Instrument (EFI) on board THEMIS\u201d and discusses high-rate AC-coupled electric field wave bursts (\u03b4E), which is exactly the measurement provided by the THEMIS EFI instruments. In the candidate list, EFI exists on multiple THEMIS probes: A (4), B (36), C (16), D (11), and E (32). The description does not specify which THEMIS spacecraft (A/B/C/D/E) the intervals come from, only \u201con board THEMIS,\u201d so the correct matching under the provided rules is to return multiple instruments corresponding to all valid EFI instances rather than declaring ambiguity. \n\nAnswer A returns exactly those five EFI entries (though in a different order), with no irrelevant instruments included. Answer B returns \u201c0\u201d (ambiguous), but the instrument type is not ambiguous\u2014only the spacecraft instance is unspecified, which the instructions indicate should be handled by returning multiple instruments when multiple instances are valid.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "11, 4, 36, 16, 32",
+      "answer_b": "0",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "83b07c6e-b72b-4ca1-bcd4-03b76614f82d",
+      "winner": "B",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The description says SOHO is the platform hosting the MDI instrument and that the analyzed data are \u201cMDI Dopplergrams.\u201d Among the candidate instruments, the only one directly responsible for producing MDI Dopplergrams is the Michelson Doppler Imager, MDI/SOHO, which is instrument 8. Although the text mentions \u201cSOHO\u201d as a spacecraft/observatory, the catalog provided contains only SOHO instruments, not the spacecraft itself; thus we should map the description to the relevant instrument (MDI). Answer A (\u201c0\u201d) incorrectly treats it as ambiguous, but the mention of MDI Dopplergrams is sufficiently specific. Answer B (\u201c8\u201d) correctly identifies MDI and is precise and complete.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "0",
+      "answer_b": "8",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "2fa1eb94-9ebe-44d7-8254-a84d462753a5",
+      "winner": "A",
+      "actual_winner": "openai/gpt-5",
+      "reasoning": "The description is \u201cSOlar and Heliospheric Observatory (SOHO)\u201d with a comment that it \u201chosts EPHIN\u201d and that SOHO spacecraft shielding was modeled for GEANT4 simulations supporting EPHIN analysis. EPHIN is a particle detector that is part of the COSTEP suite on SOHO (COSTEP includes EPHIN). Among the candidates, only instrument 1 is COSTEP; ERNE and CELIAS are different particle/plasma instruments, and \u201cSOHO Positions\u201d is ephemeris. Although the name field says \u201cSOHO\u201d (the observatory), the key discriminant is the explicit mention of EPHIN, which maps to COSTEP. Therefore Answer A (1) is the correct match; Answer B (0) is unnecessarily ambiguous given the clear EPHIN\u2192COSTEP linkage.",
+      "model_a": "openai/gpt-5",
+      "model_b": "bedrock/openai.gpt-oss-120b-1:0",
+      "answer_a": "1",
+      "answer_b": "0",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "2d8e9673-ca5b-4af4-b655-09b0809dcdcf",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The description is explicitly \u201cWAVES on board Wind,\u201d which is the Wind/WAVES radio instrument. However, Wind/WAVES is not among the candidate instruments (the only \u201cWAVES\u201d entries are STEREO/WAVES on STEREO-A and STEREO-B: candidates 5 and 9). The description also says Wind/WAVES is used alongside S/WAVES, but that does not mean the instrument being matched is STEREO/WAVES; it\u2019s contextual. Since the correct instrument (Wind/WAVES) is absent from the list, the proper response under the instructions is to return \u20180\u2019 (ambiguous/no valid match in catalog). Answer A does that. Answer B incorrectly selects STEREO/WAVES instruments (5,9), which do not match \u201con board Wind.\u201d",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "0",
+      "answer_b": "9, 5",
+      "cross_model_agreement": 0.2
+    },
+    {
+      "case_id": "04db4599-9728-4a1b-8cc9-a7d0d2657151",
+      "winner": "A",
+      "actual_winner": "bedrock/openai.gpt-oss-120b-1:0",
+      "reasoning": "The description only says \u201cInstrument Name: GONG\u201d and notes it was mentioned but not used. It does not specify a particular GONG site (Big Bear, Cerro Tololo, etc.) nor does it indicate the \u201cMERGED GONG\u201d product. With only \u201cGONG\u201d given, multiple catalog entries are plausible, so per instructions this is ambiguous and should return 0. Answer A correctly marks ambiguity. Answer B selects \u201cMERGED GONG\u201d (5) without justification; nothing in the description implies merged data rather than any site instrument, so it is overly specific and likely incorrect.",
+      "model_a": "bedrock/openai.gpt-oss-120b-1:0",
+      "model_b": "openai/gpt-5",
+      "answer_a": "0",
+      "answer_b": "5",
+      "cross_model_agreement": 0.32
+    }
+  ]
+}

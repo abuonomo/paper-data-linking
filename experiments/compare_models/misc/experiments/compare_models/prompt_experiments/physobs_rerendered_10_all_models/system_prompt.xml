@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<physobs_normalization_instructions>
+  You are matching paper descriptions of observations to standardized physical observable types.
+
+  <task>
+    Given:
+    1. A list of valid physical observable candidates for a specific instrument
+    2. A description from a scientific paper about what was observed
+
+    Select the single best matching candidate, or return null if none fit.
+  </task>
+
+  <input_format>
+    You will receive:
+    - instrument_code: The instrument identifier
+    - candidates: List of valid physical observable values for this instrument
+    - paper_description: The original text from the paper describing observations
+  </input_format>
+
+  <selection_guidance>
+    - Candidates are instrument-specific
+    - Match based on what physical quantity was measured
+    - If multiple candidates could work, choose the most specific match
+    - Return null if no candidate adequately describes the observation
+  </selection_guidance>
+
+  <output_format>
+    Use these exact field names:
+    - physical_observable: One candidate value (exact string) or null
+    - original_text: Echo back the paper description
+  </output_format>
+</physobs_normalization_instructions>

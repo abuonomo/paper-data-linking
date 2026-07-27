@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "total": 2,
+    "correct": 0,
+    "incorrect": 2,
+    "errors": 0,
+    "total_time": 4.699514627456665,
+    "average_time": 2.3497573137283325,
+    "accuracy": 0.0,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "ambiguous": {
+      "total": 2,
+      "correct": 0,
+      "incorrect": 2,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "generic_plasma_ambiguous",
+      "category": "ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/ACE/SWEPAM/spase://SMWG/Observatory/ACE",
+      "time_seconds": 2.6853907108306885,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "actual_mission": "spase://SMWG/Observatory/ACE",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/ACE/SWEPAM",
+        "matched_mission_code": "spase://SMWG/Observatory/ACE",
+        "matched_instrument_name": "SWEPAM",
+        "matched_mission_name": "ACE",
+        "reasoning": "Systematic selection: ACE \u2192 spase://SMWG/Instrument/ACE/SWEPAM"
+      },
+      "expected": {
+        "should_match": false
+      }
+    },
+    {
+      "name": "voyager_mag_ambiguous",
+      "category": "ambiguous",
+      "status": "incorrect",
+      "explanation": "Expected no match but got spase://SMWG/Instrument/Voyager2/MAG/spase://SMWG/Observatory/Voyager2",
+      "time_seconds": 2.0141239166259766,
+      "details": {
+        "actual_match": true,
+        "expected_match": false,
+        "actual_instrument": "spase://SMWG/Instrument/Voyager2/MAG",
+        "actual_mission": "spase://SMWG/Observatory/Voyager2",
+        "expected_instrument": null,
+        "expected_mission": null,
+        "reasoning": "Systematic selection: Voyager 2 \u2192 spase://SMWG/Instrument/Voyager2/MAG"
+      },
+      "grounding_result": {
+        "matched_instrument_code": "spase://SMWG/Instrument/Voyager2/MAG",
+        "matched_mission_code": "spase://SMWG/Observatory/Voyager2",
+        "matched_instrument_name": "MAG",
+        "matched_mission_name": "Voyager 2",
+        "reasoning": "Systematic selection: Voyager 2 \u2192 spase://SMWG/Instrument/Voyager2/MAG"
+      },
+      "expected": {
+        "should_match": false
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/challenging_test_cases.jsonl",
+    "total_cases_in_file": 15,
+    "cases_run": 2,
+    "category_filter": "ambiguous",
+    "limit": null,
+    "timestamp": 1751463803.49135
+  }
+}

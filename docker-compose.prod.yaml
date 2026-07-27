@@ -1,0 +1,83 @@
+# Production override — pulls pre-built images from a container registry.
+# Set PDL_IMAGE_REPO to your registry image path, e.g.
+#   PDL_IMAGE_REPO=registry.example.com/your-org/paper-data-linking
+#
+# mem_limit ceilings: per-container cgroup caps so a runaway container is
+# OOM-killed and restarted by its restart policy instead of starving the whole
+# host. Without a per-cgroup limit the kernel may never pick a victim under
+# global memory pressure and userland thrashes. Ceilings are ~2x observed peaks,
+# not reservations; normal operation sits far below them. Tuned for a host with
+# ~8GB RAM — adjust for your hardware.
+#
+# restart: unless-stopped — prod containers previously ran with policy "no",
+# so an OOM-killed (or reboot-stopped) container stayed dead. Limits are only
+# safe WITH auto-restart; together they bound a runaway to a brief blip.
+services:
+  init:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+
+  api:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+    restart: unless-stopped
+    mem_limit: 1g
+    environment: &job_bytes_cap
+      # Batch-job chunks are built as in-RAM strings (lines + one join copy =
+      # 2x peak) before S3 upload. The 512MB default is fine as a FILE but
+      # OOM-killed the 1.5g gevent worker mid-submit at 10k scale (observed
+      # live: cohort_10k step-1, 4 silent restarts ~75s into each attempt).
+      # 128MB caps peak submit memory at ~2x128MB; jobs just get more numerous
+      # (10k step-1 ~6 jobs; 40k ~22 — trivially inside the 100-job quota).
+      PDL_MAX_JOB_BYTES: "134217728"
+
+  celery:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+    restart: unless-stopped
+    mem_limit: 1.5g
+    # cpu_shares (soft priority, work-conserving): under CPU contention the
+    # api/postgres get ~5x the workers' scheduler weight, so the review UI
+    # stays responsive during corpus phases; when the UI is idle the workers
+    # run at full speed — zero throughput cost off-peak. Live-adjustable via
+    # `docker update --cpu-shares`.
+    cpu_shares: 512
+    environment: *job_bytes_cap
+
+  # New services from the batch-downstream runner: without these overrides a prod
+  # `up -d` would try to BUILD them locally instead of pulling the registry image.
+  celery-beat:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+    restart: unless-stopped
+    # Beat idles at ~256MB just loading Django + the celery app — the original
+    # 256m ceiling had it at 99.9% at rest (observed live). 512m = ~2x idle.
+    mem_limit: 512m
+
+  celery-cpu:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+    restart: unless-stopped
+    # Tightest budget: prefork workers peaked ~0.9-1.7GB in corpus rehearsals.
+    mem_limit: 2g
+    cpu_shares: 512   # see celery note: yield to api/postgres under contention
+    environment: *job_bytes_cap
+
+  flower:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/api:latest
+    restart: unless-stopped
+    # Known slow-grower; an OOM restart is harmless (stateless UI).
+    mem_limit: 512m
+
+  client:
+    image: ${PDL_IMAGE_REPO:-paper-data-linking}/client:latest
+    restart: unless-stopped
+    mem_limit: 128m
+    environment:
+      # Public hostnames for the nginx vhosts (substituted into the config at
+      # container start). Set these to your real domains in production.
+      NGINX_SERVER_NAME: ${NGINX_SERVER_NAME:-_}
+      NGINX_FLOWER_SERVER_NAME: ${NGINX_FLOWER_SERVER_NAME:-flower.localhost}
+
+  postgres:
+    restart: unless-stopped
+    mem_limit: 2g
+
+  redis:
+    restart: unless-stopped
+    mem_limit: 512m

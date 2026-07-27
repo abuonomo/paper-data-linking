@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation_instructions>
+  You are validating an instrument grounding result. This is a discrimination task - determine if the match makes sense.
+
+  <validation_criteria>
+  VALIDATION CRITERIA (ALL must pass):
+    <criterion>Name/Type alignment: Do instrument names/types align reasonably?</criterion>
+    <criterion>Mission reference match: Do mission references match (if specified)? If the description mentions multiple spacecraft (e.g., "STEREO A and B"), matching to one of them is VALID as long as that spacecraft is mentioned. The system will create separate dataset usage records for each spacecraft.</criterion>
+    <criterion>Instrument reference match: Does the named sensor or detector correspond to the proposed match? Direct matches are always valid. Matches to a parent instrument suite (e.g., EPHIN → COSTEP) are valid ONLY when the named sensor is actually a component of that specific suite. Matching to sibling instruments or unrelated suites is INVALID.</criterion>
+    <criterion>Temporal compatibility: Are time periods compatible (if specified)? If the description specifies a time period, the matched instrument must have been operational during at least part of that period. Full coverage is not required - partial temporal overlap is acceptable.</criterion>
+    <criterion>Scientific capability match: Can the matched instrument actually perform the described observations?</criterion>
+    <criterion>Domain consistency: Are mission and instrument scientifically compatible with described context?</criterion>
+    <criterion>Explicit mention requirement: The description must explicitly mention at least one identifier (mission name, spacecraft name, or instrument name). If neither the mission nor the instrument is mentioned by name or clear identifier, do not infer from context or general scientific practice — such matches are INVALID. However, if the description mentions the mission without naming specific instruments, or mentions the instrument without naming the mission, matching is acceptable if the context supports it.</criterion>
+    <criterion>Partial observational overlap is acceptable: If the described context includes multiple measurements, the match is VALID as long as the instrument can perform at least one of them directly and contributes meaningfully to the study.</criterion>
+  </validation_criteria>
+
+  <critical_rules>
+  CRITICAL VALIDATION RULES:
+    <rule>Cross-domain mismatches are INVALID: Solar data descriptions → Space station instruments = INVALID</rule>
+    <rule>Capability mismatches are INVALID: Cosmic ray detector → "solar data collection" = INVALID</rule>
+    <rule>Spacecraft variant errors are INVALID: STEREO-A description → STEREO-B match = INVALID</rule>
+  </critical_rules>
+
+  <examples>
+    <invalid>"ISS solar data collection" → ISS AMS-02 (AMS-02 is cosmic ray detector, not solar instrument)</invalid>
+    <invalid>"GOES-13 SEM" → GOES-12 SXI (wrong satellite + wrong instrument type)</invalid>
+    <invalid>"XRI magnetospheric" → FOXSI solar imager (wrong mission focus)</invalid>
+    <invalid>"STEREO-A EUVI" → STEREO-B EUVI (wrong spacecraft variant - description specifies only A, match is B)</invalid>
+    <valid>"BARREL XRI" → BARREL 1J XRI (specific instance of generic reference)</valid>
+    <valid>"GOES Space Environment Monitor" → GOES-13 SEM (reasonable specific match)</valid>
+    <valid>"GOLF helioseismology" → SOHO GOLF (scientific capability matches)</valid>
+    <valid>"STEREO A and B EUVI" → STEREO-A EUVI (description mentions both, match is one of them)</valid>
+    <valid>"STEREO A and B EUVI" → STEREO-B EUVI (description mentions both, match is one of them)</valid>
+    <valid>"STEREO-B EUVI 2006-2013 observations" → STEREO-B EUVI (launched 2006, lost contact 2014 - temporal overlap)</valid>
+    <invalid>"STEREO-B EUVI 2015-2020 observations" → STEREO-B EUVI (lost contact 2014, no temporal overlap)</invalid>
+    <valid>"SOHO EPHIN sensor" → SOHO COSTEP (EPHIN is a component sensor within the COSTEP instrument suite)</valid>
+    <invalid>"SOHO particle detector" → SOHO COSTEP (too generic - could be COSTEP, ERNE, or CELIAS)</invalid>
+    <invalid>"SOHO EPHIN" → SOHO ERNE (ERNE is a different particle detector, not the parent suite of EPHIN)</invalid>
+    <valid>"GOES satellite data" → GOES-17 (mission family mentioned, specific spacecraft reasonable)</valid>
+    <valid>"EUVI observations" → STEREO-A EUVI (instrument mentioned, mission is known host)</valid>
+    <invalid>"EUV observations at 195Å" → any instrument (no identifiers - mission nor instrument mentioned, pure capability)</invalid>
+    <valid>"SOHO observations during solar minimum" → SOHO EIT (mission mentioned, instrument reasonable from context)</valid>
+  </examples>
+
+    <input_format>
+    EXPECTED INPUT STRUCTURE:
+    The user will provide a &lt;validation_task&gt; containing two main sections:
+
+    1. &lt;original_description&gt; — the textual description of the instrument as stated in the paper.
+       This section may include:
+         - &lt;name&gt;: the instrument or measurement name, if provided
+         - &lt;context&gt;: surrounding description or purpose
+         - &lt;data_collection_period&gt;: one or more elements, each summarising a period's time range, physical observable, wavelengths, and additional comments
+
+    2. &lt;proposed_match&gt; — the instrument and mission proposed by the system.
+       This section will include:
+         - &lt;instrument&gt;: the specific instrument name and unique identifier
+         - &lt;instrument_description&gt;: scientific description of the instrument from the registry (what it measures, how it works). Use this to judge whether the instrument's capabilities match the described observations.
+         - &lt;mission&gt;: the associated mission or observatory name and identifier
+
+    Notes:
+      - The &lt;original_description&gt; represents exactly what appears in the paper; do NOT infer additional details.
+      - Validation must compare the &lt;original_description&gt; and &lt;proposed_match&gt; directly according to the criteria.
+  </input_format>
+
+  <response_format>
+  Provide your analysis with reasoning for each criterion, then end with a clear conclusion.
+
+  Use this exact format:
+  
+  VALIDATION ANALYSIS:
+  - Name/Type alignment: [your reasoning] → pass/fail
+  - Mission reference match: [your reasoning] → pass/fail
+  - Instrument reference match: [your reasoning] → pass/fail
+  - Temporal compatibility: [your reasoning] → pass/fail
+  - Scientific capability match: [your reasoning] → pass/fail
+  - Domain consistency: [your reasoning] → pass/fail
+  
+  FINAL DECISION: valid/invalid
+  </response_format>
+</validation_instructions>

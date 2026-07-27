@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total": 4,
+    "correct": 3,
+    "incorrect": 1,
+    "errors": 0,
+    "total_time": 345.9169120788574,
+    "average_time": 86.47922801971436,
+    "accuracy": 75.0,
+    "error_rate": 0.0
+  },
+  "by_category": {
+    "debug": {
+      "total": 4,
+      "correct": 3,
+      "incorrect": 1,
+      "errors": 0
+    }
+  },
+  "test_results": [
+    {
+      "name": "debug_cor1_search",
+      "category": "debug",
+      "status": "incorrect",
+      "explanation": "Expected match but got none",
+      "time_seconds": 331.2611138820648,
+      "details": {
+        "actual_match": false,
+        "expected_match": true,
+        "actual_instrument": null,
+        "actual_mission": null,
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": null
+      },
+      "grounding_result": {
+        "matched_instrument_code": null,
+        "matched_mission_code": null,
+        "matched_instrument_name": null,
+        "matched_mission_name": null,
+        "reasoning": null
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "debug_ephin_search",
+      "category": "debug",
+      "status": "correct",
+      "explanation": "Correct match: COSTEP/SOHO",
+      "time_seconds": 4.023784399032593,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "COSTEP",
+        "actual_mission": "SOHO",
+        "expected_instrument": "COSTEP",
+        "expected_mission": "SOHO",
+        "reasoning": null
+      },
+      "grounding_result": {
+        "matched_instrument_code": "COSTEP",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Comprehensive Suprathermal and Energetic Particle Analyzer",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": null
+      },
+      "expected": {
+        "instrument_code": "COSTEP",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    },
+    {
+      "name": "debug_secchi_full",
+      "category": "debug",
+      "status": "correct",
+      "explanation": "Correct match: SECCHI/STEREO_A",
+      "time_seconds": 7.3217527866363525,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "SECCHI",
+        "actual_mission": "STEREO_A",
+        "expected_instrument": "SECCHI",
+        "expected_mission": "STEREO_A",
+        "reasoning": null
+      },
+      "grounding_result": {
+        "matched_instrument_code": "SECCHI",
+        "matched_mission_code": "STEREO_A",
+        "matched_instrument_name": "Sun Earth Connection Coronal and Heliospheric Investigation",
+        "matched_mission_name": "Solar TErrestrial RElations Observatory - Ahead",
+        "reasoning": null
+      },
+      "expected": {
+        "instrument_code": "SECCHI",
+        "mission_code": "STEREO_A",
+        "should_match": true
+      }
+    },
+    {
+      "name": "debug_costep_full",
+      "category": "debug",
+      "status": "correct",
+      "explanation": "Correct match: COSTEP/SOHO",
+      "time_seconds": 3.3102610111236572,
+      "details": {
+        "actual_match": true,
+        "expected_match": true,
+        "actual_instrument": "COSTEP",
+        "actual_mission": "SOHO",
+        "expected_instrument": "COSTEP",
+        "expected_mission": "SOHO",
+        "reasoning": null
+      },
+      "grounding_result": {
+        "matched_instrument_code": "COSTEP",
+        "matched_mission_code": "SOHO",
+        "matched_instrument_name": "Comprehensive Suprathermal and Energetic Particle Analyzer",
+        "matched_mission_name": "Solar and Heliospheric Observatory",
+        "reasoning": null
+      },
+      "expected": {
+        "instrument_code": "COSTEP",
+        "mission_code": "SOHO",
+        "should_match": true
+      }
+    }
+  ],
+  "error_patterns": {},
+  "performance_stats": {},
+  "metadata": {
+    "test_cases_file": "/Users/abuonomo/code/nasa/paper-data-linking/experiments/instrument_grounding_evaluation/debug_failures.jsonl",
+    "total_cases_in_file": 4,
+    "cases_run": 4,
+    "category_filter": null,
+    "limit": null,
+    "timestamp": 1751306884.968988
+  }
+}

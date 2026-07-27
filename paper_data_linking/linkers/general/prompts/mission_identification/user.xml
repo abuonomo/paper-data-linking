@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mission_identification_task>
+  <instrument_description>
+    {{ mission_context }}
+  </instrument_description>
+
+  <available_missions>
+    {{ missions_text }}
+  </available_missions>
+
+  <instruction>
+    Return the top {{ top_k }} most likely missions as ShortCode(list_index) pairs:
+  </instruction>
+</mission_identification_task>
