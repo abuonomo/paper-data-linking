@@ -22,7 +22,8 @@ from rest_framework.generics import ListAPIView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.models import Count, Exists, Max, Min, OuterRef, Q, F, Func, Subquery, Sum, DateTimeField
+from django.db.models import Count, Exists, Max, Min, OuterRef, Q, F, Func, Subquery, Sum, DateTimeField, IntegerField, Value
+from django.db.models.functions import Coalesce
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
@@ -981,25 +982,54 @@ class PublicValidatedPapersListView(APIView):
             text_query=q,
         )
 
-        # Apply annotations and ordering
+        # Per-paper aggregates as correlated subqueries. As JOIN-based annotations
+        # these forced dataset_usages AND paperanalysis__instrument_mentions into a
+        # single GROUP BY, whose cartesian product exploded (e.g. 113 ACE papers ->
+        # ~435k intermediate rows -> ~9s). Subqueries are small indexed per-paper
+        # lookups, so nothing fans out and .distinct() is no longer needed.
+        allowed_statuses = query_parts['allowed_statuses']
+        validated_sq = Coalesce(Subquery(
+            DatasetUsage.objects.filter(paper=OuterRef('pk'), validation_status='approved')
+            .order_by().values('paper').annotate(c=Count('*')).values('c'),
+            output_field=IntegerField()), 0)
+        total_sq = Coalesce(Subquery(
+            DatasetUsage.objects.filter(paper=OuterRef('pk'), validation_status__in=allowed_statuses)
+            .order_by().values('paper').annotate(c=Count('*')).values('c'),
+            output_field=IntegerField()), 0)
+        latest_end_sq = Subquery(
+            DatasetUsage.objects.filter(paper=OuterRef('pk'))
+            .order_by().values('paper')
+            .annotate(m=Max(Func(F('observation_window'), function='upper', output_field=DateTimeField())))
+            .values('m'),
+            output_field=DateTimeField())
+        if missions:
+            mission_only_mentions = (
+                InstrumentMention.objects
+                .filter(paper_analysis__paper=OuterRef('pk'),
+                        match_level=InstrumentMention.MATCH_LEVEL_MISSION_ONLY)
+                .filter(_build_observatory_filter_q(
+                    missions,
+                    short_name_field='matched_observatory__short_name',
+                    datasource_slug_field='matched_observatory__datasource__slug'))
+            )
+            mission_only_sq = Coalesce(Subquery(
+                mission_only_mentions.order_by().values('paper_analysis__paper')
+                .annotate(c=Count('*')).values('c'),
+                output_field=IntegerField()), 0)
+        else:
+            mission_only_sq = Value(0, output_field=IntegerField())
+
+        # .distinct() is still required: on the non-mission filtered paths
+        # query_parts['papers'] joins dataset_usages and can yield duplicate paper
+        # rows. It is cheap here because the annotations no longer fan out.
         papers = (
             query_parts['papers']
             .annotate(
-                validated_count=Count('dataset_usages', filter=Q(dataset_usages__validation_status='approved'), distinct=True),
-                total_count=Count('dataset_usages', filter=query_parts['total_count_filter'], distinct=True),
-                mission_only_match_count=Count(
-                    'paperanalysis__instrument_mentions',
-                    filter=query_parts['mission_only_count_filter'],
-                    distinct=True,
-                ),
+                validated_count=validated_sq,
+                total_count=total_sq,
+                mission_only_match_count=mission_only_sq,
                 has_matching_dataset_usage=Exists(query_parts['matching_usage_exists']),
-                latest_end=Max(
-                    Func(
-                        F('dataset_usages__observation_window'),
-                        function='upper',
-                        output_field=DateTimeField(),
-                    )
-                ),
+                latest_end=latest_end_sq,
             )
             .order_by('-latest_end', 'bibcode')
             .distinct()
