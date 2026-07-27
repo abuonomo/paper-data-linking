@@ -4,6 +4,8 @@
 
 `paper-data-linking` reads heliophysics research papers and extracts the data references they contain — which instruments, observatories, and time ranges a paper analyzed — then links those references to the corresponding public data archives so the underlying datasets can be located and reused. It is built to support open, reproducible science.
 
+> **Maintained at [github.com/abuonomo/paper-data-linking](https://github.com/abuonomo/paper-data-linking)** — active development happens there. Developed at the University of Maryland, Baltimore County and released under the MIT License (© UMBC; see [LICENSE](LICENSE) and [NOTICE](NOTICE)).
+
 ## Scope and intended use
 
 This is a literature-and-metadata tool. To be explicit about what it is and is not:
