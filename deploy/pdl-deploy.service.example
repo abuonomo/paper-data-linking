@@ -1,0 +1,16 @@
+[Unit]
+Description=paper-data-linking pull-based deploy (fetch latest, pull images, converge)
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+# --- EDIT THESE for your host ---
+# The deploy checkout of the repo (must contain a prod .env). NOT where the
+# script itself lives — install the script to /usr/local/bin (see README).
+Environment=DEPLOY_DIR=/opt/paper-data-linking
+# Run as a user that can use docker and read/write the deploy dir.
+User=deploy
+# --------------------------------
+ExecStart=/usr/local/bin/pdl-deploy

@@ -1,0 +1,13 @@
+[Unit]
+Description=Run the paper-data-linking pull-based deploy periodically
+
+[Timer]
+# First run shortly after boot, then every 2 minutes. Adjust to taste — a
+# larger interval means slower auto-deploy but fewer registry checks.
+OnBootSec=2min
+OnUnitActiveSec=2min
+Unit=pdl-deploy.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target
