@@ -14,6 +14,23 @@ COPY . .
 
 # Redeclare ARG in this stage
 ARG BUILD_MODE
+
+# Frontend config is baked in at build time (Vite). The committed
+# client/.env.production holds generic placeholders; real deployment values are
+# injected here as build-args (e.g. from CI variables) into the gitignored
+# .env.production.local, which Vite loads with higher priority. If none are
+# passed, the committed placeholders are used.
+ARG VITE_BASE_URL
+ARG VITE_BASE_PROTOCOL
+ARG VITE_CONTACT_EMAIL
+RUN if [ -n "${VITE_BASE_URL}" ]; then \
+      { \
+        echo "VITE_BASE_URL=${VITE_BASE_URL}"; \
+        echo "VITE_BASE_PROTOCOL=${VITE_BASE_PROTOCOL:-https}"; \
+        echo "VITE_CONTACT_EMAIL=${VITE_CONTACT_EMAIL}"; \
+      } > .env.production.local; \
+    fi
+
 RUN npm run build -- --mode ${BUILD_MODE}
 
 # Nginx stage

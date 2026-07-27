@@ -1,0 +1,42 @@
+name: deploy
+
+# Deploys to production via a self-hosted runner ON the prod host (soho).
+#
+# SECURITY: self-hosted runners + public repos are risky — a malicious PR could
+# try to execute code on the runner. Mitigations here:
+#   - triggers ONLY on push to main (requires write access) and manual dispatch;
+#     NEVER on pull_request, so forked PRs cannot run on the prod host.
+#   - gated to the personal operating repo, so it never runs elsewhere.
+#   - the runner should run as an unprivileged user with only docker + deploy-dir
+#     access, and the repo should require approval for outside collaborators.
+#
+# The runner executes in the existing prod deploy directory; all config
+# (PDL_IMAGE_REPO, NGINX_*, secrets) comes from that directory's .env — nothing
+# sensitive lives in this file or in the repo.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # only ever run on the personal operating repo, even though this file also
+    # exists in the canonical UMBC mirror
+    if: github.repository == 'abuonomo/paper-data-linking'
+    runs-on: [self-hosted, soho]
+    steps:
+      - name: Pull latest code + images and restart the stack
+        working-directory: ${{ vars.DEPLOY_DIR }}
+        run: |
+          set -euo pipefail
+          echo "Deploying in $(pwd)"
+          git fetch origin main
+          git reset --hard origin/main
+          docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
+          docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d
+          docker image prune -f

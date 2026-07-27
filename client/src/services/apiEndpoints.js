@@ -1,6 +1,4 @@
-//export const BASE_URL = '/builder'; // Adjust this as needed
-//export const BASE_URL = "http://localhost:8000";
-//export const BASE_URL = 'http://paper-data.example.com'; // Adjust this as needed
+// Base URL is configured at build time via Vite env (VITE_BASE_PROTOCOL/VITE_BASE_URL).
 export const BASE_URL = `${import.meta.env.VITE_BASE_PROTOCOL}://${import.meta.env.VITE_BASE_URL}`;
 const BUILDER_URL = `${BASE_URL}/builder`;
 

@@ -32,6 +32,9 @@ jobs:
             dockerfile: ./client/Dockerfile
             build-args: |
               BUILD_MODE=production
+              VITE_BASE_URL=${{ vars.VITE_BASE_URL }}
+              VITE_BASE_PROTOCOL=${{ vars.VITE_BASE_PROTOCOL }}
+              VITE_CONTACT_EMAIL=${{ vars.VITE_CONTACT_EMAIL }}
     steps:
       - uses: actions/checkout@v4
 
