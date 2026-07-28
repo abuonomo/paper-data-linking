@@ -1,6 +1,6 @@
 # paper-data-linking
 
-**A basic scientific research tool that connects public heliophysics literature to public data archives.**
+**A scientific research tool that connects public heliophysics literature to public data archives.**
 
 `paper-data-linking` reads heliophysics research papers and extracts the data references they contain — which instruments, observatories, and time ranges a paper analyzed — then links those references to the corresponding public data archives so the underlying datasets can be located and reused. It is built to support open, reproducible science.
 
