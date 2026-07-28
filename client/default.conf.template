@@ -1,3 +1,11 @@
+# Docker's embedded DNS server. Without an explicit resolver, nginx resolves
+# upstream hostnames exactly once at startup and caches the result forever. The
+# pull-based deploy recreates `api` without recreating `client`, so the api
+# container gets a new IP while nginx keeps proxying to the old one -- which by
+# then belongs to another container (or nothing), giving 502s on every proxied
+# route. Re-resolving on a short TTL keeps us pointed at the live container.
+resolver 127.0.0.11 valid=10s ipv6=off;
+
 server {
     listen 80;
     server_name ${NGINX_SERVER_NAME};
@@ -6,6 +14,10 @@ server {
     index index.html index.htm;
 
     client_max_body_size 500M;
+
+    # Using a variable in proxy_pass forces nginx to resolve the name per
+    # request (via the resolver above) instead of pinning it at startup.
+    set $api_upstream http://api:8000;
 
     location / {
         try_files $uri $uri/ /index.html;
@@ -20,7 +32,7 @@ server {
     }
 
     location /builder/ {
-        proxy_pass http://api:8000/builder/;
+        proxy_pass $api_upstream$request_uri;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -29,7 +41,7 @@ server {
     }
 
     location /ws/ {
-        proxy_pass http://api:8000/ws/;
+        proxy_pass $api_upstream$request_uri;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -41,7 +53,7 @@ server {
     }
 
     location /token/ {
-        proxy_pass http://api:8000/token/;
+        proxy_pass $api_upstream$request_uri;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -50,7 +62,7 @@ server {
     }
 
     location /admin/ {
-        proxy_pass http://api:8000/admin/;
+        proxy_pass $api_upstream$request_uri;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -98,8 +110,10 @@ server {
     listen 80;
     server_name ${NGINX_FLOWER_SERVER_NAME};  # Flower dashboard vhost
 
+    set $flower_upstream http://flower:5555;
+
     location / {
-        proxy_pass http://flower:5555;
+        proxy_pass $flower_upstream$request_uri;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
