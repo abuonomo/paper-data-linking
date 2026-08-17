@@ -2078,7 +2078,38 @@ VALIDATION_CAMPAIGNS: dict[str, ValidationCampaign] = {
         overlap_tag="val2026:overlap",
         calibration_tag="val2026:calibration",
         calibration_size=25,
-        started_at=None,
+        # Campaign start: reviewer validations before this are not counted by
+        # the analysis. Frozen at prod tagging/sampling (seed 20260817).
+        started_at="2026-08-17T16:00:00Z",
+        # Frozen from sample_calibration_claims --seed 20260817 (the checked-in
+        # list lives in pdl-paper/validation/val2026_calibration_claims.json).
+        calibration_usage_ids=[
+            "251ed876-85a6-44ed-ae6e-afd55e8d6709",
+            "b270fbf0-570f-41bd-a7bc-f67430016e8d",
+            "1d243c95-2092-442e-83a5-50e66e72b79b",
+            "d463bec1-e26c-46b2-8d9a-ad6f2f101adf",
+            "fe0709d1-2b3e-481a-8e2e-683834c17dad",
+            "5d3bd50c-a165-4c29-9210-a599fe35f881",
+            "e7dd46d0-92c0-407d-87e6-f752d5e1eb8c",
+            "333c3609-75d6-4ba8-8d5e-cc6b47698434",
+            "cdf39fce-2cad-4dc8-a2e8-f4d523d6e340",
+            "acea81bb-0829-4263-9324-7a80135b3a5f",
+            "b00acb35-cd1c-469c-95da-0470635000d6",
+            "467f46c2-eec3-4295-a179-f007bbb0083c",
+            "21d50f10-f19a-41b1-8ebb-997bdc07320d",
+            "c1812b78-8979-4248-b0b6-7e086aaca0eb",
+            "3b1b64dc-2cf2-49f3-99d3-38d5ceb6b87e",
+            "11a2209f-304d-4b58-b659-5cf12a913ebe",
+            "44393a0c-06ca-4eb6-9eb2-6e7c2c4a5c42",
+            "7f312209-1e88-4120-a301-ea57b832ea70",
+            "d11b29f4-eeb1-4f43-a825-97a247930cd4",
+            "167af771-5e21-4303-b4df-b043358e6ca4",
+            "1c5778a0-5b73-4ae3-88f7-99051f0dee8e",
+            "902ed5ac-c8b5-4dec-8c28-9e1031fd4158",
+            "755d5250-ad06-4f10-a647-673cbee16916",
+            "5a817ab5-48b5-435c-9e3f-7ec28d81802e",
+            "420c1ccf-c4f0-4cbb-a7e5-a0916f48e085",
+        ],
     ),
 }
 
