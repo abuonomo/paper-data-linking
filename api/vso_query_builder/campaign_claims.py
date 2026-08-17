@@ -20,9 +20,9 @@ verdict on.
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
-from django.db.models import DateTimeField, F, Func
+from django.db.models import DateTimeField, F, Func, Prefetch
 
-from .models import DatasetUsage
+from .models import DatasetUsage, SupportQuote
 
 # Sort sentinel for NULL window bounds.
 _EPOCH = datetime(1, 1, 1, tzinfo=timezone.utc)
@@ -46,12 +46,17 @@ class Claim:
         return [du.id for du in self.members]
 
 
-def campaign_usages_queryset(campaign, paper_id=None):
+def campaign_usages_queryset(campaign, paper_id=None, with_quotes=True):
     """Base queryset of DatasetUsages participating in a campaign.
 
     Restricted to the campaign's configurations (rows with a NULL
     paper_analysis have no knowable configuration and are excluded) and to
     papers carrying the campaign's set tag.
+
+    ``with_quotes=False`` skips the supporting-quotes prefetch entirely —
+    the overview and the vote endpoint never touch quotes, and the prefetch
+    is expensive (each quote row carries a 1536-dim embedding vector unless
+    deferred).
     """
     qs = DatasetUsage.objects.filter(
         paper__tags__contains=[campaign.set_tag],
@@ -59,6 +64,12 @@ def campaign_usages_queryset(campaign, paper_id=None):
     )
     if paper_id is not None:
         qs = qs.filter(paper__id=paper_id)
+    if with_quotes:
+        # Defer the embedding: the review UI needs text + coordinates only.
+        qs = qs.prefetch_related(
+            Prefetch('supporting_quotes',
+                     queryset=SupportQuote.objects.defer('embedding'))
+        )
     return qs.select_related(
         'instrument',
         'instrument__observatory',
@@ -76,7 +87,7 @@ def campaign_usages_queryset(campaign, paper_id=None):
         'paper_analysis__normalized_instrument_details',
         'paper_analysis__token_usage',
         'paper__full_text',
-    ).prefetch_related('supporting_quotes').annotate(
+    ).annotate(
         start_lower=Func(F('observation_window'), function='lower', output_field=DateTimeField()),
         end_upper=Func(F('observation_window'), function='upper', output_field=DateTimeField()),
     )
@@ -142,12 +153,12 @@ def resolve_claim(campaign, usage_id):
     campaign (wrong configuration or paper outside the campaign set).
     """
     try:
-        target = campaign_usages_queryset(campaign).get(id=usage_id)
+        target = campaign_usages_queryset(campaign, with_quotes=False).get(id=usage_id)
     except DatasetUsage.DoesNotExist:
         return None
 
     members = [
-        du for du in campaign_usages_queryset(campaign, paper_id=target.paper_id)
+        du for du in campaign_usages_queryset(campaign, paper_id=target.paper_id, with_quotes=False)
         if claim_key(du) == claim_key(target)
     ]
     members = sorted(members, key=lambda du: str(du.id))

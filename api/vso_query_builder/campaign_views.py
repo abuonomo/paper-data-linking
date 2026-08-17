@@ -153,7 +153,7 @@ class CampaignOverviewView(CampaignAPIView):
         if calibration_ids:
             cal_usages = {
                 str(du.id): du
-                for du in campaign_usages_queryset(campaign).filter(id__in=calibration_ids)
+                for du in campaign_usages_queryset(campaign, with_quotes=False).filter(id__in=calibration_ids)
             }
             judged_ids = set(
                 str(u) for u in DatasetUsageValidation.objects.filter(
@@ -187,7 +187,7 @@ class CampaignOverviewView(CampaignAPIView):
 
         # One pass over all campaign DUs for these papers, grouped to claims.
         usages_by_paper = {}
-        for du in campaign_usages_queryset(campaign).filter(paper__in=papers):
+        for du in campaign_usages_queryset(campaign, with_quotes=False).filter(paper__in=papers):
             usages_by_paper.setdefault(du.paper_id, []).append(du)
 
         # Group every paper's claims first, then resolve the user's verdicts in
