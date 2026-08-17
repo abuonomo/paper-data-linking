@@ -65,6 +65,17 @@ def campaign_usages_queryset(campaign, paper_id=None):
         'instrument__observatory__datasource',
         'paper',
         'paper_analysis',
+    ).defer(
+        # PaperAnalysis carries huge JSON/text fields and Paper carries the
+        # full text; materializing them for every DU OOMs the api container on
+        # set-wide sweeps (e.g. the calibration sampler). Claim grouping and
+        # serialization only need configuration_name / bibcode / pdf.
+        'paper_analysis__context',
+        'paper_analysis__instruments_details',
+        'paper_analysis__structured_instruments_details',
+        'paper_analysis__normalized_instrument_details',
+        'paper_analysis__token_usage',
+        'paper__full_text',
     ).prefetch_related('supporting_quotes').annotate(
         start_lower=Func(F('observation_window'), function='lower', output_field=DateTimeField()),
         end_upper=Func(F('observation_window'), function='upper', output_field=DateTimeField()),
