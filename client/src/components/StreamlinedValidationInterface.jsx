@@ -107,6 +107,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // are only shown inside the reject panel — verdict first, detail second.
   const [claimChecks, setClaimChecks] = useState({ mission: true, instrument: true, window: true });
   const [showRejectPanel, setShowRejectPanel] = useState(false);
+  // Prefetched overview promise for campaign end-of-paper advancement — kicked
+  // off at vote time so the network round trip overlaps the vote flash.
+  const campaignAdvancePrefetchRef = useRef(null);
 
   // Helper: display name for configuration
   const getConfigurationDisplayName = (configName) => {
@@ -215,6 +218,12 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
         // Campaign mode: blinded, deduplicated claim list from the campaign API.
         // Claims arrive complete (paper, quotes, my_* fields) — no detail fetches.
         } else if (isCampaign && paperId) {
+          // Cross-paper jump: drop the stale claim immediately so the skeleton
+          // shows instead of the previous paper's claim lingering on screen.
+          if (currentUsage && String(currentUsage.paper?.id) !== String(paperId)) {
+            setCurrentUsage(null);
+            setValidationQueue([]);
+          }
           queue = await fetchCampaignPaperClaims(campaignSlug, paperId);
           if (campaignPhase === 'calibration') {
             // Calibration phase: only this paper's calibration claims are in
@@ -506,7 +515,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // paper. Lands on /campaign when everything is judged.
   const advanceCampaign = async () => {
     try {
-      const overview = await fetchCampaignOverview(campaignSlug);
+      const prefetched = campaignAdvancePrefetchRef.current;
+      campaignAdvancePrefetchRef.current = null;
+      const overview = (prefetched && await prefetched) || await fetchCampaignOverview(campaignSlug);
       const slugParam = encodeURIComponent(campaignSlug);
       if (campaignPhase === 'calibration') {
         const next = (overview.calibration?.claims || []).find(
@@ -827,13 +838,20 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
 
       // Show success toast
       toast.success('Validation submitted!');
-      
+
+      // Campaign: if this vote finished the paper's queue, start fetching the
+      // overview NOW so the where-to-next decision overlaps the flash.
+      if (isCampaign && currentIndex >= validationQueue.length - 1) {
+        campaignAdvancePrefetchRef.current =
+          fetchCampaignOverview(campaignSlug).catch(() => null);
+      }
+
       // Flash the claim card briefly, then navigate
       setValidationAnimation(status);
       setTimeout(() => {
         setValidationAnimation(null);
         goToNext();
-      }, 600);
+      }, isCampaign ? 300 : 600);
       
     } catch (error) {
       console.error('Validation failed:', error);

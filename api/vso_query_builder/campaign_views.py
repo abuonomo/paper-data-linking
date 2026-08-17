@@ -190,17 +190,30 @@ class CampaignOverviewView(CampaignAPIView):
         for du in campaign_usages_queryset(campaign).filter(paper__in=papers):
             usages_by_paper.setdefault(du.paper_id, []).append(du)
 
-        paper_rows = []
+        # Group every paper's claims first, then resolve the user's verdicts in
+        # ONE query across all representative ids (a per-paper query here made
+        # the overview ~96 round trips and noticeably slow in the UI).
+        paper_claims = {}
         for paper in papers:
             claims = group_claims(usages_by_paper.get(paper.id, []))
             if not claims:
                 # Neither campaign config asserted any data usage for this
                 # paper — nothing to review, so keep it out of the queue.
                 continue
-            my_map = _my_validation_map(claims, user)
-            judged = sum(1 for v in my_map.values() if v is not None)
+            paper_claims[paper.id] = claims
+        all_rep_ids = [c.usage_id for claims in paper_claims.values() for c in claims]
+        judged_rep_ids = set(DatasetUsageValidation.objects.filter(
+            dataset_usage_id__in=all_rep_ids, user=user,
+        ).values_list('dataset_usage_id', flat=True))
+
+        paper_rows = []
+        for paper in papers:
+            claims = paper_claims.get(paper.id)
+            if not claims:
+                continue
+            judged = sum(1 for c in claims if c.usage_id in judged_rep_ids)
             resume_usage_id = next(
-                (str(c.usage_id) for c in claims if my_map[c.usage_id] is None), None,
+                (str(c.usage_id) for c in claims if c.usage_id not in judged_rep_ids), None,
             )
             paper_rows.append({
                 'id': str(paper.id),
