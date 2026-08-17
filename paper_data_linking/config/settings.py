@@ -2074,8 +2074,7 @@ VALIDATION_CAMPAIGNS: dict[str, ValidationCampaign] = {
         configs=["bedrock-120b-mixed-v5@s1", "standard-gpt54-v5"],
         set_tag="test_set_helio_v3_2026_06_18",
         tag_prefix="val2026:",
-        # TODO: replace with the two reviewers' prod usernames before tagging.
-        reviewers=["abuonomo", "reviewer2"],
+        reviewers=["abuonomo", "ascharnikow"],
         overlap_tag="val2026:overlap",
         calibration_tag="val2026:calibration",
         calibration_size=25,
