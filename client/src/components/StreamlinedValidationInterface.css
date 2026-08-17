@@ -1605,3 +1605,32 @@
   outline-offset: 2px;
   font-weight: 700;
 }
+
+/* Campaign mode: per-component claim checkmarks (mission / instrument / window) */
+.claim-checks {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.35rem 0;
+}
+
+.claim-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #24292f;
+  cursor: pointer;
+  user-select: none;
+}
+
+.claim-check input[type="checkbox"] {
+  accent-color: #1a7f37;
+  cursor: pointer;
+}
+
+.claim-check:has(input:not(:checked)) span {
+  color: #cf222e;
+  font-weight: 600;
+  text-decoration: line-through;
+}

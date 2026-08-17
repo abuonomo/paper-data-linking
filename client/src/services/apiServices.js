@@ -457,6 +457,57 @@ export const fetchPaperDatasetUsages = async (paperId, filters = {}) => {
 };
 
 /**
+ * Fetches the reviewer's campaign overview (sections, per-user progress, resume pointer)
+ * @param {string} slug - Campaign slug (e.g. "val2026")
+ * @returns {Promise<Object>} - Campaign overview
+ */
+export const fetchCampaignOverview = async (slug) => {
+  try {
+    const response = await authAxios.get(API_ENDPOINTS.generate.CAMPAIGN_OVERVIEW(slug));
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch campaign overview for ${slug}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the blinded, deduplicated claim list for a paper in a campaign
+ * @param {string} slug - Campaign slug
+ * @param {string} paperId - UUID of the paper
+ * @returns {Promise<Array>} - Claim list
+ */
+export const fetchCampaignPaperClaims = async (slug, paperId) => {
+  try {
+    const response = await authAxios.get(API_ENDPOINTS.generate.CAMPAIGN_PAPER_CLAIMS(slug, paperId));
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch campaign claims for paper ${paperId}:`, error);
+    throw error;
+  }
+};
+
+/**
+ * Submits a campaign verdict for a claim (propagates to all member usages server-side)
+ * @param {string} slug - Campaign slug
+ * @param {string} usageId - Representative usage UUID of the claim
+ * @param {Object} payload - {validation_status, mission_correct, instrument_correct, window_correct, validation_notes}
+ * @returns {Promise<Object>} - {claim_usage_id, propagated_to, my_validation_status}
+ */
+export const validateCampaignClaim = async (slug, usageId, payload) => {
+  try {
+    const response = await authAxios.post(
+      API_ENDPOINTS.generate.CAMPAIGN_CLAIM_VALIDATE(slug, usageId),
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to validate campaign claim ${usageId}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Fetches validation statistics for a specific paper
  * @param {string} paperId - UUID of the paper
  * @returns {Promise<Object>} - Paper validation statistics

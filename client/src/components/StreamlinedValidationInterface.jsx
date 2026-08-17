@@ -1,7 +1,7 @@
 // src/components/StreamlinedValidationInterface.jsx
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchValidationQueue, fetchValidationStats, validateDatasetUsage, fetchPaperAnalysis, fetchDatasetUsageDetail, fetchPaperDatasetUsages, fetchPaperDetails, fetchDatasetUsageValidations } from '../services/apiServices';
+import { fetchValidationQueue, fetchValidationStats, validateDatasetUsage, fetchPaperAnalysis, fetchDatasetUsageDetail, fetchPaperDatasetUsages, fetchPaperDetails, fetchDatasetUsageValidations, fetchCampaignPaperClaims, validateCampaignClaim } from '../services/apiServices';
 import PDFDocument from './pdfViewer/PDFDocument';
 import { ValidationProvider } from '../context/ValidationContext';
 import { usePaperPDF } from '../hooks/usePaperPDF';
@@ -52,10 +52,18 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const { usageId, paperId, bibcode } = useParams();
   const [searchParams] = useSearchParams();
   const isReadOnly = mode === 'readonly';
+  // Campaign mode (?campaign=<slug>): claim-level blinded review against the
+  // deduplicated cross-config claim union. Claims come from the campaign API
+  // (which excludes config/consensus/other-reviewer data by construction),
+  // verdicts propagate server-side to all member usages, and the UI adds
+  // per-component checkmarks (mission / instrument / window).
+  const campaignSlug = searchParams.get('campaign') || null;
+  const isCampaign = !!campaignSlug;
   // Blind-review mode (?blind=1): hides everything that reveals which LLM
   // configuration produced this claim (config badge, Context modal with model
   // names) so validation campaigns can be config-blind. See VALIDATION_PROTOCOL.
-  const isBlind = searchParams.get('blind') === '1';
+  // Campaign mode is always blind.
+  const isBlind = isCampaign || searchParams.get('blind') === '1';
   
   const [validationQueue, setValidationQueue] = useState([]);
   const [currentUsage, setCurrentUsage] = useState(null);
@@ -89,6 +97,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const [validationCounts, setValidationCounts] = useState(null);
   const [showPreviousValidations, setShowPreviousValidations] = useState(false);
   const [wantsToRevalidate, setWantsToRevalidate] = useState(false);
+  // Campaign per-component checkmarks (mission / instrument / window).
+  // Default all checked so a clean claim is a one-click approve.
+  const [claimChecks, setClaimChecks] = useState({ mission: true, instrument: true, window: true });
 
   // Helper: display name for configuration
   const getConfigurationDisplayName = (configName) => {
@@ -132,8 +143,13 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       const querySuffix = includeUnvalidated ? '?include_unvalidated=true' : '';
       return `/public/p/${encodeURIComponent(currentBibcode || '')}/evidence/${targetUsageId}${querySuffix}`;
     }
-    // Preserve blind mode across in-page navigation (next/prev claim) so a
-    // blind review session cannot accidentally unblind itself.
+    // Preserve campaign/blind mode across in-page navigation (next/prev
+    // claim) so a blind review session cannot accidentally unblind itself.
+    // Campaign mode has its own route that bypasses the PaperValidationDetail
+    // wrapper (whose paper/analysis context fetches would unblind the review).
+    if (isCampaign && paperId) {
+      return `/campaign/papers/${paperId}/claims/${targetUsageId}?campaign=${encodeURIComponent(campaignSlug)}`;
+    }
     const blindSuffix = isBlind ? '?blind=1' : '';
     if (paperId) return `/papers/${paperId}/validate/${targetUsageId}${blindSuffix}`;
     return `/validate/${targetUsageId}${blindSuffix}`;
@@ -188,6 +204,11 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
         if (isReadOnly && paperContext && paperContext.datasetUsages) {
           queue = paperContext.datasetUsages;
           setValidationQueue(queue);
+        // Campaign mode: blinded, deduplicated claim list from the campaign API.
+        // Claims arrive complete (paper, quotes, my_* fields) — no detail fetches.
+        } else if (isCampaign && paperId) {
+          queue = await fetchCampaignPaperClaims(campaignSlug, paperId);
+          setValidationQueue(queue || []);
         // Prefer backend-ordered list when scoping to a single paper, even if paperContext is present
         } else if (paperId) {
           // Scoped to a single paper: include usages even without supporting quotes
@@ -315,7 +336,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     };
 
     loadValidationData();
-  }, [filters, isReadOnly, paperId, paperContext?.paper?.id, paperContext?.paper?.bibcode, paperContext?.datasetUsages?.length, includeUnvalidated, bibcode]);
+  }, [filters, isReadOnly, paperId, paperContext?.paper?.id, paperContext?.paper?.bibcode, paperContext?.datasetUsages?.length, includeUnvalidated, bibcode, isCampaign, campaignSlug]);
 
   // Sync current usage with URL without refetching the whole queue
   useEffect(() => {
@@ -366,11 +387,25 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     setPaperFullText(null);
   }, [currentUsage?.paper?.id]);
 
-  // Fetch per-usage validation counts when current usage changes (auth mode only)
+  // Campaign mode: initialize checkmarks per claim — from my previous verdict
+  // when one exists, otherwise default all checked.
+  useEffect(() => {
+    if (!isCampaign || !currentUsage) return;
+    setClaimChecks({
+      mission: currentUsage.my_mission_correct !== false,
+      instrument: currentUsage.my_instrument_correct !== false,
+      window: currentUsage.my_window_correct !== false,
+    });
+    setValidationNotes(currentUsage.my_validation_notes || '');
+  }, [isCampaign, currentUsage?.id]);
+
+  // Fetch per-usage validation counts when current usage changes (auth mode only).
+  // Skipped entirely in campaign mode: the validations list exposes the other
+  // reviewer's verdicts, which would break blinding on overlap papers.
   useEffect(() => {
     setShowPreviousValidations(false);
     setWantsToRevalidate(false);
-    if (isReadOnly || !currentUsage?.id) {
+    if (isReadOnly || isCampaign || !currentUsage?.id) {
       setValidationCounts(null);
       return;
     }
@@ -379,12 +414,14 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       .then(data => { if (!cancelled) setValidationCounts(data); })
       .catch(() => { if (!cancelled) setValidationCounts(null); });
     return () => { cancelled = true; };
-  }, [currentUsage?.id, isReadOnly]);
+  }, [currentUsage?.id, isReadOnly, isCampaign]);
 
   // Load paper analysis data when current usage changes
   useEffect(() => {
     const loadPaperAnalysis = async () => {
-      if (isReadOnly) {
+      // Campaign mode: the analysis carries configuration/model info — never
+      // load it (blinding).
+      if (isReadOnly || isCampaign) {
         setPaperAnalysis(null);
         setPaperAnalysisLoading(false);
         return;
@@ -424,7 +461,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     };
 
     loadPaperAnalysis();
-  }, [isReadOnly, currentUsage?.paper?.id, paperAnalysis?.paper?.id, paperContext?.analysis]);
+  }, [isReadOnly, isCampaign, currentUsage?.paper?.id, paperAnalysis?.paper?.id, paperContext?.analysis]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -493,7 +530,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // Fetch fresh statuses for all claims in the current paper to color the progress bar
   useEffect(() => {
     const loadPaperStatuses = async () => {
-      if (isReadOnly) {
+      // Campaign mode: progress coloring comes from my_validation_status on
+      // the claims themselves — never fetch (or show) consensus statuses,
+      // which would leak the co-reviewer's activity on overlap papers.
+      if (isReadOnly || isCampaign) {
         setPaperStatusMap({});
         return;
       }
@@ -511,7 +551,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     };
     loadPaperStatuses();
     // also refresh when you perform a local validation
-  }, [isReadOnly, paperContext?.paper?.id, currentUsage?.paper?.id]);
+  }, [isReadOnly, isCampaign, paperContext?.paper?.id, currentUsage?.paper?.id]);
   
   // Claims list for current paper (for progress bar)
   const paperClaims = useMemo(() => {
@@ -625,29 +665,62 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const handleValidation = async (status) => {
     if (isReadOnly || !currentUsage || isValidating) return;
 
+    // Campaign consistency rules (mirrored server-side): approve requires all
+    // three checkmarks; reject requires a note (the rejection reason).
+    if (isCampaign && status === 'approved' && !(claimChecks.mission && claimChecks.instrument && claimChecks.window)) {
+      toast.error('Approve requires all three checkmarks — uncheck means reject.');
+      return;
+    }
+    if (isCampaign && status === 'rejected' && !validationNotes.trim()) {
+      toast.error('Reject requires a note explaining the rejection reason.');
+      setShowValidationNotes(true);
+      return;
+    }
+
     try {
       setIsValidating(true);
-      
-      const result = await validateDatasetUsage(
-        currentUsage.id, 
-        status, 
-        validationNotes
-      );
 
-      // Update current usage status
+      let result;
+      if (isCampaign) {
+        result = await validateCampaignClaim(campaignSlug, currentUsage.id, {
+          validation_status: status,
+          mission_correct: claimChecks.mission,
+          instrument_correct: claimChecks.instrument,
+          window_correct: claimChecks.window,
+          validation_notes: validationNotes,
+        });
+      } else {
+        result = await validateDatasetUsage(
+          currentUsage.id,
+          status,
+          validationNotes
+        );
+      }
+
+      // Update current usage status (campaign mode: my_* fields only — there
+      // is no consensus in a campaign response)
       setCurrentUsage(prev => ({
         ...prev,
-        validation_status: status,
+        ...(isCampaign ? {} : { validation_status: status }),
         my_validation_status: status,
-        validated_by_username: result.validated_by,
-        validated_at: result.validated_at,
-        validation_notes: validationNotes,
+        ...(isCampaign ? {
+          my_mission_correct: claimChecks.mission,
+          my_instrument_correct: claimChecks.instrument,
+          my_window_correct: claimChecks.window,
+          my_validation_notes: validationNotes,
+        } : {
+          validated_by_username: result.validated_by,
+          validated_at: result.validated_at,
+          validation_notes: validationNotes,
+        }),
       }));
 
       // Reflect status in progress bar and local queue
       setStatusOverrides(prev => ({ ...prev, [currentUsage.id]: status }));
       setValidationQueue(prev => prev.map(u => (
-        u.id === currentUsage.id ? { ...u, validation_status: status, my_validation_status: status } : u
+        u.id === currentUsage.id
+          ? { ...u, ...(isCampaign ? {} : { validation_status: status }), my_validation_status: status }
+          : u
       )));
 
       // Add to validation history
@@ -664,6 +737,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       
       // Optimistically update validationCounts so the "your vote" indicator
       // reflects the new vote immediately without waiting for a re-fetch.
+      // (validationCounts is always null in campaign mode, so this is a no-op there.)
       const currentUsername = localStorage.getItem('username');
       const anonId = localStorage.getItem('pdl_anonymous_id');
       setValidationCounts(prev => {
@@ -815,7 +889,11 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                   <button
                     className="btn btn-link p-0"
                     onClick={() => {
-                      if (paperContext && paperContext.onReturnToPaperOverview) {
+                      if (isCampaign) {
+                        // Campaign mode: back to the campaign dashboard (the
+                        // paper overview would show config/consensus data)
+                        navigate('/campaign');
+                      } else if (paperContext && paperContext.onReturnToPaperOverview) {
                         paperContext.onReturnToPaperOverview();
                       } else if (isReadOnly && displayUsage?.paper?.bibcode) {
                         navigate(`/public/p/${encodeURIComponent(displayUsage.paper.bibcode)}`);
@@ -823,7 +901,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                         navigate(`/papers/${displayUsage.paper.id}/validate`);
                       }
                     }}
-                    title={isReadOnly ? 'Return to public paper page' : 'Return to paper overview'}
+                    title={isCampaign ? 'Return to campaign dashboard' : (isReadOnly ? 'Return to public paper page' : 'Return to paper overview')}
                     style={{ 
                       color: '#0969da',
                       fontSize: 'inherit',
@@ -1098,7 +1176,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                 <div className="my-vote-block">
                   <div className="my-vote-indicator">
                     Your vote: <span className={`my-vote-status ${myVote}`}>
-                      {myVote === 'approved' ? 'Correct' : myVote === 'rejected' ? 'Incorrect' : 'Review'}
+                      {myVote === 'approved' ? 'Correct' : myVote === 'rejected' ? 'Incorrect' : (isCampaign ? 'Unsure' : 'Review')}
                     </span>
                   </div>
                   <button
@@ -1110,13 +1188,41 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                 </div>
               ) : (
                 <>
+                  {/* Campaign mode: per-component checkmarks on the claim tuple.
+                      All checked (default) = clean approve; unchecking any
+                      component means the claim should be rejected. */}
+                  {isCampaign && (
+                    <div className="claim-checks">
+                      {[
+                        { key: 'mission', label: 'Mission' },
+                        { key: 'instrument', label: 'Instrument' },
+                        { key: 'window', label: 'Time window' },
+                      ].map(({ key, label }) => (
+                        <label key={key} className="claim-check" title={`Is the ${label.toLowerCase()} of this claim correct?`}>
+                          <input
+                            type="checkbox"
+                            checked={claimChecks[key]}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              setClaimChecks(prev => ({ ...prev, [key]: checked }));
+                              // An unchecked component implies a reject, which
+                              // requires a note — surface the textarea now.
+                              if (!checked) setShowValidationNotes(true);
+                            }}
+                            disabled={isLoading || isValidating}
+                          />
+                          <span>{label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
                   <div className="validation-notes">
                     {(showValidationNotes || validationNotes) ? (
                       <textarea
                         id="validation-notes"
                         value={validationNotes}
                         onChange={(e) => setValidationNotes(e.target.value)}
-                        placeholder="Add a note about this decision..."
+                        placeholder={isCampaign ? 'Notes (required to reject — say why)...' : 'Add a note about this decision...'}
                         rows={2}
                         disabled={isLoading}
                         autoFocus
@@ -1135,8 +1241,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     <button
                       className="validation-btn approve"
                       onClick={() => handleValidation('approved')}
-                      disabled={isLoading || isValidating}
-                      title="Approve"
+                      disabled={isLoading || isValidating || (isCampaign && !(claimChecks.mission && claimChecks.instrument && claimChecks.window))}
+                      title={isCampaign && !(claimChecks.mission && claimChecks.instrument && claimChecks.window)
+                        ? 'Approve requires all three checkmarks'
+                        : 'Approve'}
                     >
                       Correct
                     </button>
@@ -1144,7 +1252,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       className="validation-btn reject"
                       onClick={() => handleValidation('rejected')}
                       disabled={isLoading || isValidating}
-                      title="Reject"
+                      title={isCampaign ? 'Reject (requires a note)' : 'Reject'}
                     >
                       Incorrect
                     </button>
@@ -1152,9 +1260,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       className="validation-btn review"
                       onClick={() => handleValidation('needs_review')}
                       disabled={isLoading || isValidating}
-                      title="Needs Review"
+                      title={isCampaign ? "Unsure — can't verify from the paper" : 'Needs Review'}
                     >
-                      Review
+                      {isCampaign ? 'Unsure' : 'Review'}
                     </button>
                   </div>
                 </>

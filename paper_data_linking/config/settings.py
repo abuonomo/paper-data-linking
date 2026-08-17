@@ -2034,6 +2034,60 @@ def list_available_configurations() -> list[str]:
     return list(LLM_CONFIGURATIONS.keys())
 
 
+# ---------------------------------------------------------------------------
+# Manual validation campaigns
+# ---------------------------------------------------------------------------
+
+class ValidationCampaign(BaseModel):
+    """A manual validation campaign: blinded human review of the deduplicated
+    claim union of two configurations over a tagged paper set.
+
+    Single source of truth for the campaign API views, the tagging/sampling
+    management commands, and the analysis scripts.
+    """
+    slug: str
+    # The two PaperAnalysis.configuration_name values whose DatasetUsages form
+    # the claim union under review.
+    configs: list[str]
+    # Paper tag identifying the canonical paper set.
+    set_tag: str
+    # Reviewer assignment tags: per-reviewer bulk tags are f"{tag_prefix}{username}".
+    tag_prefix: str
+    # Usernames of the campaign reviewers (authenticated users). Only these
+    # users may access the campaign endpoints.
+    reviewers: list[str]
+    overlap_tag: str
+    calibration_tag: str
+    calibration_size: int = 25
+    # ISO datetime the campaign officially started (frozen when prod tagging is
+    # done). The analysis only counts reviewer validations created after this.
+    started_at: str | None = None
+    # Representative DatasetUsage ids of the calibration claims, frozen from the
+    # sample_calibration_claims command output. Both reviewers must judge all of
+    # these before the bulk/overlap sections unlock.
+    calibration_usage_ids: list[str] = []
+
+
+VALIDATION_CAMPAIGNS: dict[str, ValidationCampaign] = {
+    "val2026": ValidationCampaign(
+        slug="val2026",
+        configs=["bedrock-120b-mixed-v5@s1", "standard-gpt54-v5"],
+        set_tag="test_set_helio_v3_2026_06_18",
+        tag_prefix="val2026:",
+        reviewers=["abuonomo", "ascharnikow"],
+        overlap_tag="val2026:overlap",
+        calibration_tag="val2026:calibration",
+        calibration_size=25,
+        started_at=None,
+    ),
+}
+
+
+def get_validation_campaign(slug: str) -> "ValidationCampaign | None":
+    """Look up a validation campaign by slug (None if unknown)."""
+    return VALIDATION_CAMPAIGNS.get(slug)
+
+
 # Instantiate the settings. This will trigger loading from .env/environment and validation.
 settings = AppSettings()
 
