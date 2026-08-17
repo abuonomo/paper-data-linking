@@ -1634,3 +1634,18 @@
   font-weight: 600;
   text-decoration: line-through;
 }
+
+/* Campaign reject panel (verdict-first flow) */
+.claim-reject-panel {
+  background: #fff5f5;
+  border: 1px solid #ffc1c0;
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.claim-checks-prompt {
+  font-size: 0.8rem;
+  color: #82071e;
+  margin-bottom: 0.3rem;
+}

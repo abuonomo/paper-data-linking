@@ -98,8 +98,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const [showPreviousValidations, setShowPreviousValidations] = useState(false);
   const [wantsToRevalidate, setWantsToRevalidate] = useState(false);
   // Campaign per-component checkmarks (mission / instrument / window).
-  // Default all checked so a clean claim is a one-click approve.
+  // Default all checked so a clean claim is a one-click approve. The checks
+  // are only shown inside the reject panel — verdict first, detail second.
   const [claimChecks, setClaimChecks] = useState({ mission: true, instrument: true, window: true });
+  const [showRejectPanel, setShowRejectPanel] = useState(false);
 
   // Helper: display name for configuration
   const getConfigurationDisplayName = (configName) => {
@@ -397,6 +399,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       window: currentUsage.my_window_correct !== false,
     });
     setValidationNotes(currentUsage.my_validation_notes || '');
+    setShowRejectPanel(false);
   }, [isCampaign, currentUsage?.id]);
 
   // Fetch per-usage validation counts when current usage changes (auth mode only).
@@ -665,12 +668,13 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const handleValidation = async (status) => {
     if (isReadOnly || !currentUsage || isValidating) return;
 
-    // Campaign consistency rules (mirrored server-side): approve requires all
-    // three checkmarks; reject requires a note (the rejection reason).
-    if (isCampaign && status === 'approved' && !(claimChecks.mission && claimChecks.instrument && claimChecks.window)) {
-      toast.error('Approve requires all three checkmarks — uncheck means reject.');
-      return;
-    }
+    // Campaign consistency rules (mirrored server-side): approve asserts all
+    // three components correct; reject requires a note (the rejection reason).
+    // An approve always sends all-true checks — the checkboxes only carry
+    // information on the reject path.
+    const effectiveChecks = status === 'approved'
+      ? { mission: true, instrument: true, window: true }
+      : claimChecks;
     if (isCampaign && status === 'rejected' && !validationNotes.trim()) {
       toast.error('Reject requires a note explaining the rejection reason.');
       setShowValidationNotes(true);
@@ -684,9 +688,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       if (isCampaign) {
         result = await validateCampaignClaim(campaignSlug, currentUsage.id, {
           validation_status: status,
-          mission_correct: claimChecks.mission,
-          instrument_correct: claimChecks.instrument,
-          window_correct: claimChecks.window,
+          mission_correct: effectiveChecks.mission,
+          instrument_correct: effectiveChecks.instrument,
+          window_correct: effectiveChecks.window,
           validation_notes: validationNotes,
         });
       } else {
@@ -704,9 +708,9 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
         ...(isCampaign ? {} : { validation_status: status }),
         my_validation_status: status,
         ...(isCampaign ? {
-          my_mission_correct: claimChecks.mission,
-          my_instrument_correct: claimChecks.instrument,
-          my_window_correct: claimChecks.window,
+          my_mission_correct: effectiveChecks.mission,
+          my_instrument_correct: effectiveChecks.instrument,
+          my_window_correct: effectiveChecks.window,
           my_validation_notes: validationNotes,
         } : {
           validated_by_username: result.validated_by,
@@ -1186,12 +1190,16 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     Change your vote
                   </button>
                 </div>
-              ) : (
+              ) : (isCampaign && showRejectPanel) ? (
                 <>
-                  {/* Campaign mode: per-component checkmarks on the claim tuple.
-                      All checked (default) = clean approve; unchecking any
-                      component means the claim should be rejected. */}
-                  {isCampaign && (
+                  {/* Reject panel: verdict chosen, now record which components
+                      are wrong. All boxes checked + a note = the mention-only
+                      pattern (tuple is right, data not actually used). */}
+                  <div className="claim-reject-panel">
+                    <div className="claim-checks-prompt">
+                      What's wrong? Uncheck the incorrect part(s) — or leave all
+                      checked if the data just isn't actually used by the paper.
+                    </div>
                     <div className="claim-checks">
                       {[
                         { key: 'mission', label: 'Mission' },
@@ -1202,27 +1210,55 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                           <input
                             type="checkbox"
                             checked={claimChecks[key]}
-                            onChange={(e) => {
-                              const checked = e.target.checked;
-                              setClaimChecks(prev => ({ ...prev, [key]: checked }));
-                              // An unchecked component implies a reject, which
-                              // requires a note — surface the textarea now.
-                              if (!checked) setShowValidationNotes(true);
-                            }}
+                            onChange={(e) => setClaimChecks(prev => ({ ...prev, [key]: e.target.checked }))}
                             disabled={isLoading || isValidating}
                           />
                           <span>{label}</span>
                         </label>
                       ))}
                     </div>
-                  )}
+                  </div>
+                  <div className="validation-notes">
+                    <textarea
+                      id="validation-notes"
+                      value={validationNotes}
+                      onChange={(e) => setValidationNotes(e.target.value)}
+                      placeholder="Why is this incorrect? (required)"
+                      rows={2}
+                      disabled={isLoading}
+                      autoFocus
+                    />
+                  </div>
+                  <div className="validation-controls">
+                    <button
+                      className="validation-btn reject"
+                      onClick={() => handleValidation('rejected')}
+                      disabled={isLoading || isValidating || !validationNotes.trim()}
+                      title={validationNotes.trim() ? 'Submit rejection' : 'A note explaining the rejection is required'}
+                    >
+                      Confirm Incorrect
+                    </button>
+                    <button
+                      className="validation-btn"
+                      onClick={() => {
+                        setShowRejectPanel(false);
+                        setClaimChecks({ mission: true, instrument: true, window: true });
+                      }}
+                      disabled={isValidating}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
                   <div className="validation-notes">
                     {(showValidationNotes || validationNotes) ? (
                       <textarea
                         id="validation-notes"
                         value={validationNotes}
                         onChange={(e) => setValidationNotes(e.target.value)}
-                        placeholder={isCampaign ? 'Notes (required to reject — say why)...' : 'Add a note about this decision...'}
+                        placeholder="Add a note about this decision..."
                         rows={2}
                         disabled={isLoading}
                         autoFocus
@@ -1241,18 +1277,24 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     <button
                       className="validation-btn approve"
                       onClick={() => handleValidation('approved')}
-                      disabled={isLoading || isValidating || (isCampaign && !(claimChecks.mission && claimChecks.instrument && claimChecks.window))}
-                      title={isCampaign && !(claimChecks.mission && claimChecks.instrument && claimChecks.window)
-                        ? 'Approve requires all three checkmarks'
-                        : 'Approve'}
+                      disabled={isLoading || isValidating}
+                      title={isCampaign ? 'Correct — mission, instrument, and time window all check out' : 'Approve'}
                     >
                       Correct
                     </button>
                     <button
                       className="validation-btn reject"
-                      onClick={() => handleValidation('rejected')}
+                      onClick={() => {
+                        if (isCampaign) {
+                          // Two-step in campaign mode: open the what's-wrong
+                          // panel instead of submitting immediately.
+                          setShowRejectPanel(true);
+                        } else {
+                          handleValidation('rejected');
+                        }
+                      }}
                       disabled={isLoading || isValidating}
-                      title={isCampaign ? 'Reject (requires a note)' : 'Reject'}
+                      title={isCampaign ? 'Incorrect — you will be asked what is wrong' : 'Reject'}
                     >
                       Incorrect
                     </button>
