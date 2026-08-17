@@ -1197,8 +1197,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       pattern (tuple is right, data not actually used). */}
                   <div className="claim-reject-panel">
                     <div className="claim-checks-prompt">
-                      What's wrong? Uncheck the incorrect part(s) — or leave all
-                      checked if the data just isn't actually used by the paper.
+                      These describe what the paper mentioned — uncheck any that
+                      are misidentified. If all three are right but the paper
+                      only <em>cites</em> the data without using it, leave them
+                      checked and say so in the note.
                     </div>
                     <div className="claim-checks">
                       {[
