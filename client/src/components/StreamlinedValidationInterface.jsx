@@ -1,7 +1,7 @@
 // src/components/StreamlinedValidationInterface.jsx
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchValidationQueue, fetchValidationStats, validateDatasetUsage, fetchPaperAnalysis, fetchDatasetUsageDetail, fetchPaperDatasetUsages, fetchPaperDetails, fetchDatasetUsageValidations, fetchCampaignPaperClaims, validateCampaignClaim } from '../services/apiServices';
+import { fetchValidationQueue, fetchValidationStats, validateDatasetUsage, fetchPaperAnalysis, fetchDatasetUsageDetail, fetchPaperDatasetUsages, fetchPaperDetails, fetchDatasetUsageValidations, fetchCampaignPaperClaims, validateCampaignClaim, fetchCampaignOverview } from '../services/apiServices';
 import PDFDocument from './pdfViewer/PDFDocument';
 import { ValidationProvider } from '../context/ValidationContext';
 import { usePaperPDF } from '../hooks/usePaperPDF';
@@ -59,6 +59,11 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // per-component checkmarks (mission / instrument / window).
   const campaignSlug = searchParams.get('campaign') || null;
   const isCampaign = !!campaignSlug;
+  // Campaign phase (?phase=calibration): scopes the in-paper queue to the
+  // paper's calibration claims only (so a reviewer cannot wander onto bulk
+  // claims before the rubric freeze) and drives cross-paper advancement
+  // through the calibration list.
+  const campaignPhase = searchParams.get('phase') || null;
   // Blind-review mode (?blind=1): hides everything that reveals which LLM
   // configuration produced this claim (config badge, Context modal with model
   // names) so validation campaigns can be config-blind. See VALIDATION_PROTOCOL.
@@ -150,7 +155,8 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     // Campaign mode has its own route that bypasses the PaperValidationDetail
     // wrapper (whose paper/analysis context fetches would unblind the review).
     if (isCampaign && paperId) {
-      return `/campaign/papers/${paperId}/claims/${targetUsageId}?campaign=${encodeURIComponent(campaignSlug)}`;
+      const phaseSuffix = campaignPhase ? `&phase=${encodeURIComponent(campaignPhase)}` : '';
+      return `/campaign/papers/${paperId}/claims/${targetUsageId}?campaign=${encodeURIComponent(campaignSlug)}${phaseSuffix}`;
     }
     const blindSuffix = isBlind ? '?blind=1' : '';
     if (paperId) return `/papers/${paperId}/validate/${targetUsageId}${blindSuffix}`;
@@ -210,6 +216,15 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
         // Claims arrive complete (paper, quotes, my_* fields) — no detail fetches.
         } else if (isCampaign && paperId) {
           queue = await fetchCampaignPaperClaims(campaignSlug, paperId);
+          if (campaignPhase === 'calibration') {
+            // Calibration phase: only this paper's calibration claims are in
+            // the queue — bulk claims stay untouchable until the rubric freeze.
+            const overview = await fetchCampaignOverview(campaignSlug);
+            const calibrationIds = new Set(
+              (overview.calibration?.claims || []).map(c => c.usage_id)
+            );
+            queue = (queue || []).filter(c => calibrationIds.has(c.id));
+          }
           setValidationQueue(queue || []);
         // Prefer backend-ordered list when scoping to a single paper, even if paperContext is present
         } else if (paperId) {
@@ -338,7 +353,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     };
 
     loadValidationData();
-  }, [filters, isReadOnly, paperId, paperContext?.paper?.id, paperContext?.paper?.bibcode, paperContext?.datasetUsages?.length, includeUnvalidated, bibcode, isCampaign, campaignSlug]);
+  }, [filters, isReadOnly, paperId, paperContext?.paper?.id, paperContext?.paper?.bibcode, paperContext?.datasetUsages?.length, includeUnvalidated, bibcode, isCampaign, campaignSlug, campaignPhase]);
 
   // Sync current usage with URL without refetching the whole queue
   useEffect(() => {
@@ -485,6 +500,38 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [showSearch]);
 
+  // Campaign: advance across papers when the in-paper queue is exhausted.
+  // Calibration phase walks the calibration list wherever its claims live;
+  // bulk/overlap follows the server's resume pointer to the next unfinished
+  // paper. Lands on /campaign when everything is judged.
+  const advanceCampaign = async () => {
+    try {
+      const overview = await fetchCampaignOverview(campaignSlug);
+      const slugParam = encodeURIComponent(campaignSlug);
+      if (campaignPhase === 'calibration') {
+        const next = (overview.calibration?.claims || []).find(
+          c => !c.judged && c.usage_id !== currentUsage?.id
+        );
+        if (next) {
+          navigate(`/campaign/papers/${next.paper_id}/claims/${next.usage_id}?campaign=${slugParam}&phase=calibration`);
+          return;
+        }
+        toast.success('Calibration complete — your papers are now unlocked!');
+        navigate('/campaign');
+        return;
+      }
+      if (overview.resume) {
+        navigate(`/campaign/papers/${overview.resume.paper_id}/claims/${overview.resume.usage_id}?campaign=${slugParam}`);
+        return;
+      }
+      toast.success('All of your campaign claims are judged!');
+      navigate('/campaign');
+    } catch (error) {
+      console.error('Campaign advance failed:', error);
+      navigate('/campaign');
+    }
+  };
+
   // Navigation functions
   const goToNext = async () => {
     if (isNavigating) return;
@@ -505,6 +552,13 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       const nextUsage = validationQueue[currentIndex + 1];
       // URL change drives the rest (URL sync effect handles data + setIsNavigating(false))
       navigate(buildUsagePath(nextUsage.id));
+    } else if (isCampaign) {
+      // End of this paper's queue: jump to the next calibration claim /
+      // unfinished paper instead of stalling.
+      await advanceCampaign();
+      setIsNavigating(false);
+    } else {
+      setIsNavigating(false);
     }
   };
 
@@ -940,7 +994,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       }}
                       title="Blind review: the producing configuration is hidden"
                     >
-                      blind review
+                      {isCampaign && campaignPhase === 'calibration' ? 'calibration' : 'blind review'}
                     </span>
                   )}
                   {/* Configuration badge when available */}

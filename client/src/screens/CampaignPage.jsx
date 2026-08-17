@@ -11,8 +11,9 @@ import './CampaignPage.css';
 
 const CAMPAIGN_SLUG = 'val2026';
 
-const claimUrl = (paperId, usageId) =>
-  `/campaign/papers/${paperId}/claims/${usageId}?campaign=${CAMPAIGN_SLUG}`;
+const claimUrl = (paperId, usageId, phase = null) =>
+  `/campaign/papers/${paperId}/claims/${usageId}?campaign=${CAMPAIGN_SLUG}` +
+  (phase ? `&phase=${phase}` : '');
 
 const ProgressBar = ({ done, total }) => (
   <div className="campaign-progress-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
@@ -121,7 +122,10 @@ const CampaignPage = () => {
         {resume && (
           <button
             className="campaign-resume-btn"
-            onClick={() => navigate(claimUrl(resume.paper_id, resume.usage_id))}
+            onClick={() => navigate(claimUrl(
+              resume.paper_id, resume.usage_id,
+              hasCalibration && !calibrationDone ? 'calibration' : null,
+            ))}
           >
             Resume ▸
           </button>
@@ -141,7 +145,7 @@ const CampaignPage = () => {
           {!calibrationDone && nextCalibration && (
             <button
               className="campaign-resume-btn campaign-resume-secondary"
-              onClick={() => navigate(claimUrl(nextCalibration.paper_id, nextCalibration.usage_id))}
+              onClick={() => navigate(claimUrl(nextCalibration.paper_id, nextCalibration.usage_id, 'calibration'))}
             >
               Continue calibration ▸
             </button>
