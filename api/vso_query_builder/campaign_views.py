@@ -193,6 +193,10 @@ class CampaignOverviewView(CampaignAPIView):
         paper_rows = []
         for paper in papers:
             claims = group_claims(usages_by_paper.get(paper.id, []))
+            if not claims:
+                # Neither campaign config asserted any data usage for this
+                # paper — nothing to review, so keep it out of the queue.
+                continue
             my_map = _my_validation_map(claims, user)
             judged = sum(1 for v in my_map.values() if v is not None)
             resume_usage_id = next(

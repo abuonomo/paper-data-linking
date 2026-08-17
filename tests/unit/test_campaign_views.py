@@ -151,6 +151,13 @@ class TestCampaignOverview:
         finally:
             test_campaign.calibration_usage_ids = []
 
+    def test_zero_claim_papers_excluded(self, api_client, campaign_data, paper_factory):
+        """A campaign paper with no DUs from either config has nothing to
+        review and must not appear as a 0/0 row in the queue."""
+        paper_factory(tags=["test_set_camp", "testcamp:testuser"])
+        data = api_client.get(reverse("campaign-overview", kwargs={"slug": "testcamp"})).json()
+        assert len(data["papers"]) == 1  # only the paper with claims
+
     def test_overlap_section_label(self, api_client, campaign_data):
         paper = campaign_data["paper"]
         paper.tags = paper.tags + ["testcamp:overlap"]
