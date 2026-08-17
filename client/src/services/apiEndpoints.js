@@ -55,6 +55,11 @@ export const API_ENDPOINTS = {
         // Phenomena endpoints
         PHENOMENON_VALIDATE: (mentionId) => `${BUILDER_URL}/phenomenon-mentions/${mentionId}/validate/`,
         PAPER_PHENOMENA: (paperId) => `${BUILDER_URL}/papers/${paperId}/phenomena/`,
+
+        // Validation campaign endpoints (blinded claim-level review)
+        CAMPAIGN_OVERVIEW: (slug) => `${BUILDER_URL}/validation-campaigns/${slug}/overview/`,
+        CAMPAIGN_PAPER_CLAIMS: (slug, paperId) => `${BUILDER_URL}/validation-campaigns/${slug}/papers/${paperId}/claims/`,
+        CAMPAIGN_CLAIM_VALIDATE: (slug, usageId) => `${BUILDER_URL}/validation-campaigns/${slug}/claims/${usageId}/validate/`,
     },
 
     // Phenomena validation queue

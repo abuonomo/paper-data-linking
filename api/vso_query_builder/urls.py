@@ -1,5 +1,10 @@
 from django.urls import path
 
+from .campaign_views import (
+    CampaignOverviewView,
+    CampaignPaperClaimsView,
+    CampaignClaimValidationView,
+)
 from .views import (
     PaperUploadView,
     ListPapersView,
@@ -95,6 +100,14 @@ urlpatterns = [
     path('papers/aggregate-configuration-comparison/', AggregateConfigurationComparisonView.as_view(), name='aggregate-configuration-comparison'),
     path('papers/tags/', PaperTagsListView.as_view(), name='paper-tags-list'),
     path('configurations/', AvailableConfigurationsView.as_view(), name='available-configurations'),
+
+    # Validation campaign endpoints (blinded claim-level review)
+    path('validation-campaigns/<slug:slug>/overview/',
+         CampaignOverviewView.as_view(), name='campaign-overview'),
+    path('validation-campaigns/<slug:slug>/papers/<uuid:paper_id>/claims/',
+         CampaignPaperClaimsView.as_view(), name='campaign-paper-claims'),
+    path('validation-campaigns/<slug:slug>/claims/<uuid:usage_id>/validate/',
+         CampaignClaimValidationView.as_view(), name='campaign-claim-validate'),
 
     # User profile
     path('me/', UserProfileView.as_view(), name='user-profile'),

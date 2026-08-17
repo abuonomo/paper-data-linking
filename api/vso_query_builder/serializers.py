@@ -13,7 +13,9 @@ class DatasetUsageValidationSerializer(serializers.ModelSerializer):
         model = DatasetUsageValidation
         fields = [
             'id', 'dataset_usage', 'user', 'username', 'anonymous_id',
-            'validation_status', 'validation_notes', 'created_at',
+            'validation_status', 'validation_notes',
+            'mission_correct', 'instrument_correct', 'window_correct',
+            'created_at',
         ]
         read_only_fields = ['id', 'created_at', 'user', 'username']
 

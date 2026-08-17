@@ -16,6 +16,7 @@ import PublicValidatedPapers from './screens/PublicValidatedPapers';
 import PublicAbout from './screens/PublicAbout';
 import PublicEvidenceView from './screens/PublicEvidenceView';
 import PhenomenaValidationQueue from './components/PhenomenaValidationQueue';
+import CampaignPage from './screens/CampaignPage';
 import PaperPhenomenaValidation from './components/PaperPhenomenaValidation';
 import PhenomenonValidationDetail from './components/PhenomenonValidationDetail';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -59,6 +60,10 @@ function App() {
           <Route path="/papers/:paperId/validate/:analysisId/:usageId" element={<RequireAuth><PaperValidationDetail /></RequireAuth>} />
           <Route path="/phenomena-validation" element={<RequireAuth><PhenomenaValidationQueue /></RequireAuth>} />
           <Route path="/phenomena-validation/:paperId" element={<RequireAuth><PaperPhenomenaValidation /></RequireAuth>} />
+          {/* Validation campaign: dashboard + direct claim route (bypasses the
+              PaperValidationDetail wrapper so nothing config-related loads) */}
+          <Route path="/campaign" element={<RequireAuth><CampaignPage /></RequireAuth>} />
+          <Route path="/campaign/papers/:paperId/claims/:usageId" element={<RequireAuth><StreamlinedValidationInterface paperContext={undefined} /></RequireAuth>} />
         </Route>
       </Routes>
     </BrowserRouter>

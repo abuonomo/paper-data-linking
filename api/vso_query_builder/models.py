@@ -1170,6 +1170,23 @@ class DatasetUsageValidation(models.Model):
         choices=VALIDATION_STATUS_CHOICES,
     )
     validation_notes = models.TextField(blank=True, null=True)
+    # Per-component checkmarks on the claim tuple (validation-campaign reviews).
+    # Nullable so historic rows and the legacy validate endpoint are unaffected.
+    mission_correct = models.BooleanField(
+        null=True,
+        blank=True,
+        help_text="Whether the observatory/mission of the claim is correct",
+    )
+    instrument_correct = models.BooleanField(
+        null=True,
+        blank=True,
+        help_text="Whether the instrument of the claim is correct",
+    )
+    window_correct = models.BooleanField(
+        null=True,
+        blank=True,
+        help_text="Whether the observation window of the claim is correct",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -100,6 +100,7 @@ function LayoutShell() {
                   <NavDropdown title="Validate" id="nav-validate" align="end">
                     <NavDropdown.Item as={Link} to="/papers/validation-queue">Instruments</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/phenomena-validation">Phenomena</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/campaign">Campaign</NavDropdown.Item>
                   </NavDropdown>
 
                   <NavDropdown title={username || 'Account'} id="nav-user" align="end">

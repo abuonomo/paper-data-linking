@@ -2459,6 +2459,13 @@ class PaperDatasetUsagesView(ListAPIView):
         if validation_status and validation_status != 'all':
             queryset = queryset.filter(validation_status=validation_status)
 
+        # Optional filter by producing configuration(s), comma-separable.
+        configuration_name = self.request.query_params.get('configuration_name')
+        if configuration_name:
+            queryset = queryset.filter(
+                paper_analysis__configuration_name__in=configuration_name.split(',')
+            )
+
         has_quotes_param = self.request.query_params.get('has_quotes', 'true')
         if has_quotes_param == 'true':
             # We still filter by quotes, but now we add .distinct() to prevent duplicates
