@@ -107,6 +107,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // are only shown inside the reject panel — verdict first, detail second.
   const [claimChecks, setClaimChecks] = useState({ mission: true, instrument: true, window: true });
   const [showRejectPanel, setShowRejectPanel] = useState(false);
+  const [rejectReason, setRejectReason] = useState(null);
   // Prefetched overview promise for campaign end-of-paper advancement — kicked
   // off at vote time so the network round trip overlaps the vote flash.
   const campaignAdvancePrefetchRef = useRef(null);
@@ -423,6 +424,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
       window: currentUsage.my_window_correct !== false,
     });
     setValidationNotes(currentUsage.my_validation_notes || '');
+    setRejectReason(currentUsage.my_reject_reason || null);
     setShowRejectPanel(false);
   }, [isCampaign, currentUsage?.id]);
 
@@ -740,8 +742,15 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     const effectiveChecks = status === 'approved'
       ? { mission: true, instrument: true, window: true }
       : claimChecks;
-    if (isCampaign && status === 'rejected' && !validationNotes.trim()) {
-      toast.error('Reject requires a note explaining the rejection reason.');
+    const effectiveReason = status === 'rejected' ? rejectReason : null;
+    if (isCampaign && status === 'rejected'
+        && effectiveChecks.mission && effectiveChecks.instrument && effectiveChecks.window
+        && !effectiveReason) {
+      toast.error('Pick a reason category, or uncheck the incorrect component.');
+      return;
+    }
+    if (isCampaign && effectiveReason === 'other' && !validationNotes.trim()) {
+      toast.error("'Other' requires a note.");
       setShowValidationNotes(true);
       return;
     }
@@ -756,6 +765,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
           mission_correct: effectiveChecks.mission,
           instrument_correct: effectiveChecks.instrument,
           window_correct: effectiveChecks.window,
+          reject_reason: effectiveReason,
           validation_notes: validationNotes,
         });
       } else {
@@ -776,6 +786,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
           my_mission_correct: effectiveChecks.mission,
           my_instrument_correct: effectiveChecks.instrument,
           my_window_correct: effectiveChecks.window,
+          my_reject_reason: effectiveReason,
           my_validation_notes: validationNotes,
         } : {
           validated_by_username: result.validated_by,
@@ -1262,17 +1273,20 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     Change your vote
                   </button>
                 </div>
-              ) : (isCampaign && showRejectPanel) ? (
+              ) : (isCampaign && showRejectPanel) ? (() => {
+                const allChecked = claimChecks.mission && claimChecks.instrument && claimChecks.window;
+                const needsReason = allChecked && !rejectReason;
+                const needsNotes = rejectReason === 'other' && !validationNotes.trim();
+                const rejectBlocked = needsReason || needsNotes;
+                return (
                 <>
-                  {/* Reject panel: verdict chosen, now record which components
-                      are wrong. All boxes checked + a note = the mention-only
-                      pattern (tuple is right, data not actually used). */}
+                  {/* Reject panel. Rule: "uncheck what's false, or pick why it
+                      doesn't count." Unchecked box = misattribution (the box is
+                      the reason); all boxes intact = misclassification and a
+                      usage-type category is required. */}
                   <div className="claim-reject-panel">
                     <div className="claim-checks-prompt">
-                      These describe what the paper mentioned — uncheck any that
-                      are misidentified. If all three are right but the paper
-                      only <em>cites</em> the data without using it, leave them
-                      checked and say so in the note.
+                      Uncheck anything that is factually wrong:
                     </div>
                     <div className="claim-checks">
                       {[
@@ -1291,13 +1305,41 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                         </label>
                       ))}
                     </div>
+                    <div className="claim-checks-prompt" style={{ marginTop: '0.45rem' }}>
+                      {allChecked
+                        ? 'All three are right — so why doesn’t this count as data usage?'
+                        : 'Optionally, also pick a reason category:'}
+                    </div>
+                    <div className="reject-reason-chips">
+                      {[
+                        { key: 'mention_only', label: 'Mention/background only' },
+                        { key: 'external_summary', label: "Cites others' analysis" },
+                        { key: 'review_reproduction', label: 'Reproduced figure' },
+                        { key: 'infrastructure', label: 'Instrument/infra paper' },
+                        { key: 'theory_context', label: 'Theory only' },
+                        { key: 'composite_component', label: 'Composite component (OMNI-style)' },
+                        { key: 'other', label: 'Other…' },
+                      ].map(({ key, label }) => (
+                        <button
+                          key={key}
+                          type="button"
+                          className={`reject-reason-chip ${rejectReason === key ? 'is-selected' : ''}`}
+                          onClick={() => setRejectReason(prev => (prev === key ? null : key))}
+                          disabled={isLoading || isValidating}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                   <div className="validation-notes">
                     <textarea
                       id="validation-notes"
                       value={validationNotes}
                       onChange={(e) => setValidationNotes(e.target.value)}
-                      placeholder="Why is this incorrect? (required)"
+                      placeholder={rejectReason === 'other'
+                        ? 'Explain the reason (required for Other)...'
+                        : 'Notes (optional — detail always helps the census)...'}
                       rows={2}
                       disabled={isLoading}
                       autoFocus
@@ -1307,8 +1349,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     <button
                       className="validation-btn reject"
                       onClick={() => handleValidation('rejected')}
-                      disabled={isLoading || isValidating || !validationNotes.trim()}
-                      title={validationNotes.trim() ? 'Submit rejection' : 'A note explaining the rejection is required'}
+                      disabled={isLoading || isValidating || rejectBlocked}
+                      title={needsReason
+                        ? 'Pick a reason category (or uncheck the incorrect component)'
+                        : needsNotes ? "'Other' requires a note" : 'Submit rejection'}
                     >
                       Confirm Incorrect
                     </button>
@@ -1317,6 +1361,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       onClick={() => {
                         setShowRejectPanel(false);
                         setClaimChecks({ mission: true, instrument: true, window: true });
+                        setRejectReason(null);
                       }}
                       disabled={isValidating}
                     >
@@ -1324,7 +1369,8 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                     </button>
                   </div>
                 </>
-              ) : (
+                );
+              })() : (
                 <>
                   <div className="validation-notes">
                     {(showValidationNotes || validationNotes) ? (

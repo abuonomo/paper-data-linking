@@ -228,15 +228,43 @@ class TestCampaignValidate:
         response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
         assert response.status_code == 400
 
-    def test_reject_requires_notes(self, api_client, campaign_data):
+    def test_misattribution_reject_needs_no_reason(self, api_client, campaign_data):
+        """Unchecked box = the reason; no category or note required."""
         payload = {"validation_status": "rejected", "mission_correct": True,
                    "instrument_correct": True, "window_correct": False}
         response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
+        assert response.status_code == 200
+
+    def test_misclassification_reject_requires_reason(self, api_client, campaign_data):
+        """All boxes checked -> a usage-type category is mandatory."""
+        payload = {"validation_status": "rejected", "mission_correct": True,
+                   "instrument_correct": True, "window_correct": True}
+        response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
         assert response.status_code == 400
 
-        payload["validation_notes"] = "window over-extends past the studied event"
+        payload["reject_reason"] = "mention_only"
         response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
         assert response.status_code == 200
+        from vso_query_builder.models import DatasetUsageValidation
+        rows = DatasetUsageValidation.objects.filter(user__username="testuser")
+        assert all(r.reject_reason == "mention_only" for r in rows)
+
+    def test_other_reason_requires_notes(self, api_client, campaign_data):
+        payload = {"validation_status": "rejected", "mission_correct": True,
+                   "instrument_correct": True, "window_correct": True,
+                   "reject_reason": "other"}
+        response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
+        assert response.status_code == 400
+        payload["validation_notes"] = "weird edge case"
+        response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
+        assert response.status_code == 200
+
+    def test_invalid_reason_rejected(self, api_client, campaign_data):
+        payload = {"validation_status": "rejected", "mission_correct": True,
+                   "instrument_correct": True, "window_correct": True,
+                   "reject_reason": "not_a_reason"}
+        response = api_client.post(self._url(campaign_data["du_a"].id), payload, format="json")
+        assert response.status_code == 400
 
     def test_unsure_allows_missing_checks(self, api_client, campaign_data):
         response = api_client.post(

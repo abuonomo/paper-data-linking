@@ -128,6 +128,7 @@ def _serialize_claim(claim, my_validation):
         'my_mission_correct': my_validation.mission_correct if my_validation else None,
         'my_instrument_correct': my_validation.instrument_correct if my_validation else None,
         'my_window_correct': my_validation.window_correct if my_validation else None,
+        'my_reject_reason': my_validation.reject_reason if my_validation else None,
         'my_validation_notes': my_validation.validation_notes if my_validation else None,
     }
 
@@ -299,6 +300,7 @@ class CampaignClaimValidationView(CampaignAPIView):
 
         verdict = request.data.get('validation_status')
         notes = (request.data.get('validation_notes') or '').strip()
+        reject_reason = request.data.get('reject_reason') or None
         checks = {
             name: request.data.get(name)
             for name in ('mission_correct', 'instrument_correct', 'window_correct')
@@ -321,11 +323,29 @@ class CampaignClaimValidationView(CampaignAPIView):
                 {"error": "Approve requires all three checkmarks (mission, instrument, window)"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if verdict == 'rejected' and not notes:
+        # Reject semantics: "uncheck what's false, or pick why it doesn't count."
+        # All-boxes-checked rejects (misclassification) require a usage-type
+        # reason; any-unchecked rejects (misattribution) carry their reason in
+        # the unchecked box, so the category is optional there.
+        valid_reasons = {c[0] for c in DatasetUsageValidation.REJECT_REASON_CHOICES}
+        if reject_reason is not None and reject_reason not in valid_reasons:
             return Response(
-                {"error": "Reject requires validation_notes (the rejection reason)"},
+                {"error": f"reject_reason must be one of: {sorted(valid_reasons)}"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        if verdict == 'rejected' and all(checks.values()) and not reject_reason:
+            return Response(
+                {"error": "A reject with all checkmarks intact needs a reason category "
+                          "(or uncheck the incorrect component)"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if verdict == 'rejected' and reject_reason == 'other' and not notes:
+            return Response(
+                {"error": "reject_reason 'other' requires validation_notes"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if verdict != 'rejected':
+            reject_reason = None
 
         claim = resolve_claim(campaign, usage_id)
         if claim is None:
@@ -337,6 +357,7 @@ class CampaignClaimValidationView(CampaignAPIView):
         defaults = {
             'validation_status': verdict,
             'validation_notes': notes,
+            'reject_reason': reject_reason,
             'mission_correct': checks['mission_correct'] if isinstance(checks['mission_correct'], bool) else None,
             'instrument_correct': checks['instrument_correct'] if isinstance(checks['instrument_correct'], bool) else None,
             'window_correct': checks['window_correct'] if isinstance(checks['window_correct'], bool) else None,

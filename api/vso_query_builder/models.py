@@ -1187,6 +1187,24 @@ class DatasetUsageValidation(models.Model):
         blank=True,
         help_text="Whether the observation window of the claim is correct",
     )
+    # Usage-type reason for rejects whose tuple is factually correct (all
+    # checkmarks true) — the census taxonomy. Null for approves, unsures, and
+    # misattribution rejects (where the unchecked box is the reason).
+    REJECT_REASON_CHOICES = [
+        ("mention_only", "Mention/background only"),
+        ("external_summary", "Cites others' analysis"),
+        ("review_reproduction", "Reproduced figure from cited work"),
+        ("infrastructure", "Instrument/infrastructure paper"),
+        ("theory_context", "Theory only"),
+        ("composite_component", "Composite-product component"),
+        ("other", "Other (see notes)"),
+    ]
+    reject_reason = models.CharField(
+        max_length=32,
+        choices=REJECT_REASON_CHOICES,
+        null=True,
+        blank=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
