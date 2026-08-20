@@ -45,6 +45,7 @@ const formatColoredDateTime = (dateTimeString) => {
 import './pdfViewer/PDFViewer.css';
 import './StreamlinedValidationInterface.css';
 import ScriptModal from './ScriptModal';
+import CampaignRubricModal from './CampaignRubricModal';
 
 
 export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate' }) => {
@@ -109,6 +110,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const [showRejectPanel, setShowRejectPanel] = useState(false);
   const [rejectReason, setRejectReason] = useState(null);
   const [showRejectHelp, setShowRejectHelp] = useState(false);
+  const [showRubric, setShowRubric] = useState(false);
   // Prefetched overview promise for campaign end-of-paper advancement — kicked
   // off at vote time so the network round trip overlaps the vote flash.
   const campaignAdvancePrefetchRef = useRef(null);
@@ -1027,6 +1029,17 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       {isCampaign && campaignPhase === 'calibration' ? 'calibration' : 'blind review'}
                     </span>
                   )}
+                  {/* Rubric quick-access (campaign mode) */}
+                  {isCampaign && (
+                    <button
+                      type="button"
+                      className="rubric-open-btn"
+                      onClick={() => setShowRubric(true)}
+                      title="Open the review rubric"
+                    >
+                      Rubric
+                    </button>
+                  )}
                   {/* Configuration badge when available */}
                   {!isBlind && paperContext?.analysis?.configuration_name && (
                     <span
@@ -1667,6 +1680,11 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
             </div>
           </div>
         </div>
+      )}
+
+      {/* Rubric modal (campaign mode) */}
+      {isCampaign && showRubric && (
+        <CampaignRubricModal slug={campaignSlug} onClose={() => setShowRubric(false)} />
       )}
 
       {/* Reject-category help modal (campaign mode) */}

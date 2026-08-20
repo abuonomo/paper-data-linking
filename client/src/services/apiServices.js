@@ -488,6 +488,21 @@ export const fetchCampaignPaperClaims = async (slug, paperId) => {
 };
 
 /**
+ * Fetches the campaign rubric markdown (the exact ratified RUBRIC.md)
+ * @param {string} slug - Campaign slug
+ * @returns {Promise<Object>} - {markdown}
+ */
+export const fetchCampaignRubric = async (slug) => {
+  try {
+    const response = await authAxios.get(API_ENDPOINTS.generate.CAMPAIGN_RUBRIC(slug));
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch campaign rubric for ${slug}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Submits a campaign verdict for a claim (propagates to all member usages server-side)
  * @param {string} slug - Campaign slug
  * @param {string} usageId - Representative usage UUID of the claim

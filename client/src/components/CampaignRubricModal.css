@@ -1,0 +1,61 @@
+.rubric-modal {
+  width: min(720px, 92vw);
+}
+
+.rubric-modal-body {
+  max-height: 75vh;
+  overflow-y: auto;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.rubric-modal-body h1 {
+  font-size: 1.25rem;
+  margin: 0.2rem 0 0.6rem;
+}
+
+.rubric-modal-body h2 {
+  font-size: 1.02rem;
+  margin: 1rem 0 0.4rem;
+  border-bottom: 1px solid #d8dee4;
+  padding-bottom: 0.2rem;
+}
+
+.rubric-modal-body table {
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.82rem;
+}
+
+.rubric-modal-body th,
+.rubric-modal-body td {
+  border: 1px solid #d0d7de;
+  padding: 0.35rem 0.5rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.rubric-modal-body th {
+  background: #f6f8fa;
+}
+
+.rubric-modal-body blockquote {
+  border-left: 3px solid #bf8700;
+  background: #fff8e5;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.7rem;
+}
+
+.rubric-modal-body code {
+  background: #f6f8fa;
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.82em;
+}
+
+.rubric-modal-loading,
+.rubric-modal-error {
+  color: #656d76;
+  text-align: center;
+  padding: 1.5rem;
+}

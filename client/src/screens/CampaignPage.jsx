@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchCampaignOverview } from '../services/apiServices';
+import CampaignRubricModal from '../components/CampaignRubricModal';
 import './CampaignPage.css';
 
 const CAMPAIGN_SLUG = 'val2026';
@@ -68,6 +69,7 @@ const CampaignPage = () => {
   const [overview, setOverview] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showRubric, setShowRubric] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -119,18 +121,30 @@ const CampaignPage = () => {
             {hasCalibration && ` · calibration ${stats.calibration_judged}/${stats.calibration_total}`}
           </p>
         </div>
-        {resume && (
+        <div className="campaign-header-actions">
           <button
-            className="campaign-resume-btn"
-            onClick={() => navigate(claimUrl(
-              resume.paper_id, resume.usage_id,
-              hasCalibration && !calibrationDone ? 'calibration' : null,
-            ))}
+            className="campaign-rubric-btn"
+            onClick={() => setShowRubric(true)}
           >
-            Resume ▸
+            Rubric
           </button>
-        )}
+          {resume && (
+            <button
+              className="campaign-resume-btn"
+              onClick={() => navigate(claimUrl(
+                resume.paper_id, resume.usage_id,
+                hasCalibration && !calibrationDone ? 'calibration' : null,
+              ))}
+            >
+              Resume ▸
+            </button>
+          )}
+        </div>
       </div>
+
+      {showRubric && (
+        <CampaignRubricModal slug={CAMPAIGN_SLUG} onClose={() => setShowRubric(false)} />
+      )}
 
       {hasCalibration && (
         <div className={`campaign-section campaign-calibration ${calibrationDone ? 'is-done' : ''}`}>

@@ -13,6 +13,7 @@ scripts).
 """
 
 import logging
+from pathlib import Path
 
 from django.db import transaction
 from rest_framework import status
@@ -258,6 +259,29 @@ class CampaignOverviewView(CampaignAPIView):
             },
             'resume': resume,
         })
+
+
+class CampaignRubricView(CampaignAPIView):
+    """Serve the campaign rubric markdown — the exact file reviewers ratified.
+
+    Canonical source: api/vso_query_builder/campaign_docs/RUBRIC.md (ships in
+    the api image; pdl-paper's validation/RUBRIC.md is a pointer stub).
+    """
+
+    RUBRIC_PATH = Path(__file__).resolve().parent / 'campaign_docs' / 'RUBRIC.md'
+
+    def get(self, request, slug):
+        campaign, error = self.get_campaign_or_error(request, slug)
+        if error:
+            return error
+        try:
+            markdown = self.RUBRIC_PATH.read_text(encoding='utf-8')
+        except OSError:
+            return Response(
+                {"error": "Rubric file missing from deployment"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+        return Response({"markdown": markdown})
 
 
 class CampaignPaperClaimsView(CampaignAPIView):

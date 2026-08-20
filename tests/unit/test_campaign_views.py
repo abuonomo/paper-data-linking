@@ -167,6 +167,21 @@ class TestCampaignOverview:
 
 
 @pytest.mark.django_db
+class TestCampaignRubric:
+
+    def test_rubric_served_to_reviewers(self, api_client, campaign_data):
+        url = reverse("campaign-rubric", kwargs={"slug": "testcamp"})
+        response = api_client.get(url)
+        assert response.status_code == 200
+        assert "The one rule" in response.json()["markdown"]
+
+    def test_rubric_reviewer_only(self, campaign_data):
+        client = _other_client("nosy")
+        url = reverse("campaign-rubric", kwargs={"slug": "testcamp"})
+        assert client.get(url).status_code == 403
+
+
+@pytest.mark.django_db
 class TestCampaignClaims:
 
     def test_claims_deduped_and_blinded(self, api_client, campaign_data):

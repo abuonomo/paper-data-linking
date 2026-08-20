@@ -4,6 +4,7 @@ from .campaign_views import (
     CampaignOverviewView,
     CampaignPaperClaimsView,
     CampaignClaimValidationView,
+    CampaignRubricView,
 )
 from .views import (
     PaperUploadView,
@@ -104,6 +105,8 @@ urlpatterns = [
     # Validation campaign endpoints (blinded claim-level review)
     path('validation-campaigns/<slug:slug>/overview/',
          CampaignOverviewView.as_view(), name='campaign-overview'),
+    path('validation-campaigns/<slug:slug>/rubric/',
+         CampaignRubricView.as_view(), name='campaign-rubric'),
     path('validation-campaigns/<slug:slug>/papers/<uuid:paper_id>/claims/',
          CampaignPaperClaimsView.as_view(), name='campaign-paper-claims'),
     path('validation-campaigns/<slug:slug>/claims/<uuid:usage_id>/validate/',

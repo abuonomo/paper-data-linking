@@ -58,6 +58,7 @@ export const API_ENDPOINTS = {
 
         // Validation campaign endpoints (blinded claim-level review)
         CAMPAIGN_OVERVIEW: (slug) => `${BUILDER_URL}/validation-campaigns/${slug}/overview/`,
+        CAMPAIGN_RUBRIC: (slug) => `${BUILDER_URL}/validation-campaigns/${slug}/rubric/`,
         CAMPAIGN_PAPER_CLAIMS: (slug, paperId) => `${BUILDER_URL}/validation-campaigns/${slug}/papers/${paperId}/claims/`,
         CAMPAIGN_CLAIM_VALIDATE: (slug, usageId) => `${BUILDER_URL}/validation-campaigns/${slug}/claims/${usageId}/validate/`,
     },

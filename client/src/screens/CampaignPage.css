@@ -172,3 +172,24 @@
   color: #656d76;
   white-space: nowrap;
 }
+
+.campaign-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.campaign-rubric-btn {
+  background: #fff;
+  color: #0550ae;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.campaign-rubric-btn:hover {
+  background: #ddf4ff;
+}

@@ -38,6 +38,7 @@
     "react-tabs": "^6.0.2",
     "react-toastify": "^10.0.4",
     "recharts": "^2.15.3",
+    "remark-gfm": "^4.0.1",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
