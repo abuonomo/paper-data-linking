@@ -1,7 +1,8 @@
 # val2026 Review Rubric — v2.1
 
+**Ratified by both reviewers (Anthony Buonomo, Aidan Scharnikow) — 2026-08-20.**
 Rationale and campaign mechanics live in the paper repo's `VALIDATION_PROTOCOL.md`.
-Amendments are logged in this file with dates.
+Amendments after ratification are logged in this file with dates.
 
 ---
 
