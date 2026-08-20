@@ -8,8 +8,8 @@ Rationale and campaign mechanics live in the paper repo's `VALIDATION_PROTOCOL.m
 ## The one rule
 
 > **Approve if — and only if — this paper performs its own analysis on a data
-> product whose values come from this instrument, within this window, as
-> supported by the paper's own words.**
+> product whose values come from this instrument, within this window — as
+> supported by the paper, read with reasonable domain knowledge.**
 
 - **Its own analysis** — the paper does a new operation: selects events,
   computes, fits, plots from values, trains or tests a model. Restating or
@@ -17,9 +17,13 @@ Rationale and campaign mechanics live in the paper repo's `VALIDATION_PROTOCOL.m
 - **A data product** — files, catalogs, indices, merged datasets: measurement
   at scale. Individual numbers quoted from other papers are testimony, not
   data.
-- **The paper's own words** — every field of the claim must be traceable to
-  the text, at the text's level of specificity. No outside knowledge, no
-  "that instrument could have done it" guesses.
+- **Supported by the paper** — every field must be either stated in the text
+  or made **effectively unique** by the text plus reliable domain knowledge
+  (a paper using "magnetograms" at a wavelength and date only one instrument
+  could supply → that instrument is correct). The line: **unique inference is
+  fine; picking among multiple live candidates is guessing; and inference may
+  never contradict the text** (grounding antenna V5 when the paper says V2 is
+  wrong no matter how capable V5 is).
 
 ## How to decide, per claim
 
@@ -47,15 +51,20 @@ Richardson & Cane ICME list) **counts as usage.** A catalog is a data product
 derived from the instrument; analyzing it is analyzing the instrument's data.
 → **Correct.**
 
-**Merged datasets (OMNI and friends)** — three situations:
+**Merged datasets (OMNI and friends): usage flows through to the
+contributors.** OMNI's values *are* the contributing instruments'
+measurements, so analyzing OMNI is analyzing their data — a component claim
+is **Correct** even when the paper never names the spacecraft. Two checks
+still apply:
 
-- The paper says only "OMNI", and the claim names a contributing spacecraft
-  the paper never mentions → the claim states something the paper doesn't →
-  **Incorrect, uncheck Mission.**
-- The paper names the sources itself ("…the OMNI dataset (i.e., ACE and
-  Wind)") → the wording supports the claim → **Correct.**
-- The paper mentions the contributing spacecraft but analyzes only the merged
-  product → **Incorrect → Mention only**, plus a note.
+- **Derivation is parameter-level.** The component must supply the parameters
+  actually analyzed: a paper using only the magnetic field (Bz) derives from
+  the magnetometers — a claim on a *plasma* instrument for that paper is
+  **Incorrect, uncheck Instrument.**
+- **Contribution era matters for the window.** If you know the component only
+  fed the composite for part of the claimed span (Wind contributes to the
+  interplanetary-field composite from 1994, not 1963), judge the window
+  accordingly — note it, and uncheck Time window for gross mismatches.
 
 ### Constellations and satellite series
 
@@ -70,8 +79,10 @@ Mission.**
 **Interchangeable series (the GOES satellites).** A generic mention ("GOES
 X-ray flux") supports only the **generic/group record** — approve that if
 it's the claim. Claims naming specific satellite numbers the paper never
-names are **Incorrect, uncheck Mission.** Never reason "it should have been
-GOES-15 that year" — inferring the operational satellite is retired.
+names are **Incorrect, uncheck Mission.** "It should have been GOES-15 that
+year" is guessing among live candidates, not unique inference — several
+satellites return data at any time, so a generic mention never determines a
+specific bird.
 
 ### Instrument naming level
 
@@ -137,7 +148,11 @@ becoming 2007-01-01), or technical quirks in how range endpoints are stored.
 
 ## Ratification checklist (freeze meeting)
 
-- ☐ The one rule (usage definition)
+- ☐ The one rule (usage definition), with the inference standard: unique
+  inference from text + domain knowledge is fine; guessing among candidates
+  is not; inference never contradicts the text (amended 2026-08-20)
+- ☐ Composite flow-through: OMNI-style component claims approve at parameter
+  level, contributor need not be named (amended 2026-08-20)
 - ☐ The window framing rule, including event-set envelopes
 - ☐ The formation-constellation rule (MMS-3 becomes Correct; Anthony re-votes)
 - ☐ The meeting-abstract call (both reviewers enter the reject)
