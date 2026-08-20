@@ -1,91 +1,148 @@
 # val2026 Review Rubric — v2.1
 
 **Status: PROPOSED.** Anthony approved 2026-08-20 · AJ sign-off: ☐ (date: ______)
-Full rationale and campaign mechanics: `VALIDATION_PROTOCOL.md`. Keep this
-page open while reviewing.
+Rationale and campaign mechanics live in the paper repo's `VALIDATION_PROTOCOL.md`.
 
 ---
 
 ## The one rule
 
-> **Approve iff this paper performs its own analysis on a data product whose
-> values derive from this instrument, within this window — as supported by
-> the paper's own words.**
+> **Approve if — and only if — this paper performs its own analysis on a data
+> product whose values come from this instrument, within this window, as
+> supported by the paper's own words.**
 
-- *Own analysis* = a new operation: selects events, computes, fits, plots
-  from values, trains/tests a model. Restating or reproducing cited work is
-  not an operation.
-- *Data product* = files, catalogs, indices, composites — measurement at
-  scale. Quoted results from other papers are testimony, not data.
-- *Paper's own words* = every field must be traceable to the text, at the
-  text's level of specificity. No world knowledge, no capability guesses.
+- **Its own analysis** — the paper does a new operation: selects events,
+  computes, fits, plots from values, trains or tests a model. Restating or
+  reproducing someone else's work is not an operation.
+- **A data product** — files, catalogs, indices, merged datasets: measurement
+  at scale. Individual numbers quoted from other papers are testimony, not
+  data.
+- **The paper's own words** — every field of the claim must be traceable to
+  the text, at the text's level of specificity. No outside knowledge, no
+  "that instrument could have done it" guesses.
 
-## Decision flow, per claim
+## How to decide, per claim
 
-1. **Is anything factually wrong** — mission/member, instrument/sibling, or
-   a window the paper never asserts? → **Incorrect + uncheck that box.**
-   The box is the reason; no category needed.
-2. **Tuple right, but not real usage?** → **Incorrect + pick a category**
-   (all boxes stay checked):
-   - *Doesn't use this data*: **Mention only** · **Cites others' work** ·
-     **Reproduced figure**
-   - *Analyzes no data at all*: **Instrument/design paper** · **Theory only**
-   - **Other…** (note required)
-3. **Real usage, faithful tuple?** → **Correct.** One click.
-4. **Can't verify from the paper?** → **Unsure.** (Adjudicated later;
-   excluded from precision denominators.)
+1. **Something factually wrong?** Wrong spacecraft, wrong instrument, or a
+   time span the paper never asserts → **Incorrect, uncheck that box.**
+   The unchecked box is the reason — no category needed.
+2. **Everything correctly identified, but not real usage?** →
+   **Incorrect, keep all boxes checked, pick a category:**
+   - *Doesn't use this data:* Mention only · Cites others' work · Reproduced figure
+   - *Analyzes no data at all:* Instrument/design paper · Theory only
+   - *Other…* (a note is required)
+3. **Real usage, faithful claim?** → **Correct.** One click.
+4. **Can't tell from the paper?** → **Unsure.** It gets adjudicated later and
+   is excluded from precision numbers.
 
-Notes are optional everywhere except *Other* — but every note feeds the
-usage-type census, so write them on borderline calls.
+Notes are optional except for *Other* — but every note feeds the usage-type
+census, so write one on any borderline call.
 
-## Hard patterns — quick table
+## Hard patterns
 
-| Pattern | Call |
-|---|---|
-| Catalog-derived value (LASCO CME list, flare catalogs, R&C) | **approve** — tier-1 data product + own analysis qualifies |
-| OMNI/composite used; claim names an **unnamed** contributor | **reject, uncheck Mission** — the paper never said it used that craft. If the paper names the sources ("i.e., ACE and Wind") → approve. Component mentioned but only the merged product analyzed → Mention only + note. |
-| **Formation constellations** (MMS, Cluster in formation) | **approve members** when the paper frames observation/analysis at fleet level with **no textual restriction** — formation members co-collect; member enumeration is granularity, not invention. An explicit restriction ("use only … from SC1") rejects unnamed members (uncheck Mission). Figures alone never restrict; text does. |
-| **Interchangeable series** (GOES birds) | generic mention → approve the **generic/group record** if present; specific unnamed birds → reject (uncheck Mission). Never infer the operational satellite ("should have been GOES-15" is retired). |
-| Suite vs sub-instrument (SECCHI vs EUVI) | approve any level the text supports; a sibling never named (V5 when the paper says V2) → reject, uncheck Instrument |
-| **GOES/N/SEM on X-ray papers** | **approve** — XRS lives under SEM in the catalog (known judge blind spot) |
-| Review paper | genre never decides — a review doing its own analysis on data products qualifies; a reprinted figure doesn't |
-| Instrument paper analyzing commissioning/first-light data | those claims **approve** — real windows, real operations |
+### Catalogs and derived products
 
-## Window test (the framing rule)
+**A value taken from a catalog** (the LASCO CME catalog, a flare list, the
+Richardson & Cane ICME list) **counts as usage.** A catalog is a data product
+derived from the instrument; analyzing it is analyzing the instrument's data.
+→ **Correct.**
 
-Grade the window on **how the paper itself discusses the span** — never on
-duty cycle or gap size:
+**Merged datasets (OMNI and friends)** — three situations:
 
-- **Correct**: the extent matches a span the paper asserts — a duration
-  ("2007 through 2018") or a collectively-framed discrete set ("throughout
-  E6 to E21", "events up to the end of 2018"). Sparse interiors are fine;
-  add note `window-kind: event-set envelope` for discrete sets.
-- **Wrong — uncheck Time window**:
-  - *Over-extension*: a date range belonging to a different dataset
-    (MDI stamped 1850–2005 from a sunspot-series analysis).
-  - *Granularity collapse*: a manufactured union of individually-framed
-    events (one event in 1996 + one in 2016 → "1996–2016" the authors never
-    assert).
-- Never wrong: bounds-form quirks, rounding at the paper's own granularity
-  ("January 2007" → 2007-01-01).
+- The paper says only "OMNI", and the claim names a contributing spacecraft
+  the paper never mentions → the claim states something the paper doesn't →
+  **Incorrect, uncheck Mission.**
+- The paper names the sources itself ("…the OMNI dataset (i.e., ACE and
+  Wind)") → the wording supports the claim → **Correct.**
+- The paper mentions the contributing spacecraft but analyzes only the merged
+  product → **Incorrect → Mention only**, plus a note.
 
-## Worked exemplars (calibration precedents)
+### Constellations and satellite series
 
-| Claim | Call | Why |
-|---|---|---|
-| [PSP/SPAN-A envelope, 2026ApJ...997..174F](https://paper-data.helioanalytics.io/campaign/papers/00607ada-7941-42d9-989e-1b3a5f95b363/claims/333c3609-75d6-4ba8-8d5e-cc6b47698434?campaign=val2026&phase=calibration) | approve | window = min/max of the paper's Table 1; paper frames E6–E21 as one study (~0.1% duty cycle is irrelevant) |
-| [STEREO-A/IMPACT 12 yr, 2020ApJ...889..143D](https://paper-data.helioanalytics.io/campaign/papers/7ac05972-0601-4273-abbf-1c5a18c133ee/claims/467f46c2-eec3-4295-a179-f007bbb0083c?campaign=val2026&phase=calibration) | approve | span asserted in text and title; suite-level IMPACT covers SEPT+HET |
-| [MMS-3/FIELDS/ADP, 2020ApJ...891L..26H](https://paper-data.helioanalytics.io/campaign/papers/c3168f80-51b0-4553-a8e2-92bc21cb6c75/claims/5d3bd50c-a165-4c29-9210-a599fe35f881?campaign=val2026&phase=calibration) | **approve** (formation rule) | fleet-level analysis framing, no textual restriction — figures showing only MMS1/4 do not restrict |
-| [SOHO/CDS, 2000BAAS...32..460M](https://paper-data.helioanalytics.io/campaign/papers/b3daa2ef-6fa8-40f8-b8bb-33aba0539577/claims/e7dd46d0-92c0-407d-87e6-f752d5e1eb8c?campaign=val2026&phase=calibration) | **reject → Cites others' work** | meeting abstract summarizing external analyses; no own operation |
+**Formation-flying constellations (MMS; Cluster flying in formation).**
+The members observe together, so when the paper frames its observations and
+analysis at fleet level — with **no restricting sentence** — member claims are
+**Correct**, even if figures show only some members. Figures never restrict;
+only text does. If the paper *does* restrict ("we use only data from
+spacecraft 1"), claims for the other members are **Incorrect, uncheck
+Mission.**
+
+**Interchangeable series (the GOES satellites).** A generic mention ("GOES
+X-ray flux") supports only the **generic/group record** — approve that if
+it's the claim. Claims naming specific satellite numbers the paper never
+names are **Incorrect, uncheck Mission.** Never reason "it should have been
+GOES-15 that year" — inferring the operational satellite is retired.
+
+### Instrument naming level
+
+**Suite versus sub-instrument** (SECCHI vs EUVI, FIELDS vs its antennas):
+approve whichever level the paper's text supports. A specific sibling the
+paper never names — grounding antenna V5 when the paper says V2 — is
+**Incorrect, uncheck Instrument.**
+
+**GOES X-ray claims grounded to "SEM"** are **Correct**: the X-Ray Sensor
+(XRS) is part of the Space Environment Monitor (SEM) package in our catalog.
+(A known blind spot — don't reason from instrument physics here.)
+
+### Document genre
+
+**Genre never decides — operations do.** A review paper that performs its own
+analysis on data products counts as usage; a review reprinting a figure does
+not. An instrument paper is usually *Instrument/design paper* — but if it
+analyzes commissioning or first-light observations, those claims are
+**Correct**: real windows, real operations.
+
+## Time windows: the framing rule
+
+Judge a window by **how the paper itself talks about the span** — never by
+how sparsely it was observed or how big the gaps are.
+
+**Correct** when the span is one the paper asserts:
+
+- a stated duration — "we study 2007 through 2018";
+- a collectively framed set of events — "throughout encounters 6 to 21",
+  "events up to the end of 2018". Sparse coverage inside the span is fine;
+  add a note like *"window is an envelope of discrete events"*.
+
+**Incorrect — uncheck Time window** when:
+
+- the range belongs to a *different* dataset (SOHO/MDI stamped 1850–2005
+  because the paper analyzed a sunspot series) — *over-extension*;
+- the extractor invented the span by joining separately-described events
+  (one event in 1996 plus one in 2016 becoming "1996–2016") —
+  *granularity collapse*.
+
+**Never wrong**: rounding at the paper's own precision ("January 2007"
+becoming 2007-01-01), or technical quirks in how range endpoints are stored.
+
+## Worked examples (calibration precedents)
+
+1. **Parker Solar Probe SPAN-A**, Fargette et al. 2026 — **Correct.**
+   The window is the first-to-last entry of the paper's own event table, and
+   the paper frames encounters 6–21 as one statistical study. Sparse coverage
+   inside the span is irrelevant.
+   [open claim](https://paper-data.helioanalytics.io/campaign/papers/00607ada-7941-42d9-989e-1b3a5f95b363/claims/333c3609-75d6-4ba8-8d5e-cc6b47698434?campaign=val2026&phase=calibration)
+2. **STEREO-A IMPACT**, Dresing et al. 2020 — **Correct.**
+   Twelve-year span asserted in the text and the title; suite-level naming
+   covers the two sub-instruments used (SEPT and HET).
+   [open claim](https://paper-data.helioanalytics.io/campaign/papers/7ac05972-0601-4273-abbf-1c5a18c133ee/claims/467f46c2-eec3-4295-a179-f007bbb0083c?campaign=val2026&phase=calibration)
+3. **MMS-3 axial double probe**, 2020 shock paper — **Correct** by the
+   formation rule: fleet-level analysis framing, no restricting sentence —
+   figures showing only MMS-1 and MMS-4 do not restrict.
+   [open claim](https://paper-data.helioanalytics.io/campaign/papers/c3168f80-51b0-4553-a8e2-92bc21cb6c75/claims/5d3bd50c-a165-4c29-9210-a599fe35f881?campaign=val2026&phase=calibration)
+4. **SOHO CDS**, 2000 meeting abstract — **Incorrect → Cites others' work.**
+   The abstract summarizes analyses done elsewhere; the document performs no
+   operation of its own.
+   [open claim](https://paper-data.helioanalytics.io/campaign/papers/b3daa2ef-6fa8-40f8-b8bb-33aba0539577/claims/e7dd46d0-92c0-407d-87e6-f752d5e1eb8c?campaign=val2026&phase=calibration)
 
 ## Ratification checklist (freeze meeting)
 
-- ☐ The usage definition (one rule above)
-- ☐ Window framing test, including event-set envelopes (E6–E21 accepted)
-- ☐ Formation-fleet rule (MMS-3 → approve; Anthony re-votes Unsure → Correct)
-- ☐ BAAS/CDS → reject, "Cites others' work" (both reviewers enter it)
-- ☐ Reject categories (5 + Other) as shown in the review UI
-- ☐ Amendments after this point are logged here with dates
+- ☐ The one rule (usage definition)
+- ☐ The window framing rule, including event-set envelopes
+- ☐ The formation-constellation rule (MMS-3 becomes Correct; Anthony re-votes)
+- ☐ The meeting-abstract call (both reviewers enter the reject)
+- ☐ The five reject categories as shown in the review interface
+- ☐ Future amendments are logged in this file with dates
 
-Once all boxes are checked and both calibration re-verdicts are entered,
-bulk review is open.
+When every box is checked and both calibration re-verdicts are entered, bulk
+review is open.

@@ -59,3 +59,33 @@
   text-align: center;
   padding: 1.5rem;
 }
+
+.rubric-modal-body h3 {
+  font-size: 0.92rem;
+  margin: 0.9rem 0 0.3rem;
+  color: #24292f;
+}
+
+.rubric-modal-body p {
+  margin: 0.35rem 0;
+}
+
+.rubric-modal-body ul,
+.rubric-modal-body ol {
+  margin: 0.3rem 0 0.6rem 1.2rem;
+  padding: 0;
+}
+
+.rubric-modal-body li {
+  margin-bottom: 0.3rem;
+}
+
+.rubric-modal-body hr {
+  border: none;
+  border-top: 1px solid #d8dee4;
+  margin: 0.8rem 0;
+}
+
+.rubric-modal-body a {
+  color: #0969da;
+}
