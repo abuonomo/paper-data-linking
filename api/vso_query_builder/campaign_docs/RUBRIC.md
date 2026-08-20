@@ -1,7 +1,7 @@
 # val2026 Review Rubric — v2.1
 
-**Status: PROPOSED.** Anthony approved 2026-08-20 · AJ sign-off: ☐ (date: ______)
 Rationale and campaign mechanics live in the paper repo's `VALIDATION_PROTOCOL.md`.
+Amendments are logged in this file with dates.
 
 ---
 
@@ -145,19 +145,3 @@ becoming 2007-01-01), or technical quirks in how range endpoints are stored.
    The abstract summarizes analyses done elsewhere; the document performs no
    operation of its own.
    [open claim](https://paper-data.helioanalytics.io/campaign/papers/b3daa2ef-6fa8-40f8-b8bb-33aba0539577/claims/e7dd46d0-92c0-407d-87e6-f752d5e1eb8c?campaign=val2026&phase=calibration)
-
-## Ratification checklist (freeze meeting)
-
-- ☐ The one rule (usage definition), with the inference standard: unique
-  inference from text + domain knowledge is fine; guessing among candidates
-  is not; inference never contradicts the text (amended 2026-08-20)
-- ☐ Composite flow-through: OMNI-style component claims approve at parameter
-  level, contributor need not be named (amended 2026-08-20)
-- ☐ The window framing rule, including event-set envelopes
-- ☐ The formation-constellation rule (MMS-3 becomes Correct; Anthony re-votes)
-- ☐ The meeting-abstract call (both reviewers enter the reject)
-- ☐ The five reject categories as shown in the review interface
-- ☐ Future amendments are logged in this file with dates
-
-When every box is checked and both calibration re-verdicts are entered, bulk
-review is open.
