@@ -108,6 +108,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   const [claimChecks, setClaimChecks] = useState({ mission: true, instrument: true, window: true });
   const [showRejectPanel, setShowRejectPanel] = useState(false);
   const [rejectReason, setRejectReason] = useState(null);
+  const [showRejectHelp, setShowRejectHelp] = useState(false);
   // Prefetched overview promise for campaign end-of-paper advancement — kicked
   // off at vote time so the network round trip overlaps the vote flash.
   const campaignAdvancePrefetchRef = useRef(null);
@@ -1309,27 +1310,55 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       {allChecked
                         ? 'All three are right — so why doesn’t this count as data usage?'
                         : 'Optionally, also pick a reason category:'}
+                      <button
+                        type="button"
+                        className="reject-help-btn"
+                        onClick={() => setShowRejectHelp(true)}
+                        title="What do these categories mean?"
+                      >
+                        ?
+                      </button>
                     </div>
-                    <div className="reject-reason-chips">
-                      {[
-                        { key: 'mention_only', label: 'Mention/background only' },
-                        { key: 'external_summary', label: "Cites others' analysis" },
-                        { key: 'review_reproduction', label: 'Reproduced figure' },
-                        { key: 'infrastructure', label: 'Instrument/infra paper' },
-                        { key: 'theory_context', label: 'Theory only' },
-                        { key: 'composite_component', label: 'Composite component (OMNI-style)' },
-                        { key: 'other', label: 'Other…' },
-                      ].map(({ key, label }) => (
-                        <button
-                          key={key}
-                          type="button"
-                          className={`reject-reason-chip ${rejectReason === key ? 'is-selected' : ''}`}
-                          onClick={() => setRejectReason(prev => (prev === key ? null : key))}
-                          disabled={isLoading || isValidating}
-                        >
-                          {label}
-                        </button>
-                      ))}
+                    <div className="reject-reason-groups">
+                      <div className="reject-reason-group">
+                        <span className="reject-reason-group-label">Doesn't use this data</span>
+                        <div className="reject-reason-chips">
+                          {[
+                            { key: 'mention_only', label: 'Mention only' },
+                            { key: 'external_summary', label: "Cites others' work" },
+                            { key: 'review_reproduction', label: 'Reproduced figure' },
+                          ].map(({ key, label }) => (
+                            <button key={key} type="button"
+                              className={`reject-reason-chip ${rejectReason === key ? 'is-selected' : ''}`}
+                              onClick={() => setRejectReason(prev => (prev === key ? null : key))}
+                              disabled={isLoading || isValidating}>
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="reject-reason-group">
+                        <span className="reject-reason-group-label">Analyzes no data at all</span>
+                        <div className="reject-reason-chips">
+                          {[
+                            { key: 'infrastructure', label: 'Instrument/design paper' },
+                            { key: 'theory_context', label: 'Theory only' },
+                          ].map(({ key, label }) => (
+                            <button key={key} type="button"
+                              className={`reject-reason-chip ${rejectReason === key ? 'is-selected' : ''}`}
+                              onClick={() => setRejectReason(prev => (prev === key ? null : key))}
+                              disabled={isLoading || isValidating}>
+                              {label}
+                            </button>
+                          ))}
+                          <button type="button"
+                            className={`reject-reason-chip reject-reason-chip--other ${rejectReason === 'other' ? 'is-selected' : ''}`}
+                            onClick={() => setRejectReason(prev => (prev === 'other' ? null : 'other'))}
+                            disabled={isLoading || isValidating}>
+                            Other…
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="validation-notes">
@@ -1635,6 +1664,62 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reject-category help modal (campaign mode) */}
+      {showRejectHelp && (
+        <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && setShowRejectHelp(false)}>
+          <div className="context-modal" style={{ width: '560px' }}>
+            <div className="context-modal-header">
+              <h2>Rejecting a claim</h2>
+              <button className="modal-close" onClick={() => setShowRejectHelp(false)}>&times;</button>
+            </div>
+            <div className="context-modal-body reject-help-body">
+              <p><strong>The rule: uncheck what's false, or pick why it doesn't count.</strong></p>
+              <p>
+                If the mission, instrument, or time window is <em>factually wrong</em>
+                (wrong spacecraft member, wrong sibling instrument, a time span the
+                paper never asserts), uncheck that box — no category needed, the box
+                is the reason.
+              </p>
+              <p>
+                If all three are correctly identified but the paper doesn't actually
+                <em> use</em> the data, pick a category:
+              </p>
+              <h4>Doesn't use this data</h4>
+              <ul>
+                <li><strong>Mention only</strong> — the data appears as background or
+                  context, never analyzed. <em>Ex: "CMEs were observed by LASCO during
+                  this period" in an introduction.</em></li>
+                <li><strong>Cites others' work</strong> — the paper discusses another
+                  work's analysis of this data without doing its own. <em>Ex: a meeting
+                  abstract summarizing external SOHO/CDS results.</em></li>
+                <li><strong>Reproduced figure</strong> — a figure from a cited paper is
+                  reprinted; the analysis happened there. <em>Ex: a review reprinting an
+                  AIA figure from Downs et al. 2013.</em></li>
+              </ul>
+              <h4>Analyzes no data at all</h4>
+              <ul>
+                <li><strong>Instrument/design paper</strong> — describes an instrument
+                  or data system rather than analyzing observations. <em>Ex: the 1995
+                  ISTP data-systems paper. (A commissioning-data analysis section DOES
+                  count as usage.)</em></li>
+                <li><strong>Theory only</strong> — purely theoretical; datasets referenced
+                  generically, none analyzed.</li>
+              </ul>
+              <p className="reject-help-note">
+                Composite products (OMNI-style): if the paper names only the composite,
+                a component claim is factually wrong — uncheck <strong>Mission</strong>.
+                If the component is mentioned but only the merged product is analyzed —
+                <strong> Mention only</strong> + a note.
+              </p>
+              <p className="reject-help-note">
+                <strong>Other…</strong> requires a note. Notes are welcome on every
+                verdict — they feed the usage-type census.
+              </p>
             </div>
           </div>
         </div>

@@ -1677,3 +1677,69 @@
   color: #fff;
   font-weight: 600;
 }
+
+/* Grouped reject-reason chips + help */
+.reject-reason-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.reject-reason-group-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #82071e;
+  margin-bottom: 0.15rem;
+}
+
+.reject-reason-chip--other {
+  border-style: dashed;
+}
+
+.reject-help-btn {
+  margin-left: 0.4rem;
+  border: 1px solid #d0d7de;
+  background: #fff;
+  border-radius: 50%;
+  width: 1.1rem;
+  height: 1.1rem;
+  line-height: 1;
+  font-size: 0.75rem;
+  color: #57606a;
+  cursor: pointer;
+}
+
+.reject-help-btn:hover {
+  background: #f6f8fa;
+}
+
+.reject-help-body {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.reject-help-body h4 {
+  margin: 0.7rem 0 0.25rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #82071e;
+}
+
+.reject-help-body ul {
+  margin: 0.2rem 0 0.5rem 1.1rem;
+  padding: 0;
+}
+
+.reject-help-body li {
+  margin-bottom: 0.35rem;
+}
+
+.reject-help-note {
+  color: #57606a;
+  font-size: 0.82rem;
+  margin-top: 0.5rem;
+}

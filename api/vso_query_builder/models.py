@@ -1190,13 +1190,15 @@ class DatasetUsageValidation(models.Model):
     # Usage-type reason for rejects whose tuple is factually correct (all
     # checkmarks true) — the census taxonomy. Null for approves, unsures, and
     # misattribution rejects (where the unchecked box is the reason).
+    # Composite-component cases carry no chip: an unnamed component is a
+    # factual error (uncheck Mission); a mentioned-but-merged-only component
+    # is mention_only + note. Lineage credit is computed census-side.
     REJECT_REASON_CHOICES = [
-        ("mention_only", "Mention/background only"),
-        ("external_summary", "Cites others' analysis"),
-        ("review_reproduction", "Reproduced figure from cited work"),
-        ("infrastructure", "Instrument/infrastructure paper"),
+        ("mention_only", "Mention only"),
+        ("external_summary", "Cites others' work"),
+        ("review_reproduction", "Reproduced figure"),
+        ("infrastructure", "Instrument/design paper"),
         ("theory_context", "Theory only"),
-        ("composite_component", "Composite-product component"),
         ("other", "Other (see notes)"),
     ]
     reject_reason = models.CharField(
