@@ -782,7 +782,11 @@ def _build_public_papers_query_parts(include_unvalidated, missions, instruments,
                     Q(bibcode__icontains=text_query) | Q(title__icontains=text_query)
                 )
 
-    combined_papers = usage_papers
+    # Always wrap in an id__in subquery so the returned queryset never carries
+    # the dataset_usages join: joined duplicates would force DISTINCT over the
+    # caller's annotated select list, which makes the database evaluate every
+    # per-paper subquery for the full result set before LIMIT can apply (#11).
+    combined_papers = Paper.objects.filter(id__in=usage_papers.values('id'))
     if allow_mission_only:
         combined_papers = Paper.objects.filter(
             Q(id__in=usage_papers.values('id')) | Q(id__in=mission_only_papers.values('id'))
@@ -996,12 +1000,6 @@ class PublicValidatedPapersListView(APIView):
             DatasetUsage.objects.filter(paper=OuterRef('pk'), validation_status__in=allowed_statuses)
             .order_by().values('paper').annotate(c=Count('*')).values('c'),
             output_field=IntegerField()), 0)
-        latest_end_sq = Subquery(
-            DatasetUsage.objects.filter(paper=OuterRef('pk'))
-            .order_by().values('paper')
-            .annotate(m=Max(Func(F('observation_window'), function='upper', output_field=DateTimeField())))
-            .values('m'),
-            output_field=DateTimeField())
         if missions:
             mission_only_mentions = (
                 InstrumentMention.objects
@@ -1019,9 +1017,13 @@ class PublicValidatedPapersListView(APIView):
         else:
             mission_only_sq = Value(0, output_field=IntegerField())
 
-        # .distinct() is still required: on the non-mission filtered paths
-        # query_parts['papers'] joins dataset_usages and can yield duplicate paper
-        # rows. It is cheap here because the annotations no longer fan out.
+        # Order by the denormalized rollup column instead of a live Max()
+        # subquery: sorting by a correlated subquery makes the database
+        # evaluate it for every matching row even under LIMIT. The rollup is
+        # equivalent (max observation end over ALL of the paper's usages,
+        # matching the old annotation's semantics) and is what the unfiltered
+        # fast path already serves. Pagination happens on the queryset, so the
+        # per-paper count subqueries run only for the requested page (#11).
         papers = (
             query_parts['papers']
             .annotate(
@@ -1029,16 +1031,18 @@ class PublicValidatedPapersListView(APIView):
                 total_count=total_sq,
                 mission_only_match_count=mission_only_sq,
                 has_matching_dataset_usage=Exists(query_parts['matching_usage_exists']),
-                latest_end=latest_end_sq,
             )
-            .order_by('-latest_end', 'bibcode')
-            .distinct()
+            .order_by('-latest_observation_end_all', 'bibcode')
         )
-        # Build rows using database ADS metadata (much faster than API calls)
+
         include_ads = (request.query_params.get('include') or '').lower()
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(papers, request, view=self)
+        page_papers = page if page is not None else list(papers)
+
+        # Build rows using database ADS metadata (much faster than API calls)
         rows = []
-        
-        for p in papers:
+        for p in page_papers:
             row_data = {
                 'id': p.id,
                 'bibcode': p.bibcode,
@@ -1046,9 +1050,9 @@ class PublicValidatedPapersListView(APIView):
                 'total_count': getattr(p, 'total_count', None) or p.validated_count or 0,
                 'mission_only_match_count': getattr(p, 'mission_only_match_count', 0) or 0,
                 'has_matching_dataset_usage': bool(getattr(p, 'has_matching_dataset_usage', False)),
-                'latest_end': p.latest_end,
+                'latest_end': p.latest_observation_end_all,
             }
-            
+
             # Add ADS metadata from database if available, or fallback
             if include_ads:
                 if p.ads_metadata_fetched and p.title:
@@ -1067,17 +1071,12 @@ class PublicValidatedPapersListView(APIView):
                         'year': None,
                         'journal': None,
                     })
-            
+
             rows.append(row_data)
-        # Apply pagination
-        paginator = self.pagination_class()
-        page = paginator.paginate_queryset(rows, request, view=self)
-        if page is not None:
-            serializer = PublicValidatedPaperSerializer(page, many=True)
-            return paginator.get_paginated_response(serializer.data)
-        
-        # Fallback if pagination fails
+
         serializer = PublicValidatedPaperSerializer(rows, many=True)
+        if page is not None:
+            return paginator.get_paginated_response(serializer.data)
         return Response({'results': serializer.data})
 
     def _get_precomputed(self, request, include_unvalidated, q):
