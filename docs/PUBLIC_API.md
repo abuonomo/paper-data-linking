@@ -155,12 +155,6 @@ curl 'https://paper-data.helioanalytics.io/builder/public/papers/validated/?miss
 The time filter returns papers whose dataset usage observation window overlaps
 the requested range.
 
-> **Known limitation:** filtering by `instruments=` without a `start_date`/
-> `end_date` currently times out (HTTP 504) at the current corpus size —
-> always include a date range when filtering by instrument. Mission-only
-> queries work without dates. Tracked in
-> [issue #11](https://github.com/abuonomo/paper-data-linking/issues/11).
-
 The response is paginated:
 
 ```json
@@ -200,8 +194,7 @@ Query parameters:
 
 - `missions=SOHO`: filter by mission or observatory short name. Repeatable.
   Also accepts datasource-qualified keys such as `missions=vso:SOHO`.
-- `instruments=LASCO`: filter by instrument short name. Repeatable. Combine
-  with a date range (see limitation above).
+- `instruments=LASCO`: filter by instrument short name. Repeatable.
 - `start_date=2020-01-01` / `end_date=2023-12-31`: require overlap with the
   usage observation window.
 - `validation_status=approved`: filter by validation state. Repeatable.
