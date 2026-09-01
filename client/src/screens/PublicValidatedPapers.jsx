@@ -47,12 +47,14 @@ export default function PublicValidatedPapers() {
     const instruments = searchParams.getAll('instruments');
     const start_date = searchParams.get('start_date') || '';
     const end_date = searchParams.get('end_date') || '';
-    
+    const tags = searchParams.getAll('tags');
+
     return {
       missions,
       instruments,
       start_date,
-      end_date
+      end_date,
+      tags
     };
   };
   
@@ -83,8 +85,9 @@ export default function PublicValidatedPapers() {
     // Store current scroll position
     setScrollPosition(window.scrollY);
 
-    // Update local state
-    setFilters(newFilters);
+    // Update local state (tags are link-driven and not managed by the filter
+    // panel, so carry them through unchanged)
+    setFilters({ ...newFilters, tags: filters.tags });
 
     // Update URL parameters
     const newParams = new URLSearchParams(searchParams);
@@ -327,6 +330,33 @@ export default function PublicValidatedPapers() {
               }}
               searchInputRef={searchInputRef}
             />
+            {filters.tags && filters.tags.length > 0 && (
+              <div style={{ marginBottom: '0.5rem', display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ color: '#888', fontSize: 'var(--font-sm)' }}>Paper set:</span>
+                {filters.tags.map((tag) => (
+                  <span key={tag} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+                    background: 'var(--accent-soft, #e8eff7)', color: 'var(--accent, #3d6fa8)',
+                    borderRadius: '999px', padding: '0.1rem 0.6rem', fontSize: 'var(--font-sm)', fontWeight: 600,
+                  }}>
+                    {tag}
+                    <button
+                      aria-label={`Remove ${tag} paper set filter`}
+                      onClick={() => {
+                        const newParams = new URLSearchParams(searchParams);
+                        newParams.delete('tags');
+                        filters.tags.filter((t) => t !== tag).forEach((t) => newParams.append('tags', t));
+                        newParams.delete('page');
+                        setSearchParams(newParams);
+                      }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: 0, fontSize: 'inherit', lineHeight: 1 }}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
             <div style={{
               display: 'flex',
               alignItems: 'center',
