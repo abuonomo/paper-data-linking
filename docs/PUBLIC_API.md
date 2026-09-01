@@ -199,6 +199,9 @@ Query parameters:
   usage observation window.
 - `validation_status=approved`: filter by validation state. Repeatable.
 - `q=halo`: text search over bibcode and title.
+- `tags=hssi`: restrict to a curated paper set (e.g. the papers cited by the
+  HSSI software registry). Repeatable; multiple values are OR'd. The same
+  parameter works on the web page: `/public/papers?tags=hssi&include_unvalidated=true`.
 - `include=1`: include paper metadata.
 - `include_unvalidated=true`: include pending records in addition to approved.
 - `page_size=100`, `page=2`: pagination.

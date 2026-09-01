@@ -52,6 +52,11 @@ export async function fetchPublicValidatedPapers(includeUnvalidated = false, pag
     params.validation_status = filters.validation_status
   }
 
+  // Curated tag sets (link-driven, e.g. /public/papers?tags=hssi)
+  if (filters.tags && filters.tags.length > 0) {
+    params.tags = filters.tags
+  }
+
   // Text search (bibcode or title)
   if (filters.query && String(filters.query).trim()) {
     params.q = String(filters.query).trim()

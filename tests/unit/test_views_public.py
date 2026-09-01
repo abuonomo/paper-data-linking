@@ -179,6 +179,32 @@ class TestPublicValidatedPapersListView:
         response = client.get(url, {"q": bibcode[:10]})
         assert response.status_code == 200
 
+    def test_filters_by_tags(self, client, validated_usage_data):
+        paper = validated_usage_data["paper"]
+        paper.tags = ["hssi", "hssi:SunPy"]
+        paper.save(update_fields=["tags"])
+        url = reverse("public-validated-papers")
+
+        response = client.get(url, {"tags": "hssi"})
+        assert response.status_code == 200
+        results = response.data.get("results", response.data)
+        assert [r["bibcode"] for r in results] == [paper.bibcode]
+
+        response = client.get(url, {"tags": "no-such-tag"})
+        assert response.status_code == 200
+        results = response.data.get("results", response.data)
+        assert results == []
+
+    def test_tags_filter_repeatable_or_semantics(self, client, validated_usage_data):
+        paper = validated_usage_data["paper"]
+        paper.tags = ["hssi"]
+        paper.save(update_fields=["tags"])
+        url = reverse("public-validated-papers")
+        response = client.get(url, {"tags": ["no-such-tag", "hssi"]})
+        assert response.status_code == 200
+        results = response.data.get("results", response.data)
+        assert [r["bibcode"] for r in results] == [paper.bibcode]
+
     def test_mission_filter_includes_mission_only_papers(self, client, mission_only_data):
         url = reverse("public-validated-papers")
         response = client.get(url, {"missions": "STEREO_A"})

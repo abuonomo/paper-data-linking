@@ -741,14 +741,20 @@ def _build_dataset_usage_filter_q(missions, instruments, start_date, end_date, v
     return filters
 
 
-def _build_public_papers_query_parts(include_unvalidated, missions, instruments, start_date, end_date, validation_statuses, text_query):
+def _build_public_papers_query_parts(include_unvalidated, missions, instruments, start_date, end_date, validation_statuses, text_query, tags=None):
     """Build list/CSV paper query parts with mission_only inclusion semantics."""
     if include_unvalidated:
         allowed_statuses = ['approved', 'pending']
     else:
         allowed_statuses = ['approved']
 
+    tags_q = Q()
+    for tag in (tags or []):
+        tags_q |= Q(tags__contains=[tag])
+
     papers_with_usages = Paper.objects.filter(dataset_usages__validation_status__in=allowed_statuses)
+    if tags_q.children:
+        papers_with_usages = papers_with_usages.filter(tags_q)
     usage_filters = _build_dataset_usage_filter_q(
         missions=missions,
         instruments=instruments,
@@ -777,6 +783,8 @@ def _build_public_papers_query_parts(include_unvalidated, missions, instruments,
                 .filter(paperanalysis__instrument_mentions__match_level=InstrumentMention.MATCH_LEVEL_MISSION_ONLY)
                 .filter(mission_only_mission_q)
             )
+            if tags_q.children:
+                mission_only_papers = mission_only_papers.filter(tags_q)
             if text_query:
                 mission_only_papers = mission_only_papers.filter(
                     Q(bibcode__icontains=text_query) | Q(title__icontains=text_query)
@@ -962,6 +970,7 @@ class PublicValidatedPapersListView(APIView):
         start_date = request.query_params.get('start_date')
         end_date = request.query_params.get('end_date')
         validation_statuses = request.query_params.getlist('validation_status')
+        tags = request.query_params.getlist('tags')
 
         # Text search by bibcode or title (param: q)
         q = (request.query_params.get('q') or '').strip()
@@ -970,10 +979,10 @@ class PublicValidatedPapersListView(APIView):
         # not depend on any per-request usage filter, so it can read the
         # denormalized rollups on Paper (refreshed by refresh_paper_usage_stats)
         # instead of aggregating over DatasetUsage on every request. Any
-        # mission/instrument/date/validation-status filter changes the counting
-        # or membership semantics, so those requests fall through to the live
-        # aggregation path below.
-        if not (missions or instruments or start_date or end_date or validation_statuses):
+        # mission/instrument/date/validation-status/tag filter changes the
+        # counting or membership semantics, so those requests fall through to
+        # the live aggregation path below.
+        if not (missions or instruments or start_date or end_date or validation_statuses or tags):
             return self._get_precomputed(request, include_unvalidated, q)
 
         query_parts = _build_public_papers_query_parts(
@@ -984,6 +993,7 @@ class PublicValidatedPapersListView(APIView):
             end_date=end_date,
             validation_statuses=validation_statuses,
             text_query=q,
+            tags=tags,
         )
 
         # Per-paper aggregates as correlated subqueries. As JOIN-based annotations
@@ -1173,6 +1183,7 @@ class PublicValidatedPapersCSVView(APIView):
         start_date = request.query_params.get('start_date')
         end_date = request.query_params.get('end_date')
         validation_statuses = request.query_params.getlist('validation_status')
+        tags = request.query_params.getlist('tags')
 
         # Text search by bibcode or title (param: q)
         q = (request.query_params.get('q') or '').strip()
@@ -1185,6 +1196,7 @@ class PublicValidatedPapersCSVView(APIView):
             end_date=end_date,
             validation_statuses=validation_statuses,
             text_query=q,
+            tags=tags,
         )
 
         # Optimize query - only need bibcode, use distinct
