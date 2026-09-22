@@ -12,7 +12,7 @@ authors:
     orcid: 0000-0000-0000-0000
     affiliation: 1
   - name: Aidan Scharnikow
-    orcid: 0000-0000-0000-0000
+    orcid: 0009-0004-3670-7902
     affiliation: 1
 affiliations:
   - name: NASA Heliophysics Digital Resource Library, Goddard Space Flight Center, USA
