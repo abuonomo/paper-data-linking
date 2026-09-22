@@ -9,7 +9,7 @@ tags:
   - large language models
 authors:
   - name: Anthony R. Buonomo
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0001-6981-2304
     affiliation: 1
   - name: Aidan Scharnikow
     orcid: 0009-0004-3670-7902
