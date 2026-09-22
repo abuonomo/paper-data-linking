@@ -14,12 +14,6 @@ authors:
   - name: Aidan Scharnikow
     orcid: 0000-0000-0000-0000
     affiliation: 1
-  - name: Jack Ireland
-    orcid: 0000-0000-0000-0000
-    affiliation: 1
-  - name: Brian Thomas
-    orcid: 0000-0000-0000-0000
-    affiliation: 1
 affiliations:
   - name: NASA Heliophysics Digital Resource Library, Goddard Space Flight Center, USA
     index: 1
