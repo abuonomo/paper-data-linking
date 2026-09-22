@@ -37,6 +37,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Set working directory and create a non-root user for security
 WORKDIR /code
+
+# Build commit, exposed by GET /builder/version/ (set by .github/workflows/build.yml).
+ARG GIT_SHA=unknown
+ENV GIT_SHA=${GIT_SHA}
 RUN addgroup --gid 1000 $APP_USER && \
     adduser --disabled-password --gecos "" --uid 1000 --gid 1000 $APP_USER
 

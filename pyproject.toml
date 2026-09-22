@@ -1,12 +1,20 @@
 [project]
 name = "paper-data-linking"
-version = "0.1.0"
-description = "Identify and extract data references in heliophysics research papers. Starting with papers which use SOHO instrument data."
+version = "1.1.0"
+description = "Extract machine-readable data references (observatory, instrument, observation window) from heliophysics papers and link them to VSO and CDAWeb/SPASE."
 authors = [
     { name = "Anthony Buonomo", email = "anthony.r.buonomo@gmail.com" }
 ]
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.11, <3.12"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Django",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Intended Audience :: Science/Research",
+]
 dependencies = [
     "pyproject-hooks==1.1.0",
     "numpy>=1.24.2",
@@ -93,6 +101,11 @@ bibcollect = [
 classify = [
     "scikit-learn>=1.4.0",
 ]
+
+[project.urls]
+Repository = "https://github.com/abuonomo/paper-data-linking"
+Documentation = "https://github.com/abuonomo/paper-data-linking/blob/main/docs/README.md"
+Changelog = "https://github.com/abuonomo/paper-data-linking/blob/main/CHANGELOG.md"
 
 [tool.pytest.ini_options]
 pythonpath = [".", "api"]

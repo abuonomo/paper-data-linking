@@ -226,6 +226,9 @@ for the paper's usages.
 
 ## 5. Other Endpoints
 
+- `GET /builder/version/` — `{version, git_sha}`: the running software version and
+  build commit. Include it in bug reports.
+
 - `GET /builder/public/papers/{bibcode}/similar/` — up to 10 similar papers by
   embedding similarity over supporting quotes, with scores and missions.
 - `GET /builder/public/papers/{bibcode}/pdf/` — `{pdf_url, bibcode, has_pdf}`;

@@ -4169,3 +4169,20 @@ class PhenomenaQueuePapersView(ListAPIView):
         if page is not None:
             return self.get_paginated_response(data)
         return Response(data)
+
+
+class VersionView(APIView):
+    """
+    Public, unauthenticated: the running software version and build commit.
+    Useful in bug reports and for checking what a deployment is serving.
+    """
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        import os
+        from paper_data_linking import __version__
+        return Response({
+            'version': __version__,
+            'git_sha': os.getenv('GIT_SHA') or None,
+        })
