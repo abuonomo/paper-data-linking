@@ -291,7 +291,7 @@ outputs use this format.
 0.669 → 0.923 — a measurement artifact, not real disagreement.
 
 Full writeup with suggested unit tests in
-`docs/validation_parser_regex_bug.md`. This finding is *incidental*
+`docs/internal/validation_parser_regex_bug.md`. This finding is *incidental*
 to the substitution study and is worth citing as a concrete example
 of cross-model comparison surfacing prod bugs.
 
@@ -329,7 +329,7 @@ cost reduction at the per-call level.
   `InstrumentValidationHandler.parse_response` and
   `MissionValidationHandler.parse_response`. Add unit tests covering
   `**FINAL DECISION:** valid` format. Details in
-  `docs/validation_parser_regex_bug.md`.
+  `docs/internal/validation_parser_regex_bug.md`.
 
 ---
 
@@ -491,7 +491,7 @@ draggable threshold slider.
 | `experiments/compare_models/test_set_helio_v2_2026_04_06_substitution_decision_kappa.{png,pdf}` | Secondary quadrant figure |
 | `experiments/compare_models/test_set_helio_v2_2026_04_06_intra_vs_cross.{png,pdf}` | Figure-5-style figure |
 | `experiments/compare_models/test_set_helio_v2_2026_04_06_self_consistency_report.md` | Auto-generated κ + parse-rate tables |
-| `docs/validation_parser_regex_bug.md` | Regex-bug writeup |
+| `docs/internal/validation_parser_regex_bug.md` | Regex-bug writeup |
 | `experiments/compare_models/test_set_helio_v2_2026_04_06_substitution_analysis.md` | **This document** |
 
 ---
@@ -540,7 +540,7 @@ higher; rankings unchanged."
    footnote would do. It's a concrete demonstration that rigorous
    cross-model comparison surfaces prod bugs — the kind of incidental
    finding that strengthens methodology sections. Reference
-   `docs/validation_parser_regex_bug.md`.
+   `docs/internal/validation_parser_regex_bug.md`.
 
 3. **Cost/latency claim**: if the paper wants to quantify the cost
    argument behind the swap, token-usage data is already in each
