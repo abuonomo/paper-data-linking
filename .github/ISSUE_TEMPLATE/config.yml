@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Public API documentation
+    url: https://github.com/abuonomo/paper-data-linking/blob/main/docs/PUBLIC_API.md
+    about: How to query validated data references without an account
+  - name: Security issue
+    url: https://github.com/abuonomo/paper-data-linking/security/policy
+    about: Report privately; do not open a public issue

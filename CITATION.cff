@@ -1,0 +1,25 @@
+# Software authors only (the companion paper has additional authors).
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below, and cite the companion paper when it is available."
+type: software
+title: "paper-data-linking: extracting machine-readable data references from the heliophysics literature"
+version: 1.0.0
+date-released: 2026-09-22
+license: MIT
+repository-code: "https://github.com/abuonomo/paper-data-linking"
+doi: 10.5281/zenodo.22899457
+authors:
+  - family-names: Buonomo
+    given-names: Anthony R.
+    affiliation: "NASA Heliophysics Digital Resource Library, Goddard Space Flight Center"
+    orcid: "https://orcid.org/0000-0001-6981-2304"
+  - family-names: Scharnikow
+    given-names: Aidan
+    affiliation: "NASA Heliophysics Digital Resource Library, Goddard Space Flight Center"
+    orcid: "https://orcid.org/0009-0004-3670-7902"
+keywords:
+  - heliophysics
+  - scientific literature
+  - data discovery
+  - large language models
+  - SunPy
