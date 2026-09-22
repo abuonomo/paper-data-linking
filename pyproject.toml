@@ -80,6 +80,7 @@ dependencies = [
     "psycogreen>=1.0.2",
     "hdpws (>=0.6.26,<0.7.0)",
     "zeep>=4.2.1",
+    "drf-spectacular>=0.30.0",
 ]
 
 [project.optional-dependencies]

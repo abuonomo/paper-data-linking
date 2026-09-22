@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_extensions',
     'rest_framework',
+    'drf_spectacular',
     'channels',
     'storages',
     'vso_query_builder',
@@ -172,6 +173,25 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# OpenAPI schema (drf-spectacular), scoped to the public read-only API.
+# Served at /builder/schema/ (JSON/YAML) and /builder/schema/swagger/ (UI).
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'paper-data-linking public API',
+    'DESCRIPTION': (
+        'Read-only access to validated data references extracted from heliophysics '
+        'papers: which instruments, observatories, and observation windows a paper '
+        'analyzed, with supporting quotes and a generated SunPy query. No '
+        'authentication required. See docs/PUBLIC_API.md for a narrative guide.'
+    ),
+    'VERSION': None,  # filled at runtime from paper_data_linking.__version__ (see vso_query_builder.openapi)
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_PERMISSIONS': ['rest_framework.permissions.AllowAny'],
+    'SERVE_AUTHENTICATION': [],
+    'PREPROCESSING_HOOKS': ['vso_query_builder.openapi.public_only'],
+    'POSTPROCESSING_HOOKS': ['vso_query_builder.openapi.set_version'],
 }
 
 
