@@ -764,9 +764,9 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
     Create PhenomenonMention records from phenomenon normalizer output stored in
     normalized_instrument_details.
 
-    One record per (paper_analysis, phenomenon, instrument_name). All physobs
-    SupportQuotes found across every period for that instrument are collected and
-    linked via the supporting_quotes M2M so the validation UI can show all of them.
+    One record per (paper_analysis, phenomenon, instrument_name, period_name).
+    All physobs SupportQuotes for the instrument are linked via the M2M — we can't
+    filter them by period for grounded instruments since SupportQuote has no period_name.
     """
     from .models import Phenomenon, PhenomenonMention
 
@@ -785,12 +785,10 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
         matched_instrument_code = normalized_name.get("matched_instrument_code") if normalized_name else None
         matched_mission_code = normalized_name.get("matched_mission_code") if normalized_name else None
 
-        # --- Pass 1: collect all physobs SupportQuotes for this instrument ---
+        # --- Collect all physobs SupportQuotes for this instrument ---
         # Gather those already in the DB (created by the dataset-usage path for grounded instruments).
         # Key by quote text to deduplicate — the dataset-usage path creates one SupportQuote per
         # period per quote, so the same text may appear multiple times with different IDs.
-        # No page_number filter: collect all physobs quotes so grounded instruments show quotes
-        # even when find_quotes_original found no coordinates during normalization.
         inst_sq_map: dict = {
             sq.quote: sq for sq in SupportQuote.objects.filter(
                 paper_analysis=paper_analysis,
@@ -800,7 +798,7 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
         }
 
         # For ungrounded instruments, also create SupportQuotes from the quote normalizer
-        # output stored per-period in supporting_quotes
+        # output stored per-period in supporting_quotes.
         if matched_instrument_code is None:
             for period in inst_entry.get("data_collection_periods", []):
                 sq_data = period.get("supporting_quotes") or {}
@@ -828,8 +826,7 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
                         )
                         inst_sq_map[sq.quote] = sq
 
-        # Run IR search on any quotes still missing coordinates — find_quotes_original (run
-        # during normalization) only does exact matching and often fails for physobs quotes.
+        # Run IR search on any quotes still missing coordinates.
         # Applies to both grounded and ungrounded instruments.
         missing_coords = [sq for sq in inst_sq_map.values() if sq.page_number == 0]
         if missing_coords and paper_analysis.paper.pdf:
@@ -871,15 +868,15 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
                 logger.warning(f"IR quote search failed for instrument '{instrument_name}': {e}")
 
         all_inst_sqs = list(inst_sq_map.values())
-        # Prefer a SupportQuote with real PDF coordinates as the primary FK
         best_sq = next((sq for sq in all_inst_sqs if sq.page_number > 0), None) or (all_inst_sqs[0] if all_inst_sqs else None)
 
-        # --- Pass 2: collect unique phenomena and first physical_observable per phenomenon ---
-        inst_phenomena: dict = {}  # iri -> physical_observable text
+        # --- Upsert one PhenomenonMention per (instrument, period, phenomenon) ---
         for period in inst_entry.get("data_collection_periods", []):
+            period_name = period.get("period_name", "")
             phenomena_data = (period.get("phenomenon") or {}).get("phenomena", [])
             if not phenomena_data:
                 continue
+
             phys_field = period.get("physical_observable", {})
             if isinstance(phys_field, dict):
                 physical_observable = phys_field.get("original", "")
@@ -887,42 +884,40 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
                 physical_observable = phys_field
             else:
                 physical_observable = ""
+
             for ph_data in phenomena_data:
                 iri = ph_data.get("iri")
-                if iri and iri not in inst_phenomena:
-                    inst_phenomena[iri] = physical_observable
+                if not iri:
+                    continue
+                phenomenon = phenomenon_by_iri.get(iri)
+                if not phenomenon:
+                    logger.warning(f"_upsert_phenomenon_mentions: unknown IRI '{iri}', skipping")
+                    continue
 
-        # --- Pass 3: upsert one PhenomenonMention per (instrument, phenomenon) ---
-        for iri, physical_observable in inst_phenomena.items():
-            phenomenon = phenomenon_by_iri.get(iri)
-            if not phenomenon:
-                logger.warning(f"_upsert_phenomenon_mentions: unknown IRI '{iri}', skipping")
-                continue
+                key = (phenomenon.id, instrument_name, period_name)
+                if key in seen:
+                    continue
+                seen.add(key)
 
-            key = (phenomenon.id, instrument_name)
-            if key in seen:
-                continue
-            seen.add(key)
+                mention, _ = PhenomenonMention.objects.get_or_create(
+                    paper_analysis=paper_analysis,
+                    phenomenon=phenomenon,
+                    instrument_name=instrument_name,
+                    period_name=period_name,
+                    defaults={
+                        "matched_instrument_code": matched_instrument_code,
+                        "matched_mission_code": matched_mission_code,
+                        "quote": best_sq.quote if best_sq else "",
+                        "supporting_quote": best_sq,
+                        "physical_observable": physical_observable,
+                        "validation_status": "pending",
+                    },
+                )
 
-            mention, _ = PhenomenonMention.objects.get_or_create(
-                paper_analysis=paper_analysis,
-                phenomenon=phenomenon,
-                instrument_name=instrument_name,
-                defaults={
-                    "matched_instrument_code": matched_instrument_code,
-                    "matched_mission_code": matched_mission_code,
-                    "quote": best_sq.quote if best_sq else "",
-                    "supporting_quote": best_sq,
-                    "physical_observable": physical_observable,
-                    "validation_status": "pending",
-                },
-            )
+                if all_inst_sqs:
+                    mention.supporting_quotes.add(*all_inst_sqs)
 
-            # Link all SupportQuotes to the mention (idempotent M2M add)
-            if all_inst_sqs:
-                mention.supporting_quotes.add(*all_inst_sqs)
-
-            created += 1
+                created += 1
 
     logger.info(f"_upsert_phenomenon_mentions: {created} PhenomenonMention records for PaperAnalysis {paper_analysis.id}")
     return created
