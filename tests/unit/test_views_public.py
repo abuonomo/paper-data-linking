@@ -304,3 +304,26 @@ class TestSolarEventsView:
         url = reverse("solar-events")
         response = client.get(url)
         assert response.status_code == 200
+
+
+@pytest.mark.django_db
+class TestPublicPaperPDFView:
+    """The PDF endpoint under public/ requires authentication: full texts are publisher-licensed."""
+
+    def test_anonymous_gets_401(self, client, validated_usage_data):
+        bibcode = validated_usage_data["paper"].bibcode
+        url = reverse("public-paper-pdf", kwargs={"bibcode": bibcode})
+        response = client.get(url)
+        assert response.status_code == 401
+
+    def test_authenticated_gets_pdf_payload(self, api_client, validated_usage_data):
+        bibcode = validated_usage_data["paper"].bibcode
+        url = reverse("public-paper-pdf", kwargs={"bibcode": bibcode})
+        response = api_client.get(url)
+        assert response.status_code == 200
+        assert response.data["bibcode"] == bibcode
+        assert set(response.data) >= {"pdf_url", "bibcode", "has_pdf"}
+
+    def test_authenticated_404_for_unknown_bibcode(self, api_client):
+        url = reverse("public-paper-pdf", kwargs={"bibcode": "NONEXISTENT"})
+        assert api_client.get(url).status_code == 404

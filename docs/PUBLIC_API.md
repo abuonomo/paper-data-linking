@@ -228,9 +228,13 @@ for the paper's usages.
 
 - `GET /builder/public/papers/{bibcode}/similar/` — up to 10 similar papers by
   embedding similarity over supporting quotes, with scores and missions.
-- `GET /builder/public/papers/{bibcode}/pdf/` — `{pdf_url, bibcode, has_pdf}`;
-  `pdf_url` is a time-limited presigned link, so fetch it on demand rather
-  than storing it.
+- `GET /builder/public/papers/{bibcode}/pdf/` — **requires authentication**
+  (JWT). Paper full texts are publisher-licensed and are not redistributed to
+  anonymous callers; only ~40% of the papers in the corpus carry a licence
+  (CC-BY) that would permit it. Signed-in users receive
+  `{pdf_url, bibcode, has_pdf}` where `pdf_url` is a time-limited presigned
+  link. A per-paper licence field with anonymous access for CC-BY papers is
+  planned.
 
 ## URL-Encoding Bibcodes
 

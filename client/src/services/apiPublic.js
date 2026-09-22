@@ -11,14 +11,6 @@ export async function fetchPublicValidatedUsages(bibcode, includeUnvalidated = f
   return resp.data
 }
 
-export async function fetchPublicPaperPDF(bibcode) {
-  const url = `${BASE_URL}/builder/public/papers/${encodeURIComponent(bibcode)}/pdf/`
-  const resp = await axios.get(url, {
-    headers: { Accept: 'application/json' },
-  })
-  return resp.data
-}
-
 export async function fetchPublicValidatedPapers(includeUnvalidated = false, page = 1, pageSize = 20, filters = {}) {
   const url = `${BASE_URL}/builder/public/papers/validated/`
   const params = { 
