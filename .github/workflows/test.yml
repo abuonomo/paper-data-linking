@@ -1,0 +1,81 @@
+# Runs the Python unit suite and builds the client on every PR and on push to main.
+# Integration tests (marked `integration`) call real LLM/AWS endpoints and are
+# excluded here by the default addopts in pyproject.toml.
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16   # same image as docker-compose.yaml
+        env:
+          POSTGRES_DB: pdl
+          POSTGRES_USER: pdl
+          POSTGRES_PASSWORD: pdl
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U pdl"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # Django settings (api/paper_analyzer_app/settings.py + settings_test.py)
+      RUNNING_LOCALLY: "true"
+      DB_NAME: pdl
+      DB_USER: pdl
+      DB_PASSWORD: pdl
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      POSTGRES_PORT: "5432"
+      DJANGO_SECRET_KEY: ci-only-not-secret
+      ALLOWED_HOSTS: localhost,testserver
+      USE_S3: "false"
+      REDIS_HOST: localhost
+      BASE_URL: http://localhost:8000   # public CSV export builds absolute links from this
+      # paper_data_linking.config.settings.AppSettings requires these at import time;
+      # unit tests never call the services.
+      OPENAI_API_KEY: ci-dummy
+      ADS_TOKEN: ci-dummy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv python install 3.11
+      - name: System packages used by PDF/OCR imports
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils tesseract-ocr
+      - run: uv sync --frozen
+      - run: uv run pytest -q --durations=15
+
+  client:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: client
+    env:
+      VITE_BASE_URL: localhost:8000
+      VITE_BASE_PROTOCOL: http
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
