@@ -13,7 +13,7 @@ Results are used in the technical report at [docs/technical_report/paper.tex](..
 
 - **Tag**: `test_set_helio_v2_2026_04_06`
 - **Papers**: 200 heliophysics papers (stratified sample across SOHO, Wind, IRIS, PSP, ACE, and a keyword-filtered general helio stratum)
-- **Creation docs**: [docs/test_set_helio_v2_2026_04_06.md](../../../docs/test_set_helio_v2_2026_04_06.md)
+- **Creation docs**: [docs/test_set_helio_v2_2026_04_06.md](../../../docs/internal/test_set_helio_v2_2026_04_06.md)
 - **Creation script**: [scripts/queries/create_helio_test_set_v2.py](../../../scripts/queries/create_helio_test_set_v2.py)
 
 ## Call types (10)

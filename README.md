@@ -7,6 +7,10 @@
 
 `paper-data-linking` reads heliophysics research papers and extracts the data references they contain — which instruments, observatories, and time ranges a paper analyzed — then links those references to the corresponding public data archives so the underlying datasets can be located and reused. It is built to support open, reproducible science.
 
+## Statement of need
+
+Heliophysics papers rarely cite the observational data they analyze in machine-readable form: which instruments, which observatories, and which time windows are stated in prose, and no structured record connects a paper to the archives that hold its data. Data providers therefore cannot see how archival data is used, and researchers cannot search the literature by data. Journal data-availability statements and author-supplied facility keywords cover only a minority of actual usage. `paper-data-linking` extracts these references from full text, matches them to catalog entries in VSO and CDAWeb/SPASE, and produces a runnable query for each, with verbatim supporting quotes located in the source PDF so every reference can be checked. It includes a blinded human-review workflow for measuring extraction precision and a public API for querying validated references. It is intended for mission data stewards, archive operators, informaticians, and researchers doing data-driven literature discovery.
+
 > **Maintained at [github.com/abuonomo/paper-data-linking](https://github.com/abuonomo/paper-data-linking)** — active development happens there. Developed at the University of Maryland, Baltimore County and released under the MIT License (© UMBC; see [LICENSE](LICENSE) and [NOTICE](NOTICE)).
 
 ## Scope and intended use
@@ -41,19 +45,19 @@ The pipeline runs in stages:
 - **Core library** (`paper_data_linking/`): linkers (`vso/`, `cdaweb/`, `general/`), analyzers, PDF processing, LLM clients (via `litellm`), and Pydantic-based configuration.
 - **Frontend** (`client/`): React + TypeScript (Vite), served via nginx.
 
-A public, read-only API exposes validated results for querying by mission, instrument, and time range — see [docs/public_api.md](docs/public_api.md).
+A public, read-only API exposes validated results for querying by mission, instrument, and time range — see [docs/PUBLIC_API.md](docs/PUBLIC_API.md).
 
 ## Installation
 
 You will need Docker and Docker Compose.
 
-1. Create an environment file: `cp .env_example .env`, then fill in the application variables (at minimum an `ADS_TOKEN` for NASA ADS and an LLM API key such as `OPENAI_API_KEY`).
+1. Create an environment file: `cp .env_example .env`, then fill it in. Required: `DB_NAME`, `DB_USER`, `DB_PASSWORD` (Postgres is created from these), `DJANGO_SECRET_KEY`, `ADS_TOKEN` (NASA ADS API), and an LLM key such as `OPENAI_API_KEY`. `BASE_URL` should be the public URL of the API (used in exports). See [CONTRIBUTING.md](CONTRIBUTING.md) for the full list.
 2. Create a client environment file at `client/.env`:
    ```
    VITE_BASE_URL=localhost:8000
    VITE_BASE_PROTOCOL=http
    ```
-3. Set up the nginx reverse-proxy password: from the `nginx/` directory run `htpasswd -c .htpasswd <username>` and choose a password.
+3. Set up the reverse-proxy password: from the repository root run `htpasswd -c .htpasswd <username>` and choose a password (`docker-compose.yaml` mounts this file into the nginx container).
 4. From the repository root: `docker compose build` (this may take a while).
 5. Start the services: `docker compose up`. Then open `localhost:80` and sign in with the credentials from step 3.
 
@@ -69,6 +73,37 @@ uv sync
 ```
 
 Run the unit test suite with `uv run pytest` (needs a local Postgres with pgvector, e.g. `docker compose up -d postgres`; see [CONTRIBUTING.md](CONTRIBUTING.md) for the environment variables). Integration tests that call real LLM services are opt-in: `uv run pytest -m integration`. The same suite runs in CI on every pull request.
+
+## Quickstart
+
+**In the web interface.** Sign in, add a paper by ADS bibcode or PDF upload, and press **Analyze**. Within a few minutes the paper's page lists each extracted data reference with its supporting quotes highlighted in the PDF, its catalog match, and a generated SunPy script. Reviewers mark each reference correct or incorrect; validated references become visible through the public API.
+
+**From the public API** (no account needed; a hosted instance is at `https://paper-data.helioanalytics.io`). Which data does a paper use?
+
+```bash
+curl 'https://paper-data.helioanalytics.io/builder/public/papers/2023ApJ...952L..13G/validated-usages/'
+```
+
+Which papers used SOHO/LASCO data between 2020 and 2023?
+
+```bash
+curl 'https://paper-data.helioanalytics.io/builder/public/papers/validated/?missions=SOHO&instruments=LASCO&start_date=2020-01-01&end_date=2023-12-31&page_size=3&include=1'
+```
+
+Each usage record carries the instrument, observatory, observation window, the verbatim quotes that support it, and a `python_snippet` — a self-contained SunPy `Fido` query for that data, for example:
+
+```python
+from sunpy.net import Fido, attrs as a
+
+result = Fido.search(
+    a.Time("2022-11-12 00:00", "2022-11-13 00:00"),
+    a.Source("SOHO"),
+    a.Instrument("LASCO"),
+)
+files = Fido.fetch(result)
+```
+
+The full endpoint reference, including the CSV export, is in [docs/PUBLIC_API.md](docs/PUBLIC_API.md); a machine-readable schema is served at `/builder/schema/`.
 
 ## Usage
 
@@ -134,9 +169,34 @@ PDF storage can optionally use S3 by setting `USE_S3=true` and the related `AWS_
 
 The system processes CDAWeb datasets that carry SPASE links to HPDE representations (roughly 1,921 of 2,867 datasets), because those links are the reliable way to determine the associated instruments.
 
+## Documentation
+
+- [docs/README.md](docs/README.md) — index of all documentation
+- [docs/PUBLIC_API.md](docs/PUBLIC_API.md) — public API reference
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — production deployment
+- [docs/EXTENDING_DATA_SOURCES.md](docs/EXTENDING_DATA_SOURCES.md) — adding a data archive
+- [CHANGELOG.md](CHANGELOG.md)
+
 ## Contributing
 
-Contributions and dataset-usage annotations are welcome via pull request. Please open an issue to discuss substantial changes first.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, the test suite, and the pull-request process — including the rule that changes to the extraction pipeline (prompts, catalog, grounding) need an issue with evidence first, because published precision numbers are pinned to a tagged version. Bug reports and feature requests use the [issue templates](https://github.com/abuonomo/paper-data-linking/issues/new/choose). This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md); security issues go through [SECURITY.md](SECURITY.md).
+
+## Citation
+
+If you use this software, please cite it. The metadata is in [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button renders it); the archived release is on Zenodo:
+
+```bibtex
+@software{paper_data_linking,
+  author  = {Buonomo, Anthony R. and Scharnikow, Aidan},
+  title   = {paper-data-linking: extracting machine-readable data references from the heliophysics literature},
+  year    = {2026},
+  publisher = {Zenodo},
+  doi     = {10.5281/zenodo.22899457},
+  url     = {https://github.com/abuonomo/paper-data-linking}
+}
+```
+
+The results in the companion validation paper were produced with **v1.0.0** (commit `2ef517d`); a paper citation will be added when it is available.
 
 ## License & Copyright
 
