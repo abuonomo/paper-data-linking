@@ -26,7 +26,8 @@ jobs:
           - name: api
             context: .
             dockerfile: Dockerfile
-            build-args: ""
+            build-args: |
+              GIT_SHA=${{ github.sha }}
           - name: client
             context: ./client
             dockerfile: ./client/Dockerfile
