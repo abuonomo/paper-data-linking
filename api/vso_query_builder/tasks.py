@@ -873,7 +873,11 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
         # --- Upsert one PhenomenonMention per (instrument, period, phenomenon) ---
         for period in inst_entry.get("data_collection_periods", []):
             period_name = period.get("period_name", "")
-            phenomena_data = (period.get("phenomenon") or {}).get("phenomena", [])
+            phenom_field = period.get("phenomenon") or {}
+            # Normalizer stores results under "normalized.phenomena"; some older analyses
+            # stored them directly under "phenomena" as bare strings — handle both.
+            phenomena_data = phenom_field.get("normalized", {}).get("phenomena", []) \
+                or phenom_field.get("phenomena", [])
             if not phenomena_data:
                 continue
 
@@ -886,7 +890,14 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
                 physical_observable = ""
 
             for ph_data in phenomena_data:
-                iri = ph_data.get("iri")
+                # New format: {"iri": "hkp:...", "name": "..."}
+                # Old format: bare string (IRI local name, e.g. "CoronalMassEjection")
+                if isinstance(ph_data, dict):
+                    iri = ph_data.get("iri")
+                elif isinstance(ph_data, str):
+                    iri = f"hkp:{ph_data}" if not ph_data.startswith("hkp:") else ph_data
+                else:
+                    continue
                 if not iri:
                     continue
                 phenomenon = phenomenon_by_iri.get(iri)
