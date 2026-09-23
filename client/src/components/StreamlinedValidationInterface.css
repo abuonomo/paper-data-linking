@@ -1123,6 +1123,20 @@
   font-size: 1.1rem;
 }
 
+.pdf-signin-prompt {
+  max-width: 28rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.pdf-signin-prompt p {
+  margin: 0 0 0.5rem;
+}
+
+.pdf-signin-prompt button {
+  margin-top: 0.75rem;
+}
+
 
 
 /* Inline validation flash on claim card */

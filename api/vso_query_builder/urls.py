@@ -1,4 +1,5 @@
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .campaign_views import (
     CampaignOverviewView,
@@ -7,6 +8,7 @@ from .campaign_views import (
     CampaignRubricView,
 )
 from .views import (
+    VersionView,
     PaperUploadView,
     ListPapersView,
     MyPapersView,
@@ -133,6 +135,9 @@ urlpatterns = [
     path('public/papers/<str:bibcode>/validated-usages/', PublicPaperValidatedUsagesView.as_view(), name='public-paper-validated-usages'),
     path('public/papers/<str:bibcode>/pdf/', PublicPaperPDFView.as_view(), name='public-paper-pdf'),
     path('public/papers/<str:bibcode>/instrument-mentions/', PublicPaperInstrumentMentionsView.as_view(), name='public-paper-instrument-mentions'),
+    path('version/', VersionView.as_view(), name='version'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='schema-swagger'),
     path('public/papers/validated/', PublicValidatedPapersListView.as_view(), name='public-validated-papers'),
     path('public/papers/csv/', PublicValidatedPapersCSVView.as_view(), name='public-validated-papers-csv'),
     path('public/papers/filter-options/', PublicPapersFilterOptionsView.as_view(), name='public-papers-filter-options'),

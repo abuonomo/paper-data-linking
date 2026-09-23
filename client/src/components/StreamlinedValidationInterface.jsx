@@ -5,7 +5,6 @@ import { fetchValidationQueue, fetchValidationStats, validateDatasetUsage, fetch
 import PDFDocument from './pdfViewer/PDFDocument';
 import { ValidationProvider } from '../context/ValidationContext';
 import { usePaperPDF } from '../hooks/usePaperPDF';
-import { usePublicPaperPDF } from '../hooks/usePublicPaperPDF';
 import { usePDF } from '../hooks/usePDF';
 import { toast } from 'react-toastify';
 import { formatDateTimeCompactUTC } from '../utils/dateUtils';
@@ -170,15 +169,15 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
     return `/validate/${targetUsageId}${blindSuffix}`;
   };
 
-  // PDF loading for current usage
-  const authPdfState = usePaperPDF(isReadOnly ? null : currentUsage?.paper?.bibcode);
-  const publicPdfState = usePublicPaperPDF(isReadOnly ? currentUsage?.paper?.bibcode : null);
+  // PDF loading for current usage. Full texts are publisher-licensed, so the
+  // PDF endpoint requires a signed-in user; in read-only (anonymous) mode the
+  // hook is given no bibcode and the pane shows a sign-in prompt instead.
   const {
     pdfUrl,
     hasPdf,
     isLoading: pdfUrlLoading,
     error: pdfUrlError,
-  } = isReadOnly ? publicPdfState : authPdfState;
+  } = usePaperPDF(isReadOnly ? null : currentUsage?.paper?.bibcode);
   const { pdf, numPages, isLoading: pdfLoading, error: pdfError } = usePDF(
     pdfUrlLoading ? null : pdfUrl
   );
@@ -202,9 +201,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
 
   // Preload next item's PDF for smoother transitions
   const nextUsage = currentIndex < validationQueue.length - 1 ? validationQueue[currentIndex + 1] : null;
-  const { pdfUrl: nextAuthPdfUrl } = usePaperPDF(isReadOnly ? null : nextUsage?.paper?.bibcode);
-  const { pdfUrl: nextPublicPdfUrl } = usePublicPaperPDF(isReadOnly ? nextUsage?.paper?.bibcode : null);
-  const nextPdfUrl = isReadOnly ? nextPublicPdfUrl : nextAuthPdfUrl;
+  const { pdfUrl: nextPdfUrl } = usePaperPDF(isReadOnly ? null : nextUsage?.paper?.bibcode);
   const { pdf: nextPdf } = usePDF(nextPdfUrl); // Preload next PDF
 
   // Load validation data (fetch queue/stats once per paper/context change, not on usage change)
@@ -1513,7 +1510,21 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
             </ValidationProvider>
           ) : (
             <div className="pdf-loading">
-              {pdfLoading ? 'Loading PDF...' : 'No PDF available'}
+              {isReadOnly ? (
+                <div className="pdf-signin-prompt">
+                  <p>The paper's full text is available to signed-in reviewers.</p>
+                  <p>Sign in to view the PDF alongside the evidence quotes.</p>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => { window.location.href = '/public/papers?login=1'; }}
+                  >
+                    Sign in
+                  </button>
+                </div>
+              ) : (
+                pdfLoading ? 'Loading PDF...' : 'No PDF available'
+              )}
             </div>
           )}
         </div>
