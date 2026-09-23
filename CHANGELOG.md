@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-23
+
 ### Added
 - Continuous integration: the unit test suite and the client build run on every pull request and push to `main` (`.github/workflows/test.yml`).
 - `GET /builder/version/` reporting the package version and build commit.
@@ -38,5 +40,6 @@ All notable changes to this project are documented here. The format follows [Kee
 
 Initial public release: extraction pipeline, catalog grounding against VSO and CDAWeb/SPASE, SunPy script generation, validation interface with blinded campaign mode, public read API, deployment tooling. This is the version used for the validation campaign reported in the companion paper. Archived at https://doi.org/10.5281/zenodo.22899457.
 
-[Unreleased]: https://github.com/abuonomo/paper-data-linking/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/abuonomo/paper-data-linking/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/abuonomo/paper-data-linking/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/abuonomo/paper-data-linking/releases/tag/v1.0.0
