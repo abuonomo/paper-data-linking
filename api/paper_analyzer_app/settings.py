@@ -56,8 +56,9 @@ if not SECRET_KEY:
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Debug pages expose settings, tracebacks, and the URLconf. Off unless the
+# environment says otherwise (DJANGO_DEBUG=true for local development).
+DEBUG = os.getenv('DJANGO_DEBUG', 'false').strip().lower() in ('1', 'true', 'yes')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')

@@ -30,6 +30,7 @@ read them at deploy time:
 | `PDL_IMAGE_REPO` | Registry image path (without the `/api` or `/client` suffix) | `registry.example.com/your-org/paper-data-linking` |
 | `NGINX_SERVER_NAME` | Public hostname for the app vhost | `paper-data.example.com` |
 | `NGINX_FLOWER_SERVER_NAME` | Hostname for the Flower dashboard vhost | `flower.paper-data.example.com` |
+| `DJANGO_DEBUG` | Django debug mode. Leave unset/`false` in production; debug pages expose settings and tracebacks. | `false` |
 
 If `PDL_IMAGE_REPO` is unset, the overlay falls back to the local image name
 `paper-data-linking/*:latest`. If the nginx server-name variables are unset, the
