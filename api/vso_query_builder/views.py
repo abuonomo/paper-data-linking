@@ -4124,7 +4124,11 @@ class PaperPhenomenaView(APIView):
     """
     GET /builder/papers/<uuid:paper_id>/phenomena/
 
-    Returns all PhenomenonMention records for a given paper (across all analyses).
+    Returns deduplicated PhenomenonMention records for a given paper.
+    Multiple pipeline configs and multiple data collection periods can each produce a
+    PhenomenonMention for the same (instrument, phenomenon) pair. This view collapses
+    them to one entry per (instrument_name, phenomenon) for the validation UI, aggregating
+    supporting quotes from all matching records.
     """
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -4150,7 +4154,59 @@ class PaperPhenomenaView(APIView):
         qs = annotate_my_phenomenon_validation(qs, request.user)
         qs = qs.order_by('instrument_name', 'phenomenon__name')
 
-        serializer = PhenomenonMentionSerializer(qs, many=True)
+        # Deduplicate across pipeline configs and periods.
+        # Key: (display_instrument_name, phenomenon_id) — one entry per what the UI shows.
+        # When an instrument is grounded, multiple raw instrument names can map to the same
+        # grounded display name (e.g. COR1-A and COR2-A both → STEREO_A/SECCHI); collapse those.
+        # Priority: approved > rejected > pending, then standard config, then most quotes.
+        STATUS_RANK = {"approved": 0, "rejected": 1, "pending": 2}
+
+        def _grounded_display(m):
+            def short(v):
+                if v and v.startswith('spase://'):
+                    return v.rstrip('/').rsplit('/', 1)[-1]
+                return v
+            code = short(m.matched_instrument_code)
+            mission = short(m.matched_mission_code)
+            if code and mission:
+                return f"{mission}/{code}"
+            return code or mission or m.instrument_name
+
+        def _mention_rank(m):
+            config = getattr(m.paper_analysis, 'configuration_name', '') or ''
+            return (
+                STATUS_RANK.get(m.validation_status, 99),
+                0 if config == 'standard' else 1,
+                -len(m.supporting_quotes.all()),
+            )
+
+        # Group all mentions by (display_instrument_name, phenomenon_id)
+        groups: dict[tuple, list] = {}
+        for mention in qs:
+            key = (_grounded_display(mention), mention.phenomenon_id)
+            groups.setdefault(key, []).append(mention)
+
+        # For each group, pick the canonical mention and aggregate all quotes
+        canonical_list = []
+        for mentions in groups.values():
+            canonical = min(mentions, key=_mention_rank)
+
+            # Collect unique supporting quotes from all records in the group
+            seen_quote_ids: set = set()
+            all_quotes = []
+            for m in mentions:
+                for sq in m.supporting_quotes.all():
+                    if sq.id not in seen_quote_ids:
+                        seen_quote_ids.add(sq.id)
+                        all_quotes.append(sq)
+
+            # Override the prefetch cache so the serializer uses aggregated quotes
+            canonical._prefetched_objects_cache = {'supporting_quotes': all_quotes}
+            canonical_list.append(canonical)
+
+        canonical_list.sort(key=lambda m: (m.instrument_name, m.phenomenon.name))
+
+        serializer = PhenomenonMentionSerializer(canonical_list, many=True)
         return Response({'mentions': serializer.data, 'paper': {'id': str(paper.id), 'bibcode': paper.bibcode}})
 
 
