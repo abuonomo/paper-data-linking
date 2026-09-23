@@ -97,6 +97,10 @@ classify = [
 [tool.pytest.ini_options]
 pythonpath = [".", "api"]
 DJANGO_SETTINGS_MODULE = "paper_analyzer_app.settings_test"
+# Only collect real test suites; experiments/ holds ad-hoc scripts named test_*.py.
+testpaths = ["tests"]
+# Integration tests call real LLM/AWS endpoints; opt in with `pytest -m integration`.
+addopts = "-m 'not integration'"
 markers = [
     "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
 ]

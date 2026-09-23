@@ -1,5 +1,8 @@
 # paper-data-linking
 
+[![tests](https://github.com/abuonomo/paper-data-linking/actions/workflows/test.yml/badge.svg)](https://github.com/abuonomo/paper-data-linking/actions/workflows/test.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22899457.svg)](https://doi.org/10.5281/zenodo.22899457)
+
 **A scientific research tool that connects public heliophysics literature to public data archives.**
 
 `paper-data-linking` reads heliophysics research papers and extracts the data references they contain — which instruments, observatories, and time ranges a paper analyzed — then links those references to the corresponding public data archives so the underlying datasets can be located and reused. It is built to support open, reproducible science.
@@ -65,7 +68,7 @@ source .venv/bin/activate
 uv sync
 ```
 
-Run the test suite with `pytest`.
+Run the unit test suite with `uv run pytest` (needs a local Postgres with pgvector, e.g. `docker compose up -d postgres`; see [CONTRIBUTING.md](CONTRIBUTING.md) for the environment variables). Integration tests that call real LLM services are opt-in: `uv run pytest -m integration`. The same suite runs in CI on every pull request.
 
 ## Usage
 

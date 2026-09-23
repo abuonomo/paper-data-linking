@@ -79,13 +79,16 @@ uv sync
 ```
 
 ### Testing
+Tests need a Postgres with pgvector on localhost (`docker compose up -d postgres`, then set `DB_*`/`POSTGRES_PORT` to match) and the env vars listed in CONTRIBUTING.md. CI runs the same command on every PR (`.github/workflows/test.yml`).
 ```bash
-# Run all tests
-pytest
+# Unit suite (default; integration tests are excluded by pyproject addopts)
+uv run pytest
 
-# Run specific test files
-pytest tests/test_pdf_processing.py
-pytest tests/vso/test_vso_validator.py
+# One file
+uv run pytest tests/unit/test_views_public.py
+
+# Integration tests: call real Bedrock/OpenAI endpoints and cost money
+uv run pytest -m integration
 ```
 
 ## Key Models and Relationships
