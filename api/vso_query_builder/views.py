@@ -2088,38 +2088,15 @@ class PaperPDFView(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
 
-class PublicPaperPDFView(APIView):
+class PublicPaperPDFView(PaperPDFView):
     """
-    Public API endpoint that returns the PDF URL for a given bibcode.
+    PDF URL for a bibcode, at the historical ``public/`` route.
+
+    Paper full texts are publisher-licensed, so this endpoint requires
+    authentication (JWT) like ``PaperPDFView``; anonymous callers get 401.
+    The route is kept so older clients receive a clear 401 rather than 404.
+    The rest of the public API (usages, mentions, quotes) stays anonymous.
     """
-    permission_classes = [AllowAny]
-
-    def get(self, request, bibcode):
-        try:
-            paper = Paper.objects.get(bibcode=bibcode)
-
-            if paper.pdf:
-                pdf_url = paper.pdf.url
-                if not pdf_url.startswith('http'):
-                    pdf_url = request.build_absolute_uri(pdf_url)
-                return Response({
-                    'pdf_url': pdf_url,
-                    'bibcode': paper.bibcode,
-                    'has_pdf': True
-                })
-
-            return Response({
-                'pdf_url': None,
-                'bibcode': paper.bibcode,
-                'has_pdf': False,
-                'message': 'No PDF file found for this paper'
-            })
-
-        except Paper.DoesNotExist:
-            return Response({
-                'error': f'Paper with bibcode {bibcode} not found'
-            }, status=status.HTTP_404_NOT_FOUND)
-
 
 class PaperTagsListView(APIView):
     """
