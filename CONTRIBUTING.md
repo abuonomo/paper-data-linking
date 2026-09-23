@@ -52,6 +52,10 @@ cd client && npm run lint && npm run build
 
 Pytest uses `api/paper_analyzer_app/settings_test.py` (eager Celery, in-memory cache, no Redis) and creates a throwaway `test_<DB_NAME>` database. CI runs the same unit suite and the client build on every pull request (`.github/workflows/test.yml`).
 
+## API permissions
+
+Every API view requires a signed-in user unless it opts out. To add an anonymous route, set `permission_classes = [AllowAny]` on the view and add its URL name, with a reason, to the allowlist in `tests/unit/test_route_permissions.py`. The test fails if any anonymous route is missing from the list.
+
 ## Code style
 
 - Python: `uv run pylint paper_data_linking api/vso_query_builder` and `uv run bandit -r paper_data_linking api -q` before opening a PR. Absolute imports; Django app layout as in `api/vso_query_builder/`.

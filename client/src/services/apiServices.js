@@ -60,11 +60,8 @@ authAxios.interceptors.response.use(
 
 
 export const fetchPaperDetails = async (paperId) => {
-    const response = await fetch(API_ENDPOINTS.generate.PAPER_DETAIL(paperId)); // Use LIST_PAPERS and append the paper ID
-    if (!response.ok) {
-        throw new Error('Failed to fetch paper details');
-    }
-    return await response.json();
+    const response = await authAxios.get(API_ENDPOINTS.generate.PAPER_DETAIL(paperId));
+    return response.data;
 };
 
 export const loginUser = async (username, password) => {
@@ -250,24 +247,6 @@ export const fetchValidationQueue = async (filters = {}) => {
 };
 
 /**
- * Returns the anonymous tracking UUID stored in localStorage,
- * creating and persisting one if it doesn't exist yet.
- */
-function getOrCreateAnonymousId() {
-  const key = 'pdl_anonymous_id';
-  let id = localStorage.getItem(key);
-  if (!id) {
-    id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
-    localStorage.setItem(key, id);
-  }
-  return id;
-}
-
-/**
  * Updates validation status for a dataset usage
  * @param {string} usageId - UUID of the dataset usage
  * @param {string} validationStatus - New validation status
@@ -281,9 +260,6 @@ export const validateDatasetUsage = async (usageId, validationStatus, validation
       {
         validation_status: validationStatus,
         validation_notes: validationNotes,
-      },
-      {
-        headers: { 'X-Anonymous-ID': getOrCreateAnonymousId() },
       }
     );
     return response.data;
@@ -639,9 +615,6 @@ export const validatePhenomenonMention = async (mentionId, validationStatus, val
       {
         validation_status: validationStatus,
         validation_notes: validationNotes,
-      },
-      {
-        headers: { 'X-Anonymous-ID': getOrCreateAnonymousId() },
       }
     );
     return response.data;
