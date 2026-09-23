@@ -17,6 +17,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Security
 - `GET /builder/public/papers/{bibcode}/pdf/` now requires authentication. It returned time-limited links to publisher-licensed PDFs to anonymous callers.
+- `DEBUG` is off by default (was hard-coded on); set `DJANGO_DEBUG=true` for local development. Debug pages exposed the URLconf and would have exposed settings on errors.
 
 ### Notes
 - No changes to the extraction pipeline (prompts, catalog, grounding). Results in the companion paper correspond to v1.0.0.
