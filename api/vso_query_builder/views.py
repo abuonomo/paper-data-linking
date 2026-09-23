@@ -28,6 +28,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
 
 from .models import DatasetUsage, DatasetUsageValidation, recompute_consensus
 from .models import Instrument, Observatory
@@ -837,6 +839,15 @@ def _build_public_papers_query_parts(include_unvalidated, missions, instruments,
     }
 
 
+@extend_schema(
+    summary='Data references used by one paper (bibcode -> usages)',
+    tags=['Public API'],
+    parameters=[
+        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to include pending records in addition to approved.'),
+        OpenApiParameter('include', OpenApiTypes.STR, OpenApiParameter.QUERY, description='abstract to include the paper abstract.')
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class PublicPaperValidatedUsagesView(APIView):
     """Public, read-only view of dataset usages by paper bibcode (validated or all)."""
     permission_classes = [AllowAny]
@@ -956,6 +967,24 @@ class PublicPaperValidatedUsagesView(APIView):
         return Response(response)
 
 
+@extend_schema(
+    summary='Papers using a mission or instrument (filters -> papers, paginated)',
+    tags=['Public API'],
+    parameters=[
+        OpenApiParameter('missions', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Mission/observatory short name (repeatable; also accepts datasource-qualified keys such as vso:SOHO).', many=True),
+        OpenApiParameter('instruments', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Instrument short name (repeatable).', many=True),
+        OpenApiParameter('start_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; return papers whose observation windows overlap [start_date, end_date].'),
+        OpenApiParameter('end_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; see start_date.'),
+        OpenApiParameter('validation_status', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Filter by validation state, e.g. approved (repeatable).', many=True),
+        OpenApiParameter('q', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Text search over bibcode and title.'),
+        OpenApiParameter('tags', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Restrict to a curated paper set (repeatable).'),
+        OpenApiParameter('include', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Set to 1 to include paper metadata (title, authors, year, journal).'),
+        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to include pending (not yet human-validated) records; treat validation_status as a confidence signal.'),
+        OpenApiParameter('page', OpenApiTypes.INT, OpenApiParameter.QUERY, description='Page number.'),
+        OpenApiParameter('page_size', OpenApiTypes.INT, OpenApiParameter.QUERY, description='Results per page (default 25).')
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class PublicValidatedPapersListView(APIView):
     """Public list of papers that have dataset usages (validated or all)."""
     permission_classes = [AllowAny]
@@ -1166,6 +1195,22 @@ class Echo:
         return value
 
 
+@extend_schema(
+    summary='Bulk CSV export of validated data references (same filters as the papers list)',
+    tags=['Public API'],
+    parameters=[
+        OpenApiParameter('missions', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Mission/observatory short name (repeatable; also accepts datasource-qualified keys such as vso:SOHO).', many=True),
+        OpenApiParameter('instruments', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Instrument short name (repeatable).', many=True),
+        OpenApiParameter('start_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; return papers whose observation windows overlap [start_date, end_date].'),
+        OpenApiParameter('end_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; see start_date.'),
+        OpenApiParameter('validation_status', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Filter by validation state, e.g. approved (repeatable).', many=True),
+        OpenApiParameter('q', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Text search over bibcode and title.'),
+        OpenApiParameter('tags', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Restrict to a curated paper set (repeatable).'),
+        OpenApiParameter('include', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Set to 1 to include paper metadata (title, authors, year, journal).'),
+        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to include pending (not yet human-validated) records; treat validation_status as a confidence signal.')
+    ],
+    responses={(200, 'text/csv'): OpenApiTypes.STR},
+)
 class PublicValidatedPapersCSVView(APIView):
     """
     Public CSV export of validated papers.
@@ -1229,6 +1274,14 @@ class PublicValidatedPapersCSVView(APIView):
         return response
 
 
+@extend_schema(
+    summary='Valid missions/instruments filter values with paper and usage counts',
+    tags=['Public API'],
+    parameters=[
+        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to count pending records too.')
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class PublicPapersFilterOptionsView(APIView):
     """Public endpoint for getting filter options (missions, instruments, date ranges, etc.)"""
     permission_classes = [AllowAny]
@@ -1472,6 +1525,14 @@ class PublicPapersFilterOptionsView(APIView):
         })
 
 
+@extend_schema(
+    summary='Up to 10 similar papers by embedding similarity over supporting quotes',
+    tags=['Public API'],
+    parameters=[
+        
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class SimilarPapersView(APIView):
     """Return up to 10 papers most similar to the given paper, based on
     cosine similarity of averaged support-quote embeddings."""
@@ -3847,6 +3908,14 @@ class BatchJobPapersView(APIView):
         })
 
 
+@extend_schema(
+    summary='Everything the pipeline saw in a paper, including unresolved instrument mentions',
+    tags=['Public API'],
+    parameters=[
+        OpenApiParameter('match_level', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Filter mentions by match level.')
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class PublicPaperInstrumentMentionsView(APIView):
     """
     Public, read-only list of InstrumentMentions for a paper, ordered by match_level.
@@ -4148,6 +4217,14 @@ class PhenomenaQueuePapersView(ListAPIView):
         return Response(data)
 
 
+@extend_schema(
+    summary='Running software version and build commit',
+    tags=['Meta'],
+    parameters=[
+        
+    ],
+    responses=OpenApiTypes.OBJECT,
+)
 class VersionView(APIView):
     """
     Public, unauthenticated: the running software version and build commit.
