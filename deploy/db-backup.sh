@@ -25,6 +25,8 @@ set -euo pipefail
 BACKUP_REGION="${BACKUP_REGION:-us-east-1}"
 BACKUP_ROLE_ARN="${BACKUP_ROLE_ARN:-}"
 PG_CONTAINER="${PG_CONTAINER:-}"
+# Must not exceed the role's MaxSessionDuration (AWS default: 1 hour).
+BACKUP_ROLE_SESSION_SECONDS="${BACKUP_ROLE_SESSION_SECONDS:-3600}"
 
 log() { echo "[pdl-db-backup] $*"; }
 
@@ -41,7 +43,7 @@ fi
 if [ -n "$BACKUP_ROLE_ARN" ]; then
   read -r AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN < <(
     aws sts assume-role --role-arn "$BACKUP_ROLE_ARN" --role-session-name "pdl-db-backup-$(hostname -s)" \
-      --duration-seconds 7200 \
+      --duration-seconds "$BACKUP_ROLE_SESSION_SECONDS" \
       --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)
   export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 fi
