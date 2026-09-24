@@ -1,7 +1,7 @@
 # paper-data-linking
 
 [![tests](https://github.com/abuonomo/paper-data-linking/actions/workflows/test.yml/badge.svg)](https://github.com/abuonomo/paper-data-linking/actions/workflows/test.yml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22899457.svg)](https://doi.org/10.5281/zenodo.22899457)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22899456.svg)](https://doi.org/10.5281/zenodo.22899456)
 
 **A scientific research tool that connects public heliophysics literature to public data archives.**
 
@@ -183,7 +183,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, the test suite, an
 
 ## Citation
 
-If you use this software, please cite it. The metadata is in [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button renders it); the archived release is on Zenodo:
+If you use this software, please cite it. The metadata is in [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button renders it); the archived releases are on Zenodo (the DOI below always resolves to the newest version; each release also has its own):
 
 ```bibtex
 @software{paper_data_linking,
@@ -191,12 +191,12 @@ If you use this software, please cite it. The metadata is in [CITATION.cff](CITA
   title   = {paper-data-linking: extracting machine-readable data references from the heliophysics literature},
   year    = {2026},
   publisher = {Zenodo},
-  doi     = {10.5281/zenodo.22899457},
+  doi     = {10.5281/zenodo.22899456},
   url     = {https://github.com/abuonomo/paper-data-linking}
 }
 ```
 
-The results in the companion validation paper were produced with **v1.0.0** (commit `2ef517d`); a paper citation will be added when it is available.
+The results in the companion validation paper were produced with **v1.0.0** (commit `2ef517d`, [doi:10.5281/zenodo.22899457](https://doi.org/10.5281/zenodo.22899457)); a paper citation will be added when it is available.
 
 ## License & Copyright
 
