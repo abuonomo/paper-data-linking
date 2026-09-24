@@ -16,6 +16,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - `pytest` collects only `tests/` and excludes integration tests by default.
 
 ### Fixed
+- Browsers could keep a cached `index.html` after a deploy and run the previous release's JavaScript against the new API (seen as "Failed to load paper validation data" after the authentication change). nginx now serves the app shell with `Cache-Control: no-cache`; the content-hashed bundles are still cached.
 - `GET /builder/usage_by_mission/` (behind the public usage-explorer page) got the API process killed on every call. Some extracted windows are open-ended (upper bound 9999-12-31) or reach back centuries, and the view built a day-by-mission table over that whole span (about 750 million cells in production). It now counts usages per month from October 1957 to the current month, groups in the database, and caches the result for an hour: about 1.5 s and 10 MB uncached. The response adds `resolution` and `excluded_outside_range`; `dates`, `missions` and `data` keep their shape, with dates now at month starts.
 
 ### Security

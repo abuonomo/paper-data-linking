@@ -23,6 +23,18 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
+    # The app shell. Browsers must revalidate it on every load: it names the
+    # content-hashed JS/CSS bundles, so a cached copy keeps running the
+    # previous release's code against the new API after a deploy. (The hashed
+    # bundles themselves stay cached for 30 days below.) add_header here
+    # replaces the server-level headers, so the security headers are repeated.
+    location = /index.html {
+        add_header Cache-Control "no-cache" always;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+    }
+
     location = /pdf.worker.min.js {
         alias /usr/share/nginx/html/pdf.worker.min.js;
         add_header Content-Type application/javascript;
