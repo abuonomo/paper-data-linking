@@ -1,0 +1,20 @@
+[Unit]
+Description=paper-data-linking nightly database backup to S3
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+# --- EDIT THESE for your host ---
+Environment=DEPLOY_DIR=/opt/paper-data-linking
+Environment=BACKUP_BUCKET=your-backup-bucket
+Environment=BACKUP_REGION=us-east-1
+# Optional: an upload-only role to assume for the run.
+#Environment=BACKUP_ROLE_ARN=arn:aws:iam::123456789012:role/your-backup-writer
+User=deploy
+# --------------------------------
+ExecStart=/usr/local/bin/pdl-db-backup
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=2h
