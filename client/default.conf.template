@@ -6,6 +6,25 @@
 # route. Re-resolving on a short TTL keeps us pointed at the live container.
 resolver 127.0.0.11 valid=10s ipv6=off;
 
+# In production the AWS load balancer terminates TLS and tells us the client's
+# original scheme in X-Forwarded-Proto. Pass that through to Django (so
+# SECURE_PROXY_SSL_HEADER sees https and generated links use https); fall back
+# to our own $scheme when no proxy set it (local development).
+map $http_x_forwarded_proto $client_proto {
+    default $http_x_forwarded_proto;
+    ""      $scheme;
+}
+
+# Redirect only requests the load balancer received over plain HTTP. Its
+# health checks carry no forwarded headers today; they are also exempted by
+# user agent so a change there can never turn them into 301s (which would mark
+# the target unhealthy and take the site down). First matching regex wins.
+map "$http_x_forwarded_proto|$http_user_agent" $redirect_to_https {
+    default                    0;
+    "~^http\|ELB-HealthChecker" 0;
+    "~^http\|"                 1;
+}
+
 server {
     listen 80;
     server_name ${NGINX_SERVER_NAME};
@@ -14,6 +33,13 @@ server {
     index index.html index.htm;
 
     client_max_body_size 500M;
+
+    # Plain-HTTP requests that came through the load balancer go to HTTPS.
+    # Keyed on the proxy header only, so local development (no load balancer,
+    # no header) is unaffected.
+    if ($redirect_to_https) {
+        return 301 https://$host$request_uri;
+    }
 
     # Using a variable in proxy_pass forces nginx to resolve the name per
     # request (via the resolver above) instead of pinning it at startup.
@@ -30,6 +56,7 @@ server {
     # replaces the server-level headers, so the security headers are repeated.
     location = /index.html {
         add_header Cache-Control "no-cache" always;
+        add_header Strict-Transport-Security "max-age=31536000" always;
         add_header X-Frame-Options "SAMEORIGIN" always;
         add_header X-Content-Type-Options "nosniff" always;
         add_header X-XSS-Protection "1; mode=block" always;
@@ -48,7 +75,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto $client_proto;
         client_max_body_size 500M;
     }
 
@@ -60,7 +87,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto $client_proto;
         client_max_body_size 500M;
     }
 
@@ -69,7 +96,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto $client_proto;
         client_max_body_size 500M;
     }
 
@@ -78,7 +105,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto $client_proto;
         client_max_body_size 500M;
     }
 
@@ -108,10 +135,11 @@ server {
     gzip_comp_level 6;
     gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
-    # Add headers to serve security related headers
-    # Before enabling Strict-Transport-Security headers please read into this
-    # topic first.
-    # add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
+    # Security headers
+    # HSTS for this host only (no includeSubDomains/preload: other
+    # helioanalytics.io hosts are not all served over HTTPS). Browsers ignore
+    # the header on plain-HTTP responses, which are redirected above anyway.
+    add_header Strict-Transport-Security "max-age=31536000" always;
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
@@ -129,7 +157,7 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Proto $client_proto;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_http_version 1.1;
