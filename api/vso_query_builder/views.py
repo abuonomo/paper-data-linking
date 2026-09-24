@@ -1623,17 +1623,16 @@ class SimilarPapersView(APIView):
         except Paper.DoesNotExist:
             raise Http404("Paper not found")
 
-        quotes = SupportQuote.objects.filter(
-            paper_analysis__paper=paper,
-            embedding__isnull=False,
-        ).only('embedding')
-
-        if not quotes.exists():
+        embeddings = list(
+            SupportQuote.objects
+            .filter(paper_analysis__paper=paper, embedding__isnull=False)
+            .values_list('embedding', flat=True)
+        )
+        if not embeddings:
             result = []
             cache.set(cache_key, result, timeout=86400)
             return Response(result)
 
-        embeddings = [q.embedding for q in quotes]
         avg_embedding = np.mean(embeddings, axis=0).tolist()
 
         # Only return papers that have usages matching the validation filter
@@ -1648,7 +1647,11 @@ class SimilarPapersView(APIView):
             .distinct()
         )
 
-        similar_quotes = (
+        # Rank quotes by distance, selecting only (paper id, distance). Pulling
+        # whole rows here (select_related on the paper) dragged each paper's
+        # full text through the sort once per quote: 6-25 s per uncached
+        # request in production, versus 3-7 s for this form.
+        ranked = (
             SupportQuote.objects
             .filter(
                 embedding__isnull=False,
@@ -1656,23 +1659,31 @@ class SimilarPapersView(APIView):
             )
             .exclude(paper_analysis__paper=paper)
             .annotate(distance=CosineDistance('embedding', avg_embedding))
-            .select_related('paper_analysis__paper')
-            .order_by('distance')[:200]
+            .order_by('distance')
+            .values_list('paper_analysis__paper_id', 'distance')[:200]
         )
 
+        best = {}  # paper id -> distance of its closest quote, in rank order
+        for paper_id, distance in ranked:
+            if paper_id not in best:
+                best[paper_id] = distance
+                if len(best) >= 10:
+                    break
+
+        papers_by_id = {
+            p.id: p for p in Paper.objects.filter(id__in=best).only(
+                'id', 'bibcode', 'title', 'authors', 'year')
+        }
         seen = {}
-        for sq in similar_quotes:
-            p = sq.paper_analysis.paper
-            if p.bibcode not in seen:
-                seen[p.bibcode] = {
-                    'bibcode': p.bibcode,
-                    'title': p.title or p.bibcode,
-                    'authors': (p.authors or [])[:3],
-                    'year': p.year,
-                    'score': round(1 - sq.distance, 3),
-                }
-            if len(seen) >= 10:
-                break
+        for paper_id, distance in best.items():
+            p = papers_by_id[paper_id]
+            seen[p.bibcode] = {
+                'bibcode': p.bibcode,
+                'title': p.title or p.bibcode,
+                'authors': (p.authors or [])[:3],
+                'year': p.year,
+                'score': round(1 - distance, 3),
+            }
 
         # Fetch missions (observatories) for each similar paper
         if seen:
