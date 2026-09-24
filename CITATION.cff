@@ -7,7 +7,7 @@ version: 1.1.0
 date-released: 2026-09-24
 license: MIT
 repository-code: "https://github.com/abuonomo/paper-data-linking"
-doi: 10.5281/zenodo.22899457
+doi: 10.5281/zenodo.22945850
 authors:
   - family-names: Buonomo
     given-names: Anthony R.
