@@ -39,7 +39,7 @@ jobs:
       DB_HOST: localhost
       DB_PORT: "5432"
       POSTGRES_PORT: "5432"
-      DJANGO_SECRET_KEY: ci-only-not-secret
+      DJANGO_SECRET_KEY: ci-only-not-secret-at-least-32-bytes-long  # PyJWT warns on HMAC keys < 32 bytes
       ALLOWED_HOSTS: localhost,testserver
       USE_S3: "false"
       REDIS_HOST: localhost
