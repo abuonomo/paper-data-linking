@@ -103,3 +103,42 @@ Guidance for consumers doing bulk pulls:
 
 The role is read-only by grants, not a replica: it still consumes connections
 and can hold locks, which is what the guardrails bound.
+
+## Database backups (systemd timer)
+
+`db-backup.sh` streams `pg_dump -Fc` from the postgres container straight to
+S3 once a night. Nothing is written to the host's disk. Each dump lands under
+`daily/`, `weekly/` (Sundays) or `monthly/` (the 1st), so bucket lifecycle
+rules can keep 7 daily, 4 weekly and 12 monthly copies. A successful run
+writes `status/last-success.json`; a failed run leaves a `<key>.FAILED` marker
+and exits nonzero, so `systemctl status pdl-db-backup` shows it.
+
+**Bucket.** Use a bucket separate from the application's paper storage, with
+versioning, default encryption and public access blocked. Give the host
+**upload-only** access: `s3:PutObject` and `s3:ListBucket`, with no
+`GetObject` or `DeleteObject`. The backups then survive anything that goes
+wrong on the host, including a leaked application credential. If the host's
+own role can't be edited, create an upload-only role in the bucket's account
+that trusts the host role, and set `BACKUP_ROLE_ARN`.
+
+Install, like the deploy timer, outside the checkout:
+
+```bash
+sudo install -m 0755 deploy/db-backup.sh /usr/local/bin/pdl-db-backup
+sudo cp deploy/pdl-db-backup.service.example /etc/systemd/system/pdl-db-backup.service
+sudo cp deploy/pdl-db-backup.timer.example   /etc/systemd/system/pdl-db-backup.timer
+sudoedit /etc/systemd/system/pdl-db-backup.service   # DEPLOY_DIR, BACKUP_BUCKET, BACKUP_ROLE_ARN, User
+sudo systemctl daemon-reload
+sudo systemctl start pdl-db-backup.service           # first run now; watch with journalctl -u pdl-db-backup -f
+sudo systemctl enable --now pdl-db-backup.timer
+```
+
+**Test a restore** after the first run, and occasionally after that. Load the
+dump into a scratch database and compare row counts with production:
+
+```bash
+aws s3 cp s3://<bucket>/<key> backup.dump
+docker run -d --name restore-test -e POSTGRES_PASSWORD=x pgvector/pgvector:pg16
+docker cp backup.dump restore-test:/tmp/ && docker exec restore-test createdb -U postgres restored
+docker exec restore-test pg_restore -U postgres --no-owner --no-privileges -d restored /tmp/backup.dump
+```
