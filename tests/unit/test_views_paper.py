@@ -56,38 +56,48 @@ def paper_with_usages(vso_datasource, observatory_factory, instrument_factory, p
 @pytest.mark.django_db
 class TestPaperDetailView:
 
-    def test_returns_paper_by_uuid(self, client, paper_factory):
+    def test_requires_auth(self, client, paper_factory):
+        """Paper detail includes the full text (publisher-licensed): 401 anonymously."""
+        paper = paper_factory()
+        response = client.get(reverse("paper_detail", kwargs={"pk": paper.id}))
+        assert response.status_code == 401
+
+    def test_returns_paper_by_uuid(self, api_client, paper_factory):
         paper = paper_factory()
         url = reverse("paper_detail", kwargs={"pk": paper.id})
-        response = client.get(url)
+        response = api_client.get(url)
         assert response.status_code == 200
         assert response.data["id"] == str(paper.id)
 
-    def test_404_for_nonexistent(self, client):
+    def test_404_for_nonexistent(self, api_client):
         url = reverse("paper_detail", kwargs={"pk": uuid.uuid4()})
-        response = client.get(url)
+        response = api_client.get(url)
         assert response.status_code == 404
 
 
 @pytest.mark.django_db
 class TestListPapersView:
 
-    def test_returns_papers(self, client, paper_factory):
+    def test_requires_auth(self, client):
+        response = client.get(reverse("list_papers"))
+        assert response.status_code == 401
+
+    def test_returns_papers(self, api_client, paper_factory):
         paper_factory()
         url = reverse("list_papers")
-        response = client.get(url)
+        response = api_client.get(url)
         assert response.status_code == 200
 
-    def test_search_by_bibcode(self, client, paper_factory):
+    def test_search_by_bibcode(self, api_client, paper_factory):
         paper = paper_factory(bibcode="2003ApJ...595L..97S")
         url = reverse("list_papers")
-        response = client.get(url, {"search": "2003ApJ"})
+        response = api_client.get(url, {"search": "2003ApJ"})
         assert response.status_code == 200
 
-    def test_filter_by_tags(self, client, paper_factory):
+    def test_filter_by_tags(self, api_client, paper_factory):
         paper = paper_factory(tags=["solar_wind"])
         url = reverse("list_papers")
-        response = client.get(url, {"tags": "solar_wind"})
+        response = api_client.get(url, {"tags": "solar_wind"})
         assert response.status_code == 200
 
 

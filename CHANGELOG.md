@@ -18,6 +18,8 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Security
 - `GET /builder/public/papers/{bibcode}/pdf/` now requires authentication. It returned time-limited links to publisher-licensed PDFs to anonymous callers.
 - `DEBUG` is off by default (was hard-coded on); set `DJANGO_DEBUG=true` for local development. Debug pages exposed the URLconf and would have exposed settings on errors.
+- API routes require authentication by default (`DEFAULT_PERMISSION_CLASSES`). Paper list, paper detail (which include full text), quote search and script-parameter search were reachable anonymously because their views set no permission. Anonymous routes are now an explicit allowlist, enforced by `tests/unit/test_route_permissions.py`.
+- Anonymous validation votes removed. The anonymous ID was chosen by the caller, so one client could cast unlimited votes and change the consensus status the public API filters on. Existing anonymous records are kept but no new ones can be created.
 
 ### Notes
 - No changes to the extraction pipeline (prompts, catalog, grounding). Results in the companion paper correspond to v1.0.0.

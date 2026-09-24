@@ -418,6 +418,7 @@ class UsageByMissionAPIView(APIView):
         ]
       }
     """
+    permission_classes = [AllowAny]  # aggregate counts for the public usage explorer
 
     def get(self, request):
         usages_query = DatasetUsage.objects \
@@ -461,6 +462,8 @@ class UsageByMissionAPIView(APIView):
 
 
 class MissionLaunchesView(APIView):
+    permission_classes = [AllowAny]  # static reference data
+
     def get(self, request):
         # Get the path to your JSON file
         data_path = Path(__file__).parent / 'data' / 'mission_launches.json'
@@ -473,6 +476,8 @@ class MissionLaunchesView(APIView):
 
 
 class SolarEventsView(APIView):
+    permission_classes = [AllowAny]  # static reference data
+
     def get(self, request):
         # Get the path to your JSON file
         data_path = Path(__file__).parent / 'data' / 'solar_events.json'
@@ -1635,15 +1640,16 @@ class SimilarPapersView(APIView):
 
 class DatasetUsageValidationView(APIView):
     """
-    Handle validation actions for dataset usages.
-    POST: Submit a validation judgment (authenticated or anonymous).
-    Authenticated users are identified by their user account (one vote per user).
-    Anonymous users are identified by the X-Anonymous-ID header (one vote per UUID).
-    After each submission the consensus status on DatasetUsage is recomputed.
+    POST: submit the signed-in user's validation judgment for a dataset usage
+    (one vote per user; resubmitting updates it). After each submission the
+    consensus status on DatasetUsage is recomputed.
+
+    Anonymous voting was removed in 1.1.0: the anonymous ID was client-chosen,
+    so one caller could cast any number of votes and move the consensus status
+    that the public API filters on.
     """
-    # Allow both authenticated and unauthenticated requests
     authentication_classes = [JWTAuthentication]
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, usage_id):
         try:
@@ -1664,62 +1670,20 @@ class DatasetUsageValidationView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        is_authenticated = bool(request.user and request.user.is_authenticated)
+        # Upsert: one record per (dataset_usage, user)
+        validation_obj, created = DatasetUsageValidation.objects.update_or_create(
+            dataset_usage=usage,
+            user=request.user,
+            defaults={
+                'validation_status': validation_status_value,
+                'validation_notes': validation_notes,
+            },
+        )
+        rater_label = request.user.username
 
-        if is_authenticated:
-            # Upsert: one record per (dataset_usage, user)
-            validation_obj, created = DatasetUsageValidation.objects.update_or_create(
-                dataset_usage=usage,
-                user=request.user,
-                defaults={
-                    'validation_status': validation_status_value,
-                    'validation_notes': validation_notes,
-                },
-            )
-            rater_label = request.user.username
-        else:
-            # Anonymous path: require X-Anonymous-ID header
-            anon_id_str = request.headers.get('X-Anonymous-ID')
-            if not anon_id_str:
-                return Response(
-                    {"error": "X-Anonymous-ID header is required for unauthenticated validation"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            import uuid as uuid_mod
-            try:
-                anon_uuid = uuid_mod.UUID(anon_id_str)
-            except ValueError:
-                return Response(
-                    {"error": "X-Anonymous-ID must be a valid UUID"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            # Upsert: one record per (dataset_usage, anonymous_id) when user is null
-            try:
-                validation_obj = DatasetUsageValidation.objects.get(
-                    dataset_usage=usage,
-                    user__isnull=True,
-                    anonymous_id=anon_uuid,
-                )
-                validation_obj.validation_status = validation_status_value
-                validation_obj.validation_notes = validation_notes
-                validation_obj.save(update_fields=['validation_status', 'validation_notes'])
-                created = False
-            except DatasetUsageValidation.DoesNotExist:
-                validation_obj = DatasetUsageValidation.objects.create(
-                    dataset_usage=usage,
-                    user=None,
-                    anonymous_id=anon_uuid,
-                    validation_status=validation_status_value,
-                    validation_notes=validation_notes,
-                )
-                created = True
-            rater_label = f'anonymous:{anon_uuid}'
-
-        # Also keep legacy fields up to date (validated_by = last authenticated validator)
-        if is_authenticated:
-            from django.utils import timezone
-            usage.validated_by = request.user
-            usage.save(update_fields=['validated_by'])
+        # Also keep legacy fields up to date (validated_by = last validator)
+        usage.validated_by = request.user
+        usage.save(update_fields=['validated_by'])
 
         # Recompute consensus across all validations
         recompute_consensus(usage)
@@ -3989,11 +3953,12 @@ class PhenomenonMentionValidationView(APIView):
     """
     POST /builder/phenomenon-mentions/<uuid>/validate/
 
-    Submit a validation judgment for a PhenomenonMention (authenticated or anonymous).
-    Recomputes consensus after each submission.
+    Submit the signed-in user's validation judgment for a PhenomenonMention.
+    Recomputes consensus after each submission. Anonymous voting was removed
+    in 1.1.0 (see DatasetUsageValidationView).
     """
     authentication_classes = [JWTAuthentication]
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, mention_id):
         try:
@@ -4014,58 +3979,18 @@ class PhenomenonMentionValidationView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        is_authenticated = bool(request.user and request.user.is_authenticated)
+        validation_obj, created = PhenomenonMentionValidation.objects.update_or_create(
+            phenomenon_mention=mention,
+            user=request.user,
+            defaults={
+                'validation_status': validation_status_value,
+                'validation_notes': validation_notes,
+            },
+        )
+        rater_label = request.user.username
 
-        if is_authenticated:
-            validation_obj, created = PhenomenonMentionValidation.objects.update_or_create(
-                phenomenon_mention=mention,
-                user=request.user,
-                defaults={
-                    'validation_status': validation_status_value,
-                    'validation_notes': validation_notes,
-                },
-            )
-            rater_label = request.user.username
-        else:
-            anon_id_str = request.headers.get('X-Anonymous-ID')
-            if not anon_id_str:
-                return Response(
-                    {"error": "X-Anonymous-ID header is required for unauthenticated validation"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            import uuid as uuid_mod
-            try:
-                anon_uuid = uuid_mod.UUID(anon_id_str)
-            except ValueError:
-                return Response(
-                    {"error": "X-Anonymous-ID must be a valid UUID"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            try:
-                validation_obj = PhenomenonMentionValidation.objects.get(
-                    phenomenon_mention=mention,
-                    user__isnull=True,
-                    anonymous_id=anon_uuid,
-                )
-                validation_obj.validation_status = validation_status_value
-                validation_obj.validation_notes = validation_notes
-                validation_obj.save(update_fields=['validation_status', 'validation_notes'])
-                created = False
-            except PhenomenonMentionValidation.DoesNotExist:
-                validation_obj = PhenomenonMentionValidation.objects.create(
-                    phenomenon_mention=mention,
-                    user=None,
-                    anonymous_id=anon_uuid,
-                    validation_status=validation_status_value,
-                    validation_notes=validation_notes,
-                )
-                created = True
-            rater_label = f'anonymous:{anon_uuid}'
-
-        if is_authenticated:
-            from django.utils import timezone
-            mention.validated_by = request.user
-            mention.save(update_fields=['validated_by'])
+        mention.validated_by = request.user
+        mention.save(update_fields=['validated_by'])
 
         recompute_phenomenon_consensus(mention)
         mention.refresh_from_db(fields=['validation_status', 'validated_at'])

@@ -152,20 +152,11 @@ class TestDatasetUsageValidationView:
         response = api_client.post(url, {"validation_status": "invalid_status"})
         assert response.status_code == 400
 
-    def test_anon_without_header_returns_400(self, client, dataset_usage_data):
-        """Anonymous POST without X-Anonymous-ID header returns 400, not 401."""
-        du = dataset_usage_data["dataset_usage"]
-        url = reverse("dataset-usage-validate", kwargs={"usage_id": du.id})
-        response = client.post(
-            url,
-            data={"validation_status": "approved"},
-            content_type="application/json",
-        )
-        assert response.status_code == 400
-
-    def test_anon_with_valid_header_returns_200(self, client, dataset_usage_data):
-        """Anonymous POST with a valid X-Anonymous-ID header is accepted."""
+    def test_anonymous_vote_rejected(self, client, dataset_usage_data):
+        """Anonymous voting was removed: even with an X-Anonymous-ID header the
+        caller gets 401 and no validation record is written."""
         import uuid
+        from vso_query_builder.models import DatasetUsageValidation
         du = dataset_usage_data["dataset_usage"]
         url = reverse("dataset-usage-validate", kwargs={"usage_id": du.id})
         response = client.post(
@@ -174,19 +165,8 @@ class TestDatasetUsageValidationView:
             content_type="application/json",
             HTTP_X_ANONYMOUS_ID=str(uuid.uuid4()),
         )
-        assert response.status_code == 200
-        assert response.data["validation_status"] == "approved"
-
-    def test_anon_with_invalid_uuid_returns_400(self, client, dataset_usage_data):
-        du = dataset_usage_data["dataset_usage"]
-        url = reverse("dataset-usage-validate", kwargs={"usage_id": du.id})
-        response = client.post(
-            url,
-            data={"validation_status": "approved"},
-            content_type="application/json",
-            HTTP_X_ANONYMOUS_ID="not-a-uuid",
-        )
-        assert response.status_code == 400
+        assert response.status_code == 401
+        assert not DatasetUsageValidation.objects.filter(dataset_usage=du).exists()
 
     def test_404_for_nonexistent_usage(self, api_client):
         import uuid
@@ -271,33 +251,6 @@ class TestDatasetUsageValidationView:
 
         du.refresh_from_db()
         assert du.validation_status == "needs_review"
-
-    def test_anon_vote_deduped_by_uuid(self, client, dataset_usage_data):
-        """Two POSTs from the same anonymous UUID only create one record."""
-        import uuid
-        from vso_query_builder.models import DatasetUsageValidation
-
-        anon_id = str(uuid.uuid4())
-        du = dataset_usage_data["dataset_usage"]
-        url = reverse("dataset-usage-validate", kwargs={"usage_id": du.id})
-
-        client.post(
-            url,
-            data={"validation_status": "approved"},
-            content_type="application/json",
-            HTTP_X_ANONYMOUS_ID=anon_id,
-        )
-        client.post(
-            url,
-            data={"validation_status": "rejected"},
-            content_type="application/json",
-            HTTP_X_ANONYMOUS_ID=anon_id,
-        )
-
-        records = DatasetUsageValidation.objects.filter(dataset_usage=du, user__isnull=True)
-        assert records.count() == 1
-        assert records.first().validation_status == "rejected"
-
 
 @pytest.mark.django_db
 class TestDatasetUsageValidationsListView:
