@@ -10,6 +10,15 @@ on:
     branches: [main]
   workflow_dispatch: {}
 
+# One image build at a time. Every run pushes :latest, so when two merges land
+# close together an older build can finish last and overwrite :latest with the
+# older commit (seen on 2026-09-24: #30's build finished after #31's and prod ran
+# the client without #31's nginx changes). A newer push cancels the older run;
+# the newest commit always contains the older one's changes.
+concurrency:
+  group: build-images-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_BASE: ${{ github.repository_owner }}/paper-data-linking
