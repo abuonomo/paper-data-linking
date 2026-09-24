@@ -40,13 +40,13 @@ from .models import SupportQuote, BatchJob
 from .models import Phenomenon, PhenomenonMention, PhenomenonMentionValidation, recompute_phenomenon_consensus
 from .serializers import MinimalPaperSerializer, DatasetUsageThinSerializer, DatasetUsageListSerializer, \
     DatasetUsageDetailSerializer
-from .serializers import DatasetUsageValidationSerializer
+from .serializers import DatasetUsageValidationSerializer, PaperListSerializer
 from .serializers import PublicDatasetUsageSerializer, PublicValidatedPaperSerializer, PublicInstrumentMentionSerializer
 from .serializers import PhenomenonSerializer, PhenomenonMentionSerializer, PhenomenonMentionValidationSerializer
 from .ads_service import ADSService
 from django.core.cache import cache
 from .serializers import PaperDatasetUsageListSerializer
-from .serializers import (
+from .serializers import (PaperListSerializer, 
     PaperSerializer,
     SupportQuoteSearchSerializer,
     PaperAnalysisSerializer,
@@ -95,11 +95,20 @@ class PaperUploadView(APIView):
             return Response(paper_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class BoundedPageNumberPagination(PageNumberPagination):
+    """Page-number pagination with a client-settable, capped page size. Used by
+    list endpoints over whole tables (papers, analyses) so no request can
+    serialize the corpus in one response."""
+    page_size = 25
+    page_size_query_param = 'page_size'
+    max_page_size = 200
+
+
 class ListPapersView(ListAPIView):
-    serializer_class = PaperSerializer
-    pagination_class = None
+    serializer_class = PaperListSerializer
+    pagination_class = BoundedPageNumberPagination
     filter_backends = [filters.SearchFilter]
-    search_fields = ['bibcode', 'full_text']
+    search_fields = ['bibcode', 'title']
 
     def get_queryset(self):
         queryset = Paper.objects.all()
@@ -111,16 +120,16 @@ class ListPapersView(ListAPIView):
         if exclude_tags:
             queryset = queryset.exclude(tags__contains=exclude_tags)
 
-        return queryset
+        return queryset.order_by('-created_at', 'pk')
 
 
 class MyPapersView(ListAPIView):
-    serializer_class = PaperSerializer
-    pagination_class = None
+    serializer_class = PaperListSerializer
+    pagination_class = BoundedPageNumberPagination
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['bibcode', 'full_text']
+    search_fields = ['bibcode', 'title']
 
     def get_queryset(self):
         queryset = Paper.objects.filter(user=self.request.user)
@@ -132,7 +141,7 @@ class MyPapersView(ListAPIView):
         if exclude_tags:
             queryset = queryset.exclude(tags__contains=exclude_tags)
 
-        return queryset
+        return queryset.order_by('-created_at', 'pk')
 
 
 class PaperDetailView(RetrieveAPIView):
@@ -329,7 +338,7 @@ class SearchQuotesView(APIView):
 
 class PaperAnalysisView(ListAPIView):
     serializer_class = PaperAnalysisSerializer
-    pagination_class = None
+    pagination_class = BoundedPageNumberPagination
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -342,7 +351,7 @@ class PaperAnalysisView(ListAPIView):
         if exclude_tags:
             queryset = queryset.exclude(paper__tags__contains=exclude_tags)
 
-        return queryset
+        return queryset.order_by('-pk')
 
 
 class PaperScriptParamSearchView(ListAPIView):

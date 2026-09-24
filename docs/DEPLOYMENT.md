@@ -31,6 +31,8 @@ read them at deploy time:
 | `NGINX_SERVER_NAME` | Public hostname for the app vhost | `paper-data.example.com` |
 | `NGINX_FLOWER_SERVER_NAME` | Hostname for the Flower dashboard vhost | `flower.paper-data.example.com` |
 | `DJANGO_DEBUG` | Django debug mode. Leave unset/`false` in production; debug pages expose settings and tracebacks. | `false` |
+| `NUM_PROXIES` | Proxies in front of Django that append to `X-Forwarded-For`; used to find the client IP for login rate limits. Load balancer + client nginx = 2; client nginx alone = 1. Too high lets callers spoof their IP; too low makes all users share one limit. | `2` |
+| `LOGIN_RATE_BURST` / `LOGIN_RATE_SUSTAINED` | Password-login attempts allowed per client IP, shared by `/token/` and `/admin/login/`. | `10/min` / `100/day` |
 
 If `PDL_IMAGE_REPO` is unset, the overlay falls back to the local image name
 `paper-data-linking/*:latest`. If the nginx server-name variables are unset, the
