@@ -30,6 +30,14 @@ class PaperSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at', 'user')
 
 
+class PaperListSerializer(PaperSerializer):
+    """PaperSerializer without the full text, for list endpoints. The corpus is
+    ~95k papers and ~6.5 GB of text; lists must never inline it."""
+
+    class Meta(PaperSerializer.Meta):
+        fields = [f for f in PaperSerializer.Meta.fields if f != 'full_text']
+
+
 class MinimalPaperSerializer(serializers.ModelSerializer):
     """
     A serializer for Paper that only includes essential identifying information.

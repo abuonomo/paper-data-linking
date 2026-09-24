@@ -84,6 +84,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    "paper_analyzer_app.throttles.AdminLoginThrottleMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -177,6 +178,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    # Login rate limits (paper_analyzer_app/throttles.py), per client IP.
+    'DEFAULT_THROTTLE_RATES': {
+        'login_burst': os.getenv('LOGIN_RATE_BURST', '10/min'),
+        'login_sustained': os.getenv('LOGIN_RATE_SUSTAINED', '100/day'),
+    },
+    # Proxies in front of Django that append to X-Forwarded-For: the AWS load
+    # balancer and the client nginx in production. Used to find the client IP.
+    'NUM_PROXIES': int(os.getenv('NUM_PROXIES', '2')),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
