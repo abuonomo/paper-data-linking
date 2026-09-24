@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-09-23
+## [1.1.0] - 2026-09-24
 
 ### Added
 - Continuous integration: the unit test suite and the client build run on every pull request and push to `main` (`.github/workflows/test.yml`).
