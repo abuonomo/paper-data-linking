@@ -407,58 +407,114 @@ class PaperScriptParamSearchView(ListAPIView):
 
 class UsageByMissionAPIView(APIView):
     """
-    Returns JSON like:
+    Number of dataset usages per mission whose observation window overlaps
+    each calendar month, from October 1957 to the current month.
+
+    Returns::
+
       {
-        "dates": ["2020-01-01", "2020-01-02", …],
-        "missions": ["SOHO", "SDO", …],
-        "data": [
-          [10, 15, …],  # counts for SOHO, SDO, … on 2020-01-01
-          [11, 13, …],  # counts on 2020-01-02
-           …
-        ]
+        "dates": ["1957-10-01", "1957-11-01", ...],   # month starts
+        "missions": ["ACE", "SDO", ...],
+        "data": [[0, 0, ...], ...],                    # one row per month
+        "resolution": "month",
+        "excluded_outside_range": 12                   # windows entirely outside the range
       }
+
+    Windows are clipped to the range: some extracted windows are open-ended
+    (upper bound 9999-12-31) or reach back centuries (proxy series). The
+    previous day-by-mission table over that span allocated hundreds of
+    millions of cells and got the API process killed. This version groups
+    usages in the database by (mission, first month, last month) and fills
+    per-mission difference arrays, so memory is O(months x missions).
+    Cached for an hour.
     """
     permission_classes = [AllowAny]  # aggregate counts for the public usage explorer
 
+    CACHE_KEY = "usage_by_mission:v2"
+    CACHE_SECONDS = 3600
+    FIRST_YEAR, FIRST_MONTH = 1957, 10  # first artificial satellite
+
+    @classmethod
+    def _month_index(cls, d):
+        return (d.year - cls.FIRST_YEAR) * 12 + (d.month - cls.FIRST_MONTH)
+
     def get(self, request):
-        usages_query = DatasetUsage.objects \
-            .exclude(observation_window__isnull=True) \
-            .exclude(observation_window__isempty=True) \
-            .select_related("instrument__observatory")
+        cached = cache.get(self.CACHE_KEY)
+        if cached is not None:
+            return Response(cached)
+        payload = self._compute()
+        cache.set(self.CACHE_KEY, payload, timeout=self.CACHE_SECONDS)
+        return Response(payload)
 
-        usages = list(usages_query)
+    def _compute(self):
+        from datetime import date, timedelta, timezone as dt_timezone
+        from django.db.models import BooleanField, Case, ExpressionWrapper, When
+        from django.db.models.functions import Lower, TruncMonth, Upper
+        from django.utils import timezone
 
-        # If no usages found, return empty data
-        if not usages:
-            return Response({
-                "dates": [],
-                "missions": [],
-                "data": []
-            })
+        n_months = self._month_index(timezone.now().date()) + 1
+        diffs = {}  # mission -> difference array of length n_months + 1
+        excluded = 0
 
-        # build date index
-        starts = [u.observation_window.lower.date() for u in usages]
-        ends = [u.observation_window.upper.date() for u in usages]
-        dates = pd.date_range(min(starts), max(ends), freq="D")
-        missions = sorted({u.instrument.observatory.short_name.upper()
-                           for u in usages if u.instrument.observatory})
+        # Group in the database by (mission, first month, last month): ~13k
+        # rows for ~84k usages. An exclusive upper bound's last instant is
+        # upper - 1 microsecond; unbounded ends come back as NULL.
+        grouped = (
+            DatasetUsage.objects
+            .exclude(observation_window__isnull=True)
+            .exclude(observation_window__isempty=True)
+            .exclude(instrument__observatory__isnull=True)
+            .annotate(
+                lo=Lower("observation_window", output_field=DateTimeField()),
+                hi=Upper("observation_window", output_field=DateTimeField()),
+                hi_inc=Func(F("observation_window"), function="upper_inc",
+                            output_field=BooleanField()),
+            )
+            .annotate(hi_last=Case(
+                When(hi_inc=True, then=F("hi")),
+                default=ExpressionWrapper(F("hi") - timedelta(microseconds=1),
+                                          output_field=DateTimeField()),
+            ))
+            .annotate(first=TruncMonth("lo", tzinfo=dt_timezone.utc),
+                      last=TruncMonth("hi_last", tzinfo=dt_timezone.utc))
+            .values("instrument__observatory__short_name", "first", "last")
+            .annotate(n=Count("id"))
+            .order_by()
+        )
+        for row in grouped:
+            short_name = row["instrument__observatory__short_name"]
+            if not short_name:
+                continue
+            start = 0 if row["first"] is None else max(0, self._month_index(row["first"]))
+            end = n_months - 1 if row["last"] is None else min(n_months - 1, self._month_index(row["last"]))
+            if start > end:
+                excluded += row["n"]
+                continue
+            arr = diffs.get(short_name.upper())
+            if arr is None:
+                arr = diffs[short_name.upper()] = np.zeros(n_months + 1, dtype=np.int64)
+            arr[start] += row["n"]
+            arr[end + 1] -= row["n"]
 
-        # zero table
-        df = pd.DataFrame(0, index=dates, columns=missions)
+        missions = sorted(diffs)
+        if missions:
+            table = np.stack([np.cumsum(diffs[m])[:n_months] for m in missions], axis=1)
+            data = table.tolist()
+        else:
+            data = []
+        dates = []
+        y, mo = self.FIRST_YEAR, self.FIRST_MONTH
+        for _ in range(n_months if missions else 0):
+            dates.append(date(y, mo, 1).isoformat())
+            y, mo = (y + 1, 1) if mo == 12 else (y, mo + 1)
 
-        # fill
-        for u in usages:
-            obs = u.instrument.observatory
-            if not obs: continue
-            span = pd.date_range(u.observation_window.lower.date(),
-                                 u.observation_window.upper.date(), freq="D")
-            df.loc[span, obs.short_name.upper()] += 1
-
-        return Response({
-            "dates": [d.strftime("%Y-%m-%d") for d in df.index],
+        return {
+            "dates": dates,
             "missions": missions,
-            "data": df.values.tolist()
-        })
+            "data": data,
+            "resolution": "month",
+            "excluded_outside_range": excluded,
+        }
 
 
 class MissionLaunchesView(APIView):

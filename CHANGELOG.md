@@ -15,6 +15,9 @@ All notable changes to this project are documented here. The format follows [Kee
 - Version fields aligned (`pyproject.toml`, `client/package.json`, `CITATION.cff`).
 - `pytest` collects only `tests/` and excludes integration tests by default.
 
+### Fixed
+- `GET /builder/usage_by_mission/` (behind the public usage-explorer page) got the API process killed on every call. Some extracted windows are open-ended (upper bound 9999-12-31) or reach back centuries, and the view built a day-by-mission table over that whole span (about 750 million cells in production). It now counts usages per month from October 1957 to the current month, groups in the database, and caches the result for an hour: about 1.5 s and 10 MB uncached. The response adds `resolution` and `excluded_outside_range`; `dates`, `missions` and `data` keep their shape, with dates now at month starts.
+
 ### Security
 - `GET /builder/public/papers/{bibcode}/pdf/` now requires authentication. It returned time-limited links to publisher-licensed PDFs to anonymous callers.
 - `DEBUG` is off by default (was hard-coded on); set `DJANGO_DEBUG=true` for local development. Debug pages exposed the URLconf and would have exposed settings on errors.
