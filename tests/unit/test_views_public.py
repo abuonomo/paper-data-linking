@@ -279,13 +279,65 @@ class TestPublicPapersFilterOptionsView:
 @pytest.mark.django_db
 class TestUsageByMissionAPIView:
 
-    def test_returns_mission_data(self, client, validated_usage_data):
-        url = reverse("usage-by-mission")
-        response = client.get(url)
+    @pytest.fixture(autouse=True)
+    def _clear_cache(self):
+        from django.core.cache import cache
+        cache.clear()
+        yield
+        cache.clear()
+
+    def _get(self, client):
+        response = client.get(reverse("usage-by-mission"))
         assert response.status_code == 200
-        assert "dates" in response.data
-        assert "missions" in response.data
-        assert "data" in response.data
+        return response.data
+
+    def _count(self, data, mission, month):
+        return data["data"][data["dates"].index(month)][data["missions"].index(mission)]
+
+    def test_returns_mission_data(self, client, validated_usage_data):
+        data = self._get(client)
+        assert data["resolution"] == "month"
+        assert data["missions"] == ["SOHO"]
+        assert len(data["data"]) == len(data["dates"])
+        assert data["dates"][0] == "1957-10-01"
+        assert self._count(data, "SOHO", "2003-01-01") == 1
+        assert self._count(data, "SOHO", "2002-12-01") == 0
+        assert self._count(data, "SOHO", "2003-02-01") == 0
+
+    def test_empty(self, client, db):
+        data = self._get(client)
+        assert data["dates"] == [] and data["missions"] == [] and data["data"] == []
+
+    def test_open_ended_and_ancient_windows_are_clipped(
+        self, client, validated_usage_data, instrument_factory, observatory_factory
+    ):
+        """Regression: a 9999-12-31 upper bound and a 1645 lower bound made the
+        old day-by-mission table ~750M cells and got the API process killed."""
+        from vso_query_builder.models import DatasetUsage
+        inst = instrument_factory(observatory_factory("ACE"), "SWEPAM")
+        common = dict(paper=validated_usage_data["paper"], instrument=inst,
+                      paper_analysis=validated_usage_data["paper_analysis"])
+        DatasetUsage.objects.create(**common, observation_window=DateTimeTZRange(
+            datetime(1998, 2, 15, tzinfo=pytz.UTC), datetime(9999, 12, 31, tzinfo=pytz.UTC), bounds="[)"))
+        DatasetUsage.objects.create(**common, observation_window=DateTimeTZRange(
+            datetime(1645, 1, 1, tzinfo=pytz.UTC), datetime(1715, 1, 1, tzinfo=pytz.UTC), bounds="[)"))
+        DatasetUsage.objects.create(**common, observation_window=DateTimeTZRange(
+            datetime(1850, 1, 1, tzinfo=pytz.UTC), datetime(1960, 6, 1, tzinfo=pytz.UTC), bounds="[)"))
+
+        data = self._get(client)
+        assert data["missions"] == ["ACE", "SOHO"]
+        assert data["excluded_outside_range"] == 1           # 1645-1715
+        assert self._count(data, "ACE", "1957-10-01") == 1   # 1850-1960, clipped
+        assert self._count(data, "ACE", "1960-05-01") == 1
+        assert self._count(data, "ACE", "1960-06-01") == 0   # exclusive upper bound
+        assert self._count(data, "ACE", "1998-01-01") == 0
+        assert self._count(data, "ACE", "1998-02-01") == 1
+        assert self._count(data, "ACE", data["dates"][-1]) == 1  # open-ended, to this month
+
+    def test_is_cached(self, client, validated_usage_data, django_assert_num_queries):
+        self._get(client)
+        with django_assert_num_queries(0):
+            self._get(client)
 
 
 @pytest.mark.django_db
