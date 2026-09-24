@@ -3,8 +3,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below, and cite the companion paper when it is available."
 type: software
 title: "paper-data-linking: extracting machine-readable data references from the heliophysics literature"
-version: 1.0.0
-date-released: 2026-09-22
+version: 1.1.0
+date-released: 2026-09-24
 license: MIT
 repository-code: "https://github.com/abuonomo/paper-data-linking"
 doi: 10.5281/zenodo.22899457
