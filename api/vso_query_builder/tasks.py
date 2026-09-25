@@ -803,6 +803,9 @@ def _upsert_phenomenon_mentions_from_normalized(paper_analysis: PaperAnalysis) -
             for period in inst_entry.get("data_collection_periods", []):
                 sq_data = period.get("supporting_quotes") or {}
                 physobs_normalized = (sq_data.get("normalized") or {}).get("physobs", [])
+                # Fallback: structured_instruments_details stores quotes as plain strings
+                if not physobs_normalized:
+                    physobs_normalized = [{"text": q} for q in period.get("physobs_quotes", []) if q]
                 for quote_data in physobs_normalized:
                     if not isinstance(quote_data, dict):
                         continue
@@ -2701,7 +2704,13 @@ def run_phenomena_enrichment(paper_analysis_id):
         return {"success": False, "error": f"PaperAnalysis {paper_analysis_id} not found"}
     nj = pa.normalized_instrument_details
     if not nj or not nj.get("instruments"):
-        return {"success": False, "error": "No normalized_instrument_details — run normalization first"}
+        # Normalization may have dropped all instruments (e.g. none grounded to VSO
+        # catalog). Fall back to structured_instruments_details so phenomena can still
+        # be identified before grounding.
+        sd = pa.structured_instruments_details
+        if not sd or not sd.get("instruments"):
+            return {"success": False, "error": "No instruments found in normalized or structured details"}
+        nj = sd
 
     vocab = [{"id": p.id, "name": p.name, "iri": p.iri} for p in Phenomenon.objects.all()]
     if not vocab:
@@ -2717,6 +2726,9 @@ def run_phenomena_enrichment(paper_analysis_id):
             continue
         name = inst_entry.get("name", {})
         inst_name = (name.get("original", "") if isinstance(name, dict) else str(name)).strip()
+        raw_comments = inst_entry.get("general_comments", {})
+        inst_general_comments = (raw_comments.get("original", "") if isinstance(raw_comments, dict) else str(raw_comments or "")).strip()
+        inst_general_quotes = inst_entry.get("general_quotes", [])
         for period in inst_entry.get("data_collection_periods", []):
             if not isinstance(period, dict):
                 continue
@@ -2735,6 +2747,8 @@ def run_phenomena_enrichment(paper_analysis_id):
                 phenomena=vocab,
                 instrument_name=inst_name,
                 period_name=period.get("period_name", ""),
+                instrument_general_comments=inst_general_comments,
+                instrument_general_quotes=inst_general_quotes,
             )
             period["phenomenon"] = normalizer.normalize(ctx)
             extracted += 1

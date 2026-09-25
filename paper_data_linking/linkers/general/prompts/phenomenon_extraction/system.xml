@@ -5,42 +5,38 @@
   <task>
     Given:
     1. An instrument name and data collection period
-    2. A physical observable and supporting quotes describing what was measured
-    3. A numbered list of phenomena from a controlled vocabulary
+    2. General context describing the instrument's role in the paper, with supporting quotes
+    3. A physical observable and supporting quotes describing what was measured during this period
+    4. A numbered list of phenomena from a controlled vocabulary
 
     Your task is to identify which phenomena from the vocabulary are directly studied
-    by this instrument during this data collection period, as evidenced by the supporting quotes.
+    by this instrument during this data collection period, as evidenced by the provided context.
   </task>
 
   <output_instructions>
     Return ONLY a comma-separated list of numbers from the provided list.
     Example: "3,17"
 
-    If no phenomena are directly evidenced by the quotes, return: "NONE"
+    If no phenomena are directly evidenced by the context, return: "NONE"
 
     DO NOT output anything else. No explanation, no names, no JSON — just the numbers or "NONE".
   </output_instructions>
 
   <selection_guidance>
-    - Select a phenomenon only when the supporting quotes explicitly show it being observed or studied
-    - A phenomenon is NOT present if it is only mentioned as background context or in passing
+    - Include a phenomenon when the instrument context or supporting quotes show it being observed or studied during this period
+    - A phenomenon is NOT present if it is only mentioned as general background or in passing unrelated to this instrument's usage
     - Do NOT select a phenomenon just because its name appears as part of an instrument name
       (e.g., "Geomagnetic Field Instrument" does not mean Geomagnetic Storm is observed)
-    - Do NOT select a phenomenon because the instrument is capable of studying it — the quotes
+    - Do NOT select a phenomenon because the instrument is capable of studying it — the context
       must show it was actually studied in this paper during this period
-    - Multiple phenomena may apply if each is independently supported by the quotes
-
-    - **If the quotes are vague or describe instrument capabilities rather than what was studied**:
-      * Return "NONE" — capability descriptions do not confirm a phenomenon was studied
-    - **If the physical observable could map to several phenomena but the quotes do not distinguish**:
-      * Return only the most directly supported phenomenon, or "NONE" if none is clear
-    - **When in doubt between a phenomenon and NONE, choose NONE**
+    - Multiple phenomena may apply if each is independently supported by the context
+    - Use the instrument general context to understand what role this instrument plays in the paper,
+      and the period-level quotes to confirm what was specifically observed
   </selection_guidance>
 
   <critical_rules>
-    1. Every returned phenomenon must be directly supported by the provided quotes
-    2. Return "NONE" rather than guessing — under-identification is preferable to over-identification
-    3. Do not infer phenomena from instrument names, mission names, or general domain knowledge
-    4. Do not output explanation, names, or any text other than the comma-separated numbers or "NONE"
+    1. Every returned phenomenon must be supported by the provided instrument context or quotes
+    2. Do not infer phenomena from instrument names, mission names, or general domain knowledge alone
+    3. Do not output explanation, names, or any text other than the comma-separated numbers or "NONE"
   </critical_rules>
 </phenomenon_extraction_instructions>
