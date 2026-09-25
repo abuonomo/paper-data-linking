@@ -4098,7 +4098,7 @@ class PhenomenonValidationQueueView(ListAPIView):
         qs = PhenomenonMention.objects.select_related(
             'phenomenon',
             'paper_analysis__paper',
-        )
+        ).filter(paper_analysis__paper__tags__contains=['phenomenon_batch'])
 
         validation_status_param = self.request.query_params.get('validation_status', 'pending')
         if validation_status_param != 'all':
@@ -4237,7 +4237,7 @@ class PhenomenaQueuePapersView(ListAPIView):
                 filter=Q(paperanalysis__phenomenon_mentions__validation_status='accepted'),
                 distinct=True,
             ),
-        ).filter(total_mentions__gt=0)
+        ).filter(total_mentions__gt=0, tags__contains=['phenomenon_batch'])
 
         validation_status = self.request.query_params.get('validation_status', 'pending')
         if validation_status == 'pending':
