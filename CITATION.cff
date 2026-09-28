@@ -11,11 +11,11 @@ doi: 10.5281/zenodo.22945850
 authors:
   - family-names: Buonomo
     given-names: Anthony R.
-    affiliation: "NASA Heliophysics Digital Resource Library, Goddard Space Flight Center"
+    affiliation: "University of Maryland, Baltimore County; NASA Goddard Space Flight Center"
     orcid: "https://orcid.org/0000-0001-6981-2304"
   - family-names: Scharnikow
     given-names: Aidan
-    affiliation: "NASA Heliophysics Digital Resource Library, Goddard Space Flight Center"
+    affiliation: "University of Maryland, Baltimore County; NASA Goddard Space Flight Center"
     orcid: "https://orcid.org/0009-0004-3670-7902"
 keywords:
   - heliophysics
