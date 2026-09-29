@@ -1308,9 +1308,9 @@ PHENOMENON_VALIDATION_VOTE_CHOICES = [
 
 class PhenomenonMention(models.Model):
     """
-    Records an extraction result: instrument → phenomenon.
-    One record per (paper_analysis, phenomenon, instrument_name).
-    All physobs supporting quotes from every period are linked via the M2M.
+    Records an extraction result: instrument → phenomenon → period.
+    One record per (paper_analysis, phenomenon, instrument_name, period_name).
+    Supporting quotes from that specific period are linked via the M2M.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     paper_analysis = models.ForeignKey(
@@ -1369,11 +1369,17 @@ class PhenomenonMention(models.Model):
             models.Index(fields=['phenomenon']),
             models.Index(fields=['validation_status']),
         ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['paper_analysis', 'phenomenon', 'instrument_name', 'period_name'],
+                name='unique_phenomenon_mention_per_period',
+            ),
+        ]
 
     def __str__(self):
         return (
             f"{self.phenomenon.name} | {self.instrument_name} | "
-            f"{self.paper_analysis.paper.bibcode}"
+            f"{self.period_name} | {self.paper_analysis.paper.bibcode}"
         )
 
 

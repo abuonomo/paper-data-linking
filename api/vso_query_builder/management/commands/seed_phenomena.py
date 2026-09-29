@@ -112,6 +112,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Parse and print phenomena without writing to the database',
         )
+        parser.add_argument(
+            '--purge-extra',
+            action='store_true',
+            help='Delete any Phenomenon DB records whose IRI is not in the TTL phenomenon set.',
+        )
 
     def handle(self, *args, **options):
         ttl_path = Path(options['ttl']) if options['ttl'] else _find_ttl()
@@ -154,7 +159,19 @@ class Command(BaseCommand):
                 )
                 deduplicated.append((iri, unique_label))
 
+        valid_iris = {iri for iri, _ in deduplicated}
+        purged_count = 0
+
         with transaction.atomic():
+            if options['purge_extra']:
+                extra_qs = Phenomenon.objects.exclude(iri__in=valid_iris)
+                purged_count = extra_qs.count()
+                if purged_count:
+                    self.stdout.write(
+                        self.style.WARNING(f"Purging {purged_count} records not in TTL phenomenon set...")
+                    )
+                    extra_qs.delete()
+
             for iri, label in deduplicated:
                 obj, created = Phenomenon.objects.update_or_create(
                     iri=iri,
@@ -168,6 +185,6 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(
                 f"Done. Created: {created_count}, Updated: {updated_count}, "
-                f"Skipped: {skipped_count}, Total phenomena: {Phenomenon.objects.count()}"
+                f"Purged: {purged_count}, Total phenomena: {Phenomenon.objects.count()}"
             )
         )

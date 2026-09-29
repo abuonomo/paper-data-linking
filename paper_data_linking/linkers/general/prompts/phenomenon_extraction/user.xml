@@ -4,6 +4,18 @@
 
   <data_collection_period>{{ period_name }}</data_collection_period>
 
+  {% if instrument_general_comments %}
+  <instrument_context>{{ instrument_general_comments }}</instrument_context>
+  {% endif %}
+
+  {% if instrument_general_quotes %}
+  <instrument_supporting_quotes>
+    {% for quote in instrument_general_quotes -%}
+    <quote>{{ quote }}</quote>
+    {% endfor %}
+  </instrument_supporting_quotes>
+  {% endif %}
+
   <physical_observable>{{ physical_observable }}</physical_observable>
 
   {% if physobs_quotes %}

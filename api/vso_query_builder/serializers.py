@@ -791,7 +791,9 @@ class PhenomenonMentionSerializer(serializers.ModelSerializer):
         if not normalized:
             return None
         for inst in normalized.get('instruments', []):
-            if inst.get('name', {}).get('original') != obj.instrument_name:
+            raw_name = inst.get('name', {})
+            inst_name = raw_name.get('original', '') if isinstance(raw_name, dict) else str(raw_name)
+            if inst_name != obj.instrument_name:
                 continue
             for period in inst.get('data_collection_periods', []):
                 if period.get('period_name') != obj.period_name:

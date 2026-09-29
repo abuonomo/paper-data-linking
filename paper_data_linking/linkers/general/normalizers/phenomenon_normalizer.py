@@ -30,6 +30,8 @@ class PhenomenonNormalizer(BaseNormalizer):
         physical_observable = context.period_data.physical_observable
         physobs_quotes = context.period_data.physobs_quotes or []
         phenomena = context.phenomena or []
+        instrument_general_comments = getattr(context, 'instrument_general_comments', '') or ''
+        instrument_general_quotes = getattr(context, 'instrument_general_quotes', []) or []
 
         if not physical_observable or not phenomena:
             return {"phenomena": []}
@@ -46,6 +48,8 @@ class PhenomenonNormalizer(BaseNormalizer):
             physical_observable=physical_observable,
             physobs_quotes=physobs_quotes,
             phenomena_text=phenomena_text,
+            instrument_general_comments=instrument_general_comments,
+            instrument_general_quotes=instrument_general_quotes,
         )
 
         prompt_context = {
@@ -54,6 +58,8 @@ class PhenomenonNormalizer(BaseNormalizer):
             "period_name": context.period_name,
             "physical_observable": physical_observable,
             "physobs_quotes": physobs_quotes,
+            "instrument_general_comments": instrument_general_comments,
+            "instrument_general_quotes": instrument_general_quotes,
         }
 
         try:
