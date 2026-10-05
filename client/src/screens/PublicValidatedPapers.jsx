@@ -129,7 +129,7 @@ export default function PublicValidatedPapers() {
     let mounted = true;
     setFilterLoading(true);
     
-    fetchPublicPapersFilterOptions(includeUnvalidated)
+    fetchPublicPapersFilterOptions(includeUnvalidated, { ...filters, query: (searchParams.get('q') || '').trim() })
       .then((data) => {
         if (!mounted) return;
         setFilterOptions(data);
@@ -143,7 +143,7 @@ export default function PublicValidatedPapers() {
       });
     
     return () => { mounted = false; };
-  }, [includeUnvalidated]);
+  }, [includeUnvalidated, filters]);
 
   // Load papers with current filters
   useEffect(() => {

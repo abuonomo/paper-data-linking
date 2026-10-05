@@ -847,6 +847,19 @@ def _reject_unknown_query_params(request, allowed):
     )
 
 
+def _build_paper_scope_q(text_query, tags, prefix='') -> Q:
+    """Paper-level filters (text search + tags) shared by the public views."""
+    scope = Q()
+    if text_query:
+        scope &= Q(**{f'{prefix}bibcode__icontains': text_query}) | Q(**{f'{prefix}title__icontains': text_query})
+    tags_q = Q()
+    for tag in (tags or []):
+        tags_q |= Q(**{f'{prefix}tags__contains': [tag]})
+    if tags_q.children:
+        scope &= tags_q
+    return scope
+
+
 def _build_public_papers_query_parts(include_unvalidated, missions, instruments, start_date, end_date, validation_statuses, text_query, tags=None):
     """Build list/CSV paper query parts with mission_only inclusion semantics."""
     if include_unvalidated:
@@ -1389,132 +1402,36 @@ class PublicValidatedPapersCSVView(APIView):
 @extend_schema(
     summary='Valid missions/instruments filter values with paper and usage counts',
     tags=['Public API'],
+    description=(
+        'Lists every mission/instrument with matching papers under the '
+        'validation-status choice. Counts are faceted: they reflect the date '
+        'range, text search and tags filters, so a listed mission can show 0 '
+        'when those filters exclude all of its papers.'
+    ),
     parameters=[
-        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to count pending records too.')
+        OpenApiParameter('include_unvalidated', OpenApiTypes.BOOL, OpenApiParameter.QUERY, description='true to count pending records too.'),
+        OpenApiParameter('start_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; count only usages whose observation window overlaps [start_date, end_date].'),
+        OpenApiParameter('end_date', OpenApiTypes.DATE, OpenApiParameter.QUERY, description='ISO date; see start_date.'),
+        OpenApiParameter('q', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Text search over bibcode and title.'),
+        OpenApiParameter('tags', OpenApiTypes.STR, OpenApiParameter.QUERY, description='Restrict counts to a curated paper set (repeatable).', many=True),
     ],
     responses=OpenApiTypes.OBJECT,
 )
 class PublicPapersFilterOptionsView(APIView):
     """Public endpoint for getting filter options (missions, instruments, date ranges, etc.)"""
     permission_classes = [AllowAny]
-    
-    def get(self, request):
-        include_unvalidated = request.query_params.get('include_unvalidated', '').lower() == 'true'
-        
-        # Base dataset usage query
-        # include_unvalidated=True means include Approved + Pending
-        if include_unvalidated:
-            usages = DatasetUsage.objects.filter(validation_status__in=['approved', 'pending']).select_related('instrument__observatory')
-        else:
-            usages = DatasetUsage.objects.filter(validation_status='approved').select_related('instrument__observatory')
-        
-        # Usage-backed mission counts (including datasource metadata)
-        missions = (
-            usages
-            .values(
-                'instrument__observatory__short_name',
-                'instrument__observatory__display_name',
-                'instrument__observatory__name',
-                'instrument__observatory__datasource__slug',
-                'instrument__observatory__datasource__name',
-            )
-            .annotate(
-                count=Count('paper', distinct=True),
-                usage_count=Count('id')
-            )
-            .filter(count__gt=0)
-            .order_by('instrument__observatory__datasource__slug', 'instrument__observatory__short_name')
-        )
 
-        # Get instruments grouped by mission with counts (now including datasource)
-        instruments = (
-            usages
-            .values(
-                'instrument__short_name',
-                'instrument__display_name',
-                'instrument__full_name',
-                'instrument__observatory__short_name',
-                'instrument__observatory__datasource__slug',
-            )
-            .annotate(
-                count=Count('paper', distinct=True),
-                usage_count=Count('id')
-            )
-            .filter(count__gt=0)
-            .order_by('instrument__observatory__datasource__slug', 'instrument__observatory__short_name', 'instrument__short_name')
-        )
-
-        # Mission-only mentions are independent of DatasetUsage validation state.
-        mission_only_mentions = (
-            InstrumentMention.objects
-            .filter(
-                match_level=InstrumentMention.MATCH_LEVEL_MISSION_ONLY,
-                matched_observatory__isnull=False,
-            )
-            .values(
-                'matched_observatory__short_name',
-                'matched_observatory__display_name',
-                'matched_observatory__name',
-                'matched_observatory__datasource__slug',
-                'matched_observatory__datasource__name',
-            )
-            .annotate(
-                mission_only_paper_count=Count('paper_analysis__paper', distinct=True),
-                mission_only_usage_count=Count('id'),
-            )
-            .filter(mission_only_paper_count__gt=0)
-            .order_by('matched_observatory__datasource__slug', 'matched_observatory__short_name')
-        )
-        
-        # Get date ranges
-        date_stats = usages.aggregate(
-            earliest=Min(Func(F('observation_window'), function='lower', output_field=DateTimeField())),
-            latest=Max(Func(F('observation_window'), function='upper', output_field=DateTimeField()))
-        )
-        
-        # Get validation status counts
-        validation_counts = (
-            DatasetUsage.objects
-            .values('validation_status')
-            .annotate(
-                count=Count('paper', distinct=True),
-                usage_count=Count('id')
-            )
-            .order_by('validation_status')
-        )
-        
-        # Mission metadata map + combined distinct paper counts (usage OR mission_only).
-        mission_meta = {}
+    @staticmethod
+    def _aggregate(usages, mission_only_mentions):
+        """Per-mission and per-instrument paper/usage counts for the given scope."""
         usage_count_by_key = {}
-        for mission in missions:
-            ds_slug = mission['instrument__observatory__datasource__slug'] or 'unknown'
-            ds_name = mission['instrument__observatory__datasource__name'] or ds_slug
-            short_name = mission['instrument__observatory__short_name']
-            key = (ds_slug, short_name)
-            mission_meta[key] = {
-                'datasource_slug': ds_slug,
-                'datasource_name': ds_name,
-                'short_name': short_name,
-                'display_name': mission['instrument__observatory__display_name'] or short_name,
-                'name': mission['instrument__observatory__name'],
-            }
-            usage_count_by_key[key] = mission['usage_count']
-
-        mission_only_count_by_key = {}
-        for mention in mission_only_mentions:
-            ds_slug = mention['matched_observatory__datasource__slug'] or 'unknown'
-            ds_name = mention['matched_observatory__datasource__name'] or ds_slug
-            short_name = mention['matched_observatory__short_name']
-            key = (ds_slug, short_name)
-            mission_only_count_by_key[key] = mention['mission_only_usage_count']
-            if key not in mission_meta:
-                mission_meta[key] = {
-                    'datasource_slug': ds_slug,
-                    'datasource_name': ds_name,
-                    'short_name': short_name,
-                    'display_name': mention['matched_observatory__display_name'] or short_name,
-                    'name': mention['matched_observatory__name'],
-                }
+        for ds_slug, short_name, usage_count in (
+            usages
+            .values_list('instrument__observatory__datasource__slug', 'instrument__observatory__short_name')
+            .annotate(usage_count=Count('id'))
+            .order_by()
+        ):
+            usage_count_by_key[(ds_slug or 'unknown', short_name)] = usage_count
 
         usage_paper_sets = {}
         for paper_id, ds_slug, short_name in (
@@ -1529,13 +1446,18 @@ class PublicPapersFilterOptionsView(APIView):
             key = (ds_slug or 'unknown', short_name)
             usage_paper_sets.setdefault(key, set()).add(paper_id)
 
+        mission_only_count_by_key = {}
+        for ds_slug, short_name, usage_count in (
+            mission_only_mentions
+            .values_list('matched_observatory__datasource__slug', 'matched_observatory__short_name')
+            .annotate(usage_count=Count('id'))
+            .order_by()
+        ):
+            mission_only_count_by_key[(ds_slug or 'unknown', short_name)] = usage_count
+
         mission_only_paper_sets = {}
         for paper_id, ds_slug, short_name in (
-            InstrumentMention.objects
-            .filter(
-                match_level=InstrumentMention.MATCH_LEVEL_MISSION_ONLY,
-                matched_observatory__isnull=False,
-            )
+            mission_only_mentions
             .values_list(
                 'paper_analysis__paper_id',
                 'matched_observatory__datasource__slug',
@@ -1546,30 +1468,168 @@ class PublicPapersFilterOptionsView(APIView):
             key = (ds_slug or 'unknown', short_name)
             mission_only_paper_sets.setdefault(key, set()).add(paper_id)
 
+        instrument_counts = {}
+        for ds_slug, obs_short, inst_short, paper_count, usage_count in (
+            usages
+            .values_list(
+                'instrument__observatory__datasource__slug',
+                'instrument__observatory__short_name',
+                'instrument__short_name',
+            )
+            .annotate(paper_count=Count('paper', distinct=True), usage_count=Count('id'))
+            .order_by()
+        ):
+            instrument_counts[(f"{ds_slug or 'unknown'}:{obs_short}", inst_short)] = (paper_count, usage_count)
+
+        return {
+            'usage_count_by_key': usage_count_by_key,
+            'usage_paper_sets': usage_paper_sets,
+            'mission_only_count_by_key': mission_only_count_by_key,
+            'mission_only_paper_sets': mission_only_paper_sets,
+            'instrument_counts': instrument_counts,
+        }
+
+    def get(self, request):
+        include_unvalidated = request.query_params.get('include_unvalidated', '').lower() == 'true'
+        start_date = request.query_params.get('start_date') or None
+        end_date = request.query_params.get('end_date') or None
+        text_query = (request.query_params.get('q') or '').strip()
+        tags = request.query_params.getlist('tags')
+
+        # Base dataset usage query
+        # include_unvalidated=True means include Approved + Pending
+        if include_unvalidated:
+            usages = DatasetUsage.objects.filter(validation_status__in=['approved', 'pending'])
+        else:
+            usages = DatasetUsage.objects.filter(validation_status='approved')
+
+        # Mission-only mentions are independent of DatasetUsage validation state.
+        mission_only_mentions = InstrumentMention.objects.filter(
+            match_level=InstrumentMention.MATCH_LEVEL_MISSION_ONLY,
+            matched_observatory__isnull=False,
+        )
+
+        # Which missions/instruments are listed comes from the unscoped data,
+        # so the sidebar stays stable while filtering; the counts are scoped
+        # by every active filter except the mission/instrument selection
+        # (missions combine with OR, so selecting one never changes another's
+        # count), mirroring the list view's semantics: the date window applies
+        # per usage, q/tags per paper.
+        missions = (
+            usages
+            .values(
+                'instrument__observatory__short_name',
+                'instrument__observatory__display_name',
+                'instrument__observatory__name',
+                'instrument__observatory__datasource__slug',
+                'instrument__observatory__datasource__name',
+            )
+            .distinct()
+            .order_by('instrument__observatory__datasource__slug', 'instrument__observatory__short_name')
+        )
+        instruments = (
+            usages
+            .values(
+                'instrument__short_name',
+                'instrument__display_name',
+                'instrument__full_name',
+                'instrument__observatory__short_name',
+                'instrument__observatory__datasource__slug',
+            )
+            .distinct()
+            .order_by('instrument__observatory__datasource__slug', 'instrument__observatory__short_name', 'instrument__short_name')
+        )
+        mission_only_missions = (
+            mission_only_mentions
+            .values(
+                'matched_observatory__short_name',
+                'matched_observatory__display_name',
+                'matched_observatory__name',
+                'matched_observatory__datasource__slug',
+                'matched_observatory__datasource__name',
+            )
+            .distinct()
+            .order_by('matched_observatory__datasource__slug', 'matched_observatory__short_name')
+        )
+
+        counts = self._aggregate(usages, mission_only_mentions)
+        if start_date or end_date or text_query or tags:
+            scoped_usages = usages
+            date_q = _build_dataset_usage_filter_q(
+                missions=None, instruments=None, start_date=start_date, end_date=end_date,
+                validation_statuses=None, prefix='',
+            )
+            if date_q.children:
+                scoped_usages = scoped_usages.filter(date_q)
+            paper_scope_q = _build_paper_scope_q(text_query, tags, prefix='paper__')
+            if paper_scope_q.children:
+                scoped_usages = scoped_usages.filter(paper_scope_q)
+
+            # The list view only surfaces mission-only papers when no date
+            # filter is active, so they must not count under one either.
+            if start_date or end_date:
+                scoped_mentions = mission_only_mentions.none()
+            else:
+                scoped_mentions = mission_only_mentions.filter(
+                    _build_paper_scope_q(text_query, tags, prefix='paper_analysis__paper__'))
+            counts = self._aggregate(scoped_usages, scoped_mentions)
+
+        # Get date ranges (unscoped, so the "available" hint stays stable)
+        date_stats = usages.aggregate(
+            earliest=Min(Func(F('observation_window'), function='lower', output_field=DateTimeField())),
+            latest=Max(Func(F('observation_window'), function='upper', output_field=DateTimeField()))
+        )
+
+        # Get validation status counts
+        validation_counts = (
+            DatasetUsage.objects
+            .values('validation_status')
+            .annotate(
+                count=Count('paper', distinct=True),
+                usage_count=Count('id')
+            )
+            .order_by('validation_status')
+        )
+
+        # Mission metadata map (usage-backed first, then mission-only).
+        mission_meta = {}
+        for mission in missions:
+            ds_slug = mission['instrument__observatory__datasource__slug'] or 'unknown'
+            short_name = mission['instrument__observatory__short_name']
+            mission_meta.setdefault((ds_slug, short_name), {
+                'datasource_name': mission['instrument__observatory__datasource__name'] or ds_slug,
+                'display_name': mission['instrument__observatory__display_name'] or short_name,
+                'name': mission['instrument__observatory__name'],
+            })
+        for mention in mission_only_missions:
+            ds_slug = mention['matched_observatory__datasource__slug'] or 'unknown'
+            short_name = mention['matched_observatory__short_name']
+            mission_meta.setdefault((ds_slug, short_name), {
+                'datasource_name': mention['matched_observatory__datasource__name'] or ds_slug,
+                'display_name': mention['matched_observatory__display_name'] or short_name,
+                'name': mention['matched_observatory__name'],
+            })
+
+        # Combined distinct paper counts (usage OR mission_only).
         missions_by_datasource = {}
         missions_data = []  # backward compat flat list
-        all_mission_keys = sorted(set(mission_meta.keys()) | set(usage_paper_sets.keys()) | set(mission_only_paper_sets.keys()))
-        for key in all_mission_keys:
+        for key in sorted(mission_meta):
             ds_slug, short_name = key
-            meta = mission_meta.get(key, {
-                'datasource_slug': ds_slug,
-                'datasource_name': ds_slug,
-                'short_name': short_name,
-                'display_name': short_name,
-                'name': short_name,
-            })
-            usage_papers = usage_paper_sets.get(key, set())
-            mission_only_papers = mission_only_paper_sets.get(key, set())
+            meta = mission_meta[key]
+            usage_papers = counts['usage_paper_sets'].get(key, set())
+            mission_only_papers = counts['mission_only_paper_sets'].get(key, set())
+            paper_count = len(usage_papers | mission_only_papers)
+            usage_count = counts['usage_count_by_key'].get(key, 0)
 
             mission_entry = {
                 'key': f'{ds_slug}:{short_name}',
                 'short_name': short_name,
-                'display_name': meta['display_name'] or short_name,
+                'display_name': meta['display_name'],
                 'name': meta['name'],
-                'paper_count': len(usage_papers | mission_only_papers),
-                'usage_count': usage_count_by_key.get(key, 0),
+                'paper_count': paper_count,
+                'usage_count': usage_count,
                 'mission_only_paper_count': len(mission_only_papers),
-                'mission_only_usage_count': mission_only_count_by_key.get(key, 0),
+                'mission_only_usage_count': counts['mission_only_count_by_key'].get(key, 0),
             }
 
             if ds_slug not in missions_by_datasource:
@@ -1582,8 +1642,8 @@ class PublicPapersFilterOptionsView(APIView):
             missions_data.append({
                 'short_name': short_name,
                 'name': meta['name'],
-                'paper_count': len(usage_papers | mission_only_papers),
-                'usage_count': usage_count_by_key.get(key, 0),
+                'paper_count': paper_count,
+                'usage_count': usage_count,
                 'mission_only_paper_count': len(mission_only_papers),
             })
 
@@ -1594,26 +1654,22 @@ class PublicPapersFilterOptionsView(APIView):
             ds_slug = instrument['instrument__observatory__datasource__slug'] or 'unknown'
             obs_short = instrument['instrument__observatory__short_name']
             composite_key = f"{ds_slug}:{obs_short}"
+            inst_short = instrument['instrument__short_name']
+            paper_count, usage_count = counts['instrument_counts'].get((composite_key, inst_short), (0, 0))
 
-            inst_display = instrument['instrument__display_name']
             inst_entry = {
-                'short_name': instrument['instrument__short_name'],
-                'display_name': inst_display or instrument['instrument__short_name'],
-                'full_name': instrument['instrument__full_name'] or instrument['instrument__short_name'],
-                'paper_count': instrument['count'],
-                'usage_count': instrument['usage_count'],
+                'short_name': inst_short,
+                'display_name': instrument['instrument__display_name'] or inst_short,
+                'full_name': instrument['instrument__full_name'] or inst_short,
+                'paper_count': paper_count,
+                'usage_count': usage_count,
             }
 
             # New structure keyed by composite key
-            if composite_key not in instruments_by_datasource_and_mission:
-                instruments_by_datasource_and_mission[composite_key] = []
-            instruments_by_datasource_and_mission[composite_key].append(inst_entry)
-
+            instruments_by_datasource_and_mission.setdefault(composite_key, []).append(inst_entry)
             # backward compat keyed by mission short_name only
-            if obs_short not in instruments_by_mission:
-                instruments_by_mission[obs_short] = []
-            instruments_by_mission[obs_short].append(inst_entry)
-        
+            instruments_by_mission.setdefault(obs_short, []).append(inst_entry)
+
         # Format validation status data
         validation_data = []
         for status_info in validation_counts:
@@ -1622,7 +1678,7 @@ class PublicPapersFilterOptionsView(APIView):
                 'paper_count': status_info['count'],
                 'usage_count': status_info['usage_count']
             })
-        
+
         return Response({
             'missions_by_datasource': missions_by_datasource,
             'instruments_by_datasource_and_mission': instruments_by_datasource_and_mission,

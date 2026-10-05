@@ -227,6 +227,10 @@ counts) are discoverable from:
 GET /builder/public/papers/filter-options/
 ```
 
+It accepts `start_date`, `end_date`, `q` and `tags` (same meaning as above) to
+scope the counts; the set of missions/instruments listed does not change, so
+some may show a count of 0 under those filters.
+
 ## 4. Bulk Export
 
 CSV of matching papers (same filter parameters as section 3):

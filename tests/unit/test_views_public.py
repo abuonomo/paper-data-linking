@@ -315,6 +315,73 @@ class TestPublicPapersFilterOptionsView:
         assert mission is not None
         assert mission["mission_only_paper_count"] >= 1
 
+    @staticmethod
+    def _missions(response):
+        return {
+            m["short_name"]: m
+            for group in response.data["missions_by_datasource"].values()
+            for m in group["missions"]
+        }
+
+    @pytest.fixture
+    def two_mission_data(self, validated_usage_data, observatory_factory, instrument_factory,
+                         paper_analysis_factory, paper_factory):
+        """SOHO/LASCO usage in 2003 (from validated_usage_data) + ACE/SWEPAM in 2015, tagged."""
+        from vso_query_builder.models import DatasetUsage
+
+        ace = observatory_factory("ACE")
+        swepam = instrument_factory(ace, "SWEPAM")
+        paper = paper_factory(title="Solar wind at L1", tags=["hssi"])
+        pa = paper_analysis_factory(paper=paper)
+        DatasetUsage.objects.create(
+            paper=paper, instrument=swepam, paper_analysis=pa,
+            observation_window=DateTimeTZRange(
+                datetime(2015, 3, 1, tzinfo=pytz.UTC), datetime(2015, 3, 2, tzinfo=pytz.UTC), bounds="[]"),
+            validation_status="approved",
+        )
+        return {**validated_usage_data, "ace_paper": paper}
+
+    def test_unfiltered_lists_both_missions(self, client, two_mission_data):
+        missions = self._missions(client.get(reverse("public-papers-filter-options")))
+        assert missions["SOHO"]["paper_count"] == 1
+        assert missions["ACE"]["paper_count"] == 1
+
+    def test_date_filter_zeroes_missions_without_matching_usages(self, client, two_mission_data):
+        response = client.get(reverse("public-papers-filter-options"),
+                              {"start_date": "2015-01-01", "end_date": "2015-12-31"})
+        missions = self._missions(response)
+        assert missions["ACE"]["paper_count"] == 1
+        # Still listed, so the sidebar stays stable, but with a zero count.
+        assert missions["SOHO"]["paper_count"] == 0
+        assert missions["SOHO"]["usage_count"] == 0
+        lasco = response.data["instruments_by_datasource_and_mission"]["vso:SOHO"]
+        assert [(i["short_name"], i["paper_count"]) for i in lasco] == [("LASCO", 0)]
+        swepam = response.data["instruments_by_datasource_and_mission"]["vso:ACE"]
+        assert [(i["short_name"], i["paper_count"]) for i in swepam] == [("SWEPAM", 1)]
+
+    def test_text_and_tag_filters_scope_counts(self, client, two_mission_data):
+        url = reverse("public-papers-filter-options")
+        for params in ({"q": "L1"}, {"tags": "hssi"}):
+            missions = self._missions(client.get(url, params))
+            assert missions["ACE"]["paper_count"] == 1
+            assert missions["SOHO"]["paper_count"] == 0
+
+    def test_date_filter_zeroes_mission_only_papers(self, client, two_mission_data, mission_only_data):
+        url = reverse("public-papers-filter-options")
+        assert self._missions(client.get(url))["STEREO_A"]["paper_count"] == 1
+        missions = self._missions(client.get(url, {"start_date": "2015-01-01", "end_date": "2015-12-31"}))
+        assert missions["STEREO_A"]["paper_count"] == 0
+
+    def test_mission_selection_does_not_narrow_counts(self, client, two_mission_data):
+        missions = self._missions(client.get(reverse("public-papers-filter-options"), {"missions": "vso:SOHO"}))
+        assert missions["SOHO"]["paper_count"] == 1
+        assert missions["ACE"]["paper_count"] == 1
+
+    def test_date_range_hint_is_not_narrowed(self, client, two_mission_data):
+        response = client.get(reverse("public-papers-filter-options"),
+                              {"start_date": "2015-01-01", "end_date": "2015-12-31"})
+        assert response.data["date_range"]["earliest"].year == 2003
+
 
 @pytest.mark.django_db
 class TestUsageByMissionAPIView:

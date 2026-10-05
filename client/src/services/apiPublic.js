@@ -83,15 +83,20 @@ export async function fetchPublicInstrumentMentions(bibcode, matchLevels = []) {
   return resp.data
 }
 
-export async function fetchPublicPapersFilterOptions(includeUnvalidated = false) {
+// Mission/instrument counts are scoped to the active date range, search and tags.
+export async function fetchPublicPapersFilterOptions(includeUnvalidated = false, filters = {}) {
   const url = `${BASE_URL}/builder/public/papers/filter-options/`
-  const params = {}
+  const params = new URLSearchParams()
   if (includeUnvalidated) {
-    params.include_unvalidated = 'true'
+    params.append('include_unvalidated', 'true')
   }
-  const resp = await axios.get(url, { 
+  if (filters.start_date) params.append('start_date', filters.start_date)
+  if (filters.end_date) params.append('end_date', filters.end_date)
+  if (filters.query) params.append('q', filters.query)
+  ;(filters.tags || []).forEach(t => params.append('tags', t))
+  const resp = await axios.get(url, {
     headers: { Accept: 'application/json' },
-    params 
+    params
   })
   return resp.data
 }
