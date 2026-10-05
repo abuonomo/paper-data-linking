@@ -257,6 +257,46 @@ class TestPublicValidatedPapersCSVView:
 
 
 @pytest.mark.django_db
+class TestPublicPapersUnknownParams:
+    """Misspelled filters must 400, not silently return the unfiltered corpus."""
+
+    @pytest.mark.parametrize("url_name", ["public-validated-papers", "public-validated-papers-csv"])
+    @pytest.mark.parametrize("params,unknown,suggested", [
+        ({"instrument": "CLIMSO"}, "instrument", "instruments"),
+        ({"mission": "OMP"}, "mission", "missions"),
+        ({"missions[]": "OMP"}, "missions[]", "missions"),
+        ({"instruments": "CLIMSO", "start": "2022-10-01"}, "start", "start_date"),
+        ({"observatory": "OMP"}, "observatory", None),
+    ])
+    def test_unknown_param_rejected(self, client, validated_usage_data, url_name, params, unknown, suggested):
+        response = client.get(reverse(url_name), params)
+        assert response.status_code == 400
+        body = response.json()
+        assert body["unknown_params"] == [unknown]
+        assert unknown in body["error"]
+        assert body["suggestions"].get(unknown) == suggested
+
+    def test_all_documented_list_params_accepted(self, client, validated_usage_data):
+        response = client.get(reverse("public-validated-papers"), {
+            "missions": "SOHO", "instruments": "LASCO",
+            "start_date": "2003-01-01", "end_date": "2003-12-31",
+            "validation_status": "approved", "tags": "hssi", "q": "x",
+            "include": "1", "include_unvalidated": "true",
+            "page": "1", "page_size": "5",
+        })
+        assert response.status_code == 200
+
+    def test_all_documented_csv_params_accepted(self, client, validated_usage_data):
+        response = client.get(reverse("public-validated-papers-csv"), {
+            "missions": "SOHO", "instruments": "LASCO",
+            "start_date": "2003-01-01", "end_date": "2003-12-31",
+            "validation_status": "approved", "tags": "hssi", "q": "x",
+            "include": "1", "include_unvalidated": "true",
+        })
+        assert response.status_code == 200
+
+
+@pytest.mark.django_db
 class TestPublicPapersFilterOptionsView:
 
     def test_returns_filter_options(self, client, validated_usage_data):

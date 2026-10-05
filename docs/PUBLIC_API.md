@@ -206,6 +206,20 @@ Query parameters:
 - `include_unvalidated=true`: include pending records in addition to approved.
 - `page_size=100`, `page=2`: pagination.
 
+Unknown query parameters are rejected with HTTP 400 (this also applies to the
+CSV export in section 4). A misspelled filter name such as `instrument=` or
+`mission=` would otherwise be ignored and return the unfiltered corpus. The
+error body lists the unknown names and suggests the closest valid one:
+
+```json
+{
+  "error": "Unknown query parameter(s): instrument. Did you mean: instrument -> instruments?",
+  "unknown_params": ["instrument"],
+  "suggestions": {"instrument": "instruments"},
+  "allowed_params": ["end_date", "format", "include", "..."]
+}
+```
+
 Valid `missions`/`instruments` values (with per-mission paper and usage
 counts) are discoverable from:
 
