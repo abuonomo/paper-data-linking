@@ -1,4 +1,5 @@
 import csv
+import difflib
 import hashlib
 import json
 import logging
@@ -813,6 +814,39 @@ def _build_dataset_usage_filter_q(missions, instruments, start_date, end_date, v
     return filters
 
 
+# Query parameters accepted by the public papers list + CSV views. Anything
+# else is rejected: a misspelled filter (e.g. ``instrument=`` for
+# ``instruments=``) used to be silently ignored, so the request returned the
+# unfiltered corpus with a plausible-looking count.
+PUBLIC_PAPERS_FILTER_PARAMS = frozenset({
+    'missions', 'instruments', 'start_date', 'end_date', 'validation_status',
+    'tags', 'q', 'include', 'include_unvalidated',
+})
+PUBLIC_PAPERS_LIST_PARAMS = PUBLIC_PAPERS_FILTER_PARAMS | {'page', 'page_size', 'format'}
+PUBLIC_PAPERS_CSV_PARAMS = PUBLIC_PAPERS_FILTER_PARAMS | {'format'}
+
+
+def _reject_unknown_query_params(request, allowed):
+    """Return a 400 Response naming any unknown query params, else None."""
+    unknown = sorted(set(request.query_params) - allowed)
+    if not unknown:
+        return None
+    suggestions = {}
+    for name in unknown:
+        base = name[:-2] if name.endswith('[]') else name
+        match = difflib.get_close_matches(base, allowed, n=1, cutoff=0.6)
+        if match:
+            suggestions[name] = match[0]
+    message = f"Unknown query parameter(s): {', '.join(unknown)}."
+    if suggestions:
+        message += ' Did you mean: ' + ', '.join(f'{k} -> {v}' for k, v in suggestions.items()) + '?'
+    return Response(
+        {'error': message, 'unknown_params': unknown, 'suggestions': suggestions,
+         'allowed_params': sorted(allowed)},
+        status=status.HTTP_400_BAD_REQUEST,
+    )
+
+
 def _build_public_papers_query_parts(include_unvalidated, missions, instruments, start_date, end_date, validation_statuses, text_query, tags=None):
     """Build list/CSV paper query parts with mission_only inclusion semantics."""
     if include_unvalidated:
@@ -1061,6 +1095,10 @@ class PublicValidatedPapersListView(APIView):
     pagination_class = PublicPapersPagination
 
     def get(self, request):
+        rejection = _reject_unknown_query_params(request, PUBLIC_PAPERS_LIST_PARAMS)
+        if rejection is not None:
+            return rejection
+
         include_unvalidated = request.query_params.get('include_unvalidated', '').lower() == 'true'
 
         # Extract filter parameters
@@ -1290,6 +1328,10 @@ class PublicValidatedPapersCSVView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
+        rejection = _reject_unknown_query_params(request, PUBLIC_PAPERS_CSV_PARAMS)
+        if rejection is not None:
+            return rejection
+
         include_unvalidated = request.query_params.get('include_unvalidated', '').lower() == 'true'
 
         # Extract filter parameters
