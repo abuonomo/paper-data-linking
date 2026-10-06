@@ -181,12 +181,111 @@ html {
   }
 }
 
+/* Mobile filter drawer footer: only shown inside the open drawer */
+.mobile-drawer-footer {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  /* Open filters become a full-screen drawer over the results */
+  .filters-sidebar.mobile-open {
+    position: fixed;
+    inset: 0;
+    z-index: 1030; /* above the sticky navbar (1020) */
+    margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fafafa;
+    border: none !important;
+    border-radius: 0 !important;
+    padding-bottom: 4.5rem; /* room for the footer */
+  }
+
+  .filters-sidebar.mobile-open > .faceted-filters {
+    position: static !important;
+  }
+
+  .filters-sidebar.mobile-open .mobile-drawer-footer {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem 1rem;
+    background: white;
+    border-top: 1px solid #ddd;
+  }
+
+  .mobile-drawer-footer button {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #3182ce;
+    color: white;
+    font-size: var(--font-base);
+    font-weight: 600;
+  }
+
+  /* Bigger tap targets in the drawer */
+  .filters-sidebar.mobile-open .faceted-filters input[type="checkbox"] {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .filters-sidebar.mobile-open .faceted-filters .facet-row,
+  .filters-sidebar.mobile-open .faceted-filters label {
+    min-height: 2.5rem;
+  }
+
+  body.filters-drawer-open {
+    overflow: hidden;
+  }
+
   .papers-layout {
     flex-direction: column !important;
+    /* stacked children must fill the width, not size to their content */
+    align-items: stretch !important;
+  }
+
+  .papers-layout > *,
+  .detail-layout > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   .detail-layout {
     flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  /* Paper first; the observation index and similar papers follow it */
+  .detail-layout > .detail-main {
+    order: -1;
+  }
+  .detail-layout > .detail-sidebar {
+    order: 1;
+  }
+  .detail-similar {
+    position: static !important;
+    border-left: none !important;
+    border-top: 1px solid #eee;
+  }
+  .detail-similar > * {
+    max-width: none !important;
+  }
+  /* Observation row: icon/from/start on one line, to/end below, links under that */
+  .usage-row {
+    grid-template-columns: 1.4rem 2rem 1fr !important;
+    row-gap: 0.15rem;
+  }
+  .usage-row > :nth-child(4) {
+    grid-column: 2;
+  }
+  .usage-row > :nth-child(5) {
+    grid-column: 3;
+  }
+  .usage-row > :nth-child(6) {
+    grid-column: 2 / -1;
+    margin-left: 0 !important;
   }
   .detail-sidebar {
     width: 100% !important;

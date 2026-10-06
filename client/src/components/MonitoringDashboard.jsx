@@ -168,7 +168,7 @@ const MonitoringDashboard = () => {
   const colCount = 8;
 
   const sg = {
-    display: 'flex', gap: '1rem', alignItems: 'center',
+    display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1rem', alignItems: 'center',
     padding: '0.5rem 0.75rem',
     background: '#f8f9fa', borderRadius: '6px',
   };
@@ -241,7 +241,7 @@ const MonitoringDashboard = () => {
             size="sm"
             value={selectedConfig}
             onChange={(e) => { setSelectedConfig(e.target.value); setPage(0); }}
-            style={{ width: '180px', fontSize: '0.8rem' }}
+            style={{ width: '100%', maxWidth: '180px', fontSize: '0.8rem' }}
           >
             <option value="">All configurations</option>
             {configurations.map(c => <option key={c} value={c}>{c}</option>)}
@@ -274,13 +274,13 @@ const MonitoringDashboard = () => {
           placeholder={`Search ${tab === 'mission' ? 'missions' : 'instruments'}...`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ width: '180px', fontSize: '0.8rem' }}
+          style={{ width: '100%', maxWidth: '180px', fontSize: '0.8rem' }}
         />
       </div>
 
       {/* Table */}
       <div style={{ border: '1px solid #dee2e6', borderTop: 'none' }}>
-        <Table striped hover size="sm" className="mb-0" style={{ fontSize: '0.85rem' }}>
+        <Table responsive striped hover size="sm" className="mb-0" style={{ fontSize: '0.85rem' }}>
           <thead className="table-light">
             <tr>
               <SortTh label={tab === 'mission' ? 'Mission' : 'Instrument'} sortKey="name" onClick={handleSort} si={si} style={{ width: '22%' }} />

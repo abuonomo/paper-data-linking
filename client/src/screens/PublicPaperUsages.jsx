@@ -487,7 +487,7 @@ export default function PublicPaperUsages() {
       </aside>
 
       {/* Main content */}
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="detail-main" style={{ flex: 1, minWidth: 0 }}>
       {/* Paper Information */}
       <div style={{ marginBottom: '1rem' }}>
         <div style={{
@@ -736,7 +736,7 @@ export default function PublicPaperUsages() {
                     const verificationText = 'Validated by a human reviewer';
                     return (
                       <div key={usage.id}>
-                        <div style={{
+                        <div className="usage-row" style={{
                           marginBottom: '0.35rem',
                           fontSize: 'var(--font-sm)',
                           display: 'grid',
@@ -972,7 +972,7 @@ export default function PublicPaperUsages() {
 
       {/* Similar Papers (right sidebar) */}
       {bibcode && (
-        <aside style={{
+        <aside className="detail-similar" style={{
           flexShrink: 0,
           borderLeft: '1px solid #eee',
           backgroundColor: '#fafafa',

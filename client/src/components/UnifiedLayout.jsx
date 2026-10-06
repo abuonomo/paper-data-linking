@@ -162,7 +162,7 @@ function LayoutShell() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '2rem', fontSize: 'var(--font-sm, 0.84rem)' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem 2rem', fontSize: 'var(--font-sm, 0.84rem)' }}>
             <a href="https://helio.data.nasa.gov/about" target="_blank" rel="noopener noreferrer">
               About HDRL
             </a>

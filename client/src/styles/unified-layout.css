@@ -102,6 +102,12 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .unified-main {
+    padding: 1rem;
+  }
+}
+
 /* Full-bleed mode — used by validation pages that need fixed viewport height */
 .unified-main.full-bleed {
   padding: 0;

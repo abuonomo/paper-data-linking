@@ -1280,6 +1280,50 @@
   }
 }
 
+/* Read-only (logged-out) mode has no PDF, only a sign-in prompt: give the
+   evidence the screen and shrink the prompt to a strip below it. */
+@media (max-width: 768px) {
+  .streamlined-validation--no-pdf .claim-sidebar {
+    height: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .streamlined-validation--no-pdf .pdf-section {
+    height: auto;
+    flex: none;
+  }
+
+  .streamlined-validation--no-pdf .quotes-list {
+    max-height: none;
+  }
+
+  .streamlined-validation--no-pdf .pdf-loading {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .streamlined-validation--no-pdf .pdf-signin-prompt {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .streamlined-validation--no-pdf .pdf-signin-prompt p {
+    margin: 0;
+  }
+
+  .streamlined-validation--no-pdf .pdf-signin-prompt p + p {
+    display: none;
+  }
+
+  .streamlined-validation--no-pdf .pdf-signin-prompt button {
+    margin-top: 0;
+    flex-shrink: 0;
+  }
+}
+
 /* Claim Content (replaces tab system) */
 .claim-content {
   flex: 1;
