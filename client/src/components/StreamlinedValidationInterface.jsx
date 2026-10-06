@@ -963,7 +963,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   }
 
   return (
-    <div className="streamlined-validation">
+    <div className={`streamlined-validation${isReadOnly ? ' streamlined-validation--no-pdf' : ''}`}>
       {/* Main Content: Claim Sidebar + PDF */}
       <div className="validation-main">
         {/* Left: Claim Card Sidebar */}

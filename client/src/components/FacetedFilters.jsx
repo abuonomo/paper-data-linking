@@ -163,7 +163,7 @@ export default function FacetedFilters({
   const availableInstruments = getAvailableInstruments();
 
   return (
-    <div style={{
+    <div className="faceted-filters" style={{
       width: '300px',
       padding: '1rem',
       borderRight: '1px solid #eee',
@@ -437,7 +437,7 @@ export default function FacetedFilters({
                           const missionChecked = getMissionCheckState(mission.key);
                           return (
                             <div key={mission.key} style={{ marginBottom: '0.3rem', marginLeft: '0.5rem', opacity: mission.paper_count === 0 ? ZERO_OPACITY : 1 }}>
-                              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.2rem' }}>
+                              <div className="facet-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.2rem' }}>
                                 <input
                                   type="checkbox"
                                   checked={missionChecked}
@@ -543,7 +543,7 @@ export default function FacetedFilters({
                 const missionChecked = getMissionCheckState(mission.short_name);
                 return (
                   <div key={mission.short_name} style={{ marginBottom: '0.3rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.2rem' }}>
+                    <div className="facet-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.2rem' }}>
                       <input
                         type="checkbox"
                         checked={missionChecked}

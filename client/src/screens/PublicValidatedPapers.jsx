@@ -63,6 +63,11 @@ export default function PublicValidatedPapers() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const searchInputRef = useRef(null);
 
+  useEffect(() => {
+    document.body.classList.toggle('filters-drawer-open', mobileFiltersOpen);
+    return () => document.body.classList.remove('filters-drawer-open');
+  }, [mobileFiltersOpen]);
+
   const handleToggleUnvalidated = (newValue) => {
     if (newValue) {
       searchParams.set('include_unvalidated', 'true');
@@ -308,6 +313,14 @@ export default function PublicValidatedPapers() {
               includeUnvalidated={includeUnvalidated}
               onToggleUnvalidated={handleToggleUnvalidated}
             />
+            {/* Mobile drawer footer (hidden on desktop via App.css) */}
+            <div className="mobile-drawer-footer">
+              <button type="button" onClick={() => setMobileFiltersOpen(false)}>
+                {isFiltering
+                  ? 'Updating…'
+                  : `Show ${pagination.count.toLocaleString()} paper${pagination.count === 1 ? '' : 's'}`}
+              </button>
+            </div>
           </div>
 
           {/* Main Content */}
@@ -359,8 +372,10 @@ export default function PublicValidatedPapers() {
             )}
             <div style={{
               display: 'flex',
+              flexWrap: 'wrap',
               alignItems: 'center',
               justifyContent: 'space-between',
+              gap: '0.5rem',
               marginBottom: '0.75rem',
             }}>
               <p style={{ color: '#888', margin: 0, fontSize: 'var(--font-sm)' }}>

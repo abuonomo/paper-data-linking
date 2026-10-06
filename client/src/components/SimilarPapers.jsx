@@ -6,7 +6,9 @@ import { colors } from '../styles'
 const styles = {
   container: {
     padding: '16px',
-    width: '280px',
+    width: '100%',
+    maxWidth: '280px',
+    boxSizing: 'border-box',
     flexShrink: 0,
   },
   heading: {
