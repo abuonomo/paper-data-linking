@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+// Dim (rather than hide) missions/instruments the active filters leave with
+// no papers, so the list stays stable and "0" stays visible.
+const ZERO_OPACITY = 0.45;
+const withZerosLast = (items) => [
+  ...items.filter(i => i.paper_count > 0),
+  ...items.filter(i => !(i.paper_count > 0)),
+];
+
 export default function FacetedFilters({
   filters,
   onFiltersChange,
@@ -23,16 +31,16 @@ export default function FacetedFilters({
   const [localStart, setLocalStart] = useState(filters.start_date || '');
   const [localEnd, setLocalEnd] = useState(filters.end_date || '');
 
-  // Default datasources to expanded when data first loads
+  // Default datasources to expanded the first time they appear (counts are
+  // re-fetched as filters change, so groups can come and go)
   useEffect(() => {
     if (filterOptions?.missions_by_datasource) {
       setExpandedDatasources(prev => {
-        if (Object.keys(prev).length > 0) return prev;
-        const init = {};
-        for (const slug of Object.keys(filterOptions.missions_by_datasource)) {
-          init[slug] = true;
-        }
-        return init;
+        const missing = Object.keys(filterOptions.missions_by_datasource).filter(slug => !(slug in prev));
+        if (missing.length === 0) return prev;
+        const next = { ...prev };
+        for (const slug of missing) next[slug] = true;
+        return next;
       });
     }
   }, [filterOptions?.missions_by_datasource]);
@@ -416,7 +424,10 @@ export default function FacetedFilters({
                   </button>
                   {isDsExpanded && (() => {
                     const isShowingAll = !!showAllMissions[dsSlug];
-                    const visibleMissions = isShowingAll ? dsGroup.missions : dsGroup.missions.slice(0, MISSION_PREVIEW_COUNT);
+                    // Missions the other filters leave with no papers stay listed
+                    // (dimmed) but sort after the ones with results.
+                    const sortedMissions = withZerosLast(dsGroup.missions);
+                    const visibleMissions = isShowingAll ? sortedMissions : sortedMissions.slice(0, MISSION_PREVIEW_COUNT);
                     const hiddenCount = dsGroup.missions.length - MISSION_PREVIEW_COUNT;
                     return (
                       <>
@@ -425,7 +436,7 @@ export default function FacetedFilters({
                           const isExpanded = !!expandedMissions[mission.key];
                           const missionChecked = getMissionCheckState(mission.key);
                           return (
-                            <div key={mission.key} style={{ marginBottom: '0.3rem', marginLeft: '0.5rem' }}>
+                            <div key={mission.key} style={{ marginBottom: '0.3rem', marginLeft: '0.5rem', opacity: mission.paper_count === 0 ? ZERO_OPACITY : 1 }}>
                               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.2rem' }}>
                                 <input
                                   type="checkbox"
@@ -466,7 +477,7 @@ export default function FacetedFilters({
                                   ({mission.paper_count})
                                 </span>
                               </div>
-                              {isExpanded && missionInstruments.map(instrument => (
+                              {isExpanded && withZerosLast(missionInstruments).map(instrument => (
                                 <label
                                   key={`${mission.key}-${instrument.short_name}`}
                                   style={{
@@ -476,7 +487,9 @@ export default function FacetedFilters({
                                     marginLeft: '1.8rem',
                                     cursor: 'pointer',
                                     fontSize: 'var(--font-sm)',
-                                    color: '#444'
+                                    color: '#444',
+                                    // the mission row is already dimmed when it has no papers
+                                    opacity: instrument.paper_count === 0 && mission.paper_count > 0 ? ZERO_OPACITY : 1
                                   }}
                                 >
                                   <input
