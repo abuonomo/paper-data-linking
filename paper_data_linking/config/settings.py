@@ -17,7 +17,8 @@ class LLMCallConfig(BaseModel):
     max_tokens: Optional[int] = Field(default=None)
     aws_region_name: Optional[str] = Field(default=None, description="AWS region for Bedrock models")
     reasoning_effort: Optional[str] = Field(default=None, description="Reasoning effort level: 'low', 'medium', 'high'")
-    
+    extra_body: Optional[dict] = Field(default=None, description="Extra request-body fields for OpenAI-compatible servers (e.g. vLLM chat_template_kwargs)")
+
     @field_validator('max_tokens')
     @classmethod
     def validate_max_tokens(cls, v):
@@ -37,7 +38,9 @@ class LLMCallConfig(BaseModel):
             kwargs["aws_region_name"] = self.aws_region_name
         if self.reasoning_effort is not None:
             kwargs["reasoning_effort"] = self.reasoning_effort
-            
+        if self.extra_body is not None:
+            kwargs["extra_body"] = self.extra_body
+
         # Add any additional kwargs passed in
         kwargs.update(additional_kwargs)
         
@@ -2011,6 +2014,39 @@ LLM_CONFIGURATIONS["bedrock-120b-low-v5"] = _with_uniform_effort(
 # (bedrock-120b-mixed-v5 — the per-stage mixed-effort config — is defined above;
 # it merged to main independently and the branch's verbatim port was dropped in
 # favor of the canonical definition.)
+
+
+def _on_model(config: "LLMPipelineConfig", template: "LLMCallConfig") -> "LLMPipelineConfig":
+    """Deep-copy a pipeline config with every LLM stage (all but embeddings) replaced
+    by ``template``. Used for single-model configs served from one endpoint."""
+    copied = config.model_copy(deep=True)
+
+    def _apply(obj):
+        for field in type(obj).model_fields:
+            value = getattr(obj, field)
+            if isinstance(value, LLMCallConfig):
+                setattr(obj, field, template.model_copy(deep=True))
+            elif hasattr(value, "model_fields"):
+                _apply(value)
+
+    _apply(copied)
+    copied.embeddings = config.embeddings.model_copy(deep=True)
+    return copied
+
+
+# Self-hosted Gemma 4 26B-A4B on vLLM (the SciX/ADS L40S candidate), every stage incl.
+# downstream. litellm's hosted_vllm provider reads HOSTED_VLLM_API_BASE / HOSTED_VLLM_API_KEY
+# from the environment. Thinking is switched on through the chat template (Gemma ignores
+# reasoning_effort). Embeddings stay on OpenAI.
+LLM_CONFIGURATIONS["vllm-gemma4"] = _on_model(
+    LLM_CONFIGURATIONS["bedrock-120b-high-v5"],
+    LLMCallConfig(
+        model="hosted_vllm/google/gemma-4-26B-A4B-it",
+        temperature=1.0,
+        max_tokens=16000,
+        extra_body={"chat_template_kwargs": {"enable_thinking": True}},
+    ),
+)
 
 
 def get_llm_configuration(name: str) -> LLMPipelineConfig:

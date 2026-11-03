@@ -38,4 +38,14 @@
   <precision_levels>
     Set precision level based on specificity: year, month, day, hour, minute, second
   </precision_levels>
+
+  <output_format>
+    Respond with a single JSON object containing exactly these five fields:
+    {"start_datetime": "YYYY-MM-DDTHH:MM:SSZ" or null,
+     "end_datetime": "YYYY-MM-DDTHH:MM:SSZ" or null,
+     "precision": one of "year", "month", "day", "hour", "minute", "second",
+     "is_approximate": true or false,
+     "original_text": the input time range text, copied verbatim}
+    When the dates cannot be determined (the error cases above), set start_datetime and end_datetime to null.
+  </output_format>
 </time_normalization_instructions>
