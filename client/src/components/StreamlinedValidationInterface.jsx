@@ -59,6 +59,8 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
   // per-component checkmarks (mission / instrument / window).
   const campaignSlug = searchParams.get('campaign') || null;
   const isCampaign = !!campaignSlug;
+  // Dashboard for this campaign (/campaign itself still opens the original one).
+  const campaignHome = campaignSlug ? `/campaign/${encodeURIComponent(campaignSlug)}` : '/campaign';
   // Campaign phase (?phase=calibration): scopes the in-paper queue to the
   // paper's calibration claims only (so a reviewer cannot wander onto bulk
   // claims before the rubric freeze) and drives cross-paper advancement
@@ -530,7 +532,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
           return;
         }
         toast.success('Calibration complete — your papers are now unlocked!');
-        navigate('/campaign');
+        navigate(campaignHome);
         return;
       }
       if (overview.resume) {
@@ -538,10 +540,10 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
         return;
       }
       toast.success('All of your campaign claims are judged!');
-      navigate('/campaign');
+      navigate(campaignHome);
     } catch (error) {
       console.error('Campaign advance failed:', error);
-      navigate('/campaign');
+      navigate(campaignHome);
     }
   };
 
@@ -979,7 +981,7 @@ export const StreamlinedValidationInterface = ({ paperContext, mode = 'validate'
                       if (isCampaign) {
                         // Campaign mode: back to the campaign dashboard (the
                         // paper overview would show config/consensus data)
-                        navigate('/campaign');
+                        navigate(campaignHome);
                       } else if (paperContext && paperContext.onReturnToPaperOverview) {
                         paperContext.onReturnToPaperOverview();
                       } else if (isReadOnly && displayUsage?.paper?.bibcode) {

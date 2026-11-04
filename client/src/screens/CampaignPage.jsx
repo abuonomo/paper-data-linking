@@ -5,15 +5,16 @@
 // consensus or the co-reviewer's activity), gates the bulk/overlap sections
 // behind calibration, and offers one-click resume at the first unjudged claim.
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchCampaignOverview } from '../services/apiServices';
 import CampaignRubricModal from '../components/CampaignRubricModal';
 import './CampaignPage.css';
 
-const CAMPAIGN_SLUG = 'val2026';
+// /campaign keeps opening the original campaign; others live at /campaign/:slug.
+const DEFAULT_CAMPAIGN_SLUG = 'val2026';
 
-const claimUrl = (paperId, usageId, phase = null) =>
-  `/campaign/papers/${paperId}/claims/${usageId}?campaign=${CAMPAIGN_SLUG}` +
+const claimUrl = (slug, paperId, usageId, phase = null) =>
+  `/campaign/papers/${paperId}/claims/${usageId}?campaign=${encodeURIComponent(slug)}` +
   (phase ? `&phase=${phase}` : '');
 
 const ProgressBar = ({ done, total }) => (
@@ -25,7 +26,7 @@ const ProgressBar = ({ done, total }) => (
   </div>
 );
 
-const PaperRow = ({ paper, locked, navigate }) => {
+const PaperRow = ({ slug, paper, locked, navigate }) => {
   const done = paper.my_judged_claims >= paper.total_claims && paper.total_claims > 0;
   const targetUsageId = paper.resume_usage_id;
   return (
@@ -33,7 +34,7 @@ const PaperRow = ({ paper, locked, navigate }) => {
       className={`campaign-paper-row ${done ? 'is-done' : ''} ${locked ? 'is-locked' : ''}`}
       onClick={() => {
         if (locked || !targetUsageId) return;
-        navigate(claimUrl(paper.id, targetUsageId));
+        navigate(claimUrl(slug, paper.id, targetUsageId));
       }}
       title={locked ? 'Complete calibration first' : (done ? 'All claims judged' : 'Open at your next unjudged claim')}
     >
@@ -49,7 +50,7 @@ const PaperRow = ({ paper, locked, navigate }) => {
   );
 };
 
-const PaperGroup = ({ heading, papers, locked, navigate, collapsed: defaultCollapsed = false }) => {
+const PaperGroup = ({ slug, heading, papers, locked, navigate, collapsed: defaultCollapsed = false }) => {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   if (!papers.length) return null;
   return (
@@ -58,7 +59,7 @@ const PaperGroup = ({ heading, papers, locked, navigate, collapsed: defaultColla
         {collapsed ? '▸' : '▾'} {heading} ({papers.length})
       </button>
       {!collapsed && papers.map(p => (
-        <PaperRow key={p.id} paper={p} locked={locked} navigate={navigate} />
+        <PaperRow key={p.id} slug={slug} paper={p} locked={locked} navigate={navigate} />
       ))}
     </div>
   );
@@ -66,6 +67,7 @@ const PaperGroup = ({ heading, papers, locked, navigate, collapsed: defaultColla
 
 const CampaignPage = () => {
   const navigate = useNavigate();
+  const { slug = DEFAULT_CAMPAIGN_SLUG } = useParams();
   const [overview, setOverview] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +75,7 @@ const CampaignPage = () => {
 
   useEffect(() => {
     let cancelled = false;
-    fetchCampaignOverview(CAMPAIGN_SLUG)
+    fetchCampaignOverview(slug)
       .then(data => { if (!cancelled) setOverview(data); })
       .catch(err => {
         if (cancelled) return;
@@ -87,7 +89,7 @@ const CampaignPage = () => {
       })
       .finally(() => { if (!cancelled) setIsLoading(false); });
     return () => { cancelled = true; };
-  }, []);
+  }, [slug]);
 
   if (isLoading) {
     return <div className="campaign-page"><p className="campaign-muted">Loading campaign…</p></div>;
@@ -132,7 +134,7 @@ const CampaignPage = () => {
             <button
               className="campaign-resume-btn"
               onClick={() => navigate(claimUrl(
-                resume.paper_id, resume.usage_id,
+                slug, resume.paper_id, resume.usage_id,
                 hasCalibration && !calibrationDone ? 'calibration' : null,
               ))}
             >
@@ -143,7 +145,7 @@ const CampaignPage = () => {
       </div>
 
       {showRubric && (
-        <CampaignRubricModal slug={CAMPAIGN_SLUG} onClose={() => setShowRubric(false)} />
+        <CampaignRubricModal slug={slug} onClose={() => setShowRubric(false)} />
       )}
 
       {hasCalibration && (
@@ -159,7 +161,7 @@ const CampaignPage = () => {
           {!calibrationDone && nextCalibration && (
             <button
               className="campaign-resume-btn campaign-resume-secondary"
-              onClick={() => navigate(claimUrl(nextCalibration.paper_id, nextCalibration.usage_id, 'calibration'))}
+              onClick={() => navigate(claimUrl(slug, nextCalibration.paper_id, nextCalibration.usage_id, 'calibration'))}
             >
               Continue calibration ▸
             </button>
@@ -172,9 +174,9 @@ const CampaignPage = () => {
         {hasCalibration && !calibrationDone && (
           <p className="campaign-locked-note">Locked until calibration is complete.</p>
         )}
-        <PaperGroup heading="In progress" papers={bulk.inProgress} locked={hasCalibration && !calibrationDone} navigate={navigate} />
-        <PaperGroup heading="Not started" papers={bulk.notStarted} locked={hasCalibration && !calibrationDone} navigate={navigate} />
-        <PaperGroup heading="Done" papers={bulk.done} locked={false} navigate={navigate} collapsed />
+        <PaperGroup slug={slug} heading="In progress" papers={bulk.inProgress} locked={hasCalibration && !calibrationDone} navigate={navigate} />
+        <PaperGroup slug={slug} heading="Not started" papers={bulk.notStarted} locked={hasCalibration && !calibrationDone} navigate={navigate} />
+        <PaperGroup slug={slug} heading="Done" papers={bulk.done} locked={false} navigate={navigate} collapsed />
       </div>
 
       <div className="campaign-section">
@@ -186,9 +188,9 @@ const CampaignPage = () => {
         {hasCalibration && !calibrationDone && (
           <p className="campaign-locked-note">Locked until calibration is complete.</p>
         )}
-        <PaperGroup heading="In progress" papers={overlap.inProgress} locked={hasCalibration && !calibrationDone} navigate={navigate} />
-        <PaperGroup heading="Not started" papers={overlap.notStarted} locked={hasCalibration && !calibrationDone} navigate={navigate} />
-        <PaperGroup heading="Done" papers={overlap.done} locked={false} navigate={navigate} collapsed />
+        <PaperGroup slug={slug} heading="In progress" papers={overlap.inProgress} locked={hasCalibration && !calibrationDone} navigate={navigate} />
+        <PaperGroup slug={slug} heading="Not started" papers={overlap.notStarted} locked={hasCalibration && !calibrationDone} navigate={navigate} />
+        <PaperGroup slug={slug} heading="Done" papers={overlap.done} locked={false} navigate={navigate} collapsed />
       </div>
     </div>
   );

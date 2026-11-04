@@ -51,7 +51,8 @@ def campaign_usages_queryset(campaign, paper_id=None, with_quotes=True):
 
     Restricted to the campaign's configurations (rows with a NULL
     paper_analysis have no knowable configuration and are excluded) and to
-    papers carrying the campaign's set tag.
+    papers carrying the campaign's set tag. Claim-scoped campaigns further
+    restrict to their frozen ``claim_usage_ids`` sample.
 
     ``with_quotes=False`` skips the supporting-quotes prefetch entirely —
     the overview and the vote endpoint never touch quotes, and the prefetch
@@ -62,6 +63,8 @@ def campaign_usages_queryset(campaign, paper_id=None, with_quotes=True):
         paper__tags__contains=[campaign.set_tag],
         paper_analysis__configuration_name__in=campaign.configs,
     )
+    if campaign.claim_scoped:
+        qs = qs.filter(id__in=campaign.claim_usage_ids)
     if paper_id is not None:
         qs = qs.filter(paper__id=paper_id)
     if with_quotes:
