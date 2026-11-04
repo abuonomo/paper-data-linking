@@ -191,3 +191,26 @@ class TestClaimGrouping:
             claim = resolve_claim(test_campaign, du.id)
             assert claim is not None
             assert len(claim.members) == 2
+
+
+@pytest.mark.django_db
+class TestClaimScopedCampaign:
+    """A claim-scoped campaign shows only its frozen sample of DatasetUsages."""
+
+    def test_only_listed_usages_participate(self, test_campaign, campaign_data):
+        scoped = test_campaign.model_copy(update={
+            "claim_scoped": True,
+            "claim_usage_ids": [str(campaign_data["du_a_div"].id)],
+        })
+        claims = get_paper_claims(scoped, campaign_data["paper"].id)
+        assert [c.usage_id for c in claims] == [campaign_data["du_a_div"].id]
+        assert resolve_claim(scoped, campaign_data["du_b_div"].id) is None
+        assert resolve_claim(scoped, campaign_data["du_a_div"].id) is not None
+
+    def test_empty_sample_exposes_nothing(self, test_campaign, campaign_data):
+        scoped = test_campaign.model_copy(update={"claim_scoped": True, "claim_usage_ids": []})
+        assert get_paper_claims(scoped, campaign_data["paper"].id) == []
+
+    def test_unscoped_campaign_ignores_the_list(self, test_campaign, campaign_data):
+        listed = test_campaign.model_copy(update={"claim_usage_ids": [str(campaign_data["du_a_div"].id)]})
+        assert len(get_paper_claims(listed, campaign_data["paper"].id)) == 3

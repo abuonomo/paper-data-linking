@@ -175,3 +175,130 @@ class TestSampleCalibrationClaims:
             ).values_list("id", flat=True)
         )
         assert tagged == {c["paper_id"] for c in data["claims"]}
+
+
+W1 = DateTimeTZRange(WINDOW_START, WINDOW_END, bounds="[)")
+W2 = DateTimeTZRange(WINDOW_START, datetime(2003, 6, 1, tzinfo=pytz.UTC), bounds="[)")
+
+
+@pytest.fixture
+def window_campaigns():
+    """A reference campaign (existing verdicts) + a claim-scoped comparison campaign."""
+    from paper_data_linking.config.settings import VALIDATION_CAMPAIGNS, ValidationCampaign
+
+    reference = ValidationCampaign(
+        slug="refcamp", configs=["ref-a", "ref-b"], set_tag="test_set_camp",
+        tag_prefix="refcamp:", reviewers=["alice"], overlap_tag="refcamp:overlap",
+        calibration_tag="refcamp:calibration",
+    )
+    window = ValidationCampaign(
+        slug="wincamp", configs=["cfg-a", "cfg-b"], set_tag="wincamp:set",
+        tag_prefix="wincamp:", reviewers=["alice"], overlap_tag="wincamp:overlap",
+        calibration_tag="wincamp:calibration", calibration_size=0, claim_scoped=True,
+    )
+    VALIDATION_CAMPAIGNS["refcamp"] = reference
+    VALIDATION_CAMPAIGNS["wincamp"] = window
+    yield reference, window
+    del VALIDATION_CAMPAIGNS["refcamp"]
+    del VALIDATION_CAMPAIGNS["wincamp"]
+
+
+@pytest.fixture
+def window_universe(window_campaigns, paper_factory, observatory_factory, instrument_factory,
+                    paper_analysis_factory):
+    """Per paper: X window-divergent across configs, Y cfg-a only, Z shared.
+
+    Paper 0's cfg-a X/W1 claim also exists in the reference campaign with a
+    reviewer verdict, so it must be skipped.
+    """
+    from django.contrib.auth.models import User
+    from vso_query_builder.models import DatasetUsage, DatasetUsageValidation
+
+    obs = observatory_factory("SOHO")
+    inst = {name: instrument_factory(obs, name) for name in ("X", "Y", "Z")}
+    alice = User.objects.create_user(username="alice", password="x")
+    ids = {"shared": set(), "judged": set(), "window": set(), "pair": set()}
+    papers = []
+    for i in range(6):
+        paper = paper_factory(tags=["test_set_camp"])
+        papers.append(paper)
+        pa = {cfg: paper_analysis_factory(paper=paper, configuration_name=cfg)
+              for cfg in ("cfg-a", "cfg-b", "ref-a")}
+
+        def du(cfg, name, window):
+            return DatasetUsage.objects.create(
+                paper=paper, paper_analysis=pa[cfg], instrument=inst[name], observation_window=window)
+
+        x_a, x_b = du("cfg-a", "X", W1), du("cfg-b", "X", W2)
+        (ids["judged"] if i == 0 else ids["window"]).add(str(x_a.id))
+        ids["window"].add(str(x_b.id))
+        ids["pair"].add(str(du("cfg-a", "Y", W1).id))
+        ids["shared"].update({str(du("cfg-a", "Z", W1).id), str(du("cfg-b", "Z", W1).id)})
+        if i == 0:
+            ref = du("ref-a", "X", W1)
+            DatasetUsageValidation.objects.create(dataset_usage=ref, user=alice, validation_status="approved")
+    return papers, ids
+
+
+@pytest.mark.django_db
+class TestSampleWindowClaims:
+
+    def _run(self, **kwargs):
+        out, err = StringIO(), StringIO()
+        opts = dict(campaign="wincamp", reference_campaign="refcamp", seed=7, per_config=4,
+                    window_share=0.5, max_per_paper=3, dry_run=True, stdout=out, stderr=err)
+        opts.update(kwargs)
+        call_command("sample_window_claims", **opts)
+        return json.loads(out.getvalue())
+
+    def test_only_disagreement_claims_never_judged_or_shared(self, window_universe):
+        _, ids = window_universe
+        data = self._run(per_config=50)
+        sampled = set(data["claim_usage_ids"])
+        assert sampled == ids["window"] | ids["pair"]
+        assert not sampled & (ids["shared"] | ids["judged"])
+
+    def test_strata_and_configs_labeled(self, window_universe):
+        _, ids = window_universe
+        data = self._run(per_config=50)
+        for claim in data["key"]:
+            expected = "window_divergent" if claim["usage_id"] in ids["window"] else "pair_unique"
+            assert claim["stratum"] == expected
+        assert {c["config"] for c in data["key"]} == {"cfg-a", "cfg-b"}
+
+    def test_targets_per_config_with_backfill(self, window_universe):
+        data = self._run(per_config=4, window_share=0.5)
+        by_cfg = {}
+        for claim in data["key"]:
+            by_cfg.setdefault(claim["config"], []).append(claim["stratum"])
+        assert sorted(by_cfg["cfg-a"]) == ["pair_unique"] * 2 + ["window_divergent"] * 2
+        # cfg-b has no pair_unique claims: its shortfall backfills from window_divergent.
+        assert by_cfg["cfg-b"] == ["window_divergent"] * 4
+
+    def test_per_paper_cap(self, window_universe):
+        data = self._run(per_config=50, max_per_paper=1)
+        per = {}
+        for claim in data["key"]:
+            per[(claim["config"], claim["paper_id"])] = per.get((claim["config"], claim["paper_id"]), 0) + 1
+        assert max(per.values()) == 1
+
+    def test_seed_determinism(self, window_universe):
+        assert self._run() == self._run()
+        assert self._run()["claim_usage_ids"] != self._run(seed=8)["claim_usage_ids"]
+
+    def test_tagging_applied_without_dry_run(self, window_universe):
+        from vso_query_builder.models import Paper
+
+        data = self._run(dry_run=False)
+        tagged = {str(p.id) for p in Paper.objects.filter(tags__contains=["wincamp:set", "wincamp:alice"])}
+        assert tagged == {c["paper_id"] for c in data["key"]}
+
+    def test_dry_run_tags_nothing(self, window_universe):
+        from vso_query_builder.models import Paper
+
+        self._run()
+        assert not Paper.objects.filter(tags__contains=["wincamp:set"]).exists()
+
+    def test_refuses_unscoped_campaign(self, window_universe, test_campaign):
+        with pytest.raises(CommandError, match="not claim-scoped"):
+            self._run(campaign="testcamp")

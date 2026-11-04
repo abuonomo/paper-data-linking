@@ -63,6 +63,7 @@ function App() {
           {/* Validation campaign: dashboard + direct claim route (bypasses the
               PaperValidationDetail wrapper so nothing config-related loads) */}
           <Route path="/campaign" element={<RequireAuth><CampaignPage /></RequireAuth>} />
+          <Route path="/campaign/:slug" element={<RequireAuth><CampaignPage /></RequireAuth>} />
           <Route path="/campaign/papers/:paperId/claims/:usageId" element={<RequireAuth><StreamlinedValidationInterface paperContext={undefined} /></RequireAuth>} />
         </Route>
       </Routes>

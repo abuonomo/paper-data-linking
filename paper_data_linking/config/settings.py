@@ -2102,6 +2102,12 @@ class ValidationCampaign(BaseModel):
     # sample_calibration_claims command output. Both reviewers must judge all of
     # these before the bulk/overlap sections unlock.
     calibration_usage_ids: list[str] = []
+    # Claim-scoped campaigns review a frozen sample of claims instead of every
+    # claim on the tagged papers: only DatasetUsages listed in claim_usage_ids
+    # participate (an empty list means nothing does, so tagging papers before the
+    # sample is frozen exposes no claims). Frozen from sample_window_claims.
+    claim_scoped: bool = False
+    claim_usage_ids: list[str] = []
 
 
 VALIDATION_CAMPAIGNS: dict[str, ValidationCampaign] = {
@@ -2146,6 +2152,21 @@ VALIDATION_CAMPAIGNS: dict[str, ValidationCampaign] = {
             "5a817ab5-48b5-435c-9e3f-7ec28d81802e",
             "420c1ccf-c4f0-4cbb-a7e5-a0916f48e085",
         ],
+    ),
+    # Time-window validity of self-hosted Gemma (all stages) vs gpt-oss: a blinded
+    # review of the claims where the two configs DISAGREE on the eval set and
+    # val2026 has no verdict (shared claims cannot change the comparison).
+    "window2026": ValidationCampaign(
+        slug="window2026",
+        configs=["vllm-gemma4@e2e2", "bedrock-120b-mixed-v5@mx2"],
+        set_tag="window2026:set",
+        tag_prefix="window2026:",
+        reviewers=["abuonomo"],
+        overlap_tag="window2026:overlap",
+        calibration_tag="window2026:calibration",
+        calibration_size=0,
+        claim_scoped=True,
+        # started_at and claim_usage_ids are frozen from sample_window_claims.
     ),
 }
 
