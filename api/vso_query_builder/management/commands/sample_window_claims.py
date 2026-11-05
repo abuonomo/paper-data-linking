@@ -15,7 +15,9 @@ Strata, drawn separately for each config:
 ``--window-share`` of each config's ``--per-config`` claims come from
 window_divergent; a shortfall in either stratum backfills from the other.
 ``--max-per-paper`` caps each config's claims per paper so one claim-heavy
-paper cannot dominate. The two configs' claims are shuffled together.
+paper cannot dominate. Claims without supporting quotes are never drawn: a
+config whose rows lack quotes would be recognisable in the review pane, which
+breaks blinding. The two configs' claims are shuffled together.
 
 Output is JSON on stdout: ``claim_usage_ids`` (freeze into
 ``VALIDATION_CAMPAIGNS[...].claim_usage_ids``) plus a per-claim key with config
@@ -31,11 +33,11 @@ from collections import defaultdict
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-from django.db.models import DateTimeField, F, Func
+from django.db.models import DateTimeField, Exists, F, Func, OuterRef
 
 from paper_data_linking.config.settings import get_validation_campaign
 
-from ...models import DatasetUsage, DatasetUsageValidation, Paper
+from ...models import DatasetUsage, DatasetUsageValidation, Paper, SupportQuote
 
 
 def _with_bounds(qs):
@@ -69,9 +71,11 @@ def candidate_pools(campaign, source_tag, skip_keys):
     rows = _with_bounds(DatasetUsage.objects.filter(
         paper__tags__contains=[source_tag],
         paper_analysis__configuration_name__in=campaign.configs,
-    )).values(
+    )).annotate(
+        has_quotes=Exists(SupportQuote.objects.filter(dataset_usages=OuterRef('id'))),
+    ).values(
         'id', 'paper_id', 'paper__bibcode', 'instrument_id', 'start_lower', 'end_upper',
-        'paper_analysis__configuration_name',
+        'paper_analysis__configuration_name', 'has_quotes',
     )
     keys = defaultdict(set)
     pairs = defaultdict(set)
@@ -81,7 +85,9 @@ def candidate_pools(campaign, source_tag, skip_keys):
         key = _key(row)
         keys[cfg].add(key)
         pairs[cfg].add(key[:2])
-        # Lowest id per (config, key) is the representative, as in group_claims.
+        if not row['has_quotes']:
+            continue  # still counts as an assertion above, but is never drawn
+        # Lowest quoted id per (config, key) is the representative.
         current = representative.get((cfg, key))
         if current is None or str(row['id']) < str(current['id']):
             representative[(cfg, key)] = row
@@ -91,6 +97,8 @@ def candidate_pools(campaign, source_tag, skip_keys):
         (other,) = [c for c in campaign.configs if c != cfg]
         pool = {'window_divergent': [], 'pair_unique': []}
         for key in keys[cfg] - keys[other] - skip_keys:
+            if (cfg, key) not in representative:
+                continue
             stratum = 'window_divergent' if key[:2] in pairs[other] else 'pair_unique'
             pool[stratum].append(representative[(cfg, key)])
         for stratum in pool:
@@ -141,6 +149,8 @@ class Command(BaseCommand):
         parser.add_argument("--window-share", type=float, default=0.8,
                             help="Fraction of each config's claims drawn from window_divergent.")
         parser.add_argument("--max-per-paper", type=int, default=3, help="Cap per config per paper.")
+        parser.add_argument("--rejudge", action="store_true",
+                            help="Keep claims already judged in the reference campaign.")
         parser.add_argument("--dry-run", action="store_true", help="Print the sample without tagging papers.")
 
     def handle(self, *args, **opts):
@@ -157,13 +167,13 @@ class Command(BaseCommand):
         source_tag = opts["source_tag"] or reference.set_tag
         rng = random.Random(opts["seed"])
 
-        skip = judged_keys(reference)
+        skip = set() if opts["rejudge"] else judged_keys(reference)
         pools = candidate_pools(campaign, source_tag, skip)
         n_window = round(opts["per_config"] * opts["window_share"])
         targets = {"window_divergent": n_window, "pair_unique": opts["per_config"] - n_window}
 
         self.stderr.write(self.style.SUCCESS(
-            f"\nSource set '{source_tag}'; {len(skip)} claim keys already judged in '{reference.slug}' (skipped)"
+            f"\nSource set '{source_tag}'; {len(skip)} claim keys already judged in '{reference.slug}' skipped"
         ))
         sample = []
         for index, cfg in enumerate(campaign.configs):
@@ -183,6 +193,7 @@ class Command(BaseCommand):
             "campaign": campaign.slug,
             "seed": opts["seed"],
             "reference_campaign": reference.slug,
+            "rejudge": opts["rejudge"],
             "source_tag": source_tag,
             "n_claims": len(sample),
             "claim_usage_ids": [str(row["id"]) for row, _, _ in sample],

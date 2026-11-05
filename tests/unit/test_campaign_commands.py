@@ -209,15 +209,17 @@ def window_universe(window_campaigns, paper_factory, observatory_factory, instru
     """Per paper: X window-divergent across configs, Y cfg-a only, Z shared.
 
     Paper 0's cfg-a X/W1 claim also exists in the reference campaign with a
-    reviewer verdict, so it must be skipped.
+    reviewer verdict, so it must be skipped. Every paper also has a quote-less
+    cfg-a Q claim (never drawable), and paper 1's cfg-b asserts Y/W1 without
+    quotes, which still makes cfg-a's Y/W1 a shared claim there.
     """
     from django.contrib.auth.models import User
-    from vso_query_builder.models import DatasetUsage, DatasetUsageValidation
+    from vso_query_builder.models import DatasetUsage, DatasetUsageValidation, SupportQuote
 
     obs = observatory_factory("SOHO")
-    inst = {name: instrument_factory(obs, name) for name in ("X", "Y", "Z")}
+    inst = {name: instrument_factory(obs, name) for name in ("X", "Y", "Z", "Q")}
     alice = User.objects.create_user(username="alice", password="x")
-    ids = {"shared": set(), "judged": set(), "window": set(), "pair": set()}
+    ids = {"shared": set(), "judged": set(), "window": set(), "pair": set(), "unquoted": set()}
     papers = []
     for i in range(6):
         paper = paper_factory(tags=["test_set_camp"])
@@ -225,14 +227,24 @@ def window_universe(window_campaigns, paper_factory, observatory_factory, instru
         pa = {cfg: paper_analysis_factory(paper=paper, configuration_name=cfg)
               for cfg in ("cfg-a", "cfg-b", "ref-a")}
 
-        def du(cfg, name, window):
-            return DatasetUsage.objects.create(
+        def du(cfg, name, window, quoted=True):
+            usage = DatasetUsage.objects.create(
                 paper=paper, paper_analysis=pa[cfg], instrument=inst[name], observation_window=window)
+            if quoted:
+                usage.supporting_quotes.add(SupportQuote.objects.create(
+                    paper_analysis=pa[cfg], quote=f"{name} in paper {i}", instrument=name,
+                    parameter="Period 1:time", page_number=1, y_coord=10.0))
+            return usage
 
         x_a, x_b = du("cfg-a", "X", W1), du("cfg-b", "X", W2)
         (ids["judged"] if i == 0 else ids["window"]).add(str(x_a.id))
         ids["window"].add(str(x_b.id))
-        ids["pair"].add(str(du("cfg-a", "Y", W1).id))
+        y_a = str(du("cfg-a", "Y", W1).id)
+        if i == 1:
+            ids["shared"].update({y_a, str(du("cfg-b", "Y", W1, quoted=False).id)})
+        else:
+            ids["pair"].add(y_a)
+        ids["unquoted"].add(str(du("cfg-a", "Q", W1, quoted=False).id))
         ids["shared"].update({str(du("cfg-a", "Z", W1).id), str(du("cfg-b", "Z", W1).id)})
         if i == 0:
             ref = du("ref-a", "X", W1)
@@ -256,7 +268,12 @@ class TestSampleWindowClaims:
         data = self._run(per_config=50)
         sampled = set(data["claim_usage_ids"])
         assert sampled == ids["window"] | ids["pair"]
-        assert not sampled & (ids["shared"] | ids["judged"])
+        assert not sampled & (ids["shared"] | ids["judged"] | ids["unquoted"])
+
+    def test_rejudge_keeps_judged_claims(self, window_universe):
+        _, ids = window_universe
+        sampled = set(self._run(per_config=50, rejudge=True)["claim_usage_ids"])
+        assert sampled == ids["window"] | ids["pair"] | ids["judged"]
 
     def test_strata_and_configs_labeled(self, window_universe):
         _, ids = window_universe
