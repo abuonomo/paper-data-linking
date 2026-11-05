@@ -4,7 +4,9 @@ Compares the campaign's two configs on a source paper set by reviewing only the
 claims where they DISAGREE: a claim both configs assert counts the same for
 both, so it cannot change the comparison. Claims whose exact (paper,
 instrument, window) already carries a verdict in the reference campaign are
-skipped too — the analysis carries that verdict over instead.
+skipped too — the analysis carries that verdict over instead. Re-drawing them
+would be unsafe: verdicts are stored per (usage, user), so re-judging a reference
+row overwrites its verdict.
 
 Strata, drawn separately for each config:
 
@@ -149,8 +151,6 @@ class Command(BaseCommand):
         parser.add_argument("--window-share", type=float, default=0.8,
                             help="Fraction of each config's claims drawn from window_divergent.")
         parser.add_argument("--max-per-paper", type=int, default=3, help="Cap per config per paper.")
-        parser.add_argument("--rejudge", action="store_true",
-                            help="Keep claims already judged in the reference campaign.")
         parser.add_argument("--dry-run", action="store_true", help="Print the sample without tagging papers.")
 
     def handle(self, *args, **opts):
@@ -167,7 +167,7 @@ class Command(BaseCommand):
         source_tag = opts["source_tag"] or reference.set_tag
         rng = random.Random(opts["seed"])
 
-        skip = set() if opts["rejudge"] else judged_keys(reference)
+        skip = judged_keys(reference)
         pools = candidate_pools(campaign, source_tag, skip)
         n_window = round(opts["per_config"] * opts["window_share"])
         targets = {"window_divergent": n_window, "pair_unique": opts["per_config"] - n_window}
@@ -193,7 +193,6 @@ class Command(BaseCommand):
             "campaign": campaign.slug,
             "seed": opts["seed"],
             "reference_campaign": reference.slug,
-            "rejudge": opts["rejudge"],
             "source_tag": source_tag,
             "n_claims": len(sample),
             "claim_usage_ids": [str(row["id"]) for row, _, _ in sample],
