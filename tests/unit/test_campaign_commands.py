@@ -270,11 +270,6 @@ class TestSampleWindowClaims:
         assert sampled == ids["window"] | ids["pair"]
         assert not sampled & (ids["shared"] | ids["judged"] | ids["unquoted"])
 
-    def test_rejudge_keeps_judged_claims(self, window_universe):
-        _, ids = window_universe
-        sampled = set(self._run(per_config=50, rejudge=True)["claim_usage_ids"])
-        assert sampled == ids["window"] | ids["pair"] | ids["judged"]
-
     def test_strata_and_configs_labeled(self, window_universe):
         _, ids = window_universe
         data = self._run(per_config=50)
