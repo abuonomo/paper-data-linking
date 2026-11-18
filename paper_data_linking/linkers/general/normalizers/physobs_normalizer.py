@@ -2,6 +2,7 @@
 
 import json
 import logging
+from functools import lru_cache
 from typing import Dict, Optional
 
 from paper_data_linking.config.paths import VSO_METADATA_JSONL
@@ -13,6 +14,24 @@ from paper_data_linking.linkers.general.normalizers.normalization_context import
 from paper_data_linking.linkers.general.prompt_loader import load_and_render_prompt
 
 logger = logging.getLogger(__name__)
+
+
+@lru_cache(maxsize=1)
+def _instrument_physobs_from_metadata() -> Dict[str, list]:
+    """Parsed once per process: the file is static and normalizers are built per period."""
+    instrument_physobs: Dict[str, set] = {}
+
+    if VSO_METADATA_JSONL.exists():
+        with open(VSO_METADATA_JSONL, "r", encoding="utf-8") as md:
+            for line in md:
+                entry = json.loads(line)
+                code = entry.get("instrument")
+                phys = entry.get("physobs")
+                if code and phys:
+                    instrument_physobs.setdefault(code, set()).add(phys)
+
+    # Convert sets to sorted lists
+    return {code: sorted(phys_set) for code, phys_set in instrument_physobs.items()}
 
 
 @NormalizerRegistry.register("physobs", version="1.0", data_sources=["vso"])
@@ -35,19 +54,7 @@ class PhysObsNormalizer(BaseNormalizer):
         Returns:
             Dictionary mapping instrument codes to sorted lists of available physical observables.
         """
-        instrument_physobs: Dict[str, set] = {}
-
-        if VSO_METADATA_JSONL.exists():
-            with open(VSO_METADATA_JSONL, "r", encoding="utf-8") as md:
-                for line in md:
-                    entry = json.loads(line)
-                    code = entry.get("instrument")
-                    phys = entry.get("physobs")
-                    if code and phys:
-                        instrument_physobs.setdefault(code, set()).add(phys)
-
-        # Convert sets to sorted lists
-        return {code: sorted(phys_set) for code, phys_set in instrument_physobs.items()}
+        return _instrument_physobs_from_metadata()
 
     def _build_physobs_context(self, context: NormalizationContext) -> str:
         """Build the physical observable context string from period data.

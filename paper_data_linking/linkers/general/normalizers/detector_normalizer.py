@@ -2,6 +2,7 @@
 
 import json
 import logging
+from functools import lru_cache
 from typing import Dict, Optional
 
 from paper_data_linking.config.paths import VSO_METADATA_JSONL
@@ -13,6 +14,29 @@ from paper_data_linking.linkers.general.normalizers.normalization_context import
 from paper_data_linking.linkers.general.prompt_loader import load_and_render_prompt
 
 logger = logging.getLogger(__name__)
+
+
+@lru_cache(maxsize=1)
+def _instrument_detectors_from_metadata() -> Dict[str, list]:
+    """Parsed once per process: the file is static and normalizers are built per period."""
+    instrument_detectors: Dict[str, set] = {}
+
+    if VSO_METADATA_JSONL.exists():
+        with open(VSO_METADATA_JSONL, "r", encoding="utf-8") as md:
+            for line in md:
+                entry = json.loads(line)
+                code = entry.get("instrument")
+                detector = entry.get("detector")
+                if code and detector:
+                    # detector can be a list or single value
+                    if isinstance(detector, list):
+                        for det in detector:
+                            instrument_detectors.setdefault(code, set()).add(det)
+                    else:
+                        instrument_detectors.setdefault(code, set()).add(detector)
+
+    # Convert sets to sorted lists
+    return {code: sorted(detectors) for code, detectors in instrument_detectors.items()}
 
 
 @NormalizerRegistry.register("detector", version="1.0", data_sources=["vso"])
@@ -35,24 +59,7 @@ class DetectorNormalizer(BaseNormalizer):
         Returns:
             Dictionary mapping instrument codes to sorted lists of available detectors.
         """
-        instrument_detectors: Dict[str, set] = {}
-
-        if VSO_METADATA_JSONL.exists():
-            with open(VSO_METADATA_JSONL, "r", encoding="utf-8") as md:
-                for line in md:
-                    entry = json.loads(line)
-                    code = entry.get("instrument")
-                    detector = entry.get("detector")
-                    if code and detector:
-                        # detector can be a list or single value
-                        if isinstance(detector, list):
-                            for det in detector:
-                                instrument_detectors.setdefault(code, set()).add(det)
-                        else:
-                            instrument_detectors.setdefault(code, set()).add(detector)
-
-        # Convert sets to sorted lists
-        return {code: sorted(detectors) for code, detectors in instrument_detectors.items()}
+        return _instrument_detectors_from_metadata()
 
     def _build_detector_context(self, context: NormalizationContext) -> str:
         """Build the detector context string from instrument and period data.

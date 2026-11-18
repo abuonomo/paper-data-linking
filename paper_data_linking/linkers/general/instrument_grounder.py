@@ -265,6 +265,10 @@ class InstrumentGrounder:
         missions_text = "\n".join(missions_numbered)
         
         # Load prompts from XML template
+        # The template puts the instrument description ahead of the mission list, so calls
+        # share no prefix and a prefix-caching server (vLLM) cannot reuse the list. List-first
+        # was measured and not adopted: ~10% faster end to end on vLLM, worse ranking on
+        # gpt-oss-120b. See https://github.com/abuonomo/paper-data-linking/issues/47.
         template_name = "mission_identification"
         system_msg, user_msg = load_and_render_prompt(
             template_name,

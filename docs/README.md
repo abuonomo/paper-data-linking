@@ -6,6 +6,7 @@
 |---|---|
 | [PUBLIC_API.md](PUBLIC_API.md) | The read-only public API: query validated data references by paper, mission, instrument, and time range; bulk CSV export; generated SunPy snippets. No account needed. |
 | [DEPLOYMENT.md](DEPLOYMENT.md) | Running a production instance with Docker Compose, image registry, and reverse proxy. |
+| [../runner/README.md](../runner/README.md) | The standalone batch runner: the whole pipeline on a GPU machine against vLLM, files in and files out, no database. |
 | [EXTENDING_DATA_SOURCES.md](EXTENDING_DATA_SOURCES.md) | Adding a new data archive: the normalizer, script-generator, and analyzer registry pattern. |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | Development setup, environment variables, tests, pull-request process. |
 | [vision/](vision/) | Project vision materials and infographic. |

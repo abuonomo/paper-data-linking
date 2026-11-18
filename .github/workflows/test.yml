@@ -60,6 +60,23 @@ jobs:
       - run: uv sync --frozen
       - run: uv run pytest -q --durations=15
 
+  # The standalone batch runner must work with only its own dependency group
+  # installed (no Django, Celery or database driver), because that is all its image
+  # contains. Runs against the built-in fake vLLM server; no GPU, no network calls.
+  runner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv python install 3.11
+      - run: uv sync --only-group runner-test --frozen --no-install-project
+      # --confcutdir keeps the repository-root conftest (which imports Django) out.
+      - run: .venv/bin/python -m pytest -q --confcutdir=tests/runner tests/runner
+
   client:
     runs-on: ubuntu-latest
     timeout-minutes: 10

@@ -1,0 +1,33 @@
+# One command on a GPU box:   docker compose -f runner/compose.yaml up
+#
+# Set PAPERS_DIR (paper text), OUT_DIR (results, resumable), HF_CACHE (model weights)
+# and CATALOG (catalog snapshot) in the environment or an .env file next to this file.
+# PDL_GPUS limits which GPUs are used; by default every free GPU gets a vLLM replica.
+services:
+  pdl-runner:
+    image: ${PDL_RUNNER_IMAGE:-ghcr.io/abuonomo/paper-data-linking/runner:latest}
+    command: ["all"]
+    # On stop, papers in flight get up to 120 seconds to finish before the runner exits.
+    stop_grace_period: 150s
+    # vLLM's worker processes share tensors through /dev/shm.
+    ipc: host
+    # The replicas listen on localhost inside this container and nothing else is needed.
+    network_mode: ${PDL_NETWORK:-none}
+    environment:
+      PDL_GPUS: ${PDL_GPUS:-}
+      PDL_CONFIG: ${PDL_CONFIG:-vllm-gemma4-batch}
+      PDL_CATALOG_SNAPSHOT: /data/catalog.json
+      PDL_CALL_LOG: ${PDL_CALL_LOG:-meta}
+      PDL_SHARD: ${PDL_SHARD:-0/1}
+    volumes:
+      - ${PAPERS_DIR:?set PAPERS_DIR}:/data/papers:ro
+      - ${OUT_DIR:?set OUT_DIR}:/data/out
+      - ${CATALOG:?set CATALOG}:/data/catalog.json:ro
+      - ${HF_CACHE:-~/.cache/huggingface}:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

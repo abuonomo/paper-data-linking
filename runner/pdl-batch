@@ -1,0 +1,3 @@
+#!/bin/sh
+# Runs the runner with its own interpreter, leaving the image's Python (vLLM's) alone.
+exec /opt/pdl/.venv/bin/python -m paper_data_linking.runner.cli "$@"

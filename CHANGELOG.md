@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- Standalone batch runner, `pdl-batch` (`paper_data_linking/runner/`, image `runner`): runs the whole pipeline against vLLM with paper text in as files and results out as files, with no database, queue or network. Starts one vLLM server per GPU, admits calls against each GPU's KV-cache budget, resumes after any interruption, and exports results at three disclosure levels. A built-in stand-in server (`--fake-gpus N`) exercises everything but the model without a GPU. See `runner/README.md`.
+- `manage.py export_catalog_snapshot` and `SnapshotInstrumentFinder`: the instrument catalog as a file, so grounding can run without the database.
+- LLM configuration `vllm-gemma4-batch` (step 1 with a `---` stop sequence and a 20k-token cap) and a `stop` field on `LLMCallConfig`.
+
+### Changed
+- The physical-observable and detector normalizers parse `vso_metadata_exploded.jsonl` once per process instead of once per data collection period.
+
 ## [1.1.0] - 2026-09-24
 
 ### Added
