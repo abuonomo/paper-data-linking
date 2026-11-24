@@ -2878,6 +2878,34 @@ def merge_collection_task(results, run_id):
     return {"merged_chunks": 0}
 
 
+# text-embedding-3-small rejects any input over 8,192 tokens, and one such input
+# fails the whole request. Inputs are cut to a little under that.
+EMBED_MAX_TOKENS = 8000
+# Below this many characters no text can reach the limit, so nothing is tokenized.
+_EMBED_SAFE_CHARS = 8000
+# Used only if tiktoken is unavailable: dense scientific text (numbers, symbols)
+# measure about 1.8 characters per token, so this stays under the limit.
+_EMBED_FALLBACK_CHARS = 12000
+
+
+def embeddable_text(text):
+    """Cut text to what the embedding model accepts. Oversized "quotes" exist
+    (extraction occasionally captures whole sections, 75k-120k characters) and
+    used to fail every sweep, leaving every quote in the same request unembedded."""
+    if len(text) <= _EMBED_SAFE_CHARS:
+        return text
+    try:
+        import tiktoken
+        enc = tiktoken.get_encoding("cl100k_base")
+        tokens = enc.encode(text, disallowed_special=())
+        if len(tokens) <= EMBED_MAX_TOKENS:
+            return text
+        return enc.decode(tokens[:EMBED_MAX_TOKENS])
+    except Exception:
+        logger.warning("tiktoken unavailable; cutting embedding input by characters")
+        return text[:_EMBED_FALLBACK_CHARS]
+
+
 @shared_task(soft_time_limit=540, time_limit=600)
 @close_db_connection
 def embed_missing_quotes(max_quotes=20_000, chunk_size=2000):
@@ -2905,7 +2933,7 @@ def embed_missing_quotes(max_quotes=20_000, chunk_size=2000):
         if client is None:
             client = OpenAI(api_key=settings.OPENAI_API_KEY)
         resp = client.embeddings.create(
-            input=[q.quote for q in batch], model='text-embedding-3-small')
+            input=[embeddable_text(q.quote) for q in batch], model='text-embedding-3-small')
         for q, emb in zip(batch, resp.data):
             q.embedding = emb.embedding
         # bulk_update fires no post_save (same signal-bypass as queryset.update)

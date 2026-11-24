@@ -474,6 +474,69 @@ class TestCorpusModeCommitPath:
         assert res == {"embedded": 1, "remaining": 0}
         assert SupportQuote.objects.filter(embedding__isnull=True).count() == 0
 
+    def test_embed_missing_quotes_survives_oversized_quote(self, catalog_setup,
+                                                           paper_analysis_factory, monkeypatch):
+        """One quote over the model's 8,192-token limit used to fail the whole
+        request, every sweep, leaving every quote in it unembedded (prod, 2026-11)."""
+        from types import SimpleNamespace
+        import tiktoken
+        from paper_data_linking.pipeline_context import batch_execution
+        from vso_query_builder import batch_downstream as bd
+        import vso_query_builder.tasks as tasks_mod
+
+        run = bd.create_run([], "bedrock-120b-high-v5", corpus_mode=True)
+        pa = self._quote_pa(paper_analysis_factory)
+        with batch_execution('commit', run.id):
+            tasks_mod._upsert_dataset_usages_from_normalized(pa)
+        SupportQuote.objects.update(quote="0.123456 " * 30000)   # ~240k chars, far over
+        enc = tiktoken.get_encoding("cl100k_base")
+
+        class StrictClient:
+            def __init__(self, **kw):
+                self.embeddings = self
+            def create(self, input, model):
+                for i, text in enumerate(input):
+                    if len(enc.encode(text)) > 8192:
+                        raise ValueError(f"input[{i}]: maximum input length is 8192 tokens")
+                return SimpleNamespace(data=[
+                    SimpleNamespace(embedding=[0.5] * 1536) for _ in input])
+        monkeypatch.setattr("openai.OpenAI", StrictClient)
+
+        res = tasks_mod.embed_missing_quotes()
+        assert res == {"embedded": 1, "remaining": 0}
+
+
+class TestEmbeddableText:
+    def test_short_text_unchanged(self):
+        from vso_query_builder.tasks import embeddable_text
+        assert embeddable_text("SOHO/LASCO C2 images from 2003") == "SOHO/LASCO C2 images from 2003"
+
+    def test_long_text_cut_under_limit(self):
+        import tiktoken
+        from vso_query_builder.tasks import embeddable_text, EMBED_MAX_TOKENS
+        enc = tiktoken.get_encoding("cl100k_base")
+        text = "The magnetometer recorded 4.27 nT at 1 AU. " * 5000
+        out = embeddable_text(text)
+        assert text.startswith(out)
+        assert len(enc.encode(out)) <= EMBED_MAX_TOKENS < 8192
+
+    def test_long_text_under_limit_unchanged(self):
+        from vso_query_builder.tasks import embeddable_text
+        text = "word " * 2500   # 12.5k chars, about 2.5k tokens
+        assert embeddable_text(text) == text
+
+    def test_falls_back_to_characters_without_tiktoken(self, monkeypatch):
+        import builtins
+        from vso_query_builder import tasks
+        real_import = builtins.__import__
+        def no_tiktoken(name, *a, **k):
+            if name == "tiktoken":
+                raise ImportError("no tiktoken")
+            return real_import(name, *a, **k)
+        monkeypatch.setattr(builtins, "__import__", no_tiktoken)
+        out = tasks.embeddable_text("x" * 50000)
+        assert out == "x" * tasks._EMBED_FALLBACK_CHARS
+
 
 @pytest.mark.django_db
 class TestEmbeddingSignalCorpusGate:
