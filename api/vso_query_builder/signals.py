@@ -23,12 +23,12 @@ def create_embedding(sender, instance, created, **kwargs):
         # loop is exactly the hot-path cost corpus mode exists to avoid. Gating
         # here (not at each creation site) covers every quote-creation path
         # structurally; interactive/research behavior is unchanged.
-        from .tasks import _in_corpus_mode_commit   # lazy: avoids import cycle
+        from .tasks import _in_corpus_mode_commit, embeddable_text   # lazy: avoids import cycle
         if _in_corpus_mode_commit():
             return
         try:
             response = client.embeddings.create(
-                input=[instance.quote],
+                input=[embeddable_text(instance.quote)],
                 model='text-embedding-3-small'
             )
             embedding = response.data[0].embedding
