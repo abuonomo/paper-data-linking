@@ -103,6 +103,30 @@ classify = [
     "scikit-learn>=1.4.0",
 ]
 
+[project.scripts]
+pdl-batch = "paper_data_linking.runner.cli:main"
+
+[dependency-groups]
+# Everything the standalone batch runner (paper_data_linking/runner) imports, and
+# nothing else: its image carries no Django, Celery or database drivers. CI runs the
+# runner tests in an environment built from runner-test alone to keep it that way.
+runner = [
+    "litellm>=1.0.0",
+    "openai>=1.35.14,<1.100.0",
+    "httpx>=0.27.0",
+    "pydantic==2.8.0",
+    "pydantic-settings>=2.9.1",
+    "python-dotenv>=0.21.1",
+    "jinja2>=3.1.0",
+    "pymupdf>=1.24.8",
+    "numpy>=1.24.2",
+    "python-dateutil>=2.8.2",
+]
+runner-test = [
+    { include-group = "runner" },
+    "pytest>=7.2.2",
+]
+
 [project.urls]
 Repository = "https://github.com/abuonomo/paper-data-linking"
 Documentation = "https://github.com/abuonomo/paper-data-linking/blob/main/docs/README.md"

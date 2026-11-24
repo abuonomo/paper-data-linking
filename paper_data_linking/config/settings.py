@@ -18,6 +18,7 @@ class LLMCallConfig(BaseModel):
     aws_region_name: Optional[str] = Field(default=None, description="AWS region for Bedrock models")
     reasoning_effort: Optional[str] = Field(default=None, description="Reasoning effort level: 'low', 'medium', 'high'")
     extra_body: Optional[dict] = Field(default=None, description="Extra request-body fields for OpenAI-compatible servers (e.g. vLLM chat_template_kwargs)")
+    stop: Optional[list[str]] = Field(default=None, description="Stop sequences; generation ends when the model emits one")
 
     @field_validator('max_tokens')
     @classmethod
@@ -40,6 +41,8 @@ class LLMCallConfig(BaseModel):
             kwargs["reasoning_effort"] = self.reasoning_effort
         if self.extra_body is not None:
             kwargs["extra_body"] = self.extra_body
+        if self.stop is not None:
+            kwargs["stop"] = self.stop
 
         # Add any additional kwargs passed in
         kwargs.update(additional_kwargs)
@@ -2046,6 +2049,15 @@ LLM_CONFIGURATIONS["vllm-gemma4"] = _on_model(
         max_tokens=16000,
         extra_body={"chat_template_kwargs": {"enable_thinking": True}},
     ),
+)
+
+# The same config for unattended corpus runs (the standalone runner). Step 1 gets the
+# recipe verified on L40S: Gemma occasionally opens its answer with "---" and then loops
+# to the length cap, so "---" is a stop sequence (the answer comes back empty and the
+# runner retries it), and 20k tokens covers every non-looping answer observed.
+LLM_CONFIGURATIONS["vllm-gemma4-batch"] = LLM_CONFIGURATIONS["vllm-gemma4"].model_copy(deep=True)
+LLM_CONFIGURATIONS["vllm-gemma4-batch"].paper_analysis = LLM_CONFIGURATIONS["vllm-gemma4"].paper_analysis.model_copy(
+    deep=True, update={"max_tokens": 20000, "stop": ["---"]}
 )
 
 

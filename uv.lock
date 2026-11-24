@@ -2104,6 +2104,33 @@ experiments = [
     { name = "streamlit" },
 ]
 
+[package.dev-dependencies]
+runner = [
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "litellm" },
+    { name = "numpy" },
+    { name = "openai" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "pymupdf" },
+    { name = "python-dateutil" },
+    { name = "python-dotenv" },
+]
+runner-test = [
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "litellm" },
+    { name = "numpy" },
+    { name = "openai" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "pymupdf" },
+    { name = "pytest" },
+    { name = "python-dateutil" },
+    { name = "python-dotenv" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=23.1.0" },
@@ -2185,6 +2212,33 @@ requires-dist = [
     { name = "zeep", specifier = ">=4.2.1" },
 ]
 provides-extras = ["experiments", "bibcollect", "classify"]
+
+[package.metadata.requires-dev]
+runner = [
+    { name = "httpx", specifier = ">=0.27.0" },
+    { name = "jinja2", specifier = ">=3.1.0" },
+    { name = "litellm", specifier = ">=1.0.0" },
+    { name = "numpy", specifier = ">=1.24.2" },
+    { name = "openai", specifier = ">=1.35.14,<1.100.0" },
+    { name = "pydantic", specifier = "==2.8.0" },
+    { name = "pydantic-settings", specifier = ">=2.9.1" },
+    { name = "pymupdf", specifier = ">=1.24.8" },
+    { name = "python-dateutil", specifier = ">=2.8.2" },
+    { name = "python-dotenv", specifier = ">=0.21.1" },
+]
+runner-test = [
+    { name = "httpx", specifier = ">=0.27.0" },
+    { name = "jinja2", specifier = ">=3.1.0" },
+    { name = "litellm", specifier = ">=1.0.0" },
+    { name = "numpy", specifier = ">=1.24.2" },
+    { name = "openai", specifier = ">=1.35.14,<1.100.0" },
+    { name = "pydantic", specifier = "==2.8.0" },
+    { name = "pydantic-settings", specifier = ">=2.9.1" },
+    { name = "pymupdf", specifier = ">=1.24.8" },
+    { name = "pytest", specifier = ">=7.2.2" },
+    { name = "python-dateutil", specifier = ">=2.8.2" },
+    { name = "python-dotenv", specifier = ">=0.21.1" },
+]
 
 [[package]]
 name = "parfive"

@@ -36,3 +36,13 @@ def test_stage_copies_are_independent():
 
 def test_to_kwargs_omits_extra_body_when_unset():
     assert "extra_body" not in LLMCallConfig(model="openai/gpt-5", temperature=1.0).to_kwargs()
+
+
+def test_batch_config_adds_step1_stop_and_leaves_base_config_alone():
+    batch = get_llm_configuration("vllm-gemma4-batch")
+    kwargs = batch.paper_analysis.to_kwargs()
+    assert kwargs["stop"] == ["---"] and kwargs["max_tokens"] == 20000
+    assert kwargs["extra_body"] == {"chat_template_kwargs": {"enable_thinking": True}}
+    assert "stop" not in batch.normalization.time_range.to_kwargs()
+    base = get_llm_configuration("vllm-gemma4")
+    assert base.paper_analysis.max_tokens == 16000 and "stop" not in base.paper_analysis.to_kwargs()
