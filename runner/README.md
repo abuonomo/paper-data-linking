@@ -10,7 +10,7 @@ The image is `ghcr.io/abuonomo/paper-data-linking/runner`. The model recipe is G
 |---|---|
 | Paper text | A directory of `.jsonl` or `.jsonl.gz` files, one paper per line: `{"bibcode": "...", "text": "..."}`. Extra keys are carried through to the results. |
 | Model weights | A Hugging Face cache directory holding `RedHatAI/gemma-4-26B-A4B-it-FP8-dynamic` and `google/gemma-4-26B-A4B-it-assistant`. The servers run offline and never download. |
-| Catalog snapshot | One JSON file with the instrument catalog, supplied with the image release. |
+| Catalog snapshot | Built into the image (`paper_data_linking/data_assets/catalog/catalog_snapshot.json`); nothing to supply. To use a newer one, export it with `manage.py export_catalog_snapshot`, mount it and set `PDL_CATALOG_SNAPSHOT` to its path. |
 | GPUs | One or more with about 45 GB of memory each (L40S). Docker with the NVIDIA container toolkit. |
 
 ## Run it
@@ -19,12 +19,11 @@ The image is `ghcr.io/abuonomo/paper-data-linking/runner`. The model recipe is G
 docker run --rm --gpus all --ipc=host --network none \
   -v /path/to/papers:/data/papers:ro \
   -v /path/to/out:/data/out \
-  -v /path/to/catalog_snapshot.json:/data/catalog.json:ro -e PDL_CATALOG_SNAPSHOT=/data/catalog.json \
   -v /path/to/hf-cache:/root/.cache/huggingface \
   ghcr.io/abuonomo/paper-data-linking/runner all
 ```
 
-Or with `runner/compose.yaml`: set `PAPERS_DIR`, `OUT_DIR`, `CATALOG` and `HF_CACHE`, then `docker compose -f runner/compose.yaml up`.
+Or with `runner/compose.yaml`: set `PAPERS_DIR`, `OUT_DIR` and `HF_CACHE`, then `docker compose -f runner/compose.yaml up`.
 
 `all` finds the free GPUs, starts a vLLM server on each (logs in `out/logs/`), waits for them to load, processes every paper, and shuts the servers down. A progress line is printed every 30 seconds:
 
@@ -60,7 +59,6 @@ docker run --rm ... ghcr.io/abuonomo/paper-data-linking/runner doctor --papers /
 ```bash
 docker run --rm --network none \
   -v /path/to/papers:/data/papers:ro -v /path/to/out:/data/out \
-  -v /path/to/catalog_snapshot.json:/data/catalog.json:ro -e PDL_CATALOG_SNAPSHOT=/data/catalog.json \
   ghcr.io/abuonomo/paper-data-linking/runner all --fake-gpus 8
 ```
 
