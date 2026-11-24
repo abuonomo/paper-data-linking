@@ -1,7 +1,8 @@
 # One command on a GPU box:   docker compose -f runner/compose.yaml up
 #
-# Set PAPERS_DIR (paper text), OUT_DIR (results, resumable), HF_CACHE (model weights)
-# and CATALOG (catalog snapshot) in the environment or an .env file next to this file.
+# Set PAPERS_DIR (paper text), OUT_DIR (results, resumable) and HF_CACHE (model weights)
+# in the environment or an .env file next to this file. The catalog snapshot is built
+# into the image; to use another, mount it and set PDL_CATALOG_SNAPSHOT to its path.
 # PDL_GPUS limits which GPUs are used; by default every free GPU gets a vLLM replica.
 services:
   pdl-runner:
@@ -16,13 +17,11 @@ services:
     environment:
       PDL_GPUS: ${PDL_GPUS:-}
       PDL_CONFIG: ${PDL_CONFIG:-vllm-gemma4-batch}
-      PDL_CATALOG_SNAPSHOT: /data/catalog.json
       PDL_CALL_LOG: ${PDL_CALL_LOG:-meta}
       PDL_SHARD: ${PDL_SHARD:-0/1}
     volumes:
       - ${PAPERS_DIR:?set PAPERS_DIR}:/data/papers:ro
       - ${OUT_DIR:?set OUT_DIR}:/data/out
-      - ${CATALOG:?set CATALOG}:/data/catalog.json:ro
       - ${HF_CACHE:-~/.cache/huggingface}:/root/.cache/huggingface
     deploy:
       resources:
