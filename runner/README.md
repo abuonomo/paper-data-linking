@@ -141,6 +141,13 @@ Measured with this runner on one L40S (`all`, networking disabled, 182 evaluatio
 
 Step 1 alone runs at about 500 papers/hour (7 GPU-seconds per paper). Downstream costs about 25 GPU-seconds on a paper that names instruments. That gives about 180 to 260 papers/hour per GPU if a quarter to half of the papers name instruments. The evaluation papers name more instruments than typical papers (4.6 on average), so this is probably conservative.
 
-Verified without GPUs: the full path against stand-in servers, including 8 endpoints, a killed run resumed with every paper processed exactly once, a dead endpoint, and a container with networking disabled.
+Measured with this runner on one L40S (`all`, networking disabled, 500 papers drawn at random from a heliophysics corpus, 2026-11-23), with faults injected along the way:
 
-Not yet measured: more than one GPU, a run long enough to reach steady state, and a restart against real vLLM. The budget adjustment, the step-1 attempt without the cut-off and the re-sampling of answers lost to reasoning were added after that run and have only been tested against stand-in servers. In that run the server's metrics gave two thirds of its real KV capacity, so the first 18 minutes ran 20 step-1 calls at a time at 45% KV use.
+- Steady state was about 190 papers/hour (188 over the last 15 minutes before the first stop, 196 over the first run as a whole). These papers are typical of a corpus rather than chosen for naming instruments.
+- A graceful `docker stop -t 150` at 250 papers and a `docker kill` at 352 papers, each followed by the same command again: all 500 papers ended in `results/` exactly once, none in `failures/`, and no step-1 answer was generated twice.
+- In a separate 60-paper run, the vLLM server was killed (SIGKILL on it and its engine process) after 10 papers. The runner restarted it within 10 seconds, the calls in flight were retried until it answered again, and 59 papers finished. The 60th was `step1_broken` (its step-1 answer hit the token limit on all three attempts), unrelated to the kill.
+- vLLM logs errors about being unable to reach huggingface.co while it loads with networking disabled. They are harmless: the weights are read from the mounted cache.
+
+Verified without GPUs: the full path against stand-in servers, including 8 endpoints, a killed run resumed with every paper processed exactly once, a dead endpoint whose papers move to the other servers, and a container with networking disabled.
+
+Not yet measured: more than one GPU on one machine with real vLLM, and handing a dead server's papers to another real server. In the 182-paper run the server's metrics gave two thirds of its real KV capacity, so the first 18 minutes ran 20 step-1 calls at a time at 45% KV use; the budget adjustment added since corrects for that.
